@@ -1,2 +1,2 @@
-# Imperative-programming
-Imperative Programming in C
+# Imperative Programming in C
+
