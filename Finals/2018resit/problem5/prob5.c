@@ -2,7 +2,7 @@
    author: David De Potter
    description: IP Final 2018 Resit, problem 5,
 	 minimal palindromic partition
-*/
+*/ 
 
 #include <stdio.h>
 #include <stdlib.h>
