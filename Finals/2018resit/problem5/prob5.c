@@ -1,7 +1,7 @@
 /* file: prob5.c
    author: David De Potter
    description: IP Final 2018 Resit, problem 5,
-  0 minimal palindromic partition
+   minimal palindromic partition
 */ 
 
 #include <stdio.h>
