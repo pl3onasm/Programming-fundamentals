@@ -2,8 +2,10 @@
 #include <stdlib.h>
 
 int isMatch(char *pattern, char *string) {
-  if (*string == '\0' && *pattern == '\0') return 1;  // base case
-  if (*pattern == '\0' || *pattern == '\0') return 0; // base case
+  // base cases
+  if (*string == '\0' && *pattern == '\0') return 1;  
+  if (*string == '\0' || *pattern == '\0') return 0;  
+  // recursive cases
   if (pattern[1] == '?')
     return (*pattern == *string && isMatch(pattern+2, string+1)) 
             || isMatch(pattern+2, string);
