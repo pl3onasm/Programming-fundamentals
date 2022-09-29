@@ -24,9 +24,9 @@ int main(int argc, char *argv[]) {
     cycles[i] = op[i];
   }
   for (int i = 0; i < n; i++) {
-    if (cycles[i] == -1) continue;
+    if (cycles[i] < 0) continue;
     int j = i;
-    while (cycles[j] != -1) {
+    while (cycles[j] > 0) {
       int k = cycles[j];
       cycles[j] = -1;
       j = k;
