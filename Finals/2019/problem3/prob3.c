@@ -18,15 +18,12 @@ int putDisc(int n, int from, int to, int i, int rods[3][10]){
   for (k = 0; k < n; k++){
     if (rods[to][k]){
       rods[to][k-1] = disc;
-      if (rods[to][k] < disc) flag = 1; 
+      if (rods[to][k] < disc) flag = 1; // wrong disc order
       break;
     }
-    if (k == n-1){
-      rods[to][k] = disc;
-      break;
-    }
+    if (k == n-1) rods[to][k] = disc;
   }
-  if (flag || j == n) {
+  if (flag || j == n) {     // if j == n, no disc was found
     printf("ILLEGAL MOVE %d\n", i+1);
     return 1;
   }
@@ -40,8 +37,8 @@ int main(int argc, char **argv){
     rods[0][i] = i+1;
   for (int i = 0; i < m; i++) {
     scanf("%d->%d ", &from, &to);
-    int flag = putDisc(n, from, to, i, rods);
-    if (flag) return 0; 
+    int illegal = putDisc(n, from, to, i, rods);
+    if (illegal) return 0; 
   } 
   if (rods[1][0] == 1 || rods[2][0] == 1) 
     printf("SOLVED\n"); 
