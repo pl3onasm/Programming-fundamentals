@@ -32,8 +32,8 @@ Course code WBCS003-05
 
 ## Compilation
 
-`gcc -O2 -std=c99 -pedantic -Wall -o a.out takuzu.c -lm`  
+```gcc -O2 -std=c99 -pedantic -Wall -o a.out takuzu.c -lm```  
 
 ## Execution
 
-`./a.out < input.in`
+```./a.out < input.in```
