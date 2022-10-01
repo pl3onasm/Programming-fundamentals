@@ -7,7 +7,7 @@
 RED="\e[31m"
 GREEN="\e[32m"
 BLUE="\e[34m"
-GRAYBACK="\e[46m"
+CYANBACK="\e[46m"
 MAGENTA="\e[35m"
 BOLDBLUE="\e[1;34m"
 ENDCOLOR="\e[0m"
@@ -23,7 +23,7 @@ else
   echo
   echo "Program succesfully compiled as a.out"
   echo
-  echo -e "${GRAYBACK}==:: TEST RESULTS ::==${ENDCOLOR}"
+  echo -e "${CYANBACK}==:: TEST RESULTS ::==${ENDCOLOR}"
   echo
   for infile in "${infiles[@]}"; do
     echo -e "${BOLDBLUE}Test $infile ${ENDCOLOR}"
