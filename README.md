@@ -33,7 +33,7 @@ Course code: WBCS003-05
 ## Compilation
 
 ```
-gcc -O2 -std=c99 -pedantic -Wall -o a.out *.c -lm
+gcc -O2 -std=c99 -pedantic -Wall -o a.out myprog.c -lm
 ```  
 
 ## Execution
@@ -44,7 +44,7 @@ gcc -O2 -std=c99 -pedantic -Wall -o a.out *.c -lm
 
 ## Testing
 
-You can test your code with the [test script](https://github.com/pl3onasm/Imperative-programming/blob/main/ctest.sh). It will compile your code and run it on all the test cases. It will also compare the output with the expected output. 
+You can test your own code with the [test script](https://github.com/pl3onasm/Imperative-programming/blob/main/ctest.sh). It will compile your code and run it on all the test cases. It will also compare the output with the expected output. 
 
 First, make the script executable:
 ```
@@ -52,5 +52,5 @@ chmod +x test.sh
 ```
 Then run the script with the following command:
 ```
-./ctest.sh *.c
+./ctest.sh myprog.c
 ```
