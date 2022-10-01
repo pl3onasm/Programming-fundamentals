@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
   scanf("%d", &n);  
   for (int i=1; i<=n; ++i) {
     sum = 0, number = i;
-    while ((sum != 89) && (sum != 1)) {
+    while (sum != 89 && sum != 1) {
       sum = 0;
       while (number != 0) {
         digit = number%10;

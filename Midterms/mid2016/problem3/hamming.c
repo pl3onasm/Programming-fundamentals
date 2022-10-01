@@ -8,10 +8,10 @@
 
 int isDivisor (int x, int y) {
   //checks whether y is a divisor of x
-  return (x % y == 0);
+  return x % y == 0;
 }
 
-int isHammingNumberWithGivenExpSum (int x, int n) {
+int isGoodHamming (int x, int n) {
   /* checks if given number x is a Hamming number
    * with a sum of exponents that equals to n */
   int sum=0, arr[3]={5, 3, 2};
@@ -20,7 +20,7 @@ int isHammingNumberWithGivenExpSum (int x, int n) {
       x /= arr[i];
       sum += 1;
     }
-  return ((x == 1) && (sum == n));
+  return x == 1 && sum == n;
     /* true if x can be written as a product which only
      * includes the factors 2,3,5, and the exponent sum = n */
 }
@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
 
   scanf("%d %d %d", &a, &b, &n);
   for(int x=a; x<=b; x++)
-    if (isHammingNumberWithGivenExpSum (x, n))
+    if (isGoodHamming (x, n))
       counter++;
 
   printf("%d\n", counter);
