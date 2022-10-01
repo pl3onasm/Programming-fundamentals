@@ -44,7 +44,7 @@ gcc -O2 -std=c99 -pedantic -Wall -o a.out *.c -lm
 
 ## Testing
 
-You can test your code with the test script. It will compile your code and run it on all the test cases. It will also compare the output with the expected output. 
+You can test your code with the [test script](https://github.com/pl3onasm/Imperative-programming/blob/main/ctest.sh). It will compile your code and run it on all the test cases. It will also compare the output with the expected output. 
 
 First, make the script executable:
 ```
