@@ -41,3 +41,16 @@ gcc -O2 -std=c99 -pedantic -Wall -o a.out *.c -lm
 ```
 ./a.out < input.in
 ```
+
+## Testing
+
+You can test your code with the test script. It will compile your code and run it on all the test cases. It will also compare the output with the expected output. 
+
+First, make the script executable:
+```
+chmod +x test.sh
+```
+Then run the script with the following command:
+```
+./ctest.sh *.c
+```
