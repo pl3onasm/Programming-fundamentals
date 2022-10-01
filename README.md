@@ -6,13 +6,13 @@ Course code WBCS003-05
 
 ## Final exams
 
-- [2017 resit](/tree/main/Finals/2017resit)
+- [2017 resit](https://github.com/pl3onasm/Imperative-programming/tree/main/Finals/2017resit)
 - [2018](https://github.com/pl3onasm/Imperative-programming/tree/main/Finals/2018)
-- [2018 resit](/finals/2018resit)
-- [2019](/finals/2019)
-- [2019 resit](/finals/2019resit)
-- [2020](/finals/2020)
-- [2021](/finals/2021)
+- [2018 resit](https://github.com/pl3onasm/Imperative-programming/tree/main/Finals/2018resit)
+- [2019](https://github.com/pl3onasm/Imperative-programming/tree/main/Finals/2019)
+- [2019 resit](https://github.com/pl3onasm/Imperative-programming/tree/main/Finals/2019resit)
+- [2020](https://github.com/pl3onasm/Imperative-programming/tree/main/Finals/2020)
+- [2021](https://github.com/pl3onasm/Imperative-programming/tree/main/Finals/2021)
 
 ## Midterm exams
 
