@@ -18,12 +18,12 @@ int reverse (int n) {
 }
 
 int main(int argc, char *argv[]) {
-  int a, b, counter=0;
+  int a, b, count=0;
   scanf("%d %d", &a, &b);
   for (int x=a; x<=b; ++x) {
-    if (((x%7) == 0) && (((reverse(x))%7) == 0))
-      ++counter;
+    if (x%7 == 0 && reverse(x) %7 == 0)
+      ++count;
   }
-  printf("%d\n", counter);
+  printf("%d\n", count);
   return 0;
 }

@@ -9,7 +9,6 @@
 
 int main(int argc, char *argv[]) {
   int n, count=0;
-
   scanf("%d", &n);
 
   for (int z = 0; z <= n; ++z) {
@@ -17,12 +16,10 @@ int main(int argc, char *argv[]) {
       int sum = z*z + y*y;
       int x = y;
       while (x*x - sum < n) x++;
-      if (x*x - sum == n)
-        count++;
+      if (x*x - sum == n) count++;
     }
   }
 
   printf("%d\n", count);
-
   return 0;
 }

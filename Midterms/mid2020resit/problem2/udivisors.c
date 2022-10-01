@@ -16,7 +16,7 @@ int haveNoCommonDivs(int a, int b) {
   //checks whether a and b have no common divisors
   if (a > b) swap(&a, &b);
   for (int i=2; i <= a; ++i)
-    if ((a%i==0) && (b%i == 0)) return 0;
+    if (a%i==0 && b%i == 0) return 0;
   if (b%a == 0) return 0;
   return 1;
 }

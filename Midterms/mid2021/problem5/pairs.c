@@ -16,7 +16,6 @@ void *safeMalloc(int sz) {
 }
 
 int *makeIntArray(int n) {
-  /* allocates dynamic int array of size/length n */
   return safeMalloc(n*sizeof(int));
 }
 

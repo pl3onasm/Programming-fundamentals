@@ -10,8 +10,7 @@
 int getHighestExponent (int n) {
   int exp = 0;
   while (n > 0) {
-    n /= 2;
-    exp++;
+    n /= 2; exp++;
   }
   return exp-1;
 }

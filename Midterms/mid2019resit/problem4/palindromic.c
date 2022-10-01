@@ -7,16 +7,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int power(int n, int exp) {
-  /* returns n^exp */
-  int m=1;
-  while (exp!=0) {
-    if (exp % 2 == 0) {n *= n; exp = exp/2;} 
-    else {m *= n; exp--;}
-  }
-  return m;
-}
-
 int isPrime (int x) {
   /* checks whether x is prime or not */
   if (x == 2) return 1;
@@ -26,21 +16,16 @@ int isPrime (int x) {
   return 1;
 }
 
-int countDigits(int n) {
-  /* returns length of integer n */
-  int count=0;
-  while (n != 0) {count++; n /= 10;}
-  return count;
+int isPalindrome(int n) {
+  int rev = 0, m = n;
+  while (m > 0) {
+    rev = rev * 10 + m % 10;
+    m /= 10;
+  }
+  return rev == n;
 }
 
-int isDecPalindrome (int n, int len) {
-  /* Determines if a decimal number is palindromic */
-  if (len == 0 || len == 1) return 1;
-  int p = power(10, len-1);
-  return (n%10 == n/p) && isDecPalindrome ((n%p)/10, len-2);
-}
-
-int hasTwoDistinctPrimeDivisors (int n) {
+int hasTwoPrimeDivs (int n) {
   /* checks if n has two distinct proper divisors
    * which are both prime */
   for (int d = 2; d * d < n; ++d)
@@ -55,12 +40,9 @@ int hasTwoDistinctPrimeDivisors (int n) {
 int main(int argc, char *argv[]) {
   int n, a, b, count=0;
   scanf("%d %d", &a, &b);
-  for (n = a; n <= b; ++n) {
-    int len = countDigits(n);
-    if (isDecPalindrome(n, len)
-      && hasTwoDistinctPrimeDivisors(n))
-        count++;
-    }
+  for (n = a; n <= b; ++n) 
+    if (isPalindrome(n) && hasTwoPrimeDivs(n))
+      count++;
   printf("%d\n", count);
   return 0;
 }

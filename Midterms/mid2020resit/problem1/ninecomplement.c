@@ -11,11 +11,9 @@ int power(int n, int exp) {
   int m=1;
   while (exp != 0) {
     if (exp%2 == 0) {
-      n *= n;
-      exp /= 2;
+      n *= n; exp /= 2;
     } else {
-      m *= n;
-      exp--;
+      m *= n; exp--;
     }
   }
   return m;
@@ -24,8 +22,7 @@ int power(int n, int exp) {
 int countDigits(int n) {
   int count = 0;
   while (n>0) {
-    count++;
-    n /= 10;
+    count++; n /= 10;
   }
   return count;
 }

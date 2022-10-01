@@ -6,25 +6,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int power(int number, int exponent) {
+int power(int num, int exp) {
+  /* returns num^exp */
   int m=1;
-  while (exponent!=0) {
-    if (exponent%2 == 0) {
-      number = number*number;
-      exponent = exponent/2;
+  while (exp!=0) {
+    if (exp%2 == 0) {
+      num *= num; exp <<= 1;
     } else {
-      m = m*number;
-      exponent--;
+      m *= num; exp--;
     }
   }
   return m;
 }
 
+
 int countDigits(int n) {
   int count = 0;
   while (n > 0) {
-    n /= 10;
-    count++;
+    n /= 10; count++;
   }
   return count;
 }
@@ -36,9 +35,9 @@ int main(int argc, char *argv[]) {
   int unit = power(10,length-1);
   int m = n;
   for (int i=1; i <= length; ++i){
-      sum += power(n/unit, i);
-      n %= unit;
-      if (unit > 1) unit /= 10;
+    sum += power(n/unit, i);
+    n %= unit;
+    if (unit > 1) unit /= 10;
   }
   if (m == sum) printf("YES\n");
   else printf("NO\n");

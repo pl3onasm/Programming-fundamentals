@@ -1,7 +1,6 @@
 /* file: check.c
   author: David De Potter
   description: IP mid2020 resit, problem 5, check
-  extra feature: prints grid with attacking path
 */
 
 #include <stdio.h>
@@ -38,7 +37,6 @@ int inCheck(char grid[8][8], int x, int y) {
 
 int main(int argc, char *argv[]) {
   int x, y; char grid[8][8];
-
   readInput(grid, &x, &y);
 
   if (inCheck(grid, x, y)) printf("YES\n");

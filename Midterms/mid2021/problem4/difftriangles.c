@@ -16,7 +16,6 @@ void *safeMalloc(int sz) {
 }
 
 int *makeIntArray(int n) {
-  /* allocates dynamic int array of size/length n */
   return safeMalloc(n*sizeof(int));
 }
 
@@ -37,9 +36,8 @@ int absDiff (int a, int b) {
 }
 
 void computeDiffArray (int *arr, int len) {
-  for (int i=0; i<len-1; ++i) {
+  for (int i=0; i<len-1; ++i) 
     arr[i] = absDiff(arr[i],arr[i+1]);
-  }
 }
 
 int main(int argc, char *argv[]) {
