@@ -48,7 +48,7 @@ You can test your own code with the [test script](https://github.com/pl3onasm/Im
 
 First, make the script executable:
 ```
-chmod +x test.sh
+chmod +x ctest.sh
 ```
 Then run the script with the following command:
 ```
