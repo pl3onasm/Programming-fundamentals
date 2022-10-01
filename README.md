@@ -2,7 +2,7 @@
 
 Old exams for the course Imperative Programming (CS) at the University of Groningen.
 
-Course code WBCS003-05
+Course code: WBCS003-05
 
 ## Final exams
 
@@ -33,7 +33,7 @@ Course code WBCS003-05
 ## Compilation
 
 ```
-gcc -O2 -std=c99 -pedantic -Wall -o a.out takuzu.c -lm
+gcc -O2 -std=c99 -pedantic -Wall -o a.out *.c -lm
 ```  
 
 ## Execution
