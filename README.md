@@ -6,7 +6,7 @@ Course code WBCS003-05
 
 ## Final exams
 
-- [2017 resit](/finals/2017resit)
+- [2017 resit](finals/2017resit)
 - [2018](/finals/2018)
 - [2018 resit](/finals/2018resit)
 - [2019](/finals/2019)
