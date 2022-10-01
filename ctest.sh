@@ -1,6 +1,6 @@
 #!/bin/bash
-
-# This script is used to compile and test the correctness of your program.
+# Author: David De Potter
+# This script can be used to compile and test the correctness of your program.
 # The argument is the name of the program to test.
 # Example: ./test.sh myprog.c
 
