@@ -6,8 +6,8 @@ Course code WBCS003-05
 
 ## Final exams
 
-- [2017 resit](https://github.com/pl3onasm/Imperative-programming/tree/main/Finals/2017resit)
-- [2018](/finals/2018)
+- [2017 resit](/tree/main/Finals/2017resit)
+- [2018](https://github.com/pl3onasm/Imperative-programming/tree/main/Finals/2018)
 - [2018 resit](/finals/2018resit)
 - [2019](/finals/2019)
 - [2019 resit](/finals/2019resit)
