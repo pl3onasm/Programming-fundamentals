@@ -47,21 +47,23 @@ You can test your own code with the [test script](https://github.com/pl3onasm/Im
 
 You have two options: 
 1. Execution from the root of the repository  
+
 First, make the script executable in the root folder:
 ```
 chmod +x ctest.sh
 ```
-Then run the script from the current working directory with the following command:
+        Then run the script from the current working directory with the following command:
 ```
 ../../.././ctest.sh myprog.c
 ```
 
-2. Execution from $PATH  
-Alternatively, you can add the script to your bin directory and run it from anywhere:
+1. Execution from $PATH  
+
+Alternatively, you can add the script to your bin folder and run it from anywhere:
 ```
-sudo cp ctest.sh /usr/local/bin/ctest
+sudo cp ctest.sh /usr/bin/
 ```
-Then run the script from the current working directory with the following command:
+      Then run the script from the current working directory with the following command:
 ```
 ctest.sh myprog.c
 ```
