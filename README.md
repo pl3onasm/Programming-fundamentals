@@ -21,6 +21,7 @@ Old exams for the course Imperative Programming (CS) at the University of Gronin
 - [2017](https://github.com/pl3onasm/Imperative-programming/tree/main/Midterms/mid2017)
 - [2017 resit](https://github.com/pl3onasm/Imperative-programming/tree/main/Midterms/mid2017resit)
 - [2018](https://github.com/pl3onasm/Imperative-programming/tree/main/Midterms/mid2018)
+- [2018 resit](https://github.com/pl3onasm/Imperative-programming/tree/main/Midterms/mid2018resit)
 - [2019](https://github.com/pl3onasm/Imperative-programming/tree/main/Midterms/mid2019)
 - [2019 resit](https://github.com/pl3onasm/Imperative-programming/tree/main/Midterms/mid2019resit)
 - [2020](https://github.com/pl3onasm/Imperative-programming/tree/main/Midterms/mid2020)
