@@ -8,9 +8,11 @@ RED="\e[31m"
 GREEN="\e[32m"
 BLUE="\e[34m"
 CYANBACK="\e[46m"
-MAGENTA="\e[35m"
+MAGENTA="\e[105m"
 BOLDBLUE="\e[1;34m"
 ENDCOLOR="\e[0m"
+PASSED=0
+TESTS=0
 
 gcc -O2 -std=c99 -pedantic -Wall -o a.out "$1" -lm
 
@@ -20,6 +22,7 @@ if [[ $? -ne 0 ]]; then
   exit 1
 else
   readarray -d '' infiles < <(printf '%s\0' *.in | sort -zV)
+  len=${#infiles[@]}
   echo
   echo "Program succesfully compiled as a.out"
   echo
@@ -33,11 +36,19 @@ else
     if [ -n "$dif" ]; then
       echo -e "${RED}TEST FAILED!${ENDCOLOR}\n\nDifference : ${RED}$dif${ENDCOLOR}\n"
     else
+      PASSED=$((PASSED + 1))
       echo -e "${GREEN}TEST OK!${ENDCOLOR}\n"
     fi
     echo
   done
   rm -rf *.res
+  if [ $PASSED -eq $len ]; then
+    echo -e "${GREEN}All tests passed!${ENDCOLOR}"
+  else
+    echo -e "${RED}$PASSED out of $len tests passed.${ENDCOLOR}"
+  fi
+  echo
+  
 fi
 
 # Clean exit with status 0
