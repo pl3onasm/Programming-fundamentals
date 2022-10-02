@@ -26,26 +26,31 @@ else
   echo
   echo "Program succesfully compiled as a.out"
   echo
-  echo -e "${CYANBACK}==:: TEST RESULTS ::==${ENDCOLOR}"
+  if [ -t 1 ]; then echo -e "${CYANBACK}==:: TEST RESULTS ::==${ENDCOLOR}"
+  else echo "==:: TEST RESULTS ::=="; fi
   echo
   for infile in "${infiles[@]}"; do
-    echo -e "${BOLDBLUE}Test $infile ${ENDCOLOR}"
+    if [ -t 1 ]; then echo -e "${BOLDBLUE}Test $infile ${ENDCOLOR}"
     echo -e "${BOLDBLUE}---------- ${ENDCOLOR}"
+    else echo -e "Test $infile\n---------- "; fi
     ./a.out < "$infile" > "${infile%.*}.res"
     dif="$(diff "${infile%.*}.out" "${infile%.*}.res")"
     if [ -n "$dif" ]; then
-      echo -e "${RED}TEST FAILED!${ENDCOLOR}\n\nDifference : ${RED}$dif${ENDCOLOR}\n"
+      if [ -t 1 ]; then echo -e "${RED}Test failed.${ENDCOLOR}\nDifference : ${RED}$dif${ENDCOLOR}\n"
+      else echo -e "Test failed.\nDifference : $dif\n"; fi
     else
+      if [ -t 1 ]; then echo -e "${GREEN}TEST OK!${ENDCOLOR}\n"
+      else echo -e "TEST OK!\n"; fi
       PASSED=$((PASSED + 1))
-      echo -e "${GREEN}TEST OK!${ENDCOLOR}\n"
     fi
-    echo
   done
   rm -rf *.res
   if [ $PASSED -eq $len ]; then
-    echo -e "${GREEN}All tests passed!${ENDCOLOR}"
+    if [ -t 1 ]; then echo -e "${GREEN}All tests passed!${ENDCOLOR}"
+    else echo "All tests passed!"; fi
   else
-    echo -e "${RED}$PASSED out of $len tests passed.${ENDCOLOR}"
+    if [ -t 1 ]; then echo -e "${RED}$PASSED out of $len tests passed.${ENDCOLOR}"
+    else echo "$PASSED out of $len tests passed."; fi
   fi
   echo
   
