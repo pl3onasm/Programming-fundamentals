@@ -24,7 +24,7 @@ else
   readarray -d '' infiles < <(printf '%s\0' *.in | sort -zV)
   len=${#infiles[@]}
   echo
-  echo "Program succesfully compiled as a.out"
+  echo "Program successfully compiled as a.out"
   echo
   if [ -t 1 ]; then echo -e "${CYANBACK}==:: TEST RESULTS ::==${ENDCOLOR}"
   else echo "==:: TEST RESULTS ::=="; fi
