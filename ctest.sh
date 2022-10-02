@@ -28,16 +28,12 @@ else
   for infile in "${infiles[@]}"; do
     echo -e "${BOLDBLUE}Test $infile ${ENDCOLOR}"
     echo -e "${BOLDBLUE}---------- ${ENDCOLOR}"
-    echo "Input:"
-    cat "$infile"
-    echo "Output:"
     ./a.out < "$infile" > "${infile%.*}.res"
-    cat "${infile%.*}.res"
     dif="$(diff "${infile%.*}.out" "${infile%.*}.res")"
     if [ -n "$dif" ]; then
-      echo -e "Difference : ${RED}$dif${ENDCOLOR}\n"
+      echo -e "${RED}TEST FAILED!${ENDCOLOR}\n\nDifference : ${RED}$dif${ENDCOLOR}\n"
     else
-      echo -e "Result:\n${GREEN}TEST OK!${ENDCOLOR}\n"
+      echo -e "${GREEN}TEST OK!${ENDCOLOR}\n"
     fi
     echo
   done
