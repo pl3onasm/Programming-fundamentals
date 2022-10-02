@@ -71,8 +71,10 @@ sudo cp ctest.sh /usr/bin/
 Now you can run the script from any working directory with the following command:
 ```
 ctest.sh myprog.c
-```
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+```  
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+  
 Note that if you want to use less, you should add the -r flag (to keep the colors):
 ```
 ctest.sh myprog.c | less -r
@@ -83,7 +85,7 @@ ctest.sh myprog.c > results.txt
 ```
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
 Example output of the test script:  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
 
 <p align="center" width="85%">
 <img src="example.jpg"
