@@ -75,7 +75,7 @@ ctest.sh myprog.c
   
 Example output:  
 
-<p align="center" width="65%">
+<p align="center" width="85%">
 <img src="example.jpg"
      alt="Example output"
      style="float: left; padding-top:200px" />  
