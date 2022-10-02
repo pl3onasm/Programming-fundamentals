@@ -73,11 +73,14 @@ Now you can run the script from any working directory with the following command
 ctest.sh myprog.c
 ```
 
-Note: if you want to keep the colors when using less, you can use the following command:
+Note that if you want to use less, you should add the -r flag (to keep the colors):
 ```
 ctest.sh myprog.c | less -r
 ```
-
+You may also choose to redirect the output to a file:
+``` 
+ctest.sh myprog.c > results.txt
+```
   
 Example output of the test script:  
 
