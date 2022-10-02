@@ -53,7 +53,6 @@ else
     else echo "$PASSED out of $len tests passed."; fi
   fi
   echo
-  
 fi
 
 # Clean exit with status 0
