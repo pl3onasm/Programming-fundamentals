@@ -72,8 +72,14 @@ Now you can run the script from any working directory with the following command
 ```
 ctest.sh myprog.c
 ```
+
+Note: if you want to keep the colors when using less, you can use the following command:
+```
+ctest.sh myprog.c | less -r
+```
+
   
-Example output:  
+Example output of the test script:  
 
 <p align="center" width="85%">
 <img src="example.jpg"
