@@ -59,7 +59,7 @@ Then run the script from the current working directory containing the test cases
 
 ### 2. Execution from $PATH  
 
-Alternatively, you can add the script to your bin folder and run it from anywhere.
+Alternatively, you can add the script to your PATH variable and run it from anywhere.  
 To display the current $PATH, run the following command:
 ```
 echo $PATH
