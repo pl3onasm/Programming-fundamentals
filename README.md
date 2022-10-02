@@ -72,3 +72,11 @@ Now you can run the script from any working directory with the following command
 ```
 ctest.sh myprog.c
 ```
+  
+Example output:  
+
+<p align="center" width="85%">
+<img src="example.jpg"
+     alt="Example output"
+     style="float: left; padding-top:200px" />  
+</p> 
