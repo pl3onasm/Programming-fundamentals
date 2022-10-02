@@ -52,7 +52,7 @@ First, make the script executable in the root folder:
 ```
 chmod +x ctest.sh
 ```
-        Then run the script from the current working directory with the following command:
+Then run the script from the current working directory containing the test cases with the following command:
 ```
 ../../.././ctest.sh myprog.c
 ```
@@ -63,7 +63,7 @@ Alternatively, you can add the script to your bin folder and run it from anywher
 ```
 sudo cp ctest.sh /usr/bin/
 ```
-      Then run the script from the current working directory with the following command:
+Then run the script from the current working directory with the following command:
 ```
 ctest.sh myprog.c
 ```
