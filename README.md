@@ -45,8 +45,8 @@ gcc -O2 -std=c99 -pedantic -Wall -o a.out myprog.c -lm
 
 You can test your own code with the [test script](https://github.com/pl3onasm/Imperative-programming/blob/main/ctest.sh). It will compile your code and run it on all the test cases. It will also compare the output with the expected output. 
 
-You have two options: 
-1. Execution from the root of the repository  
+You basically have two options: 
+### 1. Execution from the root of the repository  
 
 First, make the script executable in the root folder:
 ```
@@ -57,7 +57,7 @@ Then run the script from the current working directory containing the test cases
 ../../.././ctest.sh myprog.c
 ```
 
-1. Execution from $PATH  
+### 2. Execution from $PATH  
 
 Alternatively, you can add the script to your bin folder and run it from anywhere:
 ```
