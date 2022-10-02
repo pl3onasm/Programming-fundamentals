@@ -45,11 +45,23 @@ gcc -O2 -std=c99 -pedantic -Wall -o a.out myprog.c -lm
 
 You can test your own code with the [test script](https://github.com/pl3onasm/Imperative-programming/blob/main/ctest.sh). It will compile your code and run it on all the test cases. It will also compare the output with the expected output. 
 
-First, make the script executable:
+From the root of the repository, run:
+
+```
+First, make the script executable in the root folder:
 ```
 chmod +x ctest.sh
 ```
-Then run the script with the following command:
+Then run the script from the current working directory with the following command:
 ```
-./ctest.sh myprog.c
+../../.././ctest.sh myprog.c
+```
+   
+Alternatively, you can add the script to your bin directory and run it from anywhere:
+```
+sudo cp ctest.sh /usr/local/bin/ctest
+```
+Then run the script from the current working directory with the following command:
+```
+ctest myprog.c
 ```
