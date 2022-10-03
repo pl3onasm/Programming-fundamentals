@@ -24,6 +24,6 @@ int main(int argc, char *argv[]) {
     do ++q; 
     while (!isPrime(q));
   }
-  printf("%d-%d=%d\n",p,q,q-p);
+  printf("%d-%d=%d\n",q,p,q-p);
   return 0;
 }

@@ -31,8 +31,8 @@ void expandKey (char *key, int keyLen, int msgLen) {
 int main(int argc, char *argv[]) {
   int msgLen, keyLen;
   scanf("%d %d:", &msgLen, &keyLen);
-  char *word = createArray(msgLen);
-  char *key = createArray(msgLen);
+  char *word = createArray(msgLen+1);
+  char *key = createArray(msgLen+1);
   scanf("%s %s", word, key);
   if (keyLen < msgLen) expandKey(key, keyLen, msgLen); 
   for (int i = 0; i < msgLen; i++) {
