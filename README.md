@@ -52,7 +52,7 @@ First, make the script executable in the root folder:
 ```
 chmod +x ctest.sh
 ```
-Then run the script from the working directory containing your program, the solution, and the folder with the tests with the following command:
+Then run the script from the working directory containing your program, the solution, and the folder with the tests using the following command:
 ```
 ../../.././ctest.sh myprog.c
 ```
@@ -68,7 +68,7 @@ Then, copy the script to one of the folders in the $PATH. For example:
 ```
 sudo cp ctest.sh /usr/bin/
 ```
-Now you can run the script from the directory containing your program and the folder with test cases with the following command:
+Now you can run the script from the directory containing your program and the folder with test cases using the following command:
 ```
 ctest.sh myprog.c
 ```  
