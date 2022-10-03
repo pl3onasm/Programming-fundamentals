@@ -11,7 +11,7 @@ int power(int num, int exp) {
   int m=1;
   while (exp!=0) {
     if (exp%2 == 0) {
-      num *= num; exp <<= 1;
+      num *= num; exp >>= 1;
     } else {
       m *= num; exp--;
     }
