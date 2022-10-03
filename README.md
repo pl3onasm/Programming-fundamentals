@@ -45,8 +45,8 @@ gcc -O2 -std=c99 -pedantic -Wall -o a.out myprog.c -lm
 
 You can test your own code with the [test script](https://github.com/pl3onasm/Imperative-programming/blob/main/ctest.sh). It will compile your code and run it on all the test cases. It will also compare your output with the expected output. 
 
-You basically have two options: 
-### 1. Execution from its location in the root of the repository  
+In order to use it, you basically have two options: 
+### 1. Execution from script's location in the root of the repository  
 
 First, make the script executable in the root folder:
 ```
@@ -68,14 +68,14 @@ Then, copy the script to one of the folders in the $PATH. For example:
 ```
 sudo cp ctest.sh /usr/bin/
 ```
-Now you can run the script from any working directory with the following command:
+Now you can run the script from any directory with the following command:
 ```
 ctest.sh myprog.c
 ```  
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
   
-Note that if you want to use less, you should add the -r flag (to keep the colors):
+Note that if you want to use less, you should add the -r flag (to keep the colors intact):
 ```
 ctest.sh myprog.c | less -r
 ```
@@ -87,7 +87,7 @@ ctest.sh myprog.c > results.txt
 Example output of the test script:  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
 
-<p align="center" width="85%">
+<p align="center" width="75%">
 <img src="example.jpg"
      alt="Example output"
      style="float: left; padding-top:200px" />  
