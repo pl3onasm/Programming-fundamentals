@@ -33,8 +33,7 @@ else
     if [ -t 1 ]; then echo -e "${BOLDBLUE}Test $infile ${ENDCOLOR}"
     echo -e "${BOLDBLUE}---------- ${ENDCOLOR}"
     else echo -e "Test $infile\n---------- "; fi
-    ./a.out < "$infile" > "${infile%.*}.res"
-    dif="$(diff "${infile%.*}.out" "${infile%.*}.res")"
+    dif="$(diff "${infile%.*}.out" <(./a.out < "$infile"))"
     if [ -n "$dif" ]; then
       if [ -t 1 ]; then echo -e "${RED}Test failed.${ENDCOLOR}\nDifference : ${RED}$dif${ENDCOLOR}\n"
       else echo -e "Test failed.\nDifference : $dif\n"; fi
@@ -44,7 +43,6 @@ else
       PASSED=$((PASSED + 1))
     fi
   done
-  rm -rf *.res
   if [ $PASSED -eq $len ]; then
     if [ -t 1 ]; then echo -e "${GREEN}All tests passed!${ENDCOLOR}"
     else echo "All tests passed!"; fi
