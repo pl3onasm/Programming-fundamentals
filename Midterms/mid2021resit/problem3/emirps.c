@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
   for (int i = a; i <= b; i++) {
     if (isPrime(i)) {
       int rev = reverse(i);
-      if (rev > i && isPrime(reverse(i))) 
+      if (rev > i && isPrime(rev)) 
         ++count;
     } 
   }
