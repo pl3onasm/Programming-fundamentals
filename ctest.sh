@@ -35,22 +35,22 @@ else
     dif="$(diff "${infile%.*}.out" <(./a.out < "$infile"))"
     if [ -n "$dif" ]; then
       if [ -t 1 ]; then echo -e "${RED}Test failed.${ENDCOLOR}\nDifference : ${RED}$dif${ENDCOLOR}\n"
-      else echo -e "Test failed.\nDifference : $dif\n"; fi
+      else echo -e "FAILED.\nDifference : $dif\n"; fi
     else
-      if [ -t 1 ]; then echo -e "${GREEN}TEST OK!${ENDCOLOR}\n"
-      else echo -e "TEST OK!\n"; fi
+      if [ -t 1 ]; then echo -e "${GREEN}PASSED!${ENDCOLOR}\n"
+      else echo -e "PASSED!\n"; fi
       PASSED=$((PASSED + 1))
     fi
   done
   if [ $PASSED -eq $len ]; then
     if [ -t 1 ]; then echo -e "${GREEN}You have passed all tests! \(ᵔᵕᵔ)/${ENDCOLOR}"
     else echo "All tests passed!"; fi
-  elif [$PASSED -eq $len-1]; then 
+  elif [ $PASSED -eq $(($len-1)) ]; then 
     if [ -t 1]; then echo -e "${MAGENTA}You have passed $PASSED out of $len tests. Almost there...! (◎_◎)${ENDCOLOR}"
-    else echo -e "You have passed $PASSED out of $len tests."; fi
+    else echo -e "Passed $PASSED out of $len tests."; fi
   else    
     if [ -t 1 ]; then echo -e "${MAGENTA}You have passed $PASSED out of $len tests. (._.)${ENDCOLOR}"
-    else echo "You have passed $PASSED out of $len tests."; fi
+    else echo "Passed $PASSED out of $len tests."; fi
   fi
   echo
 fi
