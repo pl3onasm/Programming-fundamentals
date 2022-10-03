@@ -17,10 +17,10 @@ gcc -O2 -std=c99 -pedantic -Wall -o a.out "$1" -lm
 
 if [[ $? -ne 0 ]]; then
   echo
-  echo "Compilation failed."
+  echo "${RED}Compilation failed.${ENDCOLOR}"
   exit 1
 else
-  readarray -d '' infiles < <(printf '%s\0' *.in | sort -zV)
+  readarray -d '' infiles < <(printf '%s\0' ./tests/*.in | sort -zV)
   len=${#infiles[@]}
   echo
   echo "Program successfully compiled as a.out"

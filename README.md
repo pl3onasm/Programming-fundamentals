@@ -38,7 +38,7 @@ gcc -O2 -std=c99 -pedantic -Wall -o a.out myprog.c -lm
 ## Execution
 
 ```
-./a.out < input.in
+./a.out < tests/input.in
 ```
 
 ## Testing
@@ -52,7 +52,7 @@ First, make the script executable in the root folder:
 ```
 chmod +x ctest.sh
 ```
-Then run the script from the current working directory containing the test cases with the following command:
+Then run the script from the working directory containing your program, the solution, and the folder with the tests with the following command:
 ```
 ../../.././ctest.sh myprog.c
 ```
@@ -68,7 +68,7 @@ Then, copy the script to one of the folders in the $PATH. For example:
 ```
 sudo cp ctest.sh /usr/bin/
 ```
-Now you can run the script from any directory with the following command:
+Now you can run the script from the directory containing your program and the folder with test cases with the following command:
 ```
 ctest.sh myprog.c
 ```  
