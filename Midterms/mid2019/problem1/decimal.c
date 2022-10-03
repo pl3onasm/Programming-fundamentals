@@ -11,7 +11,7 @@ int power(int num, int exp) {
   int m=1;
   while (exp!=0) {
     if (exp%2 == 0) {
-      num *= num; exp <<= 1;
+      num *= num; exp >>= 1;
     } else {
       m *= num; exp--;
     }
@@ -36,8 +36,10 @@ int main(int argc, char *argv[]) {
 
   for (int i = 0; i < len; ++i) {
     digit = (n / power(10,exp)) % 10;
-    if (i == 0) printf("%d*10^%d", digit, exp);
-    else if (digit != 0) printf(" + %d*10^%d", digit, exp);
+    if (digit) {
+      if (i) printf(" + ");
+      printf("%d*10^%d", digit, exp);
+    } 
     exp--;
   }
 
