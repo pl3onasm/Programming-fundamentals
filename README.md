@@ -33,7 +33,7 @@ All exams are in separate folders, containing a PDF of the exam. Each exam probl
 ## Compilation
 
 ```
-gcc -O2 -std=c99 -pedantic -Wall -o a.out myprog.c -lm
+gcc -O2 -std=c99 -pedantic -Wall -o a.out myprogram.c -lm
 ```  
 
 ## Execution
@@ -79,11 +79,11 @@ ctest.sh myprogram.c
   
 Note that if you want to use ```less```, you should add the -r flag (to keep the colors intact):
 ```
-ctest.sh myprog.c | less -r
+ctest.sh myprogram.c | less -r
 ```
 You may also choose to redirect the output to a file:
 ``` 
-ctest.sh myprog.c > results.txt
+ctest.sh myprogram.c > results.txt
 ```
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
 Example output of the test script:  
