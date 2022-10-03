@@ -46,7 +46,7 @@ else
     if [ -t 1 ]; then echo -e "${GREEN}You have passed all tests! \(ᵔᵕᵔ)/${ENDCOLOR}"
     else echo "All tests passed!"; fi
   elif [ $PASSED -eq $(($len-1)) ]; then 
-    if [ -t 1]; then echo -e "${MAGENTA}You have passed $PASSED out of $len tests. Almost there...! (◎_◎)${ENDCOLOR}"
+    if [ -t 1 ]; then echo -e "${MAGENTA}You have passed $PASSED out of $len tests. Almost there...! (◎_◎)${ENDCOLOR}"
     else echo -e "Passed $PASSED out of $len tests."; fi
   else    
     if [ -t 1 ]; then echo -e "${MAGENTA}You have passed $PASSED out of $len tests. (._.)${ENDCOLOR}"
