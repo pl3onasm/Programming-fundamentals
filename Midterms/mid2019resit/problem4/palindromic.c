@@ -32,7 +32,7 @@ int hasTwoPrimeDivs (int n) {
     /* uses strictly less than so as to ignore
      * square roots and enforce distinctness */
     if (n % d == 0)
-      if (isPrime(d) && isPrime(n / d) && d != n / d)
+      if (isPrime(d) && isPrime(n / d))
         return 1;
   return 0;
 }
