@@ -1,6 +1,7 @@
 # Imperative Programming in C
 
-Old exams for the course Imperative Programming (CS) at the University of Groningen. All exams are in separate folders, containing a PDF of the exam. Each exam problem has its own subfolder, whih contains a folder with the test cases, one or more example solutions, and a file myprogram.c which you can use to write and test your own solution.  
+These are old exams for the course Imperative Programming (CS) at the University of Groningen.  
+All exams are in separate folders, containing a PDF of the exam. Each exam problem has its own subfolder, which contains a folder with the test cases, one or more example solutions, and a file called *myprogram.c* which you can use to write and test your own solution.  
 
 ## Final exams
 
