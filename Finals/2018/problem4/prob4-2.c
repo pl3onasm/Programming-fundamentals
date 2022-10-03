@@ -1,4 +1,4 @@
-/* file: prob4.c
+/* file: prob4-2.c
    author: David De Potter
    description: IP Final 2018, problem 4, split3
    this version uses a binary search on the solution space,

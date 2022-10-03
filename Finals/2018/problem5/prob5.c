@@ -1,3 +1,8 @@
+/* file: prob5.c
+   author: David De Potter
+   description: IP Final 2018, problem 5, pattern matching
+*/ 
+
 #include <stdio.h>
 #include <stdlib.h>
 

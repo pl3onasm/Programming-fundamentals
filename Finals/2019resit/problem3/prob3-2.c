@@ -1,4 +1,4 @@
-/* file: prob3.c
+/* file: prob3-2.c
    author: David De Potter
    description: IP Final 2019 resit, problem 3, 
    number of pair sums

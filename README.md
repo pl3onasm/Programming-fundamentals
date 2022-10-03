@@ -1,6 +1,6 @@
 # Imperative Programming in C
 
-Old exams for the course Imperative Programming (CS) at the University of Groningen.
+Old exams for the course Imperative Programming (CS) at the University of Groningen. All exams are in separate folders, containing a PDF of the exam. Each exam problem has its own subfolder, whih contains a folder with the test cases, one or more example solutions, and a file myprogram.c which you can use to write and test your own solution.  
 
 ## Final exams
 
@@ -48,13 +48,14 @@ You can test your own code with the [test script](https://github.com/pl3onasm/Im
 In order to use it, you basically have two options: 
 ### 1. Execution from script's location in the root of the repository  
 
-First, make the script executable in the root folder:
+Opening a terminal from the working directory containing your program, the solution, and the folder with the tests, run the below commands.
+First, make the script executable:
 ```
-chmod +x ctest.sh
+../../../chmod +x ctest.sh
 ```
-Then run the script from the working directory containing your program, the solution, and the folder with the tests by using the following command:
+Then run the script  by using the following command:
 ```
-../../.././ctest.sh myprog.c
+../../../ctest.sh myprogram.c
 ```
 
 ### 2. Execution from $PATH  
@@ -70,7 +71,7 @@ sudo cp ctest.sh /usr/bin/
 ```
 Now you can run the script from the directory containing your program and the folder with test cases by using the following command:
 ```
-ctest.sh myprog.c
+ctest.sh myprogram.c
 ```  
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  

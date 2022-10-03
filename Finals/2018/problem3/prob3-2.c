@@ -1,4 +1,4 @@
-/* file: prob3.c
+/* file: prob3-2.c
    author: David De Potter
    description: IP Final 2018, problem 3, sum of pairs
    this version works with a histogram
