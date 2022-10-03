@@ -25,7 +25,7 @@ else
   echo
   echo "Program successfully compiled as a.out"
   echo
-  if [ -t 1 ]; then echo -e "${CYANBACK}==:: TEST RESULTS ::==${ENDCOLOR}"
+  if [ -t 1 ]; then echo -e "${CYANBACK}  ==:: TEST RESULTS ::==  ${ENDCOLOR}"
   else echo "==:: TEST RESULTS ::=="; fi
   echo
   for infile in "${infiles[@]}"; do
