@@ -8,11 +8,10 @@ RED="\e[31m"
 GREEN="\e[32m"
 BLUE="\e[34m"
 CYANBACK="\e[46m"
-MAGENTA="\e[105m"
+MAGENTA="\e[35m"
 BOLDBLUE="\e[1;34m"
 ENDCOLOR="\e[0m"
 PASSED=0
-TESTS=0
 
 gcc -O2 -std=c99 -pedantic -Wall -o a.out "$1" -lm
 
@@ -44,11 +43,14 @@ else
     fi
   done
   if [ $PASSED -eq $len ]; then
-    if [ -t 1 ]; then echo -e "${GREEN}All tests passed!${ENDCOLOR}"
+    if [ -t 1 ]; then echo -e "${GREEN}You have passed all tests! \(ᵔᵕᵔ)/${ENDCOLOR}"
     else echo "All tests passed!"; fi
-  else
-    if [ -t 1 ]; then echo -e "${RED}$PASSED out of $len tests passed.${ENDCOLOR}"
-    else echo "$PASSED out of $len tests passed."; fi
+  elif [$PASSED -eq $len-1]; then 
+    if [ -t 1]; then echo -e "${MAGENTA}You have passed $PASSED out of $len tests. Almost there...! (◎_◎)${ENDCOLOR}"
+    else echo -e "You have passed $PASSED out of $len tests."; fi
+  else    
+    if [ -t 1 ]; then echo -e "${MAGENTA}You have passed $PASSED out of $len tests. (._.)${ENDCOLOR}"
+    else echo "You have passed $PASSED out of $len tests."; fi
   fi
   echo
 fi
