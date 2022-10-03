@@ -25,8 +25,10 @@ void readInput(int *arr, int len) {
 }
 
 void printArray (int *arr, int len){
-  for (int i=0; i<len; i++)
-    printf("%d ",arr[i]); 
+  for (int i=0; i<len; i++){
+    printf("%d",arr[i]);
+    if (i<len-1) printf(" "); 
+  }
   printf("\n");
 }
 
