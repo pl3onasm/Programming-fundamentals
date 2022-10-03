@@ -16,29 +16,25 @@ void *safeMalloc (int n) {
 }
 
 char *createArray (int n) {
-  char *arr = safeMalloc(n * sizeof(char));
+  char *arr = safeMalloc((n+1) * sizeof(char));
   return arr;
 }
 
-void expandKey (char *key, int keyLen, int msgLen) {
-  int i = 0;
-  while (keyLen < msgLen) {
-    key[keyLen++] = key[i++];
-    if (i == keyLen) i = 0;
-  }
-}
-
 int main(int argc, char *argv[]) {
-  int msgLen, keyLen;
+  int msgLen, keyLen, j=0;
   scanf("%d %d:", &msgLen, &keyLen);
-  char *word = createArray(msgLen+1);
-  char *key = createArray(msgLen+1);
-  scanf("%s %s", word, key);
-  if (keyLen < msgLen) expandKey(key, keyLen, msgLen); 
+  
+  char *word = createArray(msgLen);
+  char *key = createArray(keyLen);
+  
+  scanf("%s", word);
+  scanf("%s", key);
+  
   for (int i = 0; i < msgLen; i++) {
     int c = word[i] - 'A';
-    int k = key[i] - 'A';
+    int k = key[j++] - 'A';
     printf("%c", (c + k) % 26 + 'A');
+    if (j == keyLen) j = 0;
   }
   printf("\n");
   return 0;
