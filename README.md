@@ -75,7 +75,7 @@ ctest.sh myprog.c
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
   
-Note that if you want to use *less*, you should add the -r flag (to keep the colors intact):
+Note that if you want to use ```less```, you should add the -r flag (to keep the colors intact):
 ```
 ctest.sh myprog.c | less -r
 ```
