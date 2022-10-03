@@ -8,11 +8,8 @@
 
 int toBinary (int n, int bin[50]) {
   int i = 0;
-  while (n > 0) {
-    bin[i] = n%2;
-    n /= 2; i++;
-  }
-  return i; // number of digits in binary
+  while (n > 0) {bin[i++] = n%2; n >>= 1;}
+  return i; // returns no of digits in binary representation
 }
 
 int checkIfTakuzu (int len, int bin[50]) {
