@@ -49,7 +49,7 @@ You can test your own code with the [test script](https://github.com/pl3onasm/Im
 In order to use it, you basically have two options: 
 ### 1. Execution from script's location in the root of the repository  
 
-Opening a terminal from the working directory containing your program, the solution, and the folder with the tests, run the below commands.
+Opening a terminal from the working directory containing your program, the solution, and the folder with the tests, run the below commands.  
 First, make the script executable:
 ```
 ../../../chmod +x ctest.sh
