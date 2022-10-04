@@ -41,7 +41,7 @@ int mergeSort(int length, int arr[]) {
       // total number of inversions to add is the number of
       // elements currently left in the left array: mid - l
       arr[idx] = right[r];
-      r++; count += (mid - l) ;
+      r++; count += mid - l;
     }
     idx++;
   }
