@@ -75,7 +75,7 @@ void getPairs(int *vec, int size, int n){
         right--; continue;  // skip duplicates
       }
       flag = 0; 
-      printf("%d + %d\n", vec[left], vec[right]);
+      printf("%d+%d\n", vec[left], vec[right]);
       left++; right--;
     } else if (vec[left] + vec[right] < n) left++;
     else right--;

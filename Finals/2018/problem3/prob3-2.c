@@ -13,9 +13,9 @@ int main(int argc, char **argv){
   while (scanf("%d", &n) && n != 0) hist[n] = 1;
   for (int i=1; i<=target/2; ++i){
     int j = target - i;
-    if (j<1000 && hist[i] && hist[j]){
+    if (j<1000 && hist[i] && hist[j] && i!=j){
       flag = 0; 
-      printf("%d + %d\n", i, j); 
+      printf("%d+%d\n", i, j); 
     }
   }
   if (flag) printf("NONE\n");
