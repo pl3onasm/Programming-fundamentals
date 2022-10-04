@@ -13,9 +13,8 @@ void readDigits(int digits[]){
 }
 
 int checkDigitFrequencies(int m[], int n[]){
-  for (int i = 0; i < 10; i++){
+  for (int i = 0; i < 10; i++)
     if (m[i] != n[i]) return 0;
-  }
   return 1;
 }
 
