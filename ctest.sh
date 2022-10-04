@@ -1,8 +1,9 @@
 #!/bin/bash
 # Author: David De Potter
-# This script can be used to compile and test the correctness of your program.
+# This script will try to compile your program and test its correctness
+# by running it on all the test cases for the current problem.
 # The argument is the name of the program to test.
-# Example: ./ctest.sh myprog.c
+# Example: $ ../../../ctest.sh myprogram.c
 
 RED="\e[31m"
 GREEN="\e[32m"
