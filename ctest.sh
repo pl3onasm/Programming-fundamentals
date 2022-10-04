@@ -29,7 +29,7 @@ else
   else echo "==:: TEST RESULTS ::=="; fi
   echo
   for infile in "${infiles[@]}"; do
-    if [ -t 1 ]; then echo -e "${BOLDBLUE}Test $infile ${ENDCOLOR}"
+    if [ -t 1 ]; then echo -e "${BOLDBLUE}Test ${infile:8} ${ENDCOLOR}"
     echo -e "${BOLDBLUE}---------- ${ENDCOLOR}"
     else echo -e "Test $infile\n---------- "; fi
     dif="$(diff "${infile%.*}.out" <(./a.out < "$infile"))"
