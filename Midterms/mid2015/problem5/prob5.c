@@ -7,8 +7,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int hasOnlyUnseen(int row, int seen[30], int friends[30][30], int n){
-  //checks if person (row) has only new (unseen) friends thus far
+int hasNoSeen(int row, int seen[30], int friends[30][30], int n){
+  /* checks if a person (row) has only new (unseen) friends thus far,
+     or no friends at all */
   for(int i = 0; i < n; i++)
     if(friends[row][i] && seen[i])
       return 0;
@@ -27,7 +28,7 @@ int main(int argc, char *argv[]) {
   }
   for (int i = 0; i<n; ++i){
     seen[i]=1;
-    if (hasOnlyUnseen(i, seen, friends, n)) groups++;
+    if (hasNoSeen(i, seen, friends, n)) groups++;
     for (int j = i; j<n; ++j)
       if (friends[i][j]) seen[j]=1; 
   }
