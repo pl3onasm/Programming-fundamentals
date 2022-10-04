@@ -5,8 +5,9 @@
    We want to find the number of inversions in the array. A possible
    solution is to use bubble sort and count the number of swaps that 
    are needed. This is, however, slow, since bubble sort is slow (O(n²)). 
-   Another solution is to sort the array with mergesort, which gives
-   a solution in O(nlogn).  
+   Another solution is to sort the array with mergesort, and count the
+   number of inversions while merging. This approach gives a solution 
+   in O(nlogn).  
 */
 
 #include <stdio.h>
