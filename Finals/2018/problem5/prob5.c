@@ -8,8 +8,7 @@
 
 int isMatch(char *pattern, char *string) {
   // base cases
-  if (*string == '\0' && *pattern == '\0') return 1;  
-  if (*string == '\0' || *pattern == '\0') return 0;  
+  if (*string == '\0' && *pattern == '\0') return 1;    
   // recursive cases
   if (pattern[1] == '?')
     return (*pattern == *string && isMatch(pattern+2, string+1)) 
