@@ -18,7 +18,7 @@ gcc -O2 -std=c99 -pedantic -Wall -o a.out "$1" -lm
 
 if [[ $? -ne 0 ]]; then
   echo
-  echo "${RED}Compilation failed.${ENDCOLOR}"
+  echo -e "${RED}Compilation failed.${ENDCOLOR}"
   exit 1
 else
   readarray -d '' infiles < <(printf '%s\0' ./tests/*.in | sort -zV)
