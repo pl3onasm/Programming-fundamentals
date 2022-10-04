@@ -61,12 +61,12 @@ int *readIntVector(int size) {
 }
 
 void countPairs(int *vec, int size, int k){
-  int count = 0;
-  for (int i=0; i < size; ++i){
-    for (int j=i+1; j < size; ++j){
-      if (vec[i] + vec[j] == k) count++;
-      if (vec[i] + vec[j] > k) break;
-    }
+  int count = 0, left = 0, right = size - 1;
+  while (left < right) {
+    if (vec[left] + vec[right] == k) {
+      count++; left++; right--;
+    } else if (vec[left] + vec[right] < k) left++;
+    else right--;
   }
   printf("%d\n", count);
 }
