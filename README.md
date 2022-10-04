@@ -1,7 +1,7 @@
 # Imperative Programming in C
 
 These are old exams for the course Imperative Programming (CS) at the University of Groningen.  
-All exams are in separate folders, containing a PDF of the exam, and a separate subfolder for each exam problem. These subfolders each hold a folder with the test cases, one or more example solutions, and a file called *myprogram.c* which you can use to write and test your own solution.  
+All exams are in separate folders, containing a PDF of the exam, and a separate subfolder for each exam problem. These subfolders each hold one or more example solutions, a folder with test cases, and a file called *myprogram.c* which you can use to write and test your own solution.  
 
 ## Final exams
 
@@ -54,7 +54,7 @@ First, make the script executable:
 ```
 ../../../chmod +x ctest.sh
 ```
-Then run the script  by using the following command:
+Then run the script by using the following command:
 ```
 ../../../ctest.sh myprogram.c
 ```
