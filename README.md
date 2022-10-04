@@ -1,7 +1,7 @@
 # Imperative Programming in C
 
 These are old exams for the course Imperative Programming (CS) at the University of Groningen, which are great for practice. 
-All exams are in separate folders, containing a PDF of the exam, and a separate subfolder for each exam problem. These subfolders each hold one or more example solutions, a folder with test cases, and a file called *myprogram.c* which you can use to write and test your own solution.  
+All exams are in separate folders, containing a PDF of the exam and a separate subfolder for each exam problem. These subfolders each hold one or more example solutions, a folder with test cases, and a file called *myprogram.c* which you can use to write and test your own solution.  
 
 ## Final exams
 
@@ -44,7 +44,7 @@ gcc -O2 -std=c99 -pedantic -Wall -o a.out myprogram.c -lm
 
 ## Testing
 
-You can test your own code with the [test script](https://github.com/pl3onasm/Imperative-programming/blob/main/ctest.sh). It will compile your code and run it on all the test cases. It will also compare your output with the expected output. 
+You can test your own code with the [test script](https://github.com/pl3onasm/Imperative-programming/blob/main/ctest.sh). It will try to compile your code and run it on all the test cases. It will also compare your output with the expected output. 
 
 In order to use it, you basically have two options: 
 ### 1. Execution from script's location in the root of the repository  
