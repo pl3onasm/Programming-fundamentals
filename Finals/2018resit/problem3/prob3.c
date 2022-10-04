@@ -1,6 +1,12 @@
 /* file: prob3.c
    author: David De Potter
    description: IP Final 2018 Resit, problem 3, ordered pairs
+   version: 1.0, slow version
+   We want to find the number of inversions in the array. A possible
+   solution is to use bubble sort and count the number of swaps that 
+   are needed. This is, however, slow, since bubble sort is slow (O(n²)). 
+   Another solution is to sort the array with mergesort, which gives
+   a solution in O(nlogn).  
 */
 
 #include <stdio.h>
