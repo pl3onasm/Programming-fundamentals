@@ -3,7 +3,7 @@
 # This script will try to compile your program and test its correctness
 # by running it on all the test cases for the current problem.
 # The argument is the name of the program to test.
-# Example: $ ../../../ctest.sh myprogram.c
+# Example: $ ../../../ctest.sh myprogram.c 
 
 RED="\e[31m"
 GREEN="\e[32m"
