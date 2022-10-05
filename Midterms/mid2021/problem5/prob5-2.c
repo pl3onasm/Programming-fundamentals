@@ -16,7 +16,7 @@ return n;
 }
 
 int main(int argc, char *argv[]) {
-  int a[1000000], b[1000000]; // or use malloc
+  int a[1000000], b[1000000]; 
   int lenA = readArray(a);
   int lenB = readArray(b);
   int cnt = 0;

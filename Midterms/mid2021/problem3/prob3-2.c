@@ -6,16 +6,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int isGoodPrime(int p) {
-  int a, b;
-  if ((p < 3) || (!isPrime(p))) return 0;
-  a = (p == 3 ? 2 : p - 2);
-  while (!isPrime(a)) a -= 2;
-  b = p + 2;
-  while (!isPrime(b)) b += 2;
-  return (a*b < p*p);
-}
-
 int isPrime(int n) {
   if (n < 3) return (n == 2);
   if (n%2 == 0) return 0;
@@ -25,6 +15,16 @@ int isPrime(int n) {
     d = d + 2;
   }
   return 1;
+}
+
+int isGoodPrime(int p) {
+  int a, b;
+  if ((p < 3) || (!isPrime(p))) return 0;
+  a = (p == 3 ? 2 : p - 2);
+  while (!isPrime(a)) a -= 2;
+  b = p + 2;
+  while (!isPrime(b)) b += 2;
+  return (a*b < p*p);
 }
 
 int main(int argc, char *argv[]) {
