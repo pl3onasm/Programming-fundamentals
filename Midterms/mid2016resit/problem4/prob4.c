@@ -11,7 +11,7 @@ int readInput(char sentence[]) {
   char c; int i = 0;
   while ((c = getchar()) != '.')
     if (c != ' ') sentence[i++] = c;
-  return --i;
+  return i;
 }
 
 int isPalindrome (int start, int end, char sentence[]) {
@@ -23,8 +23,8 @@ int isPalindrome (int start, int end, char sentence[]) {
 int main (int argc, char *argv[]) {
   char sentence[100]; int max=0, start; 
   int len = readInput(sentence);
-  for (int l=len; l > 0; --l) {
-    for (int i = 0; i <= l; ++i) {
+  for (int i = 0; i < len; ++i) {
+    for (int l=len-1; l >= 0; --l) {
       if (isPalindrome(i, l, sentence)) {
         if (l-i > max) {
           max = l-i; start = i;
