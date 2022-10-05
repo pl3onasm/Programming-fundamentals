@@ -10,5 +10,5 @@
 
 ## Shell script
 
-- [] usage
-- [] check if files exist
+- [ ] usage
+- [ ] check if files exist
