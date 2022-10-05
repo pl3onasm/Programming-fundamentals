@@ -1,7 +1,6 @@
 /* file: prob5.c
    author: David De Potter
-   description: IP Final 2016, problem 5, 
-   balanced subsequences
+   description: IP Final 2016, problem 5, balanced subsequences
 */
 
 #include <stdio.h>

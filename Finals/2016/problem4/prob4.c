@@ -1,7 +1,6 @@
 /* file: prob4.c
    author: David De Potter
-   description: IP Final 2016, problem 4, 
-   highest common ancestor
+   description: IP Final 2016, problem 4, highest common ancestor
 */
 
 #include <stdio.h>
