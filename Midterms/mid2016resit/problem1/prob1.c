@@ -37,7 +37,7 @@ int main (int argc, char *argv[]) {
   p = power(10, countDigits(a)) - 1;
   c = complement(a);
   printf("%d-%d=", a, b);
-  printf("%d-((%d-%d)+%d=", p, p, a, b);
+  printf("%d-((%d-%d)+%d)=", p, p, a, b);
   printf("%d-(%d+%d)=", p, c, b);
   printf("%d-%d=", p, b+c);
   printf("%d\n", complement(b+c));
