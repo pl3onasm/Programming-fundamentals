@@ -1,4 +1,4 @@
-/* file: prob3.c
+/* file: prob4.c
    author: David De Potter
    description: IP Final 2015 resit, problem 4, cycle detection
 */
