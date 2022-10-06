@@ -7,19 +7,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int getHighestExponent (int n) {
+int binExp(int n){
+  // returns highest exponent of 2 smaller than n
   int exp = 0;
-  while (n > 0) {
-    n >>= 1; exp++;
+  while (n > 1){
+    n >>= 1; ++exp;
   }
-  return exp-1;
+  return exp;
 }
 
 int main(int argc, char *argv[]) {
   int n;
   scanf("%d", &n);
   printf("%d=", n);
-  int len = getHighestExponent(n);
+  int len = binExp(n);
 
   for (int i=len; i>=0; i--) {
     if (i<len) printf(" + ");
