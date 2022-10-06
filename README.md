@@ -84,7 +84,7 @@ Note that if you want to use ```less```, you should add the -r flag (to keep the
 ```
 ctest.sh myprogram.c | less -r
 ```
-You may also choose to redirect the output to a file:
+You may also choose to redirect the output to a file, in which case the color codes will be removed automatically to render a plain text file:
 ``` 
 ctest.sh myprogram.c > results.txt
 ```
