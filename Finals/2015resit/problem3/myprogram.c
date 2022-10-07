@@ -6,12 +6,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char *argv[]) {
-  
+void printEmirps(int a, int b) {
+  /* implement the body of this function 
+  (implement helper functions if needed) */
+
   // your code here
 
-  // to test your code, run the test script in the terminal: $ ../../../ctest.sh myprogram.c
-  // after you made it executable by running: $ chmod +x ../../../ctest.sh (you only need to do this once)
+  // to test your code, run the test script in the terminal: 
+  // $ ../../../ctest.sh myprogram.c
+  // after you made it executable by running: 
+  // $ chmod +x ../../../ctest.sh (you only need to do this once)
+}
 
+int main() {
+  int a, b;
+  scanf ("%d %d", &a, &b); /* you may assume that 0<=a<b<=10000 */
+  printEmirps(a, b);
   return 0;
 }

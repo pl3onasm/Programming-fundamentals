@@ -25,13 +25,18 @@ int reverse(int n) {
   return rev;
 }
 
-int main(int argc, char *argv[]) {
-  int a, b; 
-  scanf("%d %d", &a, &b);
+void printEmirps(int a, int b) {
   for (int i = a; i <= b; i++) {
     int rev = reverse(i);
     if (isPrime(i) && isPrime(rev) && i != rev)
       printf("%d\n", i); 
   }
-  return 0;
 }
+
+int main(int argc, char *argv[]) {
+  int a, b; 
+  scanf("%d %d", &a, &b);
+  printEmirps(a,b); 
+  return 0; 
+}
+  

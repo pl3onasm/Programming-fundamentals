@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 int isMatch(char *pattern, char *string) {
-  // base cases
+  // base case
   if (*string == '\0' && *pattern == '\0') return 1;    
   // recursive cases
   if (pattern[1] == '?')
