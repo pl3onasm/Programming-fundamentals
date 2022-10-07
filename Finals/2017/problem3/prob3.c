@@ -4,9 +4,9 @@
    You could opt for a solution using a sort and then a 
    linear search, but then you're in O(n log n) time at best.
    We can do better by just computing the sum over the array
-   and then subtracting the sum of the numbers from 1 to n from
-   that. The result is the missing number. This way we're in
-   linear time.
+   and then subtracting this from the sum of first n natural
+   numbers, given by n*(n+1)/2. The result is the missing number. 
+   This way we're in linear time.
 */
 
 #include <stdio.h>
