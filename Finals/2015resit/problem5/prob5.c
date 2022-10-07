@@ -2,7 +2,7 @@
    author: David De Potter
    version: 1.0, this version works with a void function, 
    so that the evaluations have to be done separately 
-   when base case is reached
+   when the base case is reached
    description: IP Final 2015 resit, problem 5, recursion
 */
 
