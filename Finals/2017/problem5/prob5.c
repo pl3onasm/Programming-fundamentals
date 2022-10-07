@@ -6,23 +6,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void trySteps(int len, int series[], int index, int *solved, int seen[]){
+void trySteps(int len, int series[], int index, int *solved){
   if (index == len-1){ 
     *solved=1; return; 
   }
-  if (index < 0 || index >= len || seen[index]) return;
+  if (index < 0 || index >= len || series[index] < 0) return;
   int step = series[index];
-  seen [index] = 1;
+  series [index] = -1;    // mark as seen
   // try step to the right
-  trySteps(len, series, index+step, solved, seen);
+  trySteps(len, series, index+step, solved);
   // try step to the left
-  trySteps(len, series, index-step, solved, seen);
-  seen [index] = 0;   //backtrack
+  trySteps(len, series, index-step, solved);
+  series [index] = step;  // backtrack by restoring the value
 } 
 
 int isSolvable(int len, int series[]) {
-  int solved=0, seen[20]={0};
-  trySteps(len, series, 0, &solved, seen);
+  int solved=0;
+  trySteps(len, series, 0, &solved);
   return solved;
 }
 
@@ -35,3 +35,4 @@ int main(int argc, char *argv[]) {
   printf("%d\n", isSolvable(len, series));
   return 0;
 }
+
