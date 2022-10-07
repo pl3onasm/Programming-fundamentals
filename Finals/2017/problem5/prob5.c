@@ -17,7 +17,7 @@ void trySteps(int len, int series[], int index, int *solved, int seen[]){
   trySteps(len, series, index+step, solved, seen);
   // try step to the left
   trySteps(len, series, index-step, solved, seen);
-  seen [index] = 0;
+  seen [index] = 0;   //backtrack
 } 
 
 int isSolvable(int len, int series[]) {
