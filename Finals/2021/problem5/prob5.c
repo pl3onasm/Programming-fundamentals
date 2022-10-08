@@ -28,7 +28,7 @@ int isPalindrome(char *s, int index) {
 }
 
 void checkSequences (char *s, char *seq, int si, int seqi, int *max) {
-  if (si >= strlen(s)) return;
+  if (si > strlen(s)) return;
   if (isPalindrome(seq, 0) && seqi > *max) *max = seqi;
   seq[seqi] = s[si];  // take char at index si from s
   seq[seqi + 1] = '\0';
