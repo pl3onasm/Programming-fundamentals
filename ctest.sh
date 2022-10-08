@@ -54,7 +54,7 @@ else
       echo -e "Test file $outfile not found!\n"
       continue
     else
-      dif="$(diff "${infile%.*}.out" <(./a.out < "$infile"))"
+      dif="$(diff "$outfile" <(./a.out < "$infile"))"
       if [ -n "$dif" ]; then
         if [ -t 1 ]; then echo -e "${RED}Test failed.${ENDCOLOR}
         \nDifference : ${RED}$dif${ENDCOLOR}\n"
