@@ -6,7 +6,7 @@
 - [ ] mid2015 resit
 - [ ] mid2016 resit
 - [ ] mid2018 resit
-- [ ] final 2015
+- [x] final 2015
 - [ ] final 2015 resit
 - [ ] final 2016
 - [x] final 2017 
