@@ -1,30 +1,30 @@
-/* file: prob4.c
+/* file: prob4-2.c
    author: David De Potter
-   version: 1.0, assuming that execution times do not exceed 100 hours
+   version: 2.0, no assumption on execution times
    description: IP Final 2015, problem 4, job scheduling
 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 
 int main(int argc, char *argv[]) {
-  int n, jobIndex[100]={0}, timeFreqs[100]={0}, time;
+  int n, jobs[100];
   scanf("%d", &n);
   for (int i = 0; i < n; ++i) {
-    scanf("%d\n", &time);
-    if (!jobIndex[time]) jobIndex[time] = i+1;
-    ++timeFreqs[time];
+    scanf("%d\n", &jobs[i]);
   }
-  int i = 0, jobNum=0; 
-  while (1){
-    if (jobIndex[i]) {
-      for (int j = 0; j < timeFreqs[i]; ++j) {
-        printf("%d", jobIndex[i]+j);
-        if (++jobNum < n) printf(","); 
+  for (int i = 0; i < n; ++i) {
+    int min = INT_MAX, minIndex = 0;
+    for (int j=0; j<n; ++j) {
+      if (jobs[j] < min) {
+        min = jobs[j];
+        minIndex = j;
       }
     }
-    if (jobNum == n) break;
-    ++i; 
+    printf("%d", minIndex+1);
+    if (i < n-1) printf(",");
+    jobs[minIndex] = INT_MAX;
   }
   printf("\n");
   return 0;
