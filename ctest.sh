@@ -14,21 +14,37 @@ BOLDBLUE="\e[1;34m"
 ENDCOLOR="\e[0m"
 PASSED=0
 
+if [ $# -eq 0 ]; then
+  echo -e "\nNo argument supplied!"
+  echo "Usage: $0 myprogram.c"
+  exit 1
+fi
+
 gcc -O2 -std=c99 -pedantic -Wall -o a.out "$1" -lm
 
 if [[ $? -ne 0 ]]; then
-  echo
-  echo -e "${RED}Compilation failed.${ENDCOLOR}"
+  echo -e "\nCompilation failed."
   exit 1
 else
+  echo -e "\nProgram successfully compiled as a.out\n"
+  
+  DIR=./tests
+  if [ ! -d "$DIR" ]; then
+    echo "Test folder not found!"
+    echo "Please make sure you are working from the correct directory."
+    exit 1
+  fi
   readarray -d '' infiles < <(printf '%s\0' ./tests/*.in | sort -zV)
   len=${#infiles[@]}
-  echo
-  echo "Program successfully compiled as a.out"
-  echo
+  if [ $len -eq 0 ]; then
+    echo "No test cases found!"
+    exit 1
+  fi
+  
   if [ -t 1 ]; then echo -e "${CYANBACK}  ==:: TEST RESULTS ::==  ${ENDCOLOR}"
   else echo "==:: TEST RESULTS ::=="; fi
   echo
+  
   for infile in "${infiles[@]}"; do
     if [ -t 1 ]; then echo -e "${BOLDBLUE}Test ${infile:8} ${ENDCOLOR}"
     echo -e "${BOLDBLUE}---------- ${ENDCOLOR}"
@@ -43,6 +59,7 @@ else
       PASSED=$((PASSED + 1))
     fi
   done
+
   if [ $PASSED -eq $len ]; then
     if [ -t 1 ]; then echo -e "${GREEN}You have passed all tests! \(ᵔᵕᵔ)/${ENDCOLOR}"
     else echo "All tests passed!"; fi
