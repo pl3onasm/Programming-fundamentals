@@ -26,14 +26,13 @@ int main (int argc, char *argv[]) {
   for (int i = 0; i < len; ++i) {
     for (int l=len-1; l >= 0; --l) {
       if (isPalindrome(i, l, sentence)) {
-        if (l-i > max) {
-          max = l-i; start = i;
+        if (l-i+1 > max) {
+          max = l-i+1; start = i;
         }
       }
     }
   }
-  for (int i = start; i <= start+max; ++i) 
-    printf("%c", sentence[i]);
+  for (int i = start; i <= start+max-1; ++i) printf("%c", sentence[i]);
   printf("\n");
   return 0;
 }
