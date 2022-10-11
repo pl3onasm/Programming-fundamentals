@@ -3,7 +3,7 @@
 ## Need extra test cases
 
 - [x] mid2015
-- [ ] mid2016 resit
+- [x] mid2016 resit
 - [ ] mid2018 resit
 - [x] final 2015
 - [x] final 2015 resit
