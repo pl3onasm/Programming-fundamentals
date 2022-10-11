@@ -6,20 +6,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int **createPuzzle(int n) {
-  int **puzzle = malloc(n * sizeof(int *));
-  for (int i=0; i<n; ++i) 
-    puzzle[i] = malloc(n*sizeof(int));
-  return puzzle; 
-}
-
-void fillPuzzle(int n, int **puzzle) {
+void fillPuzzle(int n, int puzzle[][8]) {
   for (int i=0; i<n; ++i) 
     for (int j=0; j<n; ++j) 
       scanf("%d", &puzzle[i][j]);
 }
 
-void find(int x, int n, int* row, int* col, int **puzzle) {
+void find0 (int x, int n, int* row, int* col, int puzzle[][8]) {
+  // find the position of the empty space
   for (int r = 0; r < n; ++r) 
     for (int c = 0; c < n; ++c) 
       if (puzzle[r][c] == x) {
@@ -29,9 +23,9 @@ void find(int x, int n, int* row, int* col, int **puzzle) {
       }
 }
 
-int slide (char dir, int n, int x, int **puzzle) {
+int slide (char dir, int n, int x, int puzzle[][8]) {
   int row=0, col=0, result=0;
-  find(x, n, &row, &col, puzzle);
+  find0 (x, n, &row, &col, puzzle);
   switch (dir) {
     case 'R':
       if ((col + 1 < n) && (puzzle[row][col + 1] == 0)) {
@@ -57,7 +51,7 @@ int slide (char dir, int n, int x, int **puzzle) {
   return result;
 }
 
-int checkPuzzle(int n, int **puzzle) {
+int checkPuzzle(int n, int puzzle[][8]) {
   // check if puzzle is solved; note that the empty tile 0
   // may be in any position, not just the bottom right corner
   int count=0;
@@ -71,17 +65,10 @@ int checkPuzzle(int n, int **puzzle) {
   return 1;
 }
 
-void freeMem (int n, int **puzzle) {
-  for (int row = 0; row < n; ++row) 
-    free(puzzle[row]);
-  free(puzzle);
-}
-
 int main(int argc, char *argv[]) {
-  int n, x=0, valid=1;
+  int n, x=0, valid=1, puzzle[8][8];
   char dir, string[6];
   scanf("%d", &n);
-  int **puzzle = createPuzzle(n);
   fillPuzzle(n, puzzle);
   scanf("%s %d", string, &x);
   dir = string[0];
@@ -99,6 +86,5 @@ int main(int argc, char *argv[]) {
     if (checkPuzzle(n, puzzle)) printf("SOLVED\n");
     else printf("UNSOLVED\n");
   }
-  freeMem(n, puzzle);
   return 0;
 }
