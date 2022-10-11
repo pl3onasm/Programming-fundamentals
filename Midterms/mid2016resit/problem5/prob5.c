@@ -58,6 +58,8 @@ int slide (char dir, int n, int x, int **puzzle) {
 }
 
 int checkPuzzle(int n, int **puzzle) {
+  // check if puzzle is solved; note that the empty tile 0
+  // may be in any position, not just the bottom right corner
   int count=0;
   for (int row = 0; row < n; ++row) 
     for (int col = 0; col < n; ++col) 
