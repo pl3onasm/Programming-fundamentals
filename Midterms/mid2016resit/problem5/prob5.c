@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) {
       break;
     }
   }
-  if (valid == 1) {
+  if (valid) {
     if (checkPuzzle(n, puzzle)) printf("SOLVED\n");
     else printf("UNSOLVED\n");
   }
