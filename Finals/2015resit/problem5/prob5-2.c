@@ -12,7 +12,7 @@ int evaluateExps(int length, int n, int a[], int index, int sum) {
   // base case: all operators have been set
   if (index == length-1){   
     if (sum == n) return 1;
-    else return 0;
+    return 0;
   }
   // recursive case: set next operator
   return evaluateExps(length, n, a, index+1, sum+a[index+1]) +
