@@ -1,7 +1,7 @@
 /* file: prob5.c
    author: David De Potter
    version: 2.0, this version works with an int function,
-   so that the evaluations are done during the recurive calls
+   so that the total sum is computed during the recurive calls
    description: IP Final 2015 resit, problem 5, recursion
 */
 
@@ -9,12 +9,12 @@
 #include <stdlib.h>
 
 int evaluateExps(int length, int n, int a[], int index, int sum) {
-  // base case: all operators have been set
+  // base case: check computed sum
   if (index == length-1){   
     if (sum == n) return 1;
     return 0;
   }
-  // recursive case: set next operator
+  // recursive case: add / subract next term
   return evaluateExps(length, n, a, index+1, sum+a[index+1]) +
   evaluateExps(length, n, a, index+1, sum-a[index+1]);
 }
