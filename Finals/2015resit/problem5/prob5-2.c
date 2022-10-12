@@ -1,7 +1,8 @@
 /* file: prob5.c
    author: David De Potter
    version: 2.0, this version works with an int function,
-   so that the total sum is computed during the recurive calls
+   so that the total sums are computed during the recurive calls
+   and counted if they are equal to the target sum.
    description: IP Final 2015 resit, problem 5, recursion
 */
 
