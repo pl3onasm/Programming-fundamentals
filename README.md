@@ -33,6 +33,7 @@ All exams are in separate folders, containing a PDF of the exam and a separate s
 - [2020 resit](https://github.com/pl3onasm/Imperative-programming/tree/main/Midterms/mid2020resit)
 - [2021](https://github.com/pl3onasm/Imperative-programming/tree/main/Midterms/mid2021)
 - [2021 resit](https://github.com/pl3onasm/Imperative-programming/tree/main/Midterms/mid2021resit)
+- [2022](https://github.com/pl3onasm/Imperative-programming/tree/main/Midterms/mid2022)
 
 ## Compilation
 
