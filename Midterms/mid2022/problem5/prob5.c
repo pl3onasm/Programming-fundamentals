@@ -25,7 +25,6 @@ int main(int argc, char *argv[]) {
   scanf("%d", &n);
   if ((modExp(2,n, 2*n+1)+1) % (2*n + 1))
     printf("NO\n");
-  else
-    printf("YES\n"); 
+  else printf("YES\n"); 
   return 0;
 }
