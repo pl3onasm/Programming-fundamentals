@@ -11,6 +11,7 @@
 #include <stdlib.h>
 
 int modExp (int a, int b, int n) {
+  // computes a^b mod n using modular exponentiation
   int r = 1;
   while (b > 0) {
     if (b % 2) r = (r * a) % n;
@@ -23,7 +24,7 @@ int modExp (int a, int b, int n) {
 int main(int argc, char *argv[]) {
   int n; 
   scanf("%d", &n);
-  if ((modExp(2,n, 2*n+1)+1) % (2*n + 1))
+  if ((modExp(2,n,2*n+1) + 1) % (2*n + 1))
     printf("NO\n");
   else printf("YES\n"); 
   return 0;
