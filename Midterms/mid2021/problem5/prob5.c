@@ -25,10 +25,10 @@ void readInput(int *arr, int len) {
 }
 
 int countPairs (int *f, int n, int *g, int m) {
-  int a, count = 0; 
-  for (int i=0; i<n; i++) {
-    a = f[i]; 
-    if (a < m && g[a] == i) count++; 
+  int b, count = 0; 
+  for (int a=0; a<n; ++a) {
+    b = f[a]; 
+    count += b < m && g[b] == a; 
   }
   return count; 
 }
