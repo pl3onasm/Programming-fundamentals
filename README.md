@@ -2,7 +2,8 @@
 
 These are old exams for the course Imperative Programming (CS) at the University of Groningen, which are great for practice. 
 All exams are in separate folders, containing a PDF of the exam and a separate subfolder for each exam problem. These subfolders each hold one or more example solutions, a folder with test cases, and a file called *myprogram.c* which you can use to write and test your own solution, because, remember, only practice makes perfect!  
-If you happen to have a copy of an exam for this particular course that is not yet in this repository, please send it to <pl3onasm@gmail.com> and I will include it.  
+  
+If you happen to have a copy of an exam for this particular course that is not yet in this repository, please send it to <pl3onasm@gmail.com> and I will include it. The same holds if you wrote a solution that is shorter, faster, and/or more elegant: send it to me and I will include your solution with your name mentioned as the author.  
 
 ## Final exams
 

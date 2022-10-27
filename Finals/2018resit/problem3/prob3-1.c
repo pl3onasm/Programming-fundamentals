@@ -4,17 +4,28 @@
    version: 1.0, slow version
    We want to find the number of inversions in the array. A possible
    solution is to use bubble sort and count the number of swaps that 
-   are needed. This is, however, slow, since bubble sort is slow (O(n²)). 
-   Another solution is to sort the array with mergesort, and count the
+   are needed. This is, however, slow, since bubble sort is slow (O(n²)).
+   You'll see that the program takes a long time to run on test cases 
+   9 and 10. 
+   A better solution is to sort the array with mergesort, and count the
    number of inversions while merging. This approach gives a solution 
-   in O(nlogn).  
+   in O(nlogn), which is much faster.
 */
 
 #include <stdio.h>
 #include <stdlib.h>
 
+void *safeMalloc (int n) {
+  void *ptr = malloc(n);
+  if (ptr == NULL) {
+    printf("Error: malloc(%d) failed. Out of memory?\n", n);
+    exit(EXIT_FAILURE);
+  }
+  return ptr;
+}
+
 int *readIntVector (int size) {
-  int *vect = malloc(size * sizeof(int));
+  int *vect = safeMalloc(size * sizeof(int));
   for (int i = 0; i < size; i++)
     scanf("%d", vect + i);
   return vect;

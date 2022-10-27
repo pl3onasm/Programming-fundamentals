@@ -6,8 +6,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void *safeMalloc (int n) {
+  void *ptr = malloc(n);
+  if (ptr == NULL) {
+    printf("Error: malloc(%d) failed. Out of memory?\n", n);
+    exit(EXIT_FAILURE);
+  }
+  return ptr;
+}
+
+void* safeRealloc(void* ptr, int n) {
+  ptr = realloc(ptr, n);
+  if (ptr == NULL) {
+    printf("Error: realloc(%d) failed. Out of memory?\n", n);
+    exit(EXIT_FAILURE);
+  }
+  return ptr;
+}
+
 int *copySubArray(int left, int right, int arr[]) {
-  int i, *copy = malloc((right - left)*sizeof(int));
+  int i, *copy = safeMalloc((right - left)*sizeof(int));
   for (i=left; i < right; i++) {
     copy[i - left] = arr[i];
   }
@@ -52,12 +70,12 @@ void mergeSort(int length, int arr[]) {
 }
 
 int *readIntVector(int *size) {
-  int len=0, n, *vec = malloc(*size*sizeof(int));
+  int len=0, n, *vec = safeMalloc(*size*sizeof(int));
   while (scanf("%d", &n) && n != 0) {
     vec[len++] = n;
     if (len == *size) {
       *size *= 2;
-      vec = realloc(vec, *size*sizeof(int));
+      vec = safeRealloc(vec, *size*sizeof(int));
     }
   }
   *size = len;

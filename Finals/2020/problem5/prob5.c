@@ -6,11 +6,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int *readIntVector(int size) {
-  int i, *vec = malloc(size*sizeof(int));
-  for (i=0; i < size; i++) {
-    scanf("%d", &vec[i]);
+void *safeMalloc (int n) {
+  void *ptr = malloc(n);
+  if (ptr == NULL) {
+    printf("Error: malloc(%d) failed. Out of memory?\n", n);
+    exit(EXIT_FAILURE);
   }
+  return ptr;
+}
+
+int *readIntVector(int size) {
+  int i, *vec = safeMalloc(size*sizeof(int));
+  for (i=0; i < size; i++) scanf("%d", &vec[i]);
   return vec;
 }
 
@@ -31,5 +38,6 @@ int main(int argc, char **argv){
   int *vec = readIntVector(n); 
   maximize(vec, n, 0, 0, 0, &max); 
   printf("%d\n", max);
+  free(vec);
   return 0; 
 }

@@ -7,8 +7,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void *safeMalloc (int n) {
+  void *ptr = malloc(n);
+  if (ptr == NULL) {
+    printf("Error: malloc(%d) failed. Out of memory?\n", n);
+    exit(EXIT_FAILURE);
+  }
+  return ptr;
+}
+
 int *copySubArray(int left, int right, int arr[]) {
-  int i, *copy = malloc((right - left)*sizeof(int));
+  int i, *copy = safeMalloc((right - left)*sizeof(int));
   for (i=left; i < right; i++) {
     copy[i - left] = arr[i];
   }
@@ -53,7 +62,7 @@ void mergeSort(int length, int arr[]) {
 }
 
 int *readInput(int size){
-  int *arr = malloc(size*sizeof(int));
+  int *arr = safeMalloc(size*sizeof(int));
   for (int i=0; i < size; i++) {
     scanf("%d ", arr + i);
   }
@@ -73,6 +82,7 @@ int main(int argc, char *argv[]) {
       return 0;
     }
   }
+  free(arr1); free(arr2);
   printf("YES\n");
   return 0;
 }

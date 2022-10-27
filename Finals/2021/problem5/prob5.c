@@ -45,5 +45,6 @@ int main(int argc, char **argv){
   scanf("%s", s);
   checkSequences(s, seq, 0, 0, &max);
   printf("%d\n", max);
+  free(s); free(seq);
   return 0; 
 }

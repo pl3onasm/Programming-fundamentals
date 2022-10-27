@@ -10,19 +10,19 @@
 void *safeCalloc (int n, int k) {
   void *p = calloc(n, k);
   if (p == NULL) {
-    printf("Error: malloc(%d) failed. Out of memory?\n", n);
+    printf("Error: calloc(%d) failed. Out of memory?\n", n);
     exit(EXIT_FAILURE);
   }
   return p;
 }
 
 void createArray (int **arr, int len) {
-  *arr = safeCalloc(len,sizeof(int));
+  *arr = safeCalloc(len, sizeof(int));
 }
 
 int *copySubArray(int left, int right, int arr[]) {
   int i, *copy;
-  copy = malloc((right - left)*sizeof(int));
+  copy = safeCalloc((right - left), sizeof(int));
   for (i=left; i < right; i++) {
     copy[i - left] = arr[i];
   }

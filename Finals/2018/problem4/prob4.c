@@ -7,6 +7,15 @@
 #include <stdlib.h>
 #include <limits.h>
 
+void *safeMalloc (int n) {
+  void *ptr = malloc(n);
+  if (ptr == NULL) {
+    printf("Error: malloc(%d) failed. Out of memory?\n", n);
+    exit(EXIT_FAILURE);
+  }
+  return ptr;
+}
+
 int maximum(int a, int b, int c){
   a = (a > b ? a : b);
   a = (a > c ? a : c);
@@ -49,7 +58,7 @@ void split(int *arr, int size, int *min){
 int main(int argc, char **argv){
   int n, min=INT_MAX;
   scanf("%d", &n);
-  int *arr = malloc(n*sizeof(int));
+  int *arr = safeMalloc(n*sizeof(int));
   for (int i=0; i < n; i++) {
     scanf("%d", &arr[i]);
   }
