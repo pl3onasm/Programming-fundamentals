@@ -26,13 +26,13 @@ int isGoodHamming (int x, int n) {
 }
 
 int main(int argc, char *argv[]) {
-  int n, a, b, counter=0;
+  int n, a, b, count=0;
 
   scanf("%d %d %d", &a, &b, &n);
   for(int x=a; x<=b; x++)
     if (isGoodHamming (x, n))
-      counter++;
+      count++;
 
-  printf("%d\n", counter);
+  printf("%d\n", count);
   return 0;
 }

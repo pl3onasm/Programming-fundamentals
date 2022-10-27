@@ -6,10 +6,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void *safeMalloc(int sz) {
-  void *p = calloc(sz, 1);
+void *safeMalloc (int n) {
+  void *p = malloc(n);
   if (p == NULL) {
-    fprintf(stderr, "Fatal error: safeMalloc(%d) failed.\n", sz);
+    printf("Error: malloc(%d) failed. Out of memory?\n", n);
     exit(EXIT_FAILURE);
   }
   return p;

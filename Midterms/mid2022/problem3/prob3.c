@@ -6,7 +6,7 @@
     by one of these expressions: 
       return sqrt(p) == (int) sqrt(p)
       return (int) sqrt(p) * (int) sqrt(p) == p
-      return sqrt(p) == roundl(sqrtl(p))
+      return sqrt(p) == roundl(sqrt(p))
 */
 
 #include <stdio.h>

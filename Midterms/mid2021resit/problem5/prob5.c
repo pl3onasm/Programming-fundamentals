@@ -37,5 +37,6 @@ int main(int argc, char *argv[]) {
     if (j == keyLen) j = 0;
   }
   printf("\n");
+  free (word); free (key);
   return 0;
 }

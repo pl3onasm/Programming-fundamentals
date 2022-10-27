@@ -51,6 +51,7 @@ int main(int argc, char *argv[]) {
       break;
     case 'T':
       printArray(arr, size); 
+      free(arr);
       return 0;
     case 'S':
       if (op[1] == 'U') {

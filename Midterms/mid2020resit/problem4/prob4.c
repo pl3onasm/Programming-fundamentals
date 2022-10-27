@@ -6,10 +6,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void *safeMalloc(int sz) {
-  void *p = calloc(sz, 1);
+void *safeMalloc (int n) {
+  void *p = malloc(n);
   if (p == NULL) {
-    fprintf(stderr, "Fatal error: safeMalloc(%d) failed.\n", sz);
+    printf("Error: malloc(%d) failed. Out of memory?\n", n);
     exit(EXIT_FAILURE);
   }
   return p;
@@ -17,14 +17,13 @@ void *safeMalloc(int sz) {
 
 int *makeIntArray(int n) {
   /* allocates dynamic int array of size/length n */
-  return safeMalloc(n*sizeof(int));
+  return safeMalloc(n * sizeof(int));
 }
 
 void readInput(int *f, int n) {
   int idx, v;
-  while (scanf("father(%d)=%d\n", &idx, &v)) {
+  while (scanf("father(%d)=%d\n", &idx, &v)) 
     f[idx] = v;
-  }
 }
 
 void initializeArray(int *f, int n) {
@@ -50,6 +49,6 @@ int main(int argc, char *argv[]) {
   scanf("ancestor(%d,%d)\n", &anc, &desc);
   if (isAncestor(f, n, anc, desc)) printf("YES\n"); 
   else printf("NO\n");
-
+  free(f);
   return 0;
 }

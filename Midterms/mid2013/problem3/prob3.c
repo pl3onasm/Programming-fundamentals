@@ -6,6 +6,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void *safeCalloc (int n, int k) {
+  void *p = calloc(n, k);
+  if (p == NULL) {
+    printf("Error: calloc(%d) failed. Out of memory?\n", n);
+    exit(EXIT_FAILURE);
+  }
+  return p;
+}
+
 int sumDivisors (int n) {
   //returns the sum of n's proper divisors
   int sum = 1;
@@ -22,8 +31,8 @@ int main(int argc, char *argv[]) {
   int n, m, *numbers, *sums;
 
   scanf("%d", &n);
-  numbers = calloc(n, sizeof(int));
-  sums = calloc(n, sizeof(int));
+  numbers = safeCalloc(n, sizeof(int));
+  sums = safeCalloc(n, sizeof(int));
 
   /* reads all n numbers and puts them in an array.
   * Another array stores the sum of the current number's

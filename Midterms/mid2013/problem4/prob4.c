@@ -8,11 +8,20 @@
 
 int **matrix;
 
+void *safeCalloc (int n, int k) {
+  void *p = calloc(n, k);
+  if (p == NULL) {
+    printf("Error: calloc(%d) failed. Out of memory?\n", n);
+    exit(EXIT_FAILURE);
+  }
+  return p;
+}
+
 void createMatrix(int m, int n) {
   //creates a m x n null matrix
-  matrix = calloc(m,sizeof(int*));
+  matrix = safeCalloc(m,sizeof(int*));
   for (int i=0; i<m; ++i)
-    matrix[i] = calloc(n,sizeof(int));
+    matrix[i] = safeCalloc(n,sizeof(int));
   return;
 }
 

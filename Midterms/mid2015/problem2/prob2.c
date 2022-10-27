@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 int main(int argc, char *argv[]) {
-  int n, counter=0, sum, digit, number;
+  int n, count=0, sum, digit, number;
 
   scanf("%d", &n);  
   for (int i=1; i<=n; ++i) {
@@ -19,11 +19,11 @@ int main(int argc, char *argv[]) {
         sum += digit*digit;
         number /= 10;
       }
-      if (sum == 89) counter++;
+      if (sum == 89) count++;
       else number = sum;
     }
   }
 
-  printf("%d\n", counter); 
+  printf("%d\n", count); 
   return 0;
 }
