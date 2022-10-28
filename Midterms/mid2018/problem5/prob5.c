@@ -7,11 +7,13 @@
 #include <stdlib.h>
 
 int GCD(int a, int b) {
+  // returns the greatest common divisor of a and b
   if (b == 0) return a;
   return GCD(b, a%b);
 }
 
 int noCommonDivisors (int x, int y, int z) {
+  // checks if x, y and z have are coprime
   return (GCD(x, y) == 1 && GCD(y, z) == 1 && GCD(x, z) == 1);
 }
 

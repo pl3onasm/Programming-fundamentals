@@ -7,18 +7,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void swap (int *positions, int i, int j ) {
+void swap (int *arr, int i, int j ) {
   /* swaps the content of cells with indexes
-   * a and b in the given array */
-  int h = positions[i];
-  positions[i] = positions[j];
-  positions[j] = h;
-  return;
+   * i and j in the given array */
+  int h = arr[i];
+  arr[i] = arr[j];
+  arr[j] = h;
 }
 
 int main(int argc, char *argv[]) {
-  int startp, p1, p2;
-  int positions[3];
+  int startp, p1, p2, positions[3]={0}; 
 
   //reads and sets the start position
   scanf("%d ", &startp);
