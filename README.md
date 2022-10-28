@@ -53,7 +53,7 @@ gcc -O2 -std=c99 -pedantic -Wall -o a.out myprogram.c -lm
 
 You can test your own code with the [test script](https://github.com/pl3onasm/Imperative-programming/blob/main/ctest.sh). It will try to compile your code and run it on all the test cases. It will also compare your output with the expected output, and check for memory leaks by running a Valgrind test.
 
-In order to use it, you basically have two options: 
+In order to use it, you basically have two options:  
 ### 1. Execution from script's location in the root of the repository  
 
 Opening a terminal from the working directory containing your program, the solution, and the folder with the tests, run the below commands.  
