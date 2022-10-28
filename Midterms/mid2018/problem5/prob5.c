@@ -13,7 +13,7 @@ int GCD(int a, int b) {
 }
 
 int noCommonDivisors (int x, int y, int z) {
-  // checks if x, y and z have are coprime
+  // checks if x, y and z are coprime
   return (GCD(x, y) == 1 && GCD(y, z) == 1 && GCD(x, z) == 1);
 }
 
