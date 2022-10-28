@@ -6,17 +6,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int GCD(int a, int b) {
+  if (b == 0) return a;
+  return GCD(b, a%b);
+}
+
 int noCommonDivisors (int x, int y, int z) {
-  //checks if the given arguments have no common divisors
-  if ((x % 2 == 0) && (y % 2 == 0) && (z % 2 == 0))
-    return 0;
-  for (int d = 3; d <= z; d += 2) {
-    /* we know z is the largest of the three given arguments,
-    * so we only need to look for common divisors for d <= z */
-    if ((x % d == 0) && (y % d == 0) && (z % d == 0))
-      return 0;
-  }
-  return 1;
+  return (GCD(x, y) == 1 && GCD(y, z) == 1 && GCD(x, z) == 1);
 }
 
 int main(int argc, char *argv[]) {
@@ -39,3 +35,4 @@ int main(int argc, char *argv[]) {
   printf("%d\n", count);
   return 0;
 }
+

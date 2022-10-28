@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
    * proceed with checking the possible diagonal moves */
   moves = 14;
 
-  int steps[8] = {1,-1,1,1,-1,-1,-1,1}; 
+  int steps[] = {1,-1,1,1,-1,-1,-1,1}; 
   for (int i=0; i<8; i+=2) {
     int x = steps[i];
     int y = steps[i+1];

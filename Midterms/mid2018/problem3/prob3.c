@@ -7,8 +7,7 @@
 #include <stdlib.h>
 
 int main(int argc, char *argv[]) {
-  int row, x, y, flag=0;
-  char col;
+  int row, x, y; char col;
   scanf("%c %d", &col, &row); // starting position
 
   do {
