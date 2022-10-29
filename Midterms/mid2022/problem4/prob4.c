@@ -2,10 +2,10 @@
    author: David De Potter
    description: IP mid2022, problem 4, Cuban primes
    The trick is to just simplify the given expression, 
-   using the fact that a^3 - b^3 = (a-b)(a^2 + ab + b^2), 
+   using the fact that a³ - b³ = (a-b)(a² + ab + b²), 
    in the following way: 
-   p = (q+1)^3 - q^3 = (q+1-q)((q+1)^2 + q*(q+1) + q^2) 
-   = 3*q^2 + 3*q + 1 = 3*q*(q+1) + 1
+   p = (q+1)³ - q³ = (q+1-q)((q+1)² + q*(q+1) + q²) 
+   = 3*q² + 3*q + 1 = 3*q*(q+1) + 1
 */
 
 #include <stdio.h>
