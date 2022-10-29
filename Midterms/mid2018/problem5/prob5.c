@@ -12,7 +12,7 @@
   <=> c² = x⁴ + 2x²y² + y⁴
   <=> c² = x⁴ - 2x²y² + y⁴ + 4x²y²
   <=> c² = (y² - x²)² + 4x²y²
-  <=> c² = a² + b², where a = y² - x² and b = 2x²y²
+  <=> c² = a² + b², where a = y² - x² and b = 2xy
   Now we just need to find all the pairs (x, y) such that
   a + b + c = n.
 */
