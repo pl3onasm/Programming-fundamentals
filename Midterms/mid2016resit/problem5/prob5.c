@@ -24,31 +24,25 @@ void find0 (int x, int n, int* row, int* col, int puzzle[][8]) {
 }
 
 int slide (char dir, int n, int x, int puzzle[][8]) {
-  int row=0, col=0, result=0;
+  int row=0, col=0;
   find0 (x, n, &row, &col, puzzle);
-  switch (dir) {
-    case 'R':
-      if ((col + 1 < n) && (puzzle[row][col + 1] == 0)) {
-        puzzle[row][col + 1] = x; result = 1;
-      }
-      break;
-    case 'L':
-      if ((col - 1 >= 0) && (puzzle[row][col - 1] == 0)) {
-        puzzle[row][col - 1] = x; result = 1;
-      }
-      break;
-    case 'D':
-      if ((row + 1 < n) && (puzzle[row + 1][col] == 0)) {
-        puzzle[row + 1][col] = x; result = 1;
-      }
-      break;
-    case 'U':
-      if ((row - 1 >= 0) && (puzzle[row - 1][col] == 0)) {
-        puzzle[row - 1][col] = x; result = 1;
-      }
-      break;
+  if (dir == 'R' && col + 1 < n && puzzle[row][col + 1] == 0) {
+    puzzle[row][col + 1] = x; 
+    return 1;
   }
-  return result;
+  if (dir == 'L' && col - 1 >= 0 && puzzle[row][col - 1] == 0) {
+    puzzle[row][col - 1] = x;
+    return 1;
+  }
+  if (dir == 'D' && row + 1 < n && puzzle[row + 1][col] == 0) {
+    puzzle[row + 1][col] = x;
+    return 1;
+  }
+  if (dir == 'U' && row - 1 >= 0 && puzzle[row - 1][col] == 0) {
+    puzzle[row - 1][col] = x; 
+    return 1;
+  }
+  return 0;
 }
 
 int checkPuzzle(int n, int puzzle[][8]) {
@@ -66,25 +60,17 @@ int checkPuzzle(int n, int puzzle[][8]) {
 }
 
 int main(int argc, char *argv[]) {
-  int n, x=0, valid=1, puzzle[8][8];
-  char dir, string[6];
+  int n, x, puzzle[8][8];
+  char dir[6];
   scanf("%d", &n);
   fillPuzzle(n, puzzle);
-  scanf("%s %d", string, &x);
-  dir = string[0];
-  while (dir != 'E') {
-    if (slide(dir, n, x, puzzle)) {
-      scanf("%s %d", string, &x);
-      dir = string[0];
-    } else {
-      valid = 0;
+  while (scanf("%s %d", dir, &x) && dir[0] != 'E') {
+    if (! slide(dir[0], n, x, puzzle)){
       printf("INVALID\n");
-      break;
+      return 0;
     }
   }
-  if (valid) {
-    if (checkPuzzle(n, puzzle)) printf("SOLVED\n");
-    else printf("UNSOLVED\n");
-  }
+  if (checkPuzzle(n, puzzle)) printf("SOLVED\n");
+  else printf("UNSOLVED\n");
   return 0;
 }
