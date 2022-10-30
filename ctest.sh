@@ -53,6 +53,7 @@ if [ -t 1 ]; then echo -e "${CYANBACK}  ==:: TEST RESULTS ::==  ${ENDCOLOR}"
 else echo "==:: TEST RESULTS ::=="; fi
 echo
 
+# Compare the output of the program with the expected output
 for INFILE in "${INFILES[@]}"; do
   if [ -t 1 ]; then echo -e "${BOLDBLUE}Test ${INFILE:8} ${ENDCOLOR}"
   echo -e "${BOLDBLUE}---------- ${ENDCOLOR}"
@@ -79,7 +80,7 @@ for INFILE in "${INFILES[@]}"; do
   fi
 done
 
-# Valgrind test
+# Check for memory issues with valgrind
 if [ -t 1 ]; then echo -e "${BOLDBLUE}Valgrind test ${ENDCOLOR}"
   echo -e "${BOLDBLUE}------------- ${ENDCOLOR}"
 else echo -e "Valgrind test\n------------- "; fi
@@ -91,17 +92,24 @@ else
   CHECK1=$(echo "$TEST" | grep -c "in use at exit: 0 bytes in 0 blocks")
   CHECK2=$(echo "$TEST" | grep -c "0 errors from 0 contexts")
   if [[ $CHECK1 -ne 0 && $CHECK2 -ne 0 ]]; then
-    if [ -t 1 ]; then echo -e "${GREEN}PASSED!\n${ENDCOLOR}"
-    else echo -e "PASSED!\n"; fi
+    if [ -t 1 ]; then echo -e "${GREEN}PASSED!${ENDCOLOR}"
+    else echo -e "PASSED!"; fi
     PASSED=$((PASSED + 1))
   else
-    if [ -t 1 ]; then echo -e "${RED}Memory issues detected!\n${ENDCOLOR}"
-    else echo -e "Memory issues detected!\n"; fi
+    if [ -t 1 ]; then echo -e "${RED}Test failed."
+      if [ $CHECK1 -eq 0 ]; then echo -e "Not all memory freed."; fi
+      if [ $CHECK2 -eq 0 ]; then echo -e "Memory errors detected.${ENDCOLOR}"; fi
+    else echo -e "Test failed."
+      if [ $CHECK1 -eq 0 ]; then echo -e "Not all memory freed."; fi
+      if [ $CHECK2 -eq 0 ]; then echo -e "Memory errors detected."; fi
+    fi
   fi
+  echo
 fi
 
 LEN=$((LEN + 1))  # Add 1 for valgrind test
 
+# Print final result
 if [ $PASSED -eq $LEN ]; then
   if [ -t 1 ]; then echo -e "${GREEN}You have passed all tests! \(ᵔᵕᵔ)/${ENDCOLOR}"
   else echo "All tests passed!"; fi
