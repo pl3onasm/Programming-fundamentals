@@ -1,20 +1,27 @@
 /* file: prob5.c
   author: David De Potter
   description: problem 5, Pythagorean triples, mid2018
-  The Pythagorean theorem works with perfect squares, so
-  that the roots a, b, c will be integers.
   We need to apply some algebraic manipulation in order to
-  find the triplets. We don't want to compute the roots to
-  get a, b, c, instead we just assume having the roots x 
-  and y, and we compute a and b from them. So we have:
-      c = sqrt((x² + y²)²)
-  <=> c² = (x² + y²)²
-  <=> c² = x⁴ + 2x²y² + y⁴
-  <=> c² = x⁴ - 2x²y² + y⁴ + 4x²y²
-  <=> c² = (y² - x²)² + 4x²y²
-  <=> c² = a² + b², where a = y² - x² and b = 2xy
-  Now we just need to find all the pairs (x, y) such that
-  a + b + c = n.
+  easily find the triplets. We don't want to compute any roots 
+  to get a, b, c, instead we try to find a, b, c in terms of
+  two integers x and y. 
+  We know that a² + b² = c², so we can rewrite this as:
+  a² = c² - b² = (c - b)(c + b), so that
+  a / (c + b) = (c - b) / a. We can represent these fractions
+  as a ratio of two integers x and y: x/y, where y > x and both 
+  have to be coprime, since a, b, c are coprime.
+  This yields the following system of equations:
+  y/x = c/a + b/a
+  x/y = c/a - b/a
+
+  Adding the two equations yields:
+  2*c/a = y/x + x/y = (x² + y²) / xy
+  Subtraction yields:
+  2*b/a = y/x - x/y = (x² - y²) / xy
+
+  Hence, c = (x² + y²), b = (x² - y²) and a = 2xy.
+  Now we just need to find all the coprime pairs (x, y) such 
+  that a + b + c = n.
 */
 
 #include <stdio.h>
@@ -26,9 +33,9 @@ int GCD(int a, int b) {
   return GCD(b, a%b);
 }
 
-int noCommonDivisors (int x, int y, int z) {
-  // checks if x, y and z are coprime
-  return (GCD(x, y) == 1 && GCD(y, z) == 1 && GCD(x, z) == 1);
+int noCommonDivisors (int x, int y) {
+  // checks if x, y are coprime
+  return GCD(x, y) == 1;
 }
 
 int main(int argc, char *argv[]) {
@@ -37,12 +44,10 @@ int main(int argc, char *argv[]) {
 
   for (x=1; x < n/3; ++x) {
     for (y=x+1; y < n-x; ++y) {
-      /* express pythagorean relationship without
-       * having to compute roots x and y first */
-      a = y * y - x * x;  // since y > x, a is always positive
-      b = 2 * x * y;
-      c = x * x + y * y;
-      if ((a + b + c == n) && (noCommonDivisors(a, b, c)))
+      a = 2*x*y;
+      b = y*y - x*x;  // note that b is always positive
+      c = x*x + y*y;
+      if ((a + b + c == n) && (noCommonDivisors(x, y)))
         count++;
       if (c > n) break; //jumps to the next x
     }
