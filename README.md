@@ -96,7 +96,7 @@ ctest.sh myprogram.c > results.txt
 Example output of the test script:  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
 
-<p align="center" width="70%">
+<p align="center" width="60%">
 <img src="example1.jpg"
      alt="Example output"
      style="float: left; padding-top:200px" />  
