@@ -45,11 +45,11 @@ int main(int argc, char *argv[]) {
   for (x=1; x < n/3; ++x) {
     for (y=x+1; y < n-x; ++y) {
       a = 2*x*y;
-      b = y*y - x*x;  // note that b is always positive
+      b = y*y - x*x;    // note that b is always positive
       c = x*x + y*y;
       if ((a + b + c == n) && noCommonDivisors(x, y))
         count++;
-      if (c > n) break; //jumps to the next x
+      if (c > n) break; // jumps to the next x
     }
   }
 
