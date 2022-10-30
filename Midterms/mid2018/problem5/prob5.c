@@ -9,7 +9,7 @@
   a² = c² - b² = (c - b)(c + b), so that
   a / (c + b) = (c - b) / a. We can represent these fractions
   as a ratio of two integers x and y: x/y, where y > x and both 
-  have to be coprime, since a, b, c are coprime.
+  have to be coprime, since a, b, c need to be coprime.
   This yields the following system of equations:
   y/x = c/a + b/a
   x/y = c/a - b/a
