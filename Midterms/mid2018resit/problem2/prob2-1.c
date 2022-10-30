@@ -1,4 +1,4 @@
-/* file: prob2.c
+/* file: prob2-1.c
 * author: David De Potter
 * description: problem 2, queen moves, resit mid2018
 */

@@ -31,9 +31,8 @@ int hasTwoPrimeDivs (int n) {
   for (int d = 2; d * d < n; ++d)
     /* uses strictly less than so as to ignore
      * square roots and enforce distinctness */
-    if (n % d == 0)
-      if (isPrime(d) && isPrime(n / d))
-        return 1;
+    if (n % d == 0 && isPrime(d) && isPrime(n / d))
+      return 1;
   return 0;
 }
 

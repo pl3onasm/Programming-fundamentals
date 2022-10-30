@@ -33,7 +33,8 @@ int digitProduct (int n) {
   return prod; 
 }
 
-int isPfSquare (int n) {
+int isPerfSquare (int n) {
+  // returns 1 if n is a perfect square, 0 otherwise
   int i; 
   for (i=1; i*i<n; ++i);
   return (i*i==n); 
@@ -44,7 +45,7 @@ int main(int argc, char *argv[]) {
   
   scanf("%d %d", &a, &b);
   for (int i = a; i<=b; ++i)
-    count += isPrime(digitSum(i)) && isPfSquare(digitProduct(i)); 
+    count += isPrime(digitSum(i)) && isPerfSquare(digitProduct(i)); 
 
   printf("%d\n", count);
   return 0;

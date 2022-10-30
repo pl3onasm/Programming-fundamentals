@@ -1,4 +1,4 @@
-/* file: prob4.c
+/* file: prob4-1.c
 * description: problem 4,
 * Fibonacci’s bunnies again, mid2017
 */

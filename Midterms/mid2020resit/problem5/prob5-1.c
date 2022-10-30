@@ -1,4 +1,4 @@
-/* file: prob5.c
+/* file: prob5-1.c
   author: David De Potter
   description: IP mid2020 resit, problem 5, check
 */

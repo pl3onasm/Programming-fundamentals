@@ -8,7 +8,7 @@
 
 int main(int argc, char *argv[]) {
   char prefixes[100];
-  int len=0, counta, countb, countc, valid=1;
+  int len=0, counta, countb, countc;
   char c;
   //reads the input string and computes its length
   while ((c = getchar()) != '.') {
@@ -28,12 +28,11 @@ int main(int argc, char *argv[]) {
     if ((countb > counta) || (countc > counta + countb)) {
       /* at least one of the prefixes does not comply,
        * so the input string is invalid */
-      valid = 0;
-      break;
+      printf("INVALID\n");
+      return 0;
     }
   }
 
-  if (valid == 0) printf("INVALID\n");
-  else printf("VALID\n");
+  printf("VALID\n");
   return 0;
 }

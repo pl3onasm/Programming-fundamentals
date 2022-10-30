@@ -15,12 +15,18 @@ int isPrime (int x) {
   return 1;
 }
 
-int power (int x, int y) {
-  //returns x to the power y
-  int power = 1;
-  if (y == 0) return 1;
-  for (int i = 1; i<=y; ++i) power *= x;
-  return power;
+int power(int n, int exp) {
+  /* returns n^exp using exponentiation by squaring, 
+     aka binary exponentiation */
+  int m=1;
+  while (exp != 0) {
+    if (exp%2 == 0) {
+      n *= n; exp /= 2;
+    } else {
+      m *= n; exp--;
+    }
+  }
+  return m;
 }
 
 int countDigits (int p) {
@@ -42,13 +48,7 @@ int getInnerNumber (int x) {
 int main(int argc, char *argv[]) {
   int n;
   scanf ("%d", &n);
-  if (isPrime(n)) {
-    if (isPrime(getInnerNumber(n))) printf("YES\n");
-    else printf("NO\n");
-    /* inner number is not a prime, so the input number
-     * is not an encapsulating prime */
-  } else printf("NO\n");
-    /* the input number itself is not a prime, so it
-     * can never be an encapsulating prime */
+  if (isPrime(n) && isPrime(getInnerNumber(n))) printf("YES\n");
+  else printf("NO\n");
   return 0;
 }

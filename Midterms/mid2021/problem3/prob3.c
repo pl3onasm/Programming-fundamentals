@@ -15,7 +15,7 @@ int isPrime (int x) {
   return 1;
 }
 
-int getPrecedingPrime (int p) {
+int getPrevPrime (int p) {
   //gets the prime neighbour < p
   if (p == 2) return p;
   if (p%2 == 0) --p;
@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
   int a, b, count=0;
   
   scanf("%d %d", &a, &b);
-  int smallest = getPrecedingPrime(a-1);
+  int smallest = getPrevPrime(a-1);
   int middle = getNextPrime(a);
   while (1) {
     int largest = getNextPrime(middle+1);

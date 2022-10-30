@@ -7,10 +7,14 @@
 #include <stdlib.h>
 
 int sumDivisors (int n) {
+  // returns the sum of n's proper divisors
   int sum = 1;
-  //sum starts at 1, as 1 is a proper divisor for all n
-  for(int d=2; 2*d <= n; d++) 
-    if (n%d == 0) sum += d;
+  for (int d = 2; d * d <= n; ++d) {
+    if (n % d == 0) {
+      if (d * d != n) sum += d + n / d;
+      else sum += d; //count square root only once
+    }
+  }
   return sum;
 }
 

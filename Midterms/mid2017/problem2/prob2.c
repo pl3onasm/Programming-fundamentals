@@ -10,10 +10,10 @@ int main(int argc, char *argv[]) {
   int a, b;
   char operator;
 
-  if (scanf("%d", &a) == 1) {
+  if (scanf("%d", &a)) {
     // equation has the form (3) - (6)
     scanf("%c", &operator);
-    if (scanf("%d", &b) == 1)
+    if (scanf("%d", &b))
       // equation has the form (5) or (6)
       printf("x=%d\n", (operator == '+' ? a+b : a-b));
     else {

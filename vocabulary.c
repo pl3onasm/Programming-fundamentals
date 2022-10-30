@@ -67,6 +67,13 @@ int isPrime (int x) {
   return 1;
 }
 
+int isPerfSquare (int n) {
+  // returns 1 if n is a perfect square, 0 otherwise
+  int i; 
+  for (i=1; i*i<n; ++i);
+  return (i*i==n); 
+}
+
 int toBinary (int n, int *bin) {
   /* converts n to binary and stores the result in bin
      returns length of binary representation */

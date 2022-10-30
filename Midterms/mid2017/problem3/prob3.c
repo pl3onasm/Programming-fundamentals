@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
   
   scanf("%d %d", &a, &b);
   for(int d = 2; (d <= a) && (d <= b); d++) {
-    if ((a % d == 0) && (b % d == 0))
+    if (a % d == 0 && b % d == 0)
       //if d divides both, then let d be the current highest cpf
       hcpf = d;
     while (a % d == 0) a /= d;
