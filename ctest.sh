@@ -56,17 +56,21 @@ echo
 for INFILE in "${INFILES[@]}"; do
   if [ -t 1 ]; then echo -e "${BOLDBLUE}Test ${INFILE:8} ${ENDCOLOR}"
   echo -e "${BOLDBLUE}---------- ${ENDCOLOR}"
-  else echo -e "Test $INFILE\n---------- "; fi
+  else echo -e "Test ${INFILE:8}\n---------- "; fi
   OUTFILE="${INFILE%.*}.out"
   if [ ! -f "$OUTFILE" ]; then
     echo -e "Test file $OUTFILE not found!\n"
     continue
   else
-    DIF="$(diff "$OUTFILE" <(./a.out < "$INFILE"))"
+    OUTPUT=$(./a.out < "$INFILE")
+    DIF="$(diff "$OUTFILE" <(echo "$OUTPUT"))"
+    EXPECTED=$(cat "$OUTFILE")
     if [ -n "$DIF" ]; then
-      if [ -t 1 ]; then echo -e "${RED}Test failed.${ENDCOLOR}
-      \nDifference : ${RED}$DIF${ENDCOLOR}\n"
-      else echo -e "FAILED.\nDifference : $DIF\n"; fi
+      if [ -t 1 ]; then echo -e "${RED}Test failed.${ENDCOLOR}"
+      echo -e "Expected:\n\t${GREEN}$EXPECTED${ENDCOLOR}"
+      echo -e "Actual:\n\t${RED}$OUTPUT${ENDCOLOR}\n"
+      else echo -e "Test failed.\nExpected:\n\t$EXPECTED"
+      echo -e "Actual:\n\t$OUTPUT\n"; fi
     else
       if [ -t 1 ]; then echo -e "${GREEN}PASSED!${ENDCOLOR}\n"
       else echo -e "PASSED!\n"; fi
