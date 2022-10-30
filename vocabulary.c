@@ -71,7 +71,10 @@ int toBinary (int n, int *bin) {
   /* converts n to binary and stores the result in bin
      returns length of binary representation */
   int len = 0;
-  while (n > 0) {bin[len++] = n%2; n >>= 1;}
+  while (n > 0) {
+    bin[len++] = n % 2; 
+    n >>= 1;
+  }
   return len; 
 }
 
