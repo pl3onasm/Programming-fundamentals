@@ -1,6 +1,5 @@
 /* file: prob1.c
 * author: David De Potter 
-* version: 1.0
 * description: problem 1, shell game, resit mid2017
 */
 
@@ -29,7 +28,7 @@ int main(int argc, char *argv[]) {
   /* scans through the array to find and
    * print the ball's final position */
   for (int i = 0; i<3; ++i) {
-    if (positions[i] == 1) {
+    if (positions[i]) {
       printf("POSITION %d\n", i+1);
       break;
     }
