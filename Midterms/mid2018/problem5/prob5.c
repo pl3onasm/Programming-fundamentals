@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
       a = 2*x*y;
       b = y*y - x*x;  // note that b is always positive
       c = x*x + y*y;
-      if ((a + b + c == n) && (noCommonDivisors(x, y)))
+      if ((a + b + c == n) && noCommonDivisors(x, y))
         count++;
       if (c > n) break; //jumps to the next x
     }
