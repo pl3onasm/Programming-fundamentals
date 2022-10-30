@@ -42,9 +42,9 @@ if [ ! -d "$DIR" ]; then
   exit 1
 fi
 
-readarray -d '' infiles < <(printf '%s\0' ./tests/*.in | sort -zV)
-len=${#infiles[@]}
-if [ $len -eq 0 ]; then
+readarray -d '' INFILES < <(printf '%s\0' ./tests/*.in | sort -zV)
+LEN=${#INFILES[@]}
+if [ $LEN -eq 0 ]; then
   echo "No test cases found!"
   exit 1
 fi
@@ -53,20 +53,20 @@ if [ -t 1 ]; then echo -e "${CYANBACK}  ==:: TEST RESULTS ::==  ${ENDCOLOR}"
 else echo "==:: TEST RESULTS ::=="; fi
 echo
 
-for infile in "${infiles[@]}"; do
-  if [ -t 1 ]; then echo -e "${BOLDBLUE}Test ${infile:8} ${ENDCOLOR}"
+for INFILE in "${INFILES[@]}"; do
+  if [ -t 1 ]; then echo -e "${BOLDBLUE}Test ${INFILE:8} ${ENDCOLOR}"
   echo -e "${BOLDBLUE}---------- ${ENDCOLOR}"
-  else echo -e "Test $infile\n---------- "; fi
-  outfile="${infile%.*}.out"
-  if [ ! -f "$outfile" ]; then
-    echo -e "Test file $outfile not found!\n"
+  else echo -e "Test $INFILE\n---------- "; fi
+  OUTFILE="${INFILE%.*}.out"
+  if [ ! -f "$OUTFILE" ]; then
+    echo -e "Test file $OUTFILE not found!\n"
     continue
   else
-    dif="$(diff "$outfile" <(./a.out < "$infile"))"
-    if [ -n "$dif" ]; then
+    DIF="$(diff "$OUTFILE" <(./a.out < "$INFILE"))"
+    if [ -n "$DIF" ]; then
       if [ -t 1 ]; then echo -e "${RED}Test failed.${ENDCOLOR}
-      \nDifference : ${RED}$dif${ENDCOLOR}\n"
-      else echo -e "FAILED.\nDifference : $dif\n"; fi
+      \nDifference : ${RED}$DIF${ENDCOLOR}\n"
+      else echo -e "FAILED.\nDifference : $DIF\n"; fi
     else
       if [ -t 1 ]; then echo -e "${GREEN}PASSED!${ENDCOLOR}\n"
       else echo -e "PASSED!\n"; fi
@@ -83,7 +83,7 @@ else echo -e "Valgrind test\n------------- "; fi
 if ! [ -x "$(command -v valgrind)" ]; then
   echo -e "Test failed. Valgrind not installed.\n"
 else
-  TEST=$(valgrind ./a.out < "${infiles["$((len-1))"]}" 2>&1 >/dev/null)\
+  TEST=$(valgrind ./a.out < "${INFILES["$((LEN-1))"]}" 2>&1 >/dev/null)\
   CHECK1=$(echo "$TEST" | grep -c "in use at exit: 0 bytes in 0 blocks")
   CHECK2=$(echo "$TEST" | grep -c "0 errors from 0 contexts")
   if [[ $CHECK1 -ne 0 && $CHECK2 -ne 0 ]]; then
@@ -91,24 +91,24 @@ else
     else echo -e "PASSED!\n"; fi
     PASSED=$((PASSED + 1))
   else
-    if [ -t 1 ]; then echo -e "${RED}Memory leaks detected!\n${ENDCOLOR}"
-    else echo -e "Memory leaks detected!\n"; fi
+    if [ -t 1 ]; then echo -e "${RED}Memory issues detected!\n${ENDCOLOR}"
+    else echo -e "Memory issues detected!\n"; fi
   fi
 fi
 
-len=$((len + 1))  # Add 1 for valgrind test
+LEN=$((LEN + 1))  # Add 1 for valgrind test
 
-if [ $PASSED -eq $len ]; then
+if [ $PASSED -eq $LEN ]; then
   if [ -t 1 ]; then echo -e "${GREEN}You have passed all tests! \(ᵔᵕᵔ)/${ENDCOLOR}"
   else echo "All tests passed!"; fi
-elif [ $PASSED -eq $(($len-1)) ]; then 
-  if [ -t 1 ]; then echo -e "${MAGENTA}You have passed $PASSED out of $len tests."
+elif [ $PASSED -eq $(($LEN-1)) ]; then 
+  if [ -t 1 ]; then echo -e "${MAGENTA}You have passed $PASSED out of $LEN tests."
   echo -e "Almost there...! (◎_◎)${ENDCOLOR}"
-  else echo -e "Passed $PASSED out of $len tests."; fi
+  else echo -e "Passed $PASSED out of $LEN tests."; fi
 else    
-  if [ -t 1 ]; then echo -e "${MAGENTA}You have passed $PASSED out of $len tests. 
+  if [ -t 1 ]; then echo -e "${MAGENTA}You have passed $PASSED out of $LEN tests. 
   (._.)${ENDCOLOR}"
-  else echo "Passed $PASSED out of $len tests."; fi
+  else echo "Passed $PASSED out of $LEN tests."; fi
 fi
 echo
 
