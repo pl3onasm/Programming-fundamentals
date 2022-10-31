@@ -63,8 +63,7 @@ int leftRotate (int x) {
      ignoring leading zeros, e.g. 1234 -> 2341 */
   int pow = power(10, countDigits(x)-1);
   int firstDigit = x / pow;
-  int rotation = (x % pow)*10 + firstDigit;
-  return rotation;
+  return (x % pow)*10 + firstDigit;
 }
 
 int rightRotate (int x) {
@@ -72,8 +71,7 @@ int rightRotate (int x) {
      ignoring leading zeros, e.g. 1234 -> 4123 */
   int pow = power(10, countDigits(x)-1);
   int lastDigit = x % 10;
-  int rotation = lastDigit * pow + x / 10;
-  return rotation;
+  return lastDigit * pow + x / 10;
 }
 
 int isPrime (int x) {

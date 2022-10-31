@@ -53,8 +53,7 @@ int leftRotate (int x, int length) {
      ignoring leading zeros, e.g. 1234 -> 2341 */
   int pow = power(10, length-1);
   int firstDigit = x / pow;
-  int rotation = (x % pow)*10 + firstDigit;
-  return rotation;
+  return (x % pow)*10 + firstDigit;
 }
 
 int main(int argc, char *argv[]) {
