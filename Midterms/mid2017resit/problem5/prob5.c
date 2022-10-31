@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void swap (int a[], int b[]) {
+void swap (int *a, int *b) {
   for (int i = 0; i < 2; i++) {
     int temp = a[i];
     a[i] = b[i];
