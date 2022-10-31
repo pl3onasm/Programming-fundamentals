@@ -356,7 +356,7 @@ int *copySubArray(int left, int right, int arr[]) {
 }
 
 void mergeSort(int length, int arr[]) {
-  /* sorts an array of integers using merge sort;
+  /* sorts an array of integers in O(n log n) time;
      this function is given on the exam */
   int l, r, mid, idx, *left, *right;
   if (length <= 1) {
@@ -395,7 +395,7 @@ void mergeSort(int length, int arr[]) {
 }
 
 void bubbleSort(int *arr, int len) {
-  /* sorts an array of integers using bubble sort */
+  /* sorts an array of integers in O(n²) */
   int i, j, change;
   for (i=0; i < len; ++i) {
     change=0;
