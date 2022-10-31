@@ -60,15 +60,15 @@ int leftRotate (int x, int length) {
 int main(int argc, char *argv[]) {
   int a, b, length, valid, n, rot;
   scanf ("%d %d", &a, &b);
-  
+
   for (n = a; n <= b; ++n) {
     length = countDigits(n);
     if (length <= 1 && isPrime(n)) printf("%d\n", n);
-    else { // length n >= 2
+    else { 
       if (hasDivisibleDigits(n)) continue;
-      /* if in this case any of n's digits is divisible by 2 or 5,
-       * this means that at least one of its rotations will not be a prime,
-       * and n can never be a super prime, so we jump to the next n */
+      /* if any of n's digits is divisible by 2 or 5, then at 
+       * least one of its rotations will not be a prime, and n can
+       * never be a circular prime, so we jump to the next n */
       valid = 1; rot = n;
       for (int i = 0; i < length; ++i) {
         // checks if all rotations, including n itself, are prime
