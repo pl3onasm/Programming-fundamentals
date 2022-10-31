@@ -58,6 +58,24 @@ int reverse(int n) {
   return rev;
 }
 
+int leftRotate (int x) {
+  /* returns the left rotation of a given number x,
+     ignoring leading zeros, e.g. 1234 -> 2341 */
+  int pow = power(10, countDigits(x)-1);
+  int firstDigit = x / pow;
+  int rotation = (x % pow)*10 + firstDigit;
+  return rotation;
+}
+
+int rightRotate (int x) {
+  /* returns the right rotation of a given number x,
+     ignoring leading zeros, e.g. 1234 -> 4123 */
+  int pow = power(10, countDigits(x)-1);
+  int lastDigit = x % 10;
+  int rotation = lastDigit * pow + x / 10;
+  return rotation;
+}
+
 int isPrime (int x) {
   // returns 1 if x is prime, 0 otherwise
   if (x == 2) return 1;

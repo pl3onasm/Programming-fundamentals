@@ -34,7 +34,7 @@ int countPairs (int *f, int n, int *g, int m) {
 }
 
 int main(int argc, char *argv[]) {
-  int *f, *g, m, n;
+  int *f, n, *g, m;
   
   scanf("%d:", &n);
   f = makeIntArray(n);

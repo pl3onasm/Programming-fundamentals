@@ -19,8 +19,8 @@ int isPrime (int x) {
 int power(int num, int exp) {
   /* returns number^exponent */
   int m=1;
-  while (exp!=0) {
-    if (exp%2 == 0) {
+  while (exp != 0) {
+    if (exp % 2 == 0) {
       num *= num; exp /= 2;
     } else {
       m *= num; exp--;
@@ -30,7 +30,7 @@ int power(int num, int exp) {
 }
 
 int hasDivisibleDigits (int n) {
-  //checks if any of number's digits is divisible by 2 or 5
+  //checks if any of n's digits is divisible by 2 or 5
   while (n != 0) {
     int digit = n % 10;
     if (digit % 2 == 0 || digit % 5 == 0) return 1;
@@ -49,10 +49,11 @@ int countDigits (int n) {
 }
 
 int leftRotate (int x, int length) {
-  //returns the left rotation of a given number
-  int firstDigit, rotation = 0;
-  firstDigit = x/power(10, length-1);
-  rotation = (x%power(10, length-1))*10 + firstDigit;
+  /* returns the left rotation of a given number x,
+     ignoring leading zeros, e.g. 1234 -> 2341 */
+  int pow = power(10, length-1);
+  int firstDigit = x / pow;
+  int rotation = (x % pow)*10 + firstDigit;
   return rotation;
 }
 
@@ -62,13 +63,12 @@ int main(int argc, char *argv[]) {
   scanf ("%d %d", &a, &b);
   for (n = a; n <= b; ++n) {
     length = countDigits(n);
-    if (length <= 1) {
+    if (length <= 1)
       if (isPrime(n)) printf("%d\n", n);
-      continue;
-    } else { // length n >= 2
+    else { 
       if (hasDivisibleDigits(n)) continue;
-      /* if in this case any of n's digits is divisible by 2 or 5,
-       * this means that at least one of its rotations will not be a prime,
+      /* if any of n's digits is divisible by 2 or 5, then
+       * at least one of its rotations will not be a prime,
        * and n can never be a super prime, so we jump to the next n */
       valid = 1; rot = n;
       for (int i = 0; i < length; ++i) {
@@ -82,6 +82,5 @@ int main(int argc, char *argv[]) {
       if (valid) printf("%d\n", n);
     }
   }
-
   return 0;
 }
