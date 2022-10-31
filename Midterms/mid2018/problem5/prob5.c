@@ -15,11 +15,11 @@
   x/y = c/a - b/a
 
   Adding the two equations yields:
-  2*c/a = y/x + x/y = (x² + y²) / xy
+  2*c/a = y/x + x/y = (y² + x²) / xy
   Subtraction yields:
-  2*b/a = y/x - x/y = (x² - y²) / xy
+  2*b/a = y/x - x/y = (y² - x²) / xy
 
-  Hence, c = (x² + y²), b = (x² - y²) and a = 2xy.
+  Hence, c = (y² + x²), b = (y² - x²) and a = 2xy.
   Now we just need to find all the coprime pairs (x, y) such 
   that a + b + c = n.
 */
