@@ -68,8 +68,8 @@ for INFILE in "${INFILES[@]}"; do
     EXPECTED=$(cat "$OUTFILE")
     if [ -n "$DIF" ]; then
       if [ -t 1 ]; then echo -e "${RED}Test failed.${ENDCOLOR}"
-      echo -e "Expected:\n\t${GREEN}$EXPECTED${ENDCOLOR}"
-      echo -e "Actual:\n\t${RED}$OUTPUT${ENDCOLOR}\n"
+      echo -e "Expected:\n    ${GREEN}${EXPECTED//$'\n'/$'\n'    }${ENDCOLOR}"
+      echo -e "Actual:\n    ${RED}${OUTPUT//$'\n'/$'\n'    }${ENDCOLOR}\n"
       else echo -e "Test failed.\nExpected:\n\t$EXPECTED"
       echo -e "Actual:\n\t$OUTPUT\n"; fi
     else
