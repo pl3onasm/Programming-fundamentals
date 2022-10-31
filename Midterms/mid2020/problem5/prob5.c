@@ -31,7 +31,7 @@ int checkWin (int grid[][7], int row, int col) {
   return 0;
 }
 
-int checkGrid(int grid[][7]) {
+int fillGrid(int grid[][7]) {
   //yellow discs are represented by 1, red ones by 2
   int turn=0, row, col; 
   while(scanf("%d,", &col) == 1) {
@@ -46,7 +46,7 @@ int checkGrid(int grid[][7]) {
 
 int main(int argc, char *argv[]) {
   int grid[6][7] = {0}; // initializes grid with zeros
-  int r = checkGrid(grid);
+  int r = fillGrid(grid);
 
   if (r > 0) printf("RED\n");
   else if (r < 0) printf("UNDECIDED\n");
