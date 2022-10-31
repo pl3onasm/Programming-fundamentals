@@ -42,8 +42,8 @@ int hasNoThreeAdjacentNumbers(int arr[][8]){
   /* checks if no row or col contains more than two adjacent 0s or 1s */
   for (int i=0; i < 8; ++i) 
     for (int j=0; j < 6; ++j) 
-      if ((arr[i][j] == arr[i][j+1]) &&
-        (arr[i][j] == arr[i][j+2])) return 0;
+      if (arr[i][j] == arr[i][j+1] &&
+          arr[i][j] == arr[i][j+2]) return 0;
   return 1; 
 }
 
