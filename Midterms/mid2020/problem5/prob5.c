@@ -14,17 +14,14 @@ int checkEmptyCell(int grid[][7], int col) {
 }
 
 int checkWin (int grid[][7], int row, int col) {
-  int dir[] = {1, 0, 0, 1, 1, 1, -1, 1};
-  for (int i = 0; i < 8; i += 2) {
-    int count = 1;
-    for (int mult = -1; mult <= 1; mult += 2) {
-      int r = row + mult * dir[i];
-      int c = col + mult * dir[i+1];
-      while (r >= 0 && r < 6 && c >= 0 && c < 7 && grid[r][c] == grid[row][col]) {
-        count++;
-        r += mult * dir[i];
-        c += mult * dir[i+1];
-      }
+  int count = 1, dir[] = {1,0,-1,0,0,1,0,-1,1,1,-1,-1,1,-1,-1,1}; 
+  for (int i = 0; i < 16; i += 2) {
+    if (i % 4 == 0) count = 1; 
+    int r = row + dir[i], c = col + dir[i+1];
+    while (r >= 0 && r < 6 && c >= 0 && c < 7 && grid[r][c] == grid[row][col]) {
+      count++;
+      r += dir[i];
+      c += dir[i+1];
     }
     if (count >= 4) return 1;
   }
@@ -47,10 +44,9 @@ int fillGrid(int grid[][7]) {
 int main(int argc, char *argv[]) {
   int grid[6][7] = {0}; // initializes grid with zeros
   int r = fillGrid(grid);
-
+  
   if (r > 0) printf("RED\n");
   else if (r < 0) printf("UNDECIDED\n");
   else printf("YELLOW\n");
-
   return 0;
 }
