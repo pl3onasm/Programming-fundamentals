@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
   if (eq1[1] > eq2[1]) swap (eq1, eq2);
   if (eq1[1] > eq3[1]) swap (eq1, eq3);
   /* now we want to get the smallest number that satisfies 
-   * tthe equation containing the largest modulus (divisor) */
+   * the equation containing the largest modulus (divisor) */
   do g++;
   while (g % eq1[1] != eq1[0]);
   /* now we can skip through the rest of the numbers using the
