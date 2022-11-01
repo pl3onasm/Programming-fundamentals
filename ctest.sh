@@ -69,9 +69,9 @@ for INFILE in "${INFILES[@]}"; do
     if [ -n "$DIF" ]; then
       if [ -t 1 ]; then echo -e "${RED}Test failed.${ENDCOLOR}"
       echo -e "Expected:\n    ${GREEN}${EXPECTED//$'\n'/$'\n'    }${ENDCOLOR}"
-      echo -e "Actual:\n    ${RED}${OUTPUT//$'\n'/$'\n'    }${ENDCOLOR}\n"
-      else echo -e "Test failed.\nExpected:\n\t$EXPECTED"
-      echo -e "Actual:\n\t$OUTPUT\n"; fi
+      echo -e "\nActual:\n    ${RED}${OUTPUT//$'\n'/$'\n'    }${ENDCOLOR}\n"
+      else echo -e "Test failed.\nExpected:\n    ${EXPECTED//$'\n'/$'\n'    }"
+      echo -e "\nActual:\n    ${OUTPUT//$'\n'/$'\n'    }\n"; fi
     else
       if [ -t 1 ]; then echo -e "${GREEN}PASSED!${ENDCOLOR}\n"
       else echo -e "PASSED!\n"; fi
