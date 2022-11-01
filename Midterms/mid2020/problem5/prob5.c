@@ -6,10 +6,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int checkEmptyCell(int grid[][7], int col) {
+int findEmptyCell(int grid[][7], int col) {
   //returns row index with first empty cell in given column
   int row = 5;
-  while (grid[row][col] > 0) row--; 
+  while (grid[row][col]) row--; 
   return row; 
 }
 
@@ -32,7 +32,7 @@ int fillGrid(int grid[][7]) {
   //yellow discs are represented by 1, red ones by 2
   int turn=0, row, col; 
   while(scanf("%d,", &col) == 1) {
-    row = checkEmptyCell(grid, col);
+    row = findEmptyCell(grid, col);
     if (turn % 2 == 0) grid[row][col] = 1; //yellow disc
     else grid[row][col] = 2;  //red disc
     if (checkWin(grid, row, col)) return turn % 2;
