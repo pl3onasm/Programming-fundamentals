@@ -15,9 +15,9 @@ int main(int argc, char *argv[]) {
 
   /* In this version we use the following equation for the number
    * of rabbit pairs in a generation:
-   * R(n,m) = R(n-1) + R(n-2) - R(n-(m+1))
+   * Fₙ,ₘ = Fₙ₋₁ + Fₙ₋₂ - F₍ₙ₋₍ₘ₊₁₎₎
    * where run for n years, and rabbits die after m years
-   * If we use a list, then we have a problem for n==m, because
+   * If we use an array, then we have a problem for n==m, because
    * the equation would need the value at position -1
    * So we need to provide this value ourselves.
    */
@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
       //normal Fibonacci initialization
       fibmem[i] = 1;
     else if ((i < m) || (m == 0))
-      //normal Fibonacci computation, Fn = Fn−1 + Fn−2
+      //normal Fibonacci computation, Fₙ = Fₙ₋₁ + Fₙ₋₂
       fibmem[i] = fibmem[i - 1] + fibmem[i - 2];
     else if (i == m)
       //i-(m+1) < 0, so we need to provide the missing value

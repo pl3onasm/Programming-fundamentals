@@ -10,18 +10,24 @@ int main(int argc, char *argv[]) {
   int a,b,c,d,e,n;
 
   scanf("%d", &n);
-  a = 1; //F0
+  a = 1; //F₀
   b = c = d = e = 0;
-  //b = Fn-2, c = Fn-3, d = Fn-4, e = Fn-5
+  //b = F₁, c = F₂, d = F₃, e = F₄
 
   while (n>0) {
-    //keep track of Fn over a period of 5 years
-    int offspring = b + c + d + e;
-      //Fn = Fn-2 + Fn-2 + Fn-4 + Fn-5
-    e = d;
+    /* keep track of bunnies over a period of 5 years
+    in which they take 1 year to mature, reproduce for 4 years,
+    and die after 5 years
+    
+    Fₙ = Fₙ₋₁ + Fₙ₋₂ + Fₙ₋₃ + Fₙ₋₄ + Fₙ₋₅
+    where Fₙ₋₁ = a, Fₙ₋₂ = b, Fₙ₋₃ = c, Fₙ₋₄ = d, Fₙ₋₅ = e */
+    
+    int offspring = b + c + d + e;  // bunnies produced in the last year
+      
+    e = d;  // after 5 years, the bunnies die
     d = c;
     c = b;
-    b = a;  //offset of 2 because of the start
+    b = a;  
     a = offspring;
     n--;
   }
