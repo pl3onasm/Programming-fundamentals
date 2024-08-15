@@ -87,42 +87,41 @@
       (void)! scanf(format, &matrix[i][j]);
 
   // macro for reading input from stdin as long as it lasts
-  // creates a new array of the given type and format,
-  // sets the parameter size to the number of elements read
+  // creates a new array of the given type and format, and
+  // a new variable size with the number of elements read
   // and sets the last element to '\0'
   // Examples:  READ(int, "%d", myInts, size);
   //            READ(double, "%lf", myDbls, size);
   //            READ(char, "%c", myChrs, size);
 #define READ(type, arr, format, size) \
   type *arr = safeCalloc(100, sizeof(type)); \
-  int arr##Len = 0; type arr##var; \
+  size_t size = 0; type arr##var; \
   while (scanf(format, &arr##var) == 1) { \
-    arr[arr##Len++] = arr##var; \
-    if (arr##Len % 100 == 0) {\
-      arr = safeRealloc(arr, (arr##Len + 100) * sizeof(type)); \
-      memset(arr + arr##Len, 0, 100 * sizeof(type)); \
+    arr[size++] = arr##var; \
+    if (size % 100 == 0) { \
+      arr = safeRealloc(arr, (size + 100) * sizeof(type)); \
+      memset(arr + size, 0, 100); \
     } \
   } \
-  size = arr##Len;\
-  arr[arr##Len] = '\0';
+  arr[size] = '\0';
 
-// macro for reading input from stdin until a given 
+  // macro for reading input from stdin until a given 
   // delimiter is encountered 
-  // returns a new array of the given type
-  // and sets size to the number of chars read
+  // returns a new array of the given type and creates a
+  // new variable size with the number of elements read
   // Examples:  READ_UNTIL(char, myString, "%c", '\n', size);
   //            READ_UNTIL(int, myInts, "%d", '.', size);
 #define READ_UNTIL(type, arr, format, delim, size) \
   type *arr = safeCalloc(100, sizeof(type)); \
-  size_t arr##Len = 0; type arr##var; \
+  size_t size = 0; type arr##var; \
   while (scanf(format, &arr##var) == 1 && arr##var != delim) { \
-    arr[arr##Len++] = arr##var; \
-    if (arr##Len % 100 == 0) { \
-      arr = safeRealloc(arr, (arr##Len + 100) * sizeof(type)); \
-      memset(arr + arr##Len, 0, 100); \
+    arr[size++] = arr##var; \
+    if (size% 100 == 0) { \
+      arr = safeRealloc(arr, (size + 100) * sizeof(type)); \
+      memset(arr + size, 0, 100); \
     } \
   } \
-  arr[arr##Len] = '\0'; size = arr##Len;\
+  arr[size] = '\0';\
   (void) ! scanf("%*c");
 
 //::::::::::::::::::::::::: INTEGERS.C :::::::::::::::::::::::::://
