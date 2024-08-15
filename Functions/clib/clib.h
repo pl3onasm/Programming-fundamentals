@@ -106,12 +106,12 @@
   size = arr##Len;\
   arr[arr##Len] = '\0';
 
-  // macro for reading input from stdin until a given 
+// macro for reading input from stdin until a given 
   // delimiter is encountered 
-  // returns a string containing all chars read
+  // returns a new array of the given type
   // and sets size to the number of chars read
   // Examples:  READ_UNTIL(char, myString, "%c", '\n', size);
-  //            READ_UNTIL(int, myInts, "%d", 0, size);
+  //            READ_UNTIL(int, myInts, "%d", '.', size);
 #define READ_UNTIL(type, arr, format, delim, size) \
   type *arr = safeCalloc(100, sizeof(type)); \
   size_t arr##Len = 0; type arr##var; \
@@ -119,11 +119,11 @@
     arr[arr##Len++] = arr##var; \
     if (arr##Len % 100 == 0) { \
       arr = safeRealloc(arr, (arr##Len + 100) * sizeof(type)); \
-      memset(arr + arr##Len, 0, 100 * sizeof(type)); \
+      memset(arr + arr##Len, 0, 100); \
     } \
   } \
-  size = arr##Len;\
-  arr[arr##Len] = '\0';
+  arr[arr##Len] = '\0'; size = arr##Len;\
+  (void) ! scanf("%*c");
 
 //::::::::::::::::::::::::: INTEGERS.C :::::::::::::::::::::::::://
 
