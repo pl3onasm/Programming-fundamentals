@@ -1,4 +1,4 @@
-$\color{cadetblue}{\text{\huge Next smaller number}}$
+$\huge\color{cadetblue}{\text{Next smaller number}}$
 
 <br/>
 

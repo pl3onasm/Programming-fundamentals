@@ -1,4 +1,4 @@
-$\color{cadetblue}{\text{\huge Problem 1}}$
+$\huge\color{cadetblue}{\text{Problem 1}}$
 
 <br/>
 
@@ -8,7 +8,7 @@ constants (so not program variables).
 
 ---------------
 
-${\color{darkkhaki}\text{\Large Prob 1.1}}$
+$\Large{\color{darkkhaki}\text{Prob 1.1}}$
 
 ```java
 // x = y + 7 
@@ -24,7 +24,7 @@ ${\color{peru}(c)} \quad x := 11 - (x + y + 7);$
 
 ---------------
 
-${\color{darkkhaki}\text{\Large Prob 1.2}}$
+$\Large{\color{darkkhaki}\text{Prob 1.2}}$
 
 ```java
 // x = A ∧ y = B 
@@ -40,7 +40,7 @@ ${\color{peru}(c)} \quad y := x + y; \space x := y - 2 * x;$
 
 ---------------
 
-${\color{darkkhaki}\text{\Large Prob 1.3}}$
+$\Large{\color{darkkhaki}\text{Prob 1.3}}$
 
 ```java
 // x = A ∧ y = B 
@@ -56,7 +56,7 @@ ${\color{peru}(c)} \quad x := y; \space y := x;$
 
 ---------------
 
-${\color{darkkhaki}\text{\Large Prob 1.4}}$
+$\Large{\color{darkkhaki}\text{Prob 1.4}}$
 
 ```java
 // .....
@@ -73,7 +73,7 @@ ${\color{peru}(c)} \quad x = B \space \land \space y = A$
 
 ---------------
 
-${\color{darkkhaki}\text{\Large Prob 1.5}}$
+$\Large{\color{darkkhaki}\text{Prob 1.5}}$
 
 ```java
 // ..... 
@@ -89,7 +89,7 @@ ${\color{peru}(c)} \quad 10 \space \leq \space x + 3 * y + 5 \space < \space 16$
 
 ---------------
 
-${\color{darkkhaki}\text{\Large Prob 1.6}}$
+$\Large{\color{darkkhaki}\text{Prob 1.6}}$
 
 ```java
 // .....

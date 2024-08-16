@@ -1,4 +1,4 @@
-$\color{cadetblue}{\text{\huge Maximum Path}}$
+$\huge\color{cadetblue}{\text{Maximum Path}}$
 
 <br/>
 

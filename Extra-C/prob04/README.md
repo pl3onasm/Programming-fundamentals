@@ -1,4 +1,4 @@
-$\color{cadetblue}{\text{\huge Binary Palindromes}}$
+$\huge\color{cadetblue}{\text{Binary Palindromes}}$
 
 <br/>
 

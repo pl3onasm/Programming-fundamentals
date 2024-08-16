@@ -41,7 +41,7 @@ int maxPath (int n) {
   free(row1);
   free(row2);
   return max;
-  }
+}
 
 
 int main() {

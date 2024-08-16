@@ -1,4 +1,4 @@
-$\color{cadetblue}{\text{\huge Pandigital divisibility}}$
+$\huge\color{cadetblue}{\text{Pandigital divisibility}}$
 
 <br/>
 

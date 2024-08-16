@@ -1,4 +1,4 @@
-$\color{cadetblue}{\text{\huge Segments}}$
+$\huge\color{cadetblue}{\text{Segments}}$
 
 <br/>
 

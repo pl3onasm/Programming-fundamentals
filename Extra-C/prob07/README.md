@@ -1,4 +1,4 @@
-$\color{cadetblue}{\text{\huge Matching Bitstrings}}$
+$\huge\color{cadetblue}{\text{Matching Bitstrings}}$
 
 <br/>
 

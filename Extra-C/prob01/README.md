@@ -1,4 +1,4 @@
-$\color{cadetblue}{\text{\huge Sum of multiples}}$
+$\huge\color{cadetblue}{\text{Sum of multiples}}$
 
 <br/>
 

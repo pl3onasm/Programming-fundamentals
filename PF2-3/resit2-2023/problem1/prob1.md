@@ -1,4 +1,4 @@
-$\color{cadetblue}{\text{\huge Problem 1}}$
+$\huge\color{cadetblue}{\text{Problem 1}}$
 
 <br/>
 
@@ -8,7 +8,7 @@ constants (so not program variables).
 
 ---------------
 
-${\color{darkkhaki}\text{\Large Prob 1.1}}$
+$\Large{\color{darkkhaki}\text{Prob 1.1}}$
 
 ```java
 // x = 11 
@@ -24,7 +24,7 @@ ${\color{peru}(c)} \quad x := 11 - (x + y + 7);$
 
 ---------------
 
-${\color{darkkhaki}\text{\Large Prob 1.2}}$
+$\Large{\color{darkkhaki}\text{Prob 1.2}}$
 
 ```java
 // x = B - A ∧ y = A + B 
@@ -40,7 +40,7 @@ ${\color{peru}(c)} \quad y := x + y; \space x := y - 2  *  x;$
 
 ---------------
 
-${\color{darkkhaki}\text{\Large Prob 1.3}}$
+$\Large{\color{darkkhaki}\text{Prob 1.3}}$
 
 ```java
 // x - y = A - B ∧ x + y = A + B 
@@ -56,7 +56,7 @@ ${\color{peru}(c)} \quad x := 1 - x; \space y := 1 - y;$
 
 ---------------
 
-${\color{darkkhaki}\text{\Large Prob 1.4}}$
+$\Large{\color{darkkhaki}\text{Prob 1.4}}$
 
 ```java
 // .....
@@ -73,7 +73,7 @@ ${\color{peru}(c)} \quad 2 * x - 3 * y = A  \space \land \space x - 2 * y = B$
 
 ---------------
 
-${\color{darkkhaki}\text{\Large Prob 1.5}}$
+$\Large{\color{darkkhaki}\text{Prob 1.5}}$
 
 ```java
 // x = A ∧ y = B 
@@ -94,7 +94,7 @@ $\qquad \quad \land \space z = B$
 
 ---------------
 
-${\color{darkkhaki}\text{\Large Prob 1.6}}$
+$\Large{\color{darkkhaki}\text{Prob 1.6}}$
 
 ```java
 // x = A + B ∧ y = A - B 

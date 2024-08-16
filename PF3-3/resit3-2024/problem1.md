@@ -1,8 +1,8 @@
-$\color{cadetblue}{\text{\huge Problem 1}}$
+$\huge\color{cadetblue}{\text{Problem 1}}$
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 1.1: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 1.1: }}{\color{darkseagreen}{{\space \mathcal{O}(N)}}}$  
 
 <br/>
 
@@ -43,7 +43,7 @@ Thus, the number of iterations is about $N$, and the fragment's complexity is in
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 1.2: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N \log(N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 1.2: }}{\color{darkseagreen}{{\space \mathcal{O}(N \log(N))}}}$  
 
 <br/>
 
@@ -57,7 +57,7 @@ for (int i = 0; i < N; i++) {
 }
 ```
 
-The outer loop runs $N$ times, computing the sum of the integers from $0$ to $N-1$, so that at each iteration $s = \frac{i(i+1)}{2}$. The second loop runs $\log(s)$ times, since the loop index $j$ is doubled at each iteration of the inner loop. Thus, the total number of iterations becomes:
+The outer loop runs $N$ times, computing the sum of the integers from $0$ to $N-1$, so that at each iteration $s = i(i+1)/2$. The second loop runs $\log(s)$ times, since the loop index $j$ is doubled at each iteration of the inner loop. Thus, the total number of iterations becomes:
 
 $$
 \begin{align*}
@@ -78,7 +78,7 @@ The fragment's complexity is therefore in $\mathcal{O}(N \log(N))$.
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 1.3: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 1.3: }}{\color{darkseagreen}{{\space \mathcal{O}(N)}}}$  
 
 <br/>
 
@@ -108,7 +108,7 @@ We therefore conclude that the fragment's complexity is in $\mathcal{O}(N)$.
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 1.4: }}{\color{darkseagreen}{{\Large \space \mathcal{O}( \log(N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 1.4: }}{\color{darkseagreen}{{\space \mathcal{O}( \log(N))}}}$  
 
 <br/>
 
@@ -126,7 +126,7 @@ In the best case, $N$ is a power of $2$, so that $n$ is halved at each iteration
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 1.5: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N^2)}}}$  
+$\Large{\color{rosybrown}\text{Prob 1.5: }}{\color{darkseagreen}{{\space \mathcal{O}(N^2)}}}$  
 
 <br/>
 
@@ -137,13 +137,13 @@ for (int i = 0; i < N*N; i += 2) {
 }
 ```
 
-The loop index $i$ is incremented by $2$ at each iteration, so that the loop runs $\frac{N^2}{2}$ times. The fragment's complexity is therefore in $\mathcal{O}(N^2)$.
+The loop index $i$ is incremented by $2$ at each iteration, so that the loop runs $N^2/2$ times. The fragment's complexity is therefore in $\mathcal{O}(N^2)$.
 
 <br/>
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 1.6: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\sqrt N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 1.6: }}{\color{darkseagreen}{{\space \mathcal{O}(\sqrt N)}}}$  
 
 <br/>
 
@@ -154,13 +154,13 @@ for (int i = 0; i * i < N; i += 2) {
 }
 ```
 
-The loop's termination condition can be rewritten as $i^2 < N$, which is equivalent to $i < \sqrt{N}$. Since $i$ is incremented by $2$ at each iteration, the loop runs $\frac{\sqrt{N}}{2}$ times. The fragment's complexity is therefore in $\mathcal{O}(\sqrt{N})\space$.  
+The loop's termination condition can be rewritten as $i^2 < N$, which is equivalent to $i < \sqrt{N}$. Since $i$ is incremented by $2$ at each iteration, the loop runs $\sqrt{N}/2$ times. The fragment's complexity is therefore in $\mathcal{O}(\sqrt{N})\space$.  
 
 <br/>
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 1.7: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 1.7: }}{\color{darkseagreen}{{\space \mathcal{O}(N)}}}$  
 
 <br/>
 
@@ -175,7 +175,7 @@ while (s > 2) {
 }
 ```
 
-The first loop runs $N$ times, computing the sum of the integers from $0$ to $N-1$, so that at termination $s = \frac{N(N-1)}{2}$. The second loop divides $s$ by $2$ at each iteration and adds $1$ to the result. The loop will terminate when $s \leq 2$, which will happen after at most $2\log(N)$ iterations.  
+The first loop runs $N$ times, computing the sum of the integers from $0$ to $N-1$, so that at termination $s = N(N-1)/2$. The second loop divides $s$ by $2$ at each iteration and adds $1$ to the result. The loop will terminate when $s \leq 2$, which will happen after at most $2\log(N)$ iterations.  
 
 The loops are not nested, and so the most expensive one, the for loop in this case, determines the fragment's overall time complexity, which is thus in $\mathcal{O}(N)$.
 
@@ -183,7 +183,7 @@ The loops are not nested, and so the most expensive one, the for loop in this ca
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 1.8: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\log (N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 1.8: }}{\color{darkseagreen}{{\space \mathcal{O}(\log (N))}}}$  
 
 <br/>
 
@@ -202,7 +202,7 @@ In each loop iteration $m$ is set to the average of $i$ and $j$, and then either
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 1.9: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N \log (N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 1.9: }}{\color{darkseagreen}{{\space \mathcal{O}(N \log (N))}}}$  
 
 <br/>
 
@@ -224,7 +224,7 @@ Since the loops are nested, the fragment's complexity is in $\mathcal{O}(N \log(
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 1.10: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N^2)}}}$  
+$\Large{\color{rosybrown}\text{Prob 1.10: }}{\color{darkseagreen}{{\space \mathcal{O}(N^2)}}}$  
 
 <br/>
 
@@ -247,7 +247,7 @@ The fragment's overall complexity is therefore in $\mathcal{O}(N^2)$.
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 1.11: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\sqrt N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 1.11: }}{\color{darkseagreen}{{\space \mathcal{O}(\sqrt N)}}}$  
 
 <br/>
 
@@ -266,7 +266,7 @@ The loop will terminate when $i \cdot j \geq 2N$, which is equivalent to $i \cdo
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 1.12: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 1.12: }}{\color{darkseagreen}{{\space \mathcal{O}(N)}}}$  
 
 <br/>
 
@@ -283,7 +283,7 @@ while (i > 0) {
 }
 ```
 
-The first loop terminates when $i$ is the smallest power of $2$ such that $i^2 \geq N$, which is equivalent to $i \geq \sqrt{N}$. A tight upper bound for the final value of $i$ is $2\sqrt{N}$, so that in the worst case the first loop runs $\log(2\sqrt{N}) = \frac{1}{2}\log(N) + 1$ times.
+The first loop terminates when $i$ is the smallest power of $2$ such that $i^2 \geq N$, which is equivalent to $i \geq \sqrt{N}$. A tight upper bound for the final value of $i$ is $2\sqrt{N}$, so that in the worst case the first loop runs $\log(2\sqrt{N}) = 1/2\log(N) + 1$ times.
 
 The second while loop is nested. The outer loop runs $\sqrt{N}$ times, while the inner loop runs $i$ times, for each value of $i$ in the range $[1, 2\sqrt{N}]$, so that the total number of iterations can be computed as follows:
 

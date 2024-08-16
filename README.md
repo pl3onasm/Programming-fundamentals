@@ -1,5 +1,5 @@
-${\color{cadetblue} \text{\huge Programming}}$  
-${\color{cadetblue} \text{\huge Fundamentals}}$
+$\huge{\color{cadetblue} \text{Programming}}$  
+$\huge{\color{cadetblue} \text{Fundamentals}}$
 
 <br/>
 
@@ -13,7 +13,7 @@ Found this repository useful? Help out your (future) fellow students by mailing 
 
 ----------------------------------
 
-${\color{darkseagreen}\text{\Large IP Finals}}$
+$\Large{\color{darkseagreen}\text{IP Finals}}$
 
 ||||
 |:---:|:---:|:---:|
@@ -26,7 +26,7 @@ ${\color{darkseagreen}\text{\Large IP Finals}}$
 
 <br/>
 
-${\color{darkseagreen}\text{\Large IP Midterms}}$
+$\Large{\color{darkseagreen}\text{IP Midterms}}$
 
 ||||
 |:---:|:---:|:---:|
@@ -39,7 +39,7 @@ ${\color{darkseagreen}\text{\Large IP Midterms}}$
 
 <br/>
 
-${\color{darkseagreen}\text{\Large PF 1-3 exams}}$
+$\Large{\color{darkseagreen}\text{PF 1-3 exams}}$
 
 |||
 |:---:|:---:|
@@ -48,7 +48,7 @@ ${\color{darkseagreen}\text{\Large PF 1-3 exams}}$
 
 <br/>
 
-${\color{darkseagreen}\text{\Large PF 2-3 exams}}$
+$\Large{\color{darkseagreen}\text{PF 2-3 exams}}$
 
 |||
 |:---:|:---:|
@@ -57,7 +57,7 @@ ${\color{darkseagreen}\text{\Large PF 2-3 exams}}$
 
 <br/>
 
-${\color{darkseagreen}\text{\Large PF 3-3 exams}}$
+$\Large{\color{darkseagreen}\text{PF 3-3 exams}}$
 
 |||
 |:---:|:---:|
@@ -68,7 +68,7 @@ ${\color{darkseagreen}\text{\Large PF 3-3 exams}}$
 
 ----------------------------------
 
-${\color{cadetblue}\text{\Large Testing}}$
+$\Large{\color{cadetblue}\text{Testing}}$
 <br/>
 
 You can test your own C code with the [test script](ctest.sh). It will try to compile your code and run it on all the test cases. It will also compare your output with the expected output, and check for memory leaks by running a Valgrind test. If a test fails, the script will display the line numbers where a mismatch between the expected and the actual output was found, followed by the corresponding lines themselves, so you can easily spot the error. Lines in green and preceded by `<` represent the expected output, while lines in red and preceded by `>` are the actual (incorrect) output. If you only see lines in red, it means that your program produced the expected output, but also some additional, unexpected output. The script will only display the first 5 lines where mismatches were found and will indicate how many more there are if applicable.
@@ -77,7 +77,7 @@ If you want to use the script, you basically have two options:
 
 <br/>
 
-${\color{rosybrown}\text{\large 1. Execution from script's}}$ ${\color{rosybrown}\text{\large repo location}}$
+$\Large{\color{rosybrown}\text{1. Execution from script's}}$ $\Large{\color{rosybrown}\text{repo location}}$
 
 Opening a terminal from the working directory containing your program, the solution, and the folder with the tests, run the below commands.  
 First, make the script executable:
@@ -94,7 +94,7 @@ Then run the script by using the following command:
 
 <br/>
 
-${\color{rosybrown}\text{\large 2. Execution from PATH}}$
+$\Large{\color{rosybrown}\text{2. Execution from PATH}}$
 
 Alternatively, you can add the script to your PATH variable and run it from anywhere.  
 To display the current $PATH, run the following command:
@@ -125,7 +125,7 @@ ctest.sh myprogram.c > results.txt
 
 ----------------------------------
 
-${\color{cadetblue}\text{\Large Functions library}}$
+$\Large{\color{cadetblue}\text{Functions library}}$
 <br/>
 
 The folder [functions](Functions) contains some useful function implementations in C. Have a look at the [header file](Functions/clib/clib.h) to see which functions are available and how to use them.  
@@ -142,7 +142,7 @@ Including the header file in this way will also make the test script compile you
 
 ----------------------------------
 
-${\color{cadetblue}\text{\Large Notes}}$
+$\Large{\color{cadetblue}\text{Notes}}$
 <br/>
 
 All commands were given with Ubuntu in mind. If you are using a different Linux distribution, you may need to change the commands accordingly.
@@ -163,7 +163,7 @@ valgrind --leak-check=full ./a.out < tests/1.in
 
 ----------------------------------
 
-${\color{cadetblue}\text{\Large Output example of the script}}$
+$\Large{\color{cadetblue}\text{Output example of the script}}$
 <br/>
 
 <IMG src="example.jpg"

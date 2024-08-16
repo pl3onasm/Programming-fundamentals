@@ -1,4 +1,4 @@
-$\color{cadetblue}{\text{\huge Balanced brackets}}$
+$\huge\color{cadetblue}{\text{Balanced brackets}}$
 
 <br/>
 
