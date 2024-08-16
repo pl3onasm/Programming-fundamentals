@@ -1,8 +1,8 @@
-$\color{cadetblue}{\text{\huge Problem 2}}$
+$\huge\color{cadetblue}{\text{Problem 2}}$
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.1: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\sqrt{N})}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.1: }}{\color{darkseagreen}{{\space \mathcal{O}(\sqrt{N})}}}$  
 
 <br/>
 
@@ -22,7 +22,7 @@ The code fragment looks to find the smallest divisor of $N$, if any. In the wors
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.2: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N^2)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.2: }}{\color{darkseagreen}{{\space \mathcal{O}(N^2)}}}$  
 
 <br/>
 
@@ -36,13 +36,13 @@ for (int i = s; i > 1; i -= 2) {
 }
 ```
 
-The first loop is linear: it runs $N$ times. When it ends, we have $s = \frac{N(N-1)}{2}$, by Gauss' formula for the sum of the first $N - 1$ integers. The second loop then runs $\frac{s}{2}$ $=\frac{N(N-1)}{4}$ times, which is quadratic in $N$. Since the loops are not nested, and the second one takes the most time, the overall time complexity is in $\mathcal{O}(N^2)$.
+The first loop is linear: it runs $N$ times. When it ends, we have $s = N(N-1)/2$, by Gauss' formula for the sum of the first $N - 1$ integers. The second loop then runs $s/2$ $= N(N-1)/4$ times, which is quadratic in $N$. Since the loops are not nested, and the second one takes the most time, the overall time complexity is in $\mathcal{O}(N^2)$.
 
 <br/>
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.3: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.3: }}{\color{darkseagreen}{{\space \mathcal{O}(N)}}}$  
 
 <br/>
 
@@ -63,7 +63,7 @@ The loop keeps dividing $n$ by its prime divisors until $n \leq 1$. In the worst
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.4: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N \log(N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.4: }}{\color{darkseagreen}{{\space \mathcal{O}(N \log(N))}}}$  
 
 <br/>
 
@@ -94,7 +94,7 @@ Hence, the fragment's complexity is in $\mathcal{O}(N \log N)$.  [^1]
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.5: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\log (N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.5: }}{\color{darkseagreen}{{\space \mathcal{O}(\log (N))}}}$  
 
 <br/>
 
@@ -115,7 +115,7 @@ The program computes $42^N$ using the binary exponentiation algorithm. The loop 
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.6: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.6: }}{\color{darkseagreen}{{\space \mathcal{O}(N)}}}$  
 
 <br/>
 
@@ -130,7 +130,7 @@ while (i < N) {
 }
 ```
 
-If we first look at the outer loop without considering the inner one, we see that $i$ is incremented by $j$, which itself is incremented by $1$ at each iteration, so that $i$ is the sum of the first $j$ integers at the end of each iteration. The outer loop terminates when $i \geq N$, which happens when $\frac{j(j+1)}{2} \geq N$, for which we get the solution $j = \sqrt{2N + \frac{1}{4}} - \frac{1}{2}$ $\approx \sqrt{2N} $. So, the outer loop runs in $\mathcal{O}(\sqrt{N})\space$ time.  
+If we first look at the outer loop without considering the inner one, we see that $i$ is incremented by $j$, which itself is incremented by $1$ at each iteration, so that $i$ is the sum of the first $j$ integers at the end of each iteration. The outer loop terminates when $i \geq N$, which happens when $j(j+1)/2 \geq N$, for which we get the solution $j = \sqrt{2N + 1/4} - 1/2$ $\approx \sqrt{2N} $. So, the outer loop runs in $\mathcal{O}(\sqrt{N})\space$ time.  
 The inner loop increments $k$ by $1$ at each iteration, and terminates when $k^2 \geq N$ $\Leftrightarrow$ $k \geq \sqrt{N}$. Thus, the inner loop runs in $\mathcal{O}(\sqrt{N})\space$ time as well. Since the loops are nested, the overall time complexity is in $\mathcal{O}(N)$.
 
 <br/>

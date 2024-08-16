@@ -1,8 +1,8 @@
-$\color{cadetblue}{\text{\huge Problem 2}}$
+$\huge\color{cadetblue}{\text{Problem 2}}$
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.1: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\sqrt{N})}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.1: }}{\color{darkseagreen}{{\space \mathcal{O}(\sqrt{N})}}}$  
 
 <br/>
 
@@ -26,13 +26,13 @@ $$
 
 Thus, the fragment's overall time complexity is in $\mathcal{O}(\sqrt{N})\space$.
 
-The fragment is based on Gauss' formula for the sum of the first $n$ integers, but modified so that $d$ becomes the exact square of $n$, and not $\frac{n(n+1)}{2}$, at the end of each iteration.
+The fragment is based on Gauss' formula for the sum of the first $n$ integers, but modified so that $d$ becomes the exact square of $n$, and not $n(n+1)/2$, at the end of each iteration.
 
 <br/>
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.2: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N^2)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.2: }}{\color{darkseagreen}{{\space \mathcal{O}(N^2)}}}$  
 
 <br/>
 
@@ -45,7 +45,7 @@ for (int i = 0; i < N; i++) {
 }
 ```
 
-The outer loop is linear: it runs $N$ times. The inner loop runs $\frac{N - i}{2}$ times for each value of $i$, so that the total number of times the body of the inner loop is executed is:
+The outer loop is linear: it runs $N$ times. The inner loop runs $(N - i)/2$ times for each value of $i$, so that the total number of times the body of the inner loop is executed is:
 
 $$
 \begin{align*}
@@ -62,7 +62,7 @@ Thus, the fragment's time complexity is in $\mathcal{O}(N^2)$.
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.3: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.3: }}{\color{darkseagreen}{{\space \mathcal{O}(N)}}}$  
 
 <br/>
 
@@ -74,13 +74,13 @@ while (i < N) {
 }
 ```
 
-In each iteration, $i$ is incremented by either $1$ or $2$, depending on the parity of $s$, which switches in each iteration. Thus, the total number of iterations is $\frac{N}{2} + \frac{N}{4} = \frac{3N}{4}$, and the fragment's complexity is in $\mathcal{O}(N)$.
+In each iteration, $i$ is incremented by either $1$ or $2$, depending on the parity of $s$, which switches in each iteration. Thus, the total number of iterations is $N/2 + N/4 = 3N/4$, and the fragment's complexity is in $\mathcal{O}(N)$.
 
 <br/>
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.4: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N \log(N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.4: }}{\color{darkseagreen}{{\space \mathcal{O}(N \log(N))}}}$  
 
 <br/>
 
@@ -111,7 +111,7 @@ Hence, the fragment's complexity is in $\mathcal{O}(N \log N)$.  [^1]
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.5: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\log (N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.5: }}{\color{darkseagreen}{{\space \mathcal{O}(\log (N))}}}$  
 
 <br/>
 
@@ -134,7 +134,7 @@ This process is repeated until the left and right ends are adjacent to each othe
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.6: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.6: }}{\color{darkseagreen}{{\space \mathcal{O}(N)}}}$  
 
 <br/>
 

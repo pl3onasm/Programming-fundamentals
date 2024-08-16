@@ -14,7 +14,7 @@ while (s < N * N) {
 }
 ```
 
-At the end of each iteration, $s$ is incremented by $2i + 1$. Using Gauss' formula for the sum of the first $n$ integers, we have at the end of the $i$ -th iteration:
+At the end of each iteration, $s$ is incremented by $2i + 1$. Using Gauss' formula for the sum of the first $n$ integers, we have at the end of the $i$-th iteration:
 
 $$
 \begin{align*}

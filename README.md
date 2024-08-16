@@ -1,5 +1,4 @@
-$\huge{\color{cadetblue} \text{Programming}}$  
-$\huge{\color{cadetblue} \text{Fundamentals}}$
+$\huge{\color{cadetblue} \text{Programming}} \space {\color{cadetblue} \text{Fundamentals}}$
 
 <br/>
 
