@@ -19,14 +19,14 @@ int maxPath (int n) {
   
   READ_ARRAY(row1, "%d ", 1);
 
-  for (int i = 2; i <= n; ++i) {
+  for (int i = 1; i < n; ++i) {
     // read the next row
-    READ_ARRAY(row2, "%d ", i);
+    READ_ARRAY(row2, "%d ", i + 1);
     
     // calculate the maximum path cost for each cell
-    for (int j = 0; j < i; ++j) {
+    for (int j = 0; j <= i; ++j) {
       int max = 0;
-      if (j < i - 1) max = row1[j];
+      if (j < i) max = row1[j];
       if (j > 0) max = MAX(max, row1[j - 1]);
       row2[j] += max;
     }

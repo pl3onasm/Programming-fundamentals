@@ -42,7 +42,7 @@ int main() {
   free(ints);
   
   // read the array of doubles (size is not given)
-  READ_UNTIL(double, dbls, " %lf ", '-', dblLen);
+  READ_UNTIL(double, dbls, "%lf", '-', dblLen);
 
   // print the array
   printf("\nThe double input has %d elements:\n", dblLen);
