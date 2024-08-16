@@ -32,7 +32,7 @@ Write a program that reads a triangle of numbers and outputs the maximum path co
 
 <br/>
 
-$\color{darkseagreen}{\text{\Large Example}}$
+$\Large\color{darkseagreen}{\text{Example}}$
 
 Input:
 

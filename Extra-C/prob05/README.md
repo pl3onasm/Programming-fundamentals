@@ -6,7 +6,7 @@ Given is a positive integer $n \leq 10^{18}$. You are asked to find the largest 
 
 <br/>
 
-$\color{darkseagreen}{\text{\Large Examples}}$
+$\Large\color{darkseagreen}{\text{Examples}}$
 
 ```text
 Input: 632

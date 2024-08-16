@@ -8,7 +8,7 @@ The input consists of a positive integer $d \leq 10^7$. The output of your pogra
 
 <br/>
 
-$\color{darkseagreen}{\text{\Large Example}}$
+$\Large\color{darkseagreen}{\text{Example}}$
 
 Input:
 

@@ -8,7 +8,7 @@ Given are two non-negative decimal integers $a$ and $b$ ($0 \leq a \leq b < 2147
 
 <br/>
 
-$\color{darkseagreen}{\text{\Large Example}}$
+$\Large\color{darkseagreen}{\text{Example}}$
 
 Input:
 

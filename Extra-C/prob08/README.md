@@ -13,7 +13,7 @@ You are asked to write a program that reads the segments from the input, and out
 
 <br/>
 
-$\color{darkseagreen}{\text{\Large Examples}}$
+$\Large\color{darkseagreen}{\text{Examples}}$
 
 ```text
 input:

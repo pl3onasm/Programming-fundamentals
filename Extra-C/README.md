@@ -1,12 +1,12 @@
-$\color{cadetblue}{\text{\huge Extra practice in C}}$
+$\huge\color{cadetblue}{\text{Extra practice in C}}$
 
 <br/>
 
-This folder contains some extra problems. If you are looking for more practice in C, you can try them.  
+This folder contains some extra problems. If you are looking for more practice in C, you can try them. You also might want to check out [Kattis](https://open.kattis.com/), [LeetCode](https://leetcode.com/), or [HackerRank](https://www.hackerrank.com/) for more practice problems.
 
 <br/>
 
-${\color{rosybrown}\text{\Large Problems}}$
+$\Large{\color{rosybrown}\text{Problems}}$
 
 |||
 |:---:|:---|

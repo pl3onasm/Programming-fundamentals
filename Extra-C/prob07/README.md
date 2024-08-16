@@ -15,7 +15,7 @@ Write a program that accepts on the input two lines. The first line is a single 
 
 <br/>
 
-$\color{darkseagreen}{\text{\Large Example}}$
+$\Large\color{darkseagreen}{\text{Example}}$
 
 Input:
 
