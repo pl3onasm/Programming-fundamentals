@@ -7,9 +7,6 @@
   Usage: ./a.out <input.txt
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "clib/clib.h"
 
 int main() {
@@ -19,7 +16,7 @@ int main() {
   (void)! scanf("%d %d", &rows, &cols);
 
   // allocate memory for the 2D array
-  CREATE_MATRIX(int, matrix, rows, cols);
+  CREATE_MATRIX(int, matrix, rows, cols, 0);
 
   // read input from stdin into the matrix
   READ_MATRIX(matrix, "%d", rows, cols);
@@ -31,7 +28,7 @@ int main() {
 
   // read an array of integers (size is given)
   (void)! scanf("%d", &size);
-  CREATE_ARRAY(int, ints, size);
+  CREATE_ARRAY(int, ints, size, 0);
   READ_ARRAY(ints, "%d", size);
 
   // print the integer array
@@ -45,22 +42,22 @@ int main() {
   free(ints);
   
   // read the array of doubles (size is not given)
-  READ(double, dbls, "%lf", size);
+  READ_UNTIL(double, dbls, " %lf ", '-', dblLen);
 
   // print the array
-  printf("\nThe double input has %d elements:\n", size);
-  PRINT_ARRAY(dbls, "%.2lf", size);
+  printf("\nThe double input has %d elements:\n", dblLen);
+  PRINT_ARRAY(dbls, "%.2lf", dblLen);
   free(dbls);
 
   // read one line of input 
-  READ_UNTIL(char, str, "%c", '\n', size);
+  READ_STR_UNTIL(str, '\n', strLen);
   printf("\nThe input string is:\n%s\n", str);
   free(str);
 
-  // read all text until the end of the file 
-  READ(char, text, "%c", size);
+  // read all input until the end of the file 
+  READ(char, text, "%c", textLen);
 
-  printf("\nThe piece of text has %d characters:\n", size);
+  printf("\nThe piece of text has %d characters:\n", textLen);
   printf("%s\n\n", text);
   free(text); 
 

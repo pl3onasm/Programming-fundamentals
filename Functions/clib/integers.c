@@ -1,4 +1,4 @@
-#include "clib.ih"
+#include "clib.h"
 
   // returns the number of digits in n
 int countDigits(int n) {
@@ -44,7 +44,7 @@ int rightRotate(int x) {
   // returns a pointer to the string bin, which must be
   // freed by the caller
 char *toBinary(int n) {
-  CREATE_ARRAY(char, bin, 33);  // 32 bits + '\0'
+  CREATE_ARRAY(char, bin, 33, 0);  // 32 bits + '\0'
   int len = 0;
   while (n > 0) {
     bin[len++] = n % 2 + '0';
@@ -64,7 +64,7 @@ int isLeapYear(int year) {
   // returns a string representation of the given integer
   // the caller is responsible for freeing the memory
 char *toString(int n) {
-  CREATE_ARRAY(char, str, 11);  // 10 digits + '\0'
+  CREATE_ARRAY(char, str, 11, 0);  // 10 digits + '\0'
   sprintf(str, "%d", n);
   return str;
 }

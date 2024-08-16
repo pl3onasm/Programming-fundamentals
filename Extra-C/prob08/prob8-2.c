@@ -5,8 +5,6 @@
   version: 8.2, using the clib library and qsort
 */
 
-#include <stdio.h>
-#include <stdlib.h>
 #include "../../Functions/clib/clib.h"
 
 typedef struct {

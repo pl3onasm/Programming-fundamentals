@@ -1,4 +1,4 @@
-#include "clib.ih"
+#include "clib.h"
 
   // swaps two variables of any type
 void swap(void *a, void *b, int size) {

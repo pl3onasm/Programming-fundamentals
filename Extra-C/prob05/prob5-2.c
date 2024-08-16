@@ -4,9 +4,6 @@
    version: 5.2, using the clib library
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "../../Functions/clib/clib.h"
 
 int main() {

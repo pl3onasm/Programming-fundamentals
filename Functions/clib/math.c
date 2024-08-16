@@ -1,4 +1,4 @@
-#include "clib.ih"
+#include "clib.h"
 
   // returns 1 if x is prime, 0 otherwise
 int isPrime(int x) {

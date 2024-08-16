@@ -1,7 +1,0 @@
-#include "clib.h"
-
-#include <stdio.h>    // for printf, scanf
-#include <stdlib.h>   // for malloc, calloc, realloc, free
-#include <math.h>     // for sqrt
-#include <string.h>   // for strcpy, strlen, memcpy
-#include <ctype.h>    // for tolower

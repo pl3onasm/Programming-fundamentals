@@ -7,9 +7,6 @@
   usage: ./a.out
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "clib/clib.h"
 
 int isValidInt(char *str, int *n) {

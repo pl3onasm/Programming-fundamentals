@@ -5,8 +5,6 @@
   version: 7.2, using the clib library
 */
 
-#include <stdio.h>
-#include <stdlib.h>
 #include "../../Functions/clib/clib.h"
 
 void getBitstrings (char *bits, int idx, int n, int count0, int count1) {
@@ -42,7 +40,7 @@ int main (int argc, char *argv[]) {
 
   (void)! scanf("%d ", &n);
 
-  CREATE_ARRAY(char, bits, n + 1);
+  CREATE_ARRAY(char, bits, n + 1, 0);
 
   READ_ARRAY(bits, "%c", n);
 

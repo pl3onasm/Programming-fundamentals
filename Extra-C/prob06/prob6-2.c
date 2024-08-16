@@ -5,12 +5,10 @@
   version: 6.2, using the clib library
 */
 
-#include <stdio.h>
-#include <stdlib.h>
 #include "../../Functions/clib/clib.h"
 
 int isBalanced(char *s, int len) {
-  CREATE_ARRAY(char, stack, len);
+  CREATE_ARRAY(char, stack, len, 0);
   int top = 0;
   for (int i = 0; i < len; i++) {
     if (s[i] == '(' || s[i] == '[' || s[i] == '{') {
@@ -31,9 +29,9 @@ int isBalanced(char *s, int len) {
 }
 
 
-int main (int argc, char *argv[]) {
-  int len;
-  READ_UNTIL(char, str, "%c", '\n', len);
+int main () {
+ 
+  READ_STR_UNTIL(str, '\n', len);
   
   printf(isBalanced(str, len) ? "YES\n" : "NO\n");
 

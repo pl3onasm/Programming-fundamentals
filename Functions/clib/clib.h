@@ -14,6 +14,12 @@
 #ifndef CLIB_H_INCLUDED    
 #define CLIB_H_INCLUDED
 
+#include <stdio.h>    // for printf, scanf
+#include <stdlib.h>   // for malloc, calloc, realloc, free
+#include <math.h>     // for sqrt
+#include <string.h>   // for strcpy, strlen, memcpy
+#include <ctype.h>    // for tolower
+
 //::::::::::::::::::::::::: MACROS :::::::::::::::::::::::::::::://
 
   // macros for min, max, abs, and sign
@@ -29,44 +35,51 @@
   // macro for printing an array of a given type and length
   // Examples:  PRINT_ARRAY(myInts, "%d", 10);
   //            PRINT_ARRAY(myDbls, "%.2lf", 20);
-#define PRINT_ARRAY(arr, format, len) \
-  for (int i = 0; i < len; ++i){ \
-    printf(format, arr[i]);\
-    printf(i == len-1 ? "\n" : ", "); \
-  } 
+#define PRINT_ARRAY(arr, format, len)\
+  for (int arr##i = 0; arr##i < len; ++arr##i){\
+    printf(format, arr[arr##i]);\
+    printf(arr##i == len-1 ? "\n" : ", ");\
+  }
 
   // macro for printing a matrix of a given type and dimensions
   // Examples:  PRINT_MATRIX(myInts, "%d", rows, cols);
   //            PRINT_MATRIX(myDbls, "%.2lf", rows, cols);
   //            PRINT_MATRIX(myChrs, "%c", rows, cols);
-#define PRINT_MATRIX(matrix, format, rows, cols) \
-  for (int i = 0; i < rows; ++i) { \
-    for (int j = 0; j < cols; ++j) {\
-      printf(format, matrix[i][j]); \
-      printf(j == cols-1 ? "\n" : " "); \
-    } \
-  } 
+#define PRINT_MATRIX(matrix, format, rows, cols)\
+  for (int matrix##i = 0; matrix##i < rows; ++matrix##i) {\
+    for (int matrix##j = 0; matrix##j < cols; ++matrix##j) {\
+      printf(format, matrix[matrix##i][matrix##j]);\
+      printf(matrix##j == cols-1 ? "\n" : " ");\
+    }\
+  }
 
   // macro for creating an array of a given type and length
-  // Examples:  CREATE_ARRAY(myInts, int, 10);
-  //            CREATE_ARRAY(myDbls, double, 20);
-  //            CREATE_ARRAY(myString, 15);
-#define CREATE_ARRAY(type, arr, len) \
-  type *arr = safeCalloc(len, sizeof(type))
+  // Examples:  CREATE_ARRAY(myInts, int, 10, 0);
+  //            CREATE_ARRAY(myDbls, double, 20, DOUBLE_MIN);
+  //            CREATE_ARRAY(myString, 15, '\0');
+#define CREATE_ARRAY(type, arr, len, init)\
+  type *arr = safeCalloc(len, sizeof(type));\
+  if (init)\
+    for (int arr##i = 0; arr##i < len; ++arr##i)\
+      arr[arr##i] = init;
 
   // macro for creating a matrix of given type and dimensions
-  // Examples:  CREATE_MATRIX(myInts, int, 10, 10);
-  //            CREATE_MATRIX(myDbls, double, 10, 15);
-  //            CREATE_MATRIX(myChrs, char, 15, 10);
-#define CREATE_MATRIX(type, matrix, rows, cols) \
+  // Examples:  CREATE_MATRIX(myInts, int, 10, 10, INT_MAX);
+  //            CREATE_MATRIX(myDbls, double, 10, 15, 1);
+  //            CREATE_MATRIX(myChrs, char, 15, 10, '\0');
+#define CREATE_MATRIX(type, matrix, rows, cols, init) \
   type **matrix = safeCalloc(rows, sizeof(type *)); \
-  for (int i = 0; i < rows; ++i) \
-    matrix[i] = safeCalloc(cols, sizeof(type));
+  for (int matrix##i = 0; matrix##i < rows; ++matrix##i) { \
+    matrix[matrix##i] = safeCalloc(cols, sizeof(type)); \
+    if (init) \
+      for (int matrix##j = 0; matrix##j < cols; ++matrix##j) \
+        matrix[matrix##i][matrix##j] = init; \
+  }
 
   // macro for freeing the memory of a matrix 
 #define FREE_MATRIX(matrix, rows) \
-  for (int i = 0; i < rows; ++i) \
-    free(matrix[i]); \
+  for (int matrix##i = 0; matrix##i < rows; ++matrix##i) \
+    free(matrix[matrix##i]); \
   free(matrix);
 
   // macro for reading input into an array of known length
@@ -74,28 +87,28 @@
   //            READ_ARRAY(myDbls, "%lf", 15);
   //            READ_ARRAY(myString, "%c", 10);
 #define READ_ARRAY(arr, format, len) \
-  for (int i = 0; i < len; ++i) \
-    (void)! scanf(format, &arr[i]);
+  for (int arr##i = 0; arr##i < len; ++arr##i) \
+    (void)! scanf(format, &arr[arr##i]);
 
   // macro for reading input into a matrix of given dimensions
   // Examples:  READ_MATRIX(myInts, "%d", 10, 5);
   //            READ_MATRIX(myDbls, "%lf", 8, 8);
   //            READ_MATRIX(myChrs, "%c", 5, 10);
 #define READ_MATRIX(matrix, format, rows, cols) \
-  for (int i = 0; i < rows; ++i) \
-    for (int j = 0; j < cols; ++j) \
-      (void)! scanf(format, &matrix[i][j]);
+  for (int arr##i = 0; arr##i < rows; ++arr##i) \
+    for (int arr##j = 0; arr##j < cols; ++arr##j) \
+      (void)! scanf(format, &matrix[arr##i][arr##j]);
 
   // macro for reading input from stdin as long as it lasts
   // creates a new array of the given type and format, and
   // a new variable size with the number of elements read
-  // and sets the last element to '\0'
-  // Examples:  READ(int, "%d", myInts, size);
-  //            READ(double, "%lf", myDbls, size);
-  //            READ(char, "%c", myChrs, size);
+  // also sets the last element to '\0'
+  // Examples:  READ(int, "%d", myInts, myIntsLen);
+  //            READ(double, "%lf", myDbls, myDblsLen);
+  //            READ(char, "%c", myChrs, myChrsLen);
 #define READ(type, arr, format, size) \
   type *arr = safeCalloc(100, sizeof(type)); \
-  size_t size = 0; type arr##var; \
+  int size = 0; type arr##var; \
   while (scanf(format, &arr##var) == 1) { \
     arr[size++] = arr##var; \
     if (size % 100 == 0) { \
@@ -103,18 +116,19 @@
       memset(arr + size, 0, 100); \
     } \
   } \
-  arr[size] = '\0';
+  arr[size] = '\0'
 
   // macro for reading input from stdin until a given 
-  // delimiter is encountered 
-  // returns a new array of the given type and creates a
+  // delimiter is encountered. The delimiter should not be
+  // able to be interpreted as part of the input.
+  // Returns a new array of the given type and creates a
   // new variable size with the number of elements read
-  // Examples:  READ_UNTIL(char, myString, "%c", '\n', size);
-  //            READ_UNTIL(int, myInts, "%d", '.', size);
+  // Examples:  READ_UNTIL(double, myDbls, "%lf", '\n', myDblsLen);
+  //            READ_UNTIL(int, myInts, "%d", '.', myIntsLen);
 #define READ_UNTIL(type, arr, format, delim, size) \
   type *arr = safeCalloc(100, sizeof(type)); \
-  size_t size = 0; type arr##var; \
-  while (scanf(format, &arr##var) == 1 && arr##var != delim) { \
+  int size = 0; type arr##var; \
+  while (scanf(format, &arr##var) == 1) { \
     arr[size++] = arr##var; \
     if (size% 100 == 0) { \
       arr = safeRealloc(arr, (size + 100) * sizeof(type)); \
@@ -122,7 +136,26 @@
     } \
   } \
   arr[size] = '\0';\
-  (void) ! scanf("%*c");
+  (void) ! scanf("%*c ")
+  
+  // macro for reading a string from stdin until a given
+  // delimiter is encountered, which is not part of the string
+  // Returns a new array of chars and creates a new variable
+  // size with the number of elements read
+  // Examples:  READ_STR_UNTIL(myString, '\n', myStrLen);
+  //            READ_STR_UNTIL(myString, '.', myStrLen);
+#define READ_STR_UNTIL(str, delim, size) \
+  char *str = safeCalloc(100, sizeof(char)); \
+  int size = 0; char str##var; \
+  while (scanf("%c", &str##var) == 1 && str##var != delim) { \
+    str[size++] = str##var; \
+    if (size % 100 == 0) { \
+      str = safeRealloc(str, (size + 100) * sizeof(char)); \
+      memset(str + size, 0, 100); \
+    } \
+  } \
+  str[size] = '\0'
+  
 
 //::::::::::::::::::::::::: INTEGERS.C :::::::::::::::::::::::::://
 
