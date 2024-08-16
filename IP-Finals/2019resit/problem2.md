@@ -1,8 +1,8 @@
-$\color{cadetblue}{\text{\huge Problem 2}}$
+$\huge\color{cadetblue}{\text{Problem 2}}$
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.1: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N\log{(N)})}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.1: }}{\color{darkseagreen}{{\space \mathcal{O}(N\log{(N)})}}}$  
 
 <br/>
 
@@ -22,7 +22,7 @@ The outer loop runs $N$ times. The inner loop runs $\log_k{N}$ times, where $k$ 
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.2: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\sqrt N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.2: }}{\color{darkseagreen}{{\space \mathcal{O}(\sqrt N)}}}$  
 
 <br/>
 
@@ -35,13 +35,13 @@ while (i*j < 2*N) {
 }
 ```
 
-In each iteration the variable $i$ is incremented by $1$ and the variable $j$ is incremented by $2$. The loop terminates when $i \cdot j \geq 2 N$ $\Leftrightarrow \frac{i \cdot j}{2} \geq N$. Since we have $j  = 2 i$ at the end of each iteration, the satisfied loop condition becomes $i^2 \geq N \Leftrightarrow i \geq \sqrt{N}$. Hence, the fragment's overall time complexity is in $\mathcal{O}(\sqrt{N})\space$.
+In each iteration the variable $i$ is incremented by $1$ and the variable $j$ is incremented by $2$. The loop terminates when $i \cdot j \geq 2 N$ $\Leftrightarrow (i \cdot j)/2 \geq N$. Since we have $j  = 2 i$ at the end of each iteration, the satisfied loop condition becomes $i^2 \geq N \Leftrightarrow i \geq \sqrt{N}$. Hence, the fragment's overall time complexity is in $\mathcal{O}(\sqrt{N})\space$.
 
 <br/>
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.3: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.3: }}{\color{darkseagreen}{{\space \mathcal{O}(N)}}}$  
 
 <br/>
 
@@ -53,7 +53,7 @@ while (s < N*N) {
 }
 ```
 
-The loop terminates when $s \geq N^2$. Since $s$ is incremented by $i$ in each iteration, we have $s = \frac{i (i-1)}{2}$ by Gauss' formula. Note that $i$ is incremented $\color{mediumorchid}{\text{after}}$ $s$ is updated, so that when the loop condition is checked, the value of $s$ equals the sum of the first $i - 1$ positive integers. Hence, the loop terminates when:
+The loop terminates when $s \geq N^2$. Since $s$ is incremented by $i$ in each iteration, we have $s = i (i-1)/2$ by Gauss' formula. Note that $i$ is incremented $\color{mediumorchid}{\text{after}}$ $s$ is updated, so that when the loop condition is checked, the value of $s$ equals the sum of the first $i - 1$ positive integers. Hence, the loop terminates when:
 
 $$
 \begin{align*}
@@ -72,7 +72,7 @@ Therefore, the fragment's overall time complexity is in $\mathcal{O}(N)$.
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.4: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\log(N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.4: }}{\color{darkseagreen}{{\space \mathcal{O}(\log(N))}}}$  
 
 <br/>
 
@@ -90,7 +90,7 @@ The loop terminates when $s \geq N$. The variable $s$ keeps the running sum of a
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.5: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N^2)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.5: }}{\color{darkseagreen}{{\space \mathcal{O}(N^2)}}}$  
 
 <br/>
 
@@ -111,7 +111,7 @@ By the end of the first loop, $i$ is the smallest power of $2$ that is greater t
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.6: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.6: }}{\color{darkseagreen}{{\space \mathcal{O}(N)}}}$  
 
 <br/>
 
@@ -128,7 +128,7 @@ while (i > 0) {
 }
 ```
 
-The first loop computes $i \approx \sqrt{N}$ in $\log{(\sqrt{N})} = \frac{1}{2}\log{(N)}$ steps. The second part of the fragment has an outer loop that runs $\sqrt{N}$ times and an inner loop that runs $i$ times for each consecutive value of $i$. The total number of iterations of the second loop is therefore:
+The first loop computes $i \approx \sqrt{N}$ in $\log{(\sqrt{N})} = 1/2\log{(N)}$ steps. The second part of the fragment has an outer loop that runs $\sqrt{N}$ times and an inner loop that runs $i$ times for each consecutive value of $i$. The total number of iterations of the second loop is therefore:
 
 $$
 \begin{align*}

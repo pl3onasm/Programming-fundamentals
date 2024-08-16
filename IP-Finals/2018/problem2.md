@@ -1,8 +1,8 @@
-$\color{cadetblue}{\text{\huge Problem 2}}$
+$\huge\color{cadetblue}{\text{Problem 2}}$
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.1: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N^2)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.1: }}{\color{darkseagreen}{{\space \mathcal{O}(N^2)}}}$  
 
 <br/>
 
@@ -17,14 +17,14 @@ while (j > 5) {
 }
 ```
 
-The first loop runs $N$ times, computing the sum of the first $N$ integers, so that after the loop has terminated, we have $j = \frac{N(N+1)}{2}$ by Gauss' formula. The second loop iterates a total number of $j - 5$ times. It is quadratic in $N$, since $j$ is decremented by $1$ at each iteration.  
+The first loop runs $N$ times, computing the sum of the first $N$ integers, so that after the loop has terminated, we have $j = N(N+1)/2$ by Gauss' formula. The second loop iterates a total number of $j - 5$ times. It is quadratic in $N$, since $j$ is decremented by $1$ at each iteration.  
 The loops are not nested, so the most expensive one determines the fragment's time complexity, which is therefore in $\mathcal{O}(N^2)$.
 
 <br/>
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.2: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\log (N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.2: }}{\color{darkseagreen}{{\space \mathcal{O}(\log (N))}}}$  
 
 <br/>
 
@@ -42,7 +42,7 @@ The variable $i$ is doubled at each iteration, so that the loop runs $\log(N^2) 
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.3: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.3: }}{\color{darkseagreen}{{\space \mathcal{O}(N)}}}$  
 
 <br/>
 
@@ -53,13 +53,13 @@ for (int i = 42; i < 7*N; i += 3) {
 }
 ```
 
-The variable $s$ does not affect the complexity of the fragment. The loop runs $\frac{7N - 42}{3}$ $= \frac{7}{3}N - 14$ times. The fragment's time complexity is therefore in $\mathcal{O}(N)$.
+The variable $s$ does not affect the complexity of the fragment. The loop runs $(7N - 42)/3$ $= 7/3N - 14$ times. The fragment's time complexity is therefore in $\mathcal{O}(N)$.
 
 <br/>
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.4: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\sqrt N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.4: }}{\color{darkseagreen}{{\space \mathcal{O}(\sqrt N)}}}$  
 
 <br/>
 
@@ -81,7 +81,7 @@ The first loop ends when $s = i^2 \geq N$, so that $i \geq \sqrt{N}$. In the sec
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.5: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N \log (N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.5: }}{\color{darkseagreen}{{\space \mathcal{O}(N \log (N))}}}$  
 
 <br/>
 
@@ -94,7 +94,7 @@ for (int i = N; i > 0; i = i/2) {
 }
 ```
 
-The index $i$ is initialized to $N$ and is halved at the end of each iteration of the outer loop, which therefore runs a total number of $\log(N)$ times. The inner loop runs $N - i$ times for each value of $i$, which is $\frac{N}{2^k}$ for the $k$-th iteration of the outer loop, where $k \in \lbrace 1, \dots, \lfloor \log(N) \rfloor \rbrace$.[^1]
+The index $i$ is initialized to $N$ and is halved at the end of each iteration of the outer loop, which therefore runs a total number of $\log(N)$ times. The inner loop runs $N - i$ times for each value of $i$, which is $N/2^k$ for the $k$-th iteration of the outer loop, where $k \in \lbrace 1, \dots, \lfloor \log(N) \rfloor \rbrace$.[^1]
 The total number of iterations of the inner loop is therefore given by:
 
 $$
@@ -117,7 +117,7 @@ From the above, we conclude that the fragment's time complexity is in $\mathcal{
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.6: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.6: }}{\color{darkseagreen}{{\space \mathcal{O}(N)}}}$  
 
 <br/>
 
@@ -131,6 +131,6 @@ for (i = 0; i*i < j; i++) {
 }
 ```
 
-The first loop runs $N$ times, computing the sum of the first $N - 1$ integers, so that in the end $j = \frac{N(N-1)}{2}$ by Gauss' formula. The second loop runs about $\sqrt{j}$ times, which is also linear in $N$. The loops are not nested, so the fragment's time complexity is therefore in $\mathcal{O}(N)$.
+The first loop runs $N$ times, computing the sum of the first $N - 1$ integers, so that in the end $j = N(N-1)/2$ by Gauss' formula. The second loop runs about $\sqrt{j}$ times, which is also linear in $N$. The loops are not nested, so the fragment's time complexity is therefore in $\mathcal{O}(N)$.
 
 <br/>

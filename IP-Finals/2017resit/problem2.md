@@ -1,8 +1,8 @@
-$\color{cadetblue}{\text{\huge Problem 2}}$
+$\huge\color{cadetblue}{\text{Problem 2}}$
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.1: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.1: }}{\color{darkseagreen}{{\space \mathcal{O}(N)}}}$  
 
 <br/>
 
@@ -15,7 +15,7 @@ for (int i = N; i > 0; i /= 2) {
 }
 ```
 
-The outer loop runs $\log(N)$ times, since $i$ starts at $N$ and is then halved after each iteration. The inner loop runs $i$ times for each value of $i$, which is $\frac{N}{2^k}$ for $k \in \lbrace 0, 1, \dots, \lceil \log(N) \rceil \rbrace$. The total number of iterations of the inner loop is therefore given by:
+The outer loop runs $\log(N)$ times, since $i$ starts at $N$ and is then halved after each iteration. The inner loop runs $i$ times for each value of $i$, which is $N/2^k$ for $k \in \lbrace 0, 1, \dots, \lceil \log(N) \rceil \rbrace$. The total number of iterations of the inner loop is therefore given by:
 
 $$
 \begin{align*}
@@ -27,7 +27,7 @@ $$
 \end{align*}
 $$
 
-In $\color{peru}{(1)}$ we use the formula for the sum of a geometric series, with $a = \frac{1}{2}$ and $n = \lceil \log(N) \rceil$:
+In $\color{peru}{(1)}$ we use the formula for the sum of a geometric series, with $a = 1/2$ and $n = \lceil \log(N) \rceil$:
 
 $$
 \sum_{k=0}^n a^k = \frac{a^{n+1} - 1}{a - 1} \quad \text{for} \quad a \neq 1
@@ -41,7 +41,7 @@ Note that we could have run an argument for a complexity in $\mathcal{O}(N \log(
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.2: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N \log (N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.2: }}{\color{darkseagreen}{{\space \mathcal{O}(N \log (N))}}}$  
 
 <br/>
 
@@ -72,7 +72,7 @@ Therefore, the fragment's time complexity is in $\mathcal{O}(N\log(N))$.
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.3: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N^2)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.3: }}{\color{darkseagreen}{{\space \mathcal{O}(N^2)}}}$  
 
 <br/>
 
@@ -85,7 +85,7 @@ for (int i = N; i > 0; i--) {
 }
 ```
 
-The outer loop runs $N$ times, and the inner loop runs $\frac {i}{2}$ times for each value of $i$. The total number of iterations of the inner loop is therefore given by:
+The outer loop runs $N$ times, and the inner loop runs $i/2$ times for each value of $i$. The total number of iterations of the inner loop is therefore given by:
 
 $$
 \begin{align*}
@@ -102,7 +102,7 @@ Therefore, the fragment's time complexity is in $\mathcal{O}(N^2)$.
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.4: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\sqrt N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.4: }}{\color{darkseagreen}{{\space \mathcal{O}(\sqrt N)}}}$  
 
 <br/>
 
@@ -120,7 +120,7 @@ To be fair, though, the program fragment will actually result in undefined behav
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.5: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\log (N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.5: }}{\color{darkseagreen}{{\space \mathcal{O}(\log (N))}}}$  
 
 <br/>
 
@@ -139,7 +139,7 @@ The variable $i$ is initialized to $N$, and is either decremented by $1$ or divi
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.6: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.6: }}{\color{darkseagreen}{{\space \mathcal{O}(N)}}}$  
 
 <br/>
 

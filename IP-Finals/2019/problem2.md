@@ -1,8 +1,8 @@
-$\color{cadetblue}{\text{\huge Problem 2}}$
+$\huge\color{cadetblue}{\text{Problem 2}}$
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.1: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\sqrt{N})}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.1: }}{\color{darkseagreen}{{\space \mathcal{O}(\sqrt{N})}}}$  
 
 <br/>
 
@@ -13,13 +13,13 @@ for (int i = 0; i < N; i += s) {
 }
 ```
 
-After each iteration, the loop index $i$ is incremented by $s$, which is itself incremented by $1$ in each execution of the loop body. This means that $i$ is first incremented by $1$, then by $2$, then $3$, ..., so that after $k$ iterations $i = \frac{k(k+1)}{2}$. The loop terminates when $i \geq N$, which happens when $k \geq \sqrt{2N + \frac{1}{4}} - \frac{1}{2}$. The loop therefore runs in $\mathcal{O}(\sqrt{N})\space$ time.
+After each iteration, the loop index $i$ is incremented by $s$, which is itself incremented by $1$ in each execution of the loop body. This means that $i$ is first incremented by $1$, then by $2$, then $3$, ..., so that after $k$ iterations $i = k(k+1)/2$. The loop terminates when $i \geq N$, which happens when $k \geq \sqrt{2N + 1/4} - 1/2$. The loop therefore runs in $\mathcal{O}(\sqrt{N})\space$ time.
 
 <br/>
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.2: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\log(N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.2: }}{\color{darkseagreen}{{\space \mathcal{O}(\log(N))}}}$  
 
 <br/>
 
@@ -36,7 +36,7 @@ The loop index $i$ is multiplied by 2 at each iteration, so that after $k$ itera
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.3: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N^2)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.3: }}{\color{darkseagreen}{{\space \mathcal{O}(N^2)}}}$  
 
 <br/>
 
@@ -49,13 +49,13 @@ for (int i = 0; i < 2*N; i += 2) {
 }
 ```
 
-The outer loop runs $N$ times, and the inner loop runs $\frac{N}{3}$ times. This means that the loop body is executed $\frac{N^2}{3}$ times, so that the total running time is in $\mathcal{O}(N^2)$.
+The outer loop runs $N$ times, and the inner loop runs $N/3$ times. This means that the loop body is executed $N^2/3$ times, so that the total running time is in $\mathcal{O}(N^2)$.
 
 <br/>
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.4: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\log(N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.4: }}{\color{darkseagreen}{{\space \mathcal{O}(\log(N))}}}$  
 
 <br/>
 
@@ -74,7 +74,7 @@ After $k$ iterations, we have $s = 2^{\lfloor k/2 \rfloor} + \lfloor k/2 \rfloor
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.5: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N \log (N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.5: }}{\color{darkseagreen}{{\space \mathcal{O}(N \log (N))}}}$  
 
 <br/>
 
@@ -93,7 +93,7 @@ The outer loop runs $\log(N^2) = 2\log(N)$ times, and the inner loop runs $N$ ti
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.6: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.6: }}{\color{darkseagreen}{{\space \mathcal{O}(N)}}}$  
 
 <br/>
 
@@ -107,7 +107,7 @@ for (int i = 0; i < N; i += k) {
 }
 ```
 
-The outer loop has an index $i$ which after each iteration is incremented by $k$, which is itself incremented by $1$ in each execution of the loop body. This means that $i$ is first incremented by $1$, then by $2$, then $3$, ..., so that after $k$ iterations $i = \frac{k(k+1)}{2}$. The loop terminates when $i \geq N$, which happens when $k \geq \sqrt{2N + \frac{1}{4}} - \frac{1}{2}$, so that $k\approx \sqrt{2N}$.  
+The outer loop has an index $i$ which after each iteration is incremented by $k$, which is itself incremented by $1$ in each execution of the loop body. This means that $i$ is first incremented by $1$, then by $2$, then $3$, ..., so that after $k$ iterations $i = k(k+1)/2$. The loop terminates when $i \geq N$, which happens when $k \geq \sqrt{2N + 1/4} - 1/2$, so that $k\approx \sqrt{2N}$.  
 The inner loop runs $\sqrt{N}$ times, so that the inner loop body is executed about $\sqrt{2}N$ times, and the fragment's total time complexity is in $\mathcal{O}(N)$.
 
 <br/>

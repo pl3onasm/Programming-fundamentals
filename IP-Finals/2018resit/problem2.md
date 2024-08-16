@@ -14,7 +14,7 @@ while (i > 1) {
 }
 ```
 
-The variable $i$ is halved in each loop iteration, so that after $k$ iterations $i = \frac{N}{2^k}$. The loop terminates when $i \leq 1$, which happens when $k \geq \log(N)$. The loop therefore runs in $\mathcal{O}(\log(N))$ time.
+The variable $i$ is halved in each loop iteration, so that after $k$ iterations $i = N/2^k$. The loop terminates when $i \leq 1$, which happens when $k \geq \log(N)$. The loop therefore runs in $\mathcal{O}(\log(N))$ time.
 
 <br/>
 
@@ -31,7 +31,7 @@ for (int i = 0; i < N; i += 10) {
 }
 ```
 
-Since the loop variable $i$ is incremented by 10 in each iteration, the loop runs $\frac{N}{10}$ times. The fragment's time complexity is therefore in $\mathcal{O}(N)$.
+Since the loop variable $i$ is incremented by 10 in each iteration, the loop runs $N/10$ times. The fragment's time complexity is therefore in $\mathcal{O}(N)$.
 
 <br/>
 
@@ -49,7 +49,7 @@ while (s < N) {
 }
 ```
 
-The variable $s$ is incremented by $i$ in each iteration, while $i$ just counts the number of iterations. After $i$ iterations, $s = \frac{i(i+1)}{2}$ by Gauss' formula. The loop terminates when:
+The variable $s$ is incremented by $i$ in each iteration, while $i$ just counts the number of iterations. After $i$ iterations, $s = i(i+1)/2$ by Gauss' formula. The loop terminates when:
 
 $$
 \begin{align*}
