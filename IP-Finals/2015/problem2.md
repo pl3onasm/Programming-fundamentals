@@ -1,8 +1,8 @@
-$\color{cadetblue}{\text{\huge Problem 2}}$
+$\huge\color{cadetblue}{\text{Problem 2}}$
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.1: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\sqrt{N})}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.1: }}{\color{darkseagreen}{{\space \mathcal{O}(\sqrt{N})}}}$  
 
 <br/>
 
@@ -34,7 +34,7 @@ Note that $i$ is incremented $\color{mediumorchid}{\text{after}}$ $s$ is updated
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.2: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N^2)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.2: }}{\color{darkseagreen}{{\space \mathcal{O}(N^2)}}}$  
 
 <br/>
 
@@ -65,7 +65,7 @@ Another, more intuitive way to reach the same conclusion is to note that the out
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.3: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\log (N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.3: }}{\color{darkseagreen}{{\space \mathcal{O}(\log (N))}}}$  
 
 <br/>
 
@@ -88,7 +88,7 @@ The fragment is a binary search algorithm. The indices $i$ and $j$ indicate the 
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.4: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N^2)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.4: }}{\color{darkseagreen}{{\space \mathcal{O}(N^2)}}}$  
 
 <br/>
 
@@ -103,13 +103,13 @@ while (j > 0) {
 }
 ```
 
-The first loop computes $j = \frac{N(N-1)}{2}$ in $N$ steps. After that, the second loop is executed $j$ times. The loops are not nested, which means that the most expensive one, the second loop, determines the overall complexity. Thus, the fragment's time complexity is in $\mathcal{O}(N^2)$.
+The first loop computes $j = N(N-1)/2$ in $N$ steps. After that, the second loop is executed $j$ times. The loops are not nested, which means that the most expensive one, the second loop, determines the overall complexity. Thus, the fragment's time complexity is in $\mathcal{O}(N^2)$.
 
 <br/>
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.5: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.5: }}{\color{darkseagreen}{{\space \mathcal{O}(N)}}}$  
 
 <br/>
 
@@ -120,13 +120,13 @@ for (i = 0; i < N; i += 2) {
 }
 ```
 
-The loop is executed $\frac{N}{2}$ times, so that the fragment's time complexity is in $\mathcal{O}(N)$.
+The loop is executed $N/2$ times, so that the fragment's time complexity is in $\mathcal{O}(N)$.
 
 <br/>
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.6: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N \log (N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.6: }}{\color{darkseagreen}{{\space \mathcal{O}(N \log (N))}}}$  
 
 <br/>
 

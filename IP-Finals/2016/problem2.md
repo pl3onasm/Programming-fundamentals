@@ -1,8 +1,8 @@
-$\color{cadetblue}{\text{\huge Problem 2}}$
+$\huge\color{cadetblue}{\text{Problem 2}}$
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.1: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N^2)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.1: }}{\color{darkseagreen}{{\space \mathcal{O}(N^2)}}}$  
 
 <br/>
 
@@ -31,7 +31,7 @@ In $\color{peru}{(1)}$, we used Gauss' formula to compute the sum of the first $
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.2: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\sqrt N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.2: }}{\color{darkseagreen}{{\space \mathcal{O}(\sqrt N)}}}$  
 
 <br/>
 
@@ -49,7 +49,7 @@ The loop runs until $s = i^2 \geq N$. As $i$ keeps track of the number of iterat
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.3: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\log (N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.3: }}{\color{darkseagreen}{{\space \mathcal{O}(\log (N))}}}$  
 
 <br/>
 
@@ -72,7 +72,7 @@ This fragment computes $2^N$ by repeated squaring. The loop runs until $n = 0$. 
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.4: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N^2)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.4: }}{\color{darkseagreen}{{\space \mathcal{O}(N^2)}}}$  
 
 <br/>
 
@@ -86,13 +86,13 @@ for (i = 0; i < s; i += 2) {
 }
 ```
 
-The first loop runs $N$ times and computes $s = \frac{N(N - 1)}{2}$ (by Gauss' formula). The second loop runs a total of $\frac{s}{2}$ $=\frac{N(N - 1)}{4}$ times. The loops are not nested and thus the second loop clearly dominates the time complexity as it is quadratic in $N$. Thus, the overall time complexity is in $\mathcal{O}(N^2)$.
+The first loop runs $N$ times and computes $s = N(N - 1)/2$ (by Gauss' formula). The second loop runs a total of $s/2$ $= N(N - 1)/4$ times. The loops are not nested and thus the second loop clearly dominates the time complexity as it is quadratic in $N$. Thus, the overall time complexity is in $\mathcal{O}(N^2)$.
 
 <br/>
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.5: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.5: }}{\color{darkseagreen}{{\space \mathcal{O}(N)}}}$  
 
 <br/>
 
@@ -109,7 +109,7 @@ The loop runs $\frac{4N}{2} = 2N$ times. The overall time complexity is therefor
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.6: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N \log (N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.6: }}{\color{darkseagreen}{{\space \mathcal{O}(N \log (N))}}}$  
 
 <br/>
 

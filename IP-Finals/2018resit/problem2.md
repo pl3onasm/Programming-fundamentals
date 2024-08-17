@@ -1,8 +1,8 @@
-$\color{cadetblue}{\text{\huge Problem 2}}$
+$\huge\color{cadetblue}{\text{Problem 2}}$
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.1: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\log{(N)})}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.1: }}{\color{darkseagreen}{{\space \mathcal{O}(\log{(N)})}}}$  
 
 <br/>
 
@@ -20,7 +20,7 @@ The variable $i$ is halved in each loop iteration, so that after $k$ iterations 
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.2: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.2: }}{\color{darkseagreen}{{\space \mathcal{O}(N)}}}$  
 
 <br/>
 
@@ -37,7 +37,7 @@ Since the loop variable $i$ is incremented by 10 in each iteration, the loop run
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.3: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\sqrt N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.3: }}{\color{darkseagreen}{{\space \mathcal{O}(\sqrt N)}}}$  
 
 <br/>
 
@@ -69,7 +69,7 @@ The overall number of iterations is therefore in $\mathcal{O}(\sqrt{N})\space$.
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.4: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N^2)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.4: }}{\color{darkseagreen}{{\space \mathcal{O}(N^2)}}}$  
 
 <br/>
 
@@ -98,7 +98,7 @@ The fragment's time complexity is therefore in $\mathcal{O}(N^2)$.
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.5: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.5: }}{\color{darkseagreen}{{\space \mathcal{O}(N)}}}$  
 
 <br/>
 
@@ -140,7 +140,7 @@ Note that we could have run an argument for a complexity in $\mathcal{O}(N \log(
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.6: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N \log (N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.6: }}{\color{darkseagreen}{{\space \mathcal{O}(N \log (N))}}}$  
 
 <br/>
 

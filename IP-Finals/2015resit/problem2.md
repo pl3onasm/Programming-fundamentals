@@ -1,8 +1,8 @@
-$\color{cadetblue}{\text{\huge Problem 2}}$
+$\huge\color{cadetblue}{\text{Problem 2}}$
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.1: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.1: }}{\color{darkseagreen}{{\space \mathcal{O}(N)}}}$  
 
 <br/>
 
@@ -19,7 +19,7 @@ The loop runs $N$ times, since the loop condition can be rewritten as $i > 0$. H
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.2: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N \log (N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.2: }}{\color{darkseagreen}{{\space \mathcal{O}(N \log (N))}}}$  
 
 <br/>
 
@@ -34,7 +34,7 @@ for (i = 1; i < N; i *= 2) {
 ```
 
 The outer loop runs $\log(N)$ times, since it doubles $i$ at the end of each iteration. This means that $i$ is always a power of $2$, that is, $i = 2^k$ for $k \in \lbrace 0, 1, \ldots, \lfloor \log(N) - 1 \rfloor \rbrace$.  
-The inner loop runs $\frac{N - i + 1}{2}$ times for each value of $i$. The total number of iterations is therefore:
+The inner loop runs $(N - i + 1)/2$ times for each value of $i$. The total number of iterations is therefore:
 
 $$
 \begin{align*}
@@ -59,7 +59,7 @@ From the above, we therefore have that the fragment's time complexity is in $\ma
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.3: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\sqrt N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.3: }}{\color{darkseagreen}{{\space \mathcal{O}(\sqrt N)}}}$  
 
 <br/>
 
@@ -72,7 +72,7 @@ while (s < N) {
 }
 ```
 
-At each iteration, $p$ equals the product of the first $i$ integers, so that $p = i!$, whereas $s$ equals the sum of the first $i$ integers, so that $s = \frac{i(i+1)}{2}$. The loop terminates when $s \geq N$, that is, when:
+At each iteration, $p$ equals the product of the first $i$ integers, so that $p = i!$, whereas $s$ equals the sum of the first $i$ integers, so that $s = i(i+1)/2$. The loop terminates when $s \geq N$, that is, when:
 
 $$
 \begin{align*}
@@ -91,7 +91,7 @@ Hence, the fragment's time complexity is in $\mathcal{O}(\sqrt{N})\space$.
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.4: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\log(N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.4: }}{\color{darkseagreen}{{\space \mathcal{O}(\log(N))}}}$  
 
 <br/>
 
@@ -112,7 +112,7 @@ The loop runs $\log(N)$ times, since $i$ is halved at each iteration. The *if* s
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.5: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N^2)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.5: }}{\color{darkseagreen}{{\space \mathcal{O}(N^2)}}}$  
 
 <br/>
 
@@ -124,13 +124,13 @@ while (2*i <= N*N) {
 }
 ```
 
-At each iteration, $i$ is incremented by $1$, so that $i$ keeps track of the number of iterations. When the loop terminates, we have $2i > N^2$, that is, $i > \frac{N^2}{2}$. Hence, the fragment's time complexity is in $\mathcal{O}(N^2)$.
+At each iteration, $i$ is incremented by $1$, so that $i$ keeps track of the number of iterations. When the loop terminates, we have $2i > N^2$, that is, $i > N^2/2$. Hence, the fragment's time complexity is in $\mathcal{O}(N^2)$.
 
 <br/>
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.6: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.6: }}{\color{darkseagreen}{{\space \mathcal{O}(N)}}}$  
 
 <br/>
 

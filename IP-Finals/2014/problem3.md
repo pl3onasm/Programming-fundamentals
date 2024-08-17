@@ -1,8 +1,8 @@
-$\color{cadetblue}{\text{\huge Problem 3}}$
+$\huge\color{cadetblue}{\text{Problem 3}}$
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 3.1: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\sqrt{N})}}}$  
+$\Large{\color{rosybrown}\text{Prob 3.1: }}{\color{darkseagreen}{{\space \mathcal{O}(\sqrt{N})}}}$  
 
 <br/>
 
@@ -20,7 +20,7 @@ The variable $j$ keeps track of the number of iterations. Use is made of Gauss' 
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 3.2: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\log (N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 3.2: }}{\color{darkseagreen}{{\space \mathcal{O}(\log (N))}}}$  
 
 <br/>
 
@@ -41,7 +41,7 @@ The variable $i$ is initialized to $N$, and then halved if it is even, or increm
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 3.3: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 3.3: }}{\color{darkseagreen}{{\space \mathcal{O}(N)}}}$  
 
 <br/>
 
@@ -59,7 +59,7 @@ The variables $i$ and $j$ are incremented and decremented, respectively, until t
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 3.4: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 3.4: }}{\color{darkseagreen}{{\space \mathcal{O}(N)}}}$  
 
 <br/>
 
@@ -79,7 +79,7 @@ The first loop is executed $N$ times, and the second loop is executed $N-1$ time
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 3.5: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N^2)}}}$  
+$\Large{\color{rosybrown}\text{Prob 3.5: }}{\color{darkseagreen}{{\space \mathcal{O}(N^2)}}}$  
 
 <br/>
 
@@ -98,7 +98,7 @@ The inner loop is executed $N-1$ times for each iteration of the outer loop, whi
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 3.6: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N \log (N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 3.6: }}{\color{darkseagreen}{{\space \mathcal{O}(N \log (N))}}}$  
 
 <br/>
 

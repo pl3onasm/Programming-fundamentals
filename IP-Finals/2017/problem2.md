@@ -1,8 +1,8 @@
-$\color{cadetblue}{\text{\huge Problem 2}}$
+$\huge\color{cadetblue}{\text{Problem 2}}$
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.1: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N \log (N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.1: }}{\color{darkseagreen}{{\space \mathcal{O}(N \log (N))}}}$  
 
 <br/>
 
@@ -15,13 +15,13 @@ for (int i = 0; i < N; i += 3) {
 }
 ```
 
-The outer loop runs $\frac{N}{3}$ times, and the inner loop runs $\log(3N) = \log(3) + \log(N)$ times. Since the loops are nested, we obtain the total number of iterations by multiplying the number of iterations of the outer loop by the ones of the inner loop, and come to an overall time complexity of $\mathcal{O}(N\log(N))$.
+The outer loop runs $N/3$ times, and the inner loop runs $\log(3N) = \log(3) + \log(N)$ times. Since the loops are nested, we obtain the total number of iterations by multiplying the number of iterations of the outer loop by the ones of the inner loop, and come to an overall time complexity of $\mathcal{O}(N\log(N))$.
 
 <br/>
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.2: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\log (N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.2: }}{\color{darkseagreen}{{\space \mathcal{O}(\log (N))}}}$  
 
 <br/>
 
@@ -48,7 +48,7 @@ Thus, the overall time complexity is in $\mathcal{O}(\log(N))\space$.
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.3: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\sqrt N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.3: }}{\color{darkseagreen}{{\space \mathcal{O}(\sqrt N)}}}$  
 
 <br/>
 
@@ -64,7 +64,7 @@ while (i > 0) {
 }
 ```
 
-The first loop terminates when $s \geq N$. Since $s$ is incremented by $i$ in each iteration, we have $s = \frac{i (i-1)}{2}$ by Gauss' formula. Note that $i$ is incremented $\color{mediumorchid}{\text{after}}$ $s$ is updated, so that when the loop condition is checked, the value of $s$ equals the sum of the first $i - 1$ positive integers. Hence, the loop terminates when:
+The first loop terminates when $s \geq N$. Since $s$ is incremented by $i$ in each iteration, we have $s = i(i-1)/2$ by Gauss' formula. Note that $i$ is incremented $\color{mediumorchid}{\text{after}}$ $s$ is updated, so that when the loop condition is checked, the value of $s$ equals the sum of the first $i - 1$ positive integers. Hence, the loop terminates when:
 
 $$
 \begin{align*}
@@ -83,7 +83,7 @@ The second loop decrements $i$ until it reaches 0 in a total of about $\sqrt{2N}
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.4: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N^2)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.4: }}{\color{darkseagreen}{{\space \mathcal{O}(N^2)}}}$  
 
 <br/>
 
@@ -96,7 +96,7 @@ for (i = 0; i < N; i++) {
 }
 ```
 
-The outer loop runs $N$ times, and the inner loop runs $\frac{5i}{2}$ times for each iteration of the outer loop. Thus, the total number of iterations is given by:
+The outer loop runs $N$ times, and the inner loop runs $5i/2$ times for each iteration of the outer loop. Thus, the total number of iterations is given by:
 
 $$
 \begin{align*}
@@ -112,7 +112,7 @@ In $\color{peru}{(1)}$, we used Gauss' formula to compute the sum of the first $
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.5: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N \log (N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.5: }}{\color{darkseagreen}{{\space \mathcal{O}(N \log (N))}}}$  
 
 <br/>
 
@@ -126,13 +126,13 @@ for (int i = N; i > 0; i--) {
 }
 ```
 
-The outer loop runs $N$ times. The inner loop runs $\log_d(N) = \frac{\log(N)}{\log(d)}$ times, where $d \in \left[2, 7\right)$, which is in $\mathcal{O}(\log(N))$. Since the loops are nested, we obtain an overall time complexity of $\mathcal{O}(N\log(N))$.
+The outer loop runs $N$ times. The inner loop runs $\log_d(N) = \log(N) / \log(d)$ times, where $d \in \left[2, 7\right)$, which is in $\mathcal{O}(\log(N))$. Since the loops are nested, we obtain an overall time complexity of $\mathcal{O}(N\log(N))$.
 
 <br/>
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 2.6: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 2.6: }}{\color{darkseagreen}{{\space \mathcal{O}(N)}}}$  
 
 <br/>
 
@@ -144,6 +144,6 @@ while (s < N*N) {
 }
 ```
 
-This loop is the same as the first one in [ex3](https://github.com/pl3onasm/Imperative-programming/blob/main/IP-Finals/2017/problem2.md#ex3-colorrosybrownmathcalosqrtn), except that the loop condition here is $s < N^2$ instead of $s < N$. Following the same reasoning, we obtain that the loop terminates when $i \geq \sqrt{2 N^2 + \frac{1}{4}} + \frac{1}{2} \approx \sqrt{2} N$. Thus, the overall time complexity is in $\mathcal{O}(N)$.
+This loop is the same as the first one in [ex3](https://github.com/pl3onasm/Imperative-programming/blob/main/IP-Finals/2017/problem2.md#ex3-colorrosybrownmathcalosqrtn), except that the loop condition here is $s < N^2$ instead of $s < N$. Following the same reasoning, we obtain that the loop terminates when $i \geq \sqrt{2 N^2 + 1/4} + 1/2 \approx \sqrt{2} N$. Thus, the overall time complexity is in $\mathcal{O}(N)$.
 
 <br/>

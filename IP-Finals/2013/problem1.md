@@ -1,8 +1,8 @@
-$\color{cadetblue}{\text{\huge Problem 1}}$
+$\huge\color{cadetblue}{\text{Problem 1}}$
 
 ---------------
 
-${\color{darkkhaki}\text{\Large Prob 1.1: }}\space{\color{olive}\text{\Large b}}$
+$\Large{\color{darkkhaki}\text{Prob 1.1: }}\space{\color{olive}\text{b}}$
 
 ```java
 // x = X
@@ -23,7 +23,7 @@ $\quad \lbrace \space x = 42 * X + 21 \space \rbrace$
 
 ---------------
 
-${\color{darkkhaki}\text{\Large Prob 1.2: }}\space{\color{olive}\text{\Large c}}$
+$\Large{\color{darkkhaki}\text{Prob 1.2: }}\space{\color{olive}\text{c}}$
 
 ```java
 // x = 42 * X + 21
@@ -44,7 +44,7 @@ $\quad \lbrace \space x = X \space \rbrace \space$
 
 ---------------
 
-${\color{darkkhaki}\text{\Large Prob 1.3: }}\space{\color{olive}\text{\Large b}}$
+$\Large{\color{darkkhaki}\text{Prob 1.3: }}\space{\color{olive}\text{b}}$
 
 ```java
 // x = y * y
@@ -69,7 +69,7 @@ $\quad \lbrace \space x = y * y \space \rbrace$
 
 ---------------
 
-${\color{darkkhaki}\text{\Large Prob 1.4: }}\space{\color{olive}\text{\Large c}}$
+$\Large{\color{darkkhaki}\text{Prob 1.4: }}\space{\color{olive}\text{c}}$
 
 ```java
 // y + z > 4
@@ -90,7 +90,7 @@ $\quad \lbrace \space y \space > \space 5 \space \rbrace$
 
 ---------------
 
-${\color{darkkhaki}\text{\Large Prob 1.5: }}\space{\color{olive}\text{\Large b}}$
+$\Large{\color{darkkhaki}\text{Prob 1.5: }}\space{\color{olive}\text{b}}$
 
 ```java
 // x = X ∧ y = Y 
@@ -128,7 +128,7 @@ $\quad \lbrace \space x = - Y \space \land \space y = 2 * X \space \rbrace$
 
 ---------------
 
-${\color{darkkhaki}\text{\Large Prob 1.6: }}\space{\color{olive}\text{\Large  a}}$
+$\Large{\color{darkkhaki}\text{Prob 1.6: }}\space{\color{olive}\text{ a}}$
 
 ```java
 // x = X ∧ y = X + Y ∧ z = X + Y + Z

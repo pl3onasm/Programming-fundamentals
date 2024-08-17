@@ -1,8 +1,8 @@
-$\color{cadetblue}{\text{\huge Problem 3}}$
+$\huge\color{cadetblue}{\text{Problem 3}}$
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 3.1: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\log (N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 3.1: }}{\color{darkseagreen}{{\space \mathcal{O}(\log (N))}}}$  
 
 <br/>
 
@@ -20,7 +20,7 @@ The variable $i$ is incremented by $1$ and the variable $j$ is divided by $2$ in
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 3.2: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N^2)}}}$  
+$\Large{\color{rosybrown}\text{Prob 3.2: }}{\color{darkseagreen}{{\space \mathcal{O}(N^2)}}}$  
 
 <br/>
 
@@ -47,14 +47,14 @@ $$
 \end{align*}
 $$
 
-In $\color{peru}{(1)}$, we used Gauss' formula to compute the sum of the first $\frac{N}{2}$ positive integers. Also note that just like in the code fragments, the division always is integer division, so that e.g. $\frac{N}{2} = \lfloor\frac{N}{2}\rfloor$.  
+In $\color{peru}{(1)}$, we used Gauss' formula to compute the sum of the first $\frac{N}{2}$ positive integers. Also note that just like in the code fragments, the division always is integer division, so that e.g. $N/2 = \lfloor N/2 \rfloor$.  
 From the calculations above, we conclude that the fragment's time complexity is in $\mathcal{O}(N^2)$.
 
 <br/>
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 3.3: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\sqrt N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 3.3: }}{\color{darkseagreen}{{\space \mathcal{O}(\sqrt N)}}}$  
 
 <br/>
 
@@ -72,7 +72,7 @@ The variable $j$ keeps track of the number of iterations. Use is made of Gauss' 
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 3.4: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\log (N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 3.4: }}{\color{darkseagreen}{{\space \mathcal{O}(\log (N))}}}$  
 
 <br/>
 
@@ -90,7 +90,7 @@ The variable $i$ is doubled and the variable $j$ is decremented by $1$ in each i
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 3.5: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 3.5: }}{\color{darkseagreen}{{\space \mathcal{O}(N)}}}$  
 
 <br/>
 
@@ -130,7 +130,7 @@ Note that we could have run an argument for a complexity in $\mathcal{O}(N \log(
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 3.6: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N \log (N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 3.6: }}{\color{darkseagreen}{{\space \mathcal{O}(N \log (N))}}}$  
 
 <br/>
 
@@ -144,7 +144,7 @@ for (i = 1; i < N; i++) {
 }
 ```
 
-The outer loop runs $N - 1$ times. The variable $s$ takes the running sum of the first $i$ integers, so $s = i(i+1)/2$ $\approx \frac{i^2}{2}$ before the inner loop starts. The inner loop runs $\log(s) \approx \log(i^2/2) = 2\log(i) -1$  times. The total number of iterations is therefore given by:
+The outer loop runs $N - 1$ times. The variable $s$ takes the running sum of the first $i$ integers, so $s = i(i+1)/2$ $\approx i^2/2$ before the inner loop starts. The inner loop runs $\log(s) \approx \log(i^2/2) = 2\log(i) -1$  times. The total number of iterations is therefore given by:
 
 $$
 \begin{align*}

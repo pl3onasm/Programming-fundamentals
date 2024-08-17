@@ -1,8 +1,8 @@
-$\color{cadetblue}{\text{\huge Problem 3}}$
+$\huge\color{cadetblue}{\text{Problem 3}}$
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 3.1: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 3.1: }}{\color{darkseagreen}{{\space \mathcal{O}(N)}}}$  
 
 <br/>
 
@@ -14,13 +14,13 @@ while (i < j) {
 }
 ```
 
-Both variables run through their consecutive values, until they meet in the middle at which point the loop terminates. The total number of iterations is $\frac{N}{2}$, and the fragment's complexity is therefore in $\mathcal{O}(N)$.
+Both variables run through their consecutive values, until they meet in the middle at which point the loop terminates. The total number of iterations is $N/2$, and the fragment's complexity is therefore in $\mathcal{O}(N)$.
 
 <br/>
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 3.2: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\log (N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 3.2: }}{\color{darkseagreen}{{\space \mathcal{O}(\log (N))}}}$  
 
 <br/>
 
@@ -41,7 +41,7 @@ This is a binary search algorithm. At each iteration, the size of the interval i
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 3.3: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(\sqrt N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 3.3: }}{\color{darkseagreen}{{\space \mathcal{O}(\sqrt N)}}}$  
 
 <br/>
 
@@ -58,7 +58,7 @@ The loop terminates when $i^2 \geq N$, which is equivalent to $i \geq \sqrt{N}$.
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 3.4: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N^2)}}}$  
+$\Large{\color{rosybrown}\text{Prob 3.4: }}{\color{darkseagreen}{{\space \mathcal{O}(N^2)}}}$  
 
 <br/>
 
@@ -72,13 +72,13 @@ for (i = 0; i < s; i++) {
 }
 ```
 
-The first loop computes the sum of the first $N - 1$ integers in $N$ steps, so that in the end, we have $s = \frac{N(N-1)}{2}$. The second loop then runs $s$ times, which is quadratic in $N$. The loops are not nested, and so the overall complexity is determined by the most expensive loop, which is the second one. Thus, the fragment's complexity is in $\mathcal{O}(N^2)$.
+The first loop computes the sum of the first $N - 1$ integers in $N$ steps, so that in the end, we have $s = N(N-1)/2$. The second loop then runs $s$ times, which is quadratic in $N$. The loops are not nested, and so the overall complexity is determined by the most expensive loop, which is the second one. Thus, the fragment's complexity is in $\mathcal{O}(N^2)$.
 
 <br/>
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 3.5: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N \log (N))}}}$  
+$\Large{\color{rosybrown}\text{Prob 3.5: }}{\color{darkseagreen}{{\space \mathcal{O}(N \log (N))}}}$  
 
 <br/>
 
@@ -107,7 +107,7 @@ Thus, the fragment's complexity is in $\mathcal{O}(N \log N)$.
 
 ----------------------
 
-${\color{rosybrown}\text{\Large Prob 3.6: }}{\color{darkseagreen}{{\Large \space \mathcal{O}(N)}}}$  
+$\Large{\color{rosybrown}\text{Prob 3.6: }}{\color{darkseagreen}{{\space \mathcal{O}(N)}}}$  
 
 <br/>
 
@@ -123,7 +123,7 @@ for (i = 0; i < 5; i++) {
 }
 ```
 
-The first loop runs $N$ times: it sets the values of the items in the array $a$ to their respective values. The second loop is nested: the outer loop runs $5$ times, whereas the inner loop runs $a[i]$ times, which is at most $\lfloor\frac{N}{5}\rfloor + 1$, given the fact that $a[i]$ is incremented at most $\lfloor\frac{N}{5}\rfloor + 1$ times in the first loop.
+The first loop runs $N$ times: it sets the values of the items in the array $a$ to their respective values. The second loop is nested: the outer loop runs $5$ times, whereas the inner loop runs $a[i]$ times, which is at most $\lfloor N/5 \rfloor + 1$, given the fact that $a[i]$ is incremented at most $\lfloor N/5 \rfloor + 1$ times in the first loop.
 This means that both the first and the second, nested loop are linear in $N$, and so the fragment's total complexity is in $\mathcal{O}(N)$.
 
 <br/>
