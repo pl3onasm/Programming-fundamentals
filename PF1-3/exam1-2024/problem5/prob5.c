@@ -33,7 +33,7 @@ int *readInput(int n) {
 
 //===================================================================
 // Detects a cycle in the array
-void detectCyle(int *arr, int n) {
+void detectCycle(int *arr, int n) {
   
   int *visited = safeCalloc(n, sizeof(int));
   int idx = 0, i = 1;
@@ -58,7 +58,7 @@ int main() {
 
   int *arr = readInput(n);
 
-  detectCyle(arr, n); 
+  detectCycle(arr, n); 
 
   free(arr);
 

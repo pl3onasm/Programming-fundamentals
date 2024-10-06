@@ -1,6 +1,6 @@
 /* file: myprogram.c
    author: your name
-   description: PF 1/3rd term 2023, problem 3, 
+   description: PF 1/3rd term 2024, problem 3, 
                 prime sum iterations
 */
 

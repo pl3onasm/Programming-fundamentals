@@ -1,6 +1,6 @@
 /* file: myprogram.c
    author: your name
-   description: PF 1/3rd term 2023, problem 5, 
+   description: PF 1/3rd term 2024, problem 5, 
                 cycle detection
 */
 
