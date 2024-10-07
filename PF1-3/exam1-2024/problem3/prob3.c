@@ -9,8 +9,9 @@
 #include <assert.h>
 
 //===================================================================
-// returns the product between the number of distinct
+// Returns the product between the number of distinct
 // prime factors of n and the sum of those factors
+// Returns 0 if n is a prime number
 int compProduct(int n) {
   int sum = 0, nFactors = 0;
   for (int i = 2; n > 1 && i * i <= n; i += i == 2 ? 1 : 2) {
