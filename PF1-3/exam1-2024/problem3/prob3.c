@@ -9,17 +9,6 @@
 #include <assert.h>
 
 //===================================================================
-// checks whether x is prime
-int isPrime (int x) {
-  if (x == 2) return 1;
-  if (x % 2 == 0 || x == 1) return 0;
-  for (int i = 3; i*i <= x; i += 2) {
-    if (x % i == 0) return 0;
-  }
-  return 1;
-}
-
-//===================================================================
 // returns the product between the number of distinct
 // prime factors of n and the sum of those factors
 int compProduct(int n) {
@@ -31,11 +20,6 @@ int compProduct(int n) {
       while (n % i == 0)
         n /= i;
     }
-  }
-
-  if (isPrime(n)) {
-    ++nFactors;
-    sum += n;
   }
   
   return sum * nFactors;
@@ -53,7 +37,7 @@ int main() {
     int nIter, n = i;
     for (nIter = 0; n != 10 && n != 30 ; nIter++) {
       int m = compProduct(n);
-      if (m == n) break;  // we have reached a prime number
+      if (m == 0) break;  // we have reached a prime number
       n = m;
     }
 
