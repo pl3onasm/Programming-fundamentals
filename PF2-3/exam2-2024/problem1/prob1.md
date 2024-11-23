@@ -65,9 +65,9 @@ z := x + 1;
 // z ≠ 0
 ```
 
-${\color{peru}(a)} \quad x \neq -1$
-${\color{peru}(b)} \quad x \neq 1$
-${\color{peru}(c)} \quad z \neq -1$
+${\color{peru}(a)} \quad x \neq -1$  
+${\color{peru}(b)} \quad x \neq 1$  
+${\color{peru}(c)} \quad z \neq -1$  
 
 <br/>
 
@@ -82,9 +82,9 @@ z := x + y;
 // z > 0
 ```
 
-${\color{peru}(a)} \quad y > 0$
+${\color{peru}(a)} \quad y > 0$  
 ${\color{peru}(b)} \quad x > 0$  
-${\color{peru}(c)} \quad z > 0$
+${\color{peru}(c)} \quad z > 0$  
 
 <br/>
 
@@ -99,8 +99,8 @@ y := 2*x - 10;
 // y > 26
 ```
 
-${\color{peru}(a)} \quad 2*x + y > 42$ 
-${\color{peru}(b)} \quad x + 2*y > 42$
-${\color{peru}(c)} \quad x + y \geq 42$
+${\color{peru}(a)} \quad 2*x + y > 42$  
+${\color{peru}(b)} \quad x + 2*y > 42$  
+${\color{peru}(c)} \quad x + y \geq 42$  
 
 &nbsp;
