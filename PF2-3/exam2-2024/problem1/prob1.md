@@ -17,8 +17,8 @@ $\Large{\color{darkkhaki}\text{Prob 1.1}}$
 ```
 
 ${\color{peru} (a) } \quad x := 2; \space y := 100; $  
-${\color{peru} (b) } \quad y := 2*y; \space x := y - 52; $  
-${\color{peru} (c) } \quad x := x + 2; \space y := y - 3*x; $  
+${\color{peru}(b)} \quad y := 2; \space x := y - 52; $  
+${\color{peru}(c)} \quad x := x + 2; y := y - 3 * x;$  
 
 <br/>
 
