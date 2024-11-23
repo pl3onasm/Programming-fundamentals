@@ -49,10 +49,10 @@ $\Large{\color{darkseagreen}\text{PF 1-3 exams}}$
 
 $\Large{\color{darkseagreen}\text{PF 2-3 exams}}$
 
-|||
-|:---:|:---:|
-|**[2023](PF2-3/exam2-2023)**| **[2023 resit](PF2-3/resit2-2023)** |
-|||
+||||
+|:---:|:---:|:---:|
+|**[2023](PF2-3/exam2-2023)**| **[2023 resit](PF2-3/resit2-2023)** | **[2024](PF2-3/exam2-2024)**|
+||||
 
 <br/>
 

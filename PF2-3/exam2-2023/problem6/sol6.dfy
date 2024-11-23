@@ -24,6 +24,17 @@ ensures a == fSum(n)
   {
     k := k + 1;
     a := a + x;
-    x, y := y, 2 * y + 3 * x;   
+    y := 2 * y + 3 * x;
+    x := (y - 3 * x) / 2;
   }
 }
+
+/* Alternatively, the following loop body can be used:
+  
+  k := k + 1;
+  a := a + x;
+  y, x := 2 * y + 3 * x, y; 
+
+  It is equivalent to the loop body above, 
+  but more concise.
+ */
