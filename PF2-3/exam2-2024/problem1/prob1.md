@@ -18,7 +18,7 @@ $\Large{\color{darkkhaki}\text{Prob 1.1}}$
 
 ${\color{peru} (a) } \quad x := 2; \space y := 100; $  
 ${\color{peru}(b)} \quad y := 2; \space x := y - 52; $  
-${\color{peru}(c)} \quad x := x + 2; y := y - 3 * x;$  
+${\color{peru}(c)} \quad x := x + 2; \space y := y - 3 * x;$  
 
 <br/>
 
@@ -50,7 +50,7 @@ $\Large{\color{darkkhaki}\text{Prob 1.3}}$
 
 ${\color{peru}(a)} \quad x := 0; \space y := A - B;$  
 ${\color{peru}(b)} \quad y := -y; \space x := x + y;$  
-${\color{peru}(c)} \quad x := x - 3*y; \space y := 2*y;$  
+${\color{peru}(c)} \quad y := x - 3 * y; \space y := 2 * y;$  
 
 <br/>
 
@@ -99,8 +99,8 @@ y := 2*x - 10;
 // y > 26
 ```
 
-${\color{peru}(a)} \quad 2*x + y > 42$  
-${\color{peru}(b)} \quad x + 2*y > 42$  
+${\color{peru}(c)} \quad 2 * x + y > 42$  
+${\color{peru}(c)} \quad x + 2 * y > 42$  
 ${\color{peru}(c)} \quad x + y \geq 42$  
 
 &nbsp;
