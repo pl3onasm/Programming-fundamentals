@@ -40,7 +40,7 @@ $\space \color{cornflowerblue} x := x - y;$
 $\quad \lbrace\space x = A - B \space\land\space y = B \space\rbrace$  
 $\qquad \color{darkseagreen} (\space \text{prepare } y := x + 2 * y \space)$  
 $\quad \lbrace\space x = A - B \space \land x + 2 * y = A - B + 2*B \space\rbrace$  
-$\quad \lbrace\space x = A - B \space \land x + 2 * y = A + B \space\rbrace$
+$\quad \lbrace\space x = A - B \space \land x + 2 * y = A + B \space\rbrace$  
 $\space \color{cornflowerblue}y := x + 2 * y;$  
 $\quad \lbrace \space x = A - B \space \land \space y = A + B \space \rbrace$  
 
@@ -126,15 +126,15 @@ y := 2*x - 10;
 ```
 
 $\quad \lbrace \space  x + 2 * y > 42 \space \rbrace$  
-$\qquad \color{darkseagreen} (\space \text{prepare } x := 3*(x + 2*y - 36) \space)$  
+$\qquad \color{darkseagreen} (\space \text{prepare } x := 3 * (x + 2 * y - 36) \space)$  
 $\quad \lbrace \space  x + 2 * y - 36 > 42 - 36 \space \rbrace$  
 $\quad \lbrace \space  3 * (x + 2 * y - 36) > 3 * 6 \space \rbrace$  
-$\space \color{cornflowerblue} x := 3*(x + 2*y - 36);$  
+$\space \color{cornflowerblue} x := 3 * (x + 2 * y - 36);$  
 $\quad \lbrace \space  x > 18 \space \rbrace$  
-$\qquad \color{darkseagreen} (\space \text{prepare } y := 2*x - 10 \space)$  
+$\qquad \color{darkseagreen} (\space \text{prepare } y := 2 * x - 10 \space)$  
 $\quad \lbrace \space  2 * x > 36 \space \rbrace$  
 $\quad \lbrace \space  2 * x - 10 > 26 \space \rbrace$  
-$\space \color{cornflowerblue} y := 2*x - 10;$  
+$\space \color{cornflowerblue} y := 2 * x - 10;$  
 $\quad \lbrace \space y > 26 \space \rbrace$  
 
 <br/>
