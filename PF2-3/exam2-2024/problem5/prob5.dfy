@@ -8,7 +8,7 @@ ghost function f(x: nat): nat {
   // like x := f(n) is not allowed.
   if x < 2 then 1
   else if x % 2 == 0 then 2*f(x/2) + 1
-  else 3 * f(x/2) + 2
+  else 3 * f(x/2) - 2
 }
 
 method problem5(n: nat) returns (x: nat)
