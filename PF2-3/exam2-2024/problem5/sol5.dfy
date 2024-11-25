@@ -32,6 +32,7 @@ ensures x == f(n)
     }
     k := k / 2;
   }
+  assert x + y > -z;
   x := x + y + z;
 }
 
