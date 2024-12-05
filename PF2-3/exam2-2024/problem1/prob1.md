@@ -2,9 +2,7 @@ $\huge\color{cadetblue}{\text{Problem 1}}$
 
 <br/>
 
-For each of the following annotations determine which choice fits on the empty line (.....). The
-variables x, y, and z are of type int. Note that A and B (capital letters!) are specification
-constants (so not program variables).
+For each of the following annotations determine which choice fits on the empty line (.....). The variables x, y, and z are of type int. Note that A and B (capital letters!) are specification constants (so not program variables).
 
 ---------------
 

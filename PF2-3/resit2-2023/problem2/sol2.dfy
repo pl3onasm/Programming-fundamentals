@@ -5,7 +5,7 @@
 
 method problem2(m:int, n:int, X:int, Y:int) returns (x:int, y:int)
 requires 3*m + 2*n == 2*X + Y && 2*m == X + Y
-ensures x==X && y == Y
+ensures x == X && y == Y
 {
     // 3*m + 2*n - 2*m == 2*X + Y - X - Y
     // m + 2*n == X

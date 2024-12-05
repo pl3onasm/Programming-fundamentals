@@ -19,7 +19,7 @@ ensures x == f(n)
   var k: nat := n;
   var z: int := 0;
   
-  while k >= 2
+  while k > 0
     invariant f(n) == x + z + y * f(k)
     decreases k
   { 
@@ -33,6 +33,6 @@ ensures x == f(n)
     k := k / 2;
   }
   assert x + y > -z;
-  x := x + y + z;
+  x := x + y + z;   // active finalization
 }
 
