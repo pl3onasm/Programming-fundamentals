@@ -97,8 +97,8 @@ y := 2*x - 10;
 // y > 26
 ```
 
-${\color{peru}(c)} \quad 2 * x + y > 42$  
-${\color{peru}(c)} \quad x + 2 * y > 42$  
+${\color{peru}(a)} \quad 2 * x + y > 42$  
+${\color{peru}(b)} \quad x + 2 * y > 42$  
 ${\color{peru}(c)} \quad x + y \geq 42$  
 
 &nbsp;

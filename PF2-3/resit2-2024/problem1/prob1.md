@@ -99,8 +99,8 @@ x := (x - y)/2;
 // .....
 ```
 
-${\color{peru}(c)} \quad x = A \land y = 2 * B$  
-${\color{peru}(c)} \quad x = B \land y = A$  
+${\color{peru}(a)} \quad x = A \land y = 2 * B$  
+${\color{peru}(b)} \quad x = B \land y = A$  
 ${\color{peru}(c)} \quad x = B \land y = 2 * A$  
 
 &nbsp;
