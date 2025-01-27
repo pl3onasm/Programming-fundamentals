@@ -248,8 +248,6 @@ while (i > 2) {
 }
 ```
 
-After $n$ iterations, the value of $i$ is roughly $N/2^n$. The loop will terminate when $N/2^n \leq 2$, or $n \geq \log(N/2)$, which is equivalent to $n \geq \log(N/2)$. The fragment's complexity is therefore in $\mathcal{O}(\log(N))$.
-
-
+After $n$ iterations, the value of $i$ is roughly $N/2^n$. The loop will terminate when $N/2^n \leq 2$, or $2^n \geq N/2$, which is equivalent to $n \geq \log(N/2)$. The fragment's complexity is therefore in $\mathcal{O}(\log(N))$.
 
 <br/>
