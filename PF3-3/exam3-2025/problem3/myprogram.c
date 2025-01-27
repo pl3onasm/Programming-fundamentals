@@ -1,7 +1,8 @@
 /* 
   file: myprogram.c
   author: your name
-  description: PF 3/3rd term 2025, problem 3
+  description: PF 3/3rd term 2025, problem 3,
+               Counting pair sums
 */
 
 #include <stdio.h>
