@@ -14,7 +14,7 @@ while (s > 0) {
 }
 ```
 
-After $N$ iterations, we have $i = N$ and $s = N^2 - N(N+1)/2$, so that $s$ will become negative after $N+1$ iterations and the loop will terminate. Thus, the fragment's complexity is in $\mathcal{O}(N)\space$.  
+After $n$ iterations, we have $s = N^2 - n(n+1)/2$. The loop will terminate when $N^2 - n(n+1)/2 \leq 0$, or $n(n+1)/2 \geq N^2$, which is equivalent to $n^2 + n \geq 2N^2$. The fragment's complexity is therefore in $\mathcal{O}(N)$.
 
 <br/>
 
