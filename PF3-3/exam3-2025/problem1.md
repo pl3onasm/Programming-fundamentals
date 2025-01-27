@@ -83,7 +83,7 @@ while (s > 0) {
 }
 ```
 
-The first loop runs $N/2$ times, after which $s = N \cdot N/2 = N^2/2$ in the worst case where $N$ is even. In that worst case, the second loop will run $N^2/2$ times. Since the loops are not nested, the fragment's complexity is dominated by the most expensive one, which is the second loop, and is therefore in $\mathcal{O}(N^2)$.
+The first loop runs $\lceil N/2 \rceil$ times, after which $s = N \cdot \lceil N/2 \rceil $ $\approx N^2/2$. Since the loops are not nested, the fragment's complexity is dominated by the most expensive one, which is the while loop which decrements $s$ by $1$ until it reaches $0$. The fragment's complexity is therefore in $\mathcal{O}(N^2)$.
 
 <br/>
 
