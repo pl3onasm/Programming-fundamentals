@@ -32,8 +32,9 @@ while (i > 0) {
 }
 ```
 
-The variable $i$ starts at $N$. In the worst case, we are then halving it half of the time and decrementing it by $1$ the other half of the time. In this case, the loop needs less than $2\log(N)$ iterations to terminate.
-The fragment's complexity is therefore in $\mathcal{O}(\log(N))$.
+The variable $i$ starts at $N$. In the worst case, we are then halving it half of the time and decrementing it by $1$ the other half of the time. In this worst case, the loop roughly needs $2\log(N)$ iterations to terminate. The fragment's complexity is therefore in $\mathcal{O}(\log(N))$.
+
+Note: It is crucial to see that decrements only occur when $i$ is odd in order to make it even and that they are applied to the updated value of $i$ after the halving operation, not to the original value of $i$.
 
 <br/>
 
