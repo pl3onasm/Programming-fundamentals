@@ -1,0 +1,16 @@
+4 5
+01 52 09 01 22
+20 16 27 12 10
+03 07 83 41 23
+08 14 33 72 38
+
+18
+8 9 5 65 3 6 43 6 23 5 60 8 9 5 34 64 12 74
+
+2.2 3.36 4.45 5.51 6.6 2.33 .1   -
+
+You can either read in a single string...
+... or, you can read in an entire text,
+which means everything is read
+as long as the text is not empty.
+The text is represented as a single string.
