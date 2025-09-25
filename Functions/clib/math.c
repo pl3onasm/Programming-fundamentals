@@ -42,10 +42,7 @@ int areCoprime(int a, int b) {
 int power(int n, int exp) {
   int pow = 1;
   while (exp) {
-    if (exp & 1) {
-      pow *= n;
-      --exp;
-    } 
+    if (exp & 1) pow *= n; 
     if (exp > 1) n *= n;
     exp /= 2;
   }
