@@ -39,6 +39,7 @@ int areCoprime(int a, int b) {
 
   // returns n^exp using binary exponentiation 
   // also known as exponentiation by squaring
+  // see note below
 int power(int n, int exp) {
   int pow = 1;
   while (exp) {
@@ -50,6 +51,7 @@ int power(int n, int exp) {
 }
 
   // computes n^exp mod m using modular exponentiation 
+  // see note below
 int modExp(int n, int exp, int m) {
   int pow = 1; n %= m;
   while (exp) {
@@ -59,3 +61,26 @@ int modExp(int n, int exp, int m) {
   }
   return pow;
 }
+
+
+/* NOTE
+
+  Both power and modExp use the method of exponentiation 
+  by squaring, which works in O(log(exp)) time instead of
+  O(exp) time for the naive method of repeated 
+  multiplication.
+  The idea is that instead of multiplying n by itself exp 
+  times, we can reduce the number of multiplications by 
+  taking advantage of the fact that n^exp = (n^2)^(exp/2) 
+  if exp is even. If exp is odd, we simply make the 
+  exponent even by taking one n out: n^exp = n * n^(exp-1),
+  so that we can then apply the same rule as in the even 
+  case.
+  Explicitly decrementing the exponent in the odd case is
+  not necessary, however, since the integer division by 2 
+  at the end of the loop will take care of it: if exp
+  is odd, exp/2 is the same as (exp-1)/2.
+  The check for exp > 1 is just an optimization to avoid
+  an unnecessary multiplication when exp == 1.
+
+*/
