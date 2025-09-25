@@ -56,7 +56,10 @@ int power(int n, int exp) {
 int modExp(int n, int exp, int m) {
   int pow = 1; n %= m;
   while (exp) {
-    if (exp & 1) pow = (pow * n) % m;
+    if (exp & 1) {
+      pow = (pow * n) % m;
+      --exp;
+    }
     if (exp > 1) n = (n * n) % m;
     exp /= 2;
   }
