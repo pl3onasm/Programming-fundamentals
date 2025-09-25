@@ -10,7 +10,10 @@ int power(int n, int exp) {
   // returns n^exp using binary exponentiation
   int pow = 1;
   while (exp) {
-    if (exp & 1) pow *= n; 
+    if (exp & 1) {
+      pow *= n;
+      --exp;
+    } 
     if (exp > 1) n *= n; 
     exp /= 2;
   }
@@ -35,13 +38,13 @@ int isArmstrongNumber (int n) {
     digitSum += power(p % 10, len);
     p /= 10;
   }
-  return (n==digitSum);
+  return n == digitSum;
 }
 
 int main(int argc, char *argv[]) {
-  int n, x, index=0;
+  int n, x, index = 0;
   (void)! scanf("%d", &n);
-  for (x = 1; ;++x) {
+  for (x = 1; ; ++x) {
     if (isArmstrongNumber(x)) index++;
     if (index == n) break;
   }
