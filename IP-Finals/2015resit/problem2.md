@@ -53,7 +53,7 @@ $$
 \sum_{k=0}^n a^k = \frac{a^{n+1} - 1}{a - 1} \quad \text{for} \quad a \neq 1
 $$
 
-From the above, we therefore have that the fragment's time complexity is in $\mathcal{O}(N)$.
+From the above, we therefore have that the fragment's time complexity is in $\mathcal{O}(N \log(N))$.
 
 <br/>
 

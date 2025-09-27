@@ -72,14 +72,17 @@ int modExp(int n, int exp, int m) {
   The idea is that instead of multiplying n by itself exp 
   times, we can reduce the number of multiplications by 
   taking advantage of the fact that n^exp = (n^2)^(exp/2) 
-  if exp is even. If exp is odd, we simply make the 
-  exponent even by taking one n out: n^exp = n * n^(exp-1),
-  so that we can then apply the same rule as in the even 
-  case.
+  if exp is even. If exp is odd (exp & 1 is true), we 
+  simply make the exponent even by taking one n out: 
+  n^exp = n * n^(exp-1), so that we can then apply the 
+  same rule as in the even case.
   Explicitly decrementing the exponent in the odd case is
   not necessary, however, since the integer division by 2 
-  at the end of the loop will take care of it: if exp
-  is odd, exp/2 is the same as (exp-1)/2.
+  at the end of the loop will take care of it: if exp is 
+  odd (say exp = 2k + 1 for some integer k) then exp/2 = k, 
+  and (exp-1)/2 = k as well. Thus, whether we explicitly 
+  decrement exp in the odd case or not, after the division 
+  by 2 we will end up with exp = k regardless.
   The check for exp > 1 is just an optimization to avoid
   an unnecessary multiplication when exp == 1.
 
