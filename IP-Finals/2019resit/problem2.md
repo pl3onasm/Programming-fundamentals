@@ -128,7 +128,7 @@ while (i > 0) {
 }
 ```
 
-The first loop computes $i \approx \sqrt{N}$ in $\log{(\sqrt{N})} = 1/2\log{(N)}$ steps. The second part of the fragment has an outer loop that runs $\sqrt{N}$ times and an inner loop that runs $i$ times for each consecutive value of $i$. The total number of iterations of the second loop is therefore:
+The first loop computes $i \approx \sqrt{N}$ in $\log{(\sqrt{N})} = (1/2)\log{(N)}$ steps. The second part of the fragment has an outer loop that runs $\sqrt{N}$ times and an inner loop that runs $i$ times for each consecutive value of $i$. The total number of iterations of the second loop is therefore:
 
 $$
 \begin{align*}

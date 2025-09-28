@@ -74,7 +74,7 @@ while (i < N) {
 }
 ```
 
-In each iteration, $i$ is incremented by either $1$ or $2$, depending on the parity of $s$, which switches in each iteration. This means that $i$ is incremented by $3$ every two iterations, and the loop needs around $2/3N$ iterations to reach or exceed $N$. Thus, the fragment's complexity is in $\mathcal{O}(N)$.
+In each iteration, $i$ is incremented by either $1$ or $2$, depending on the parity of $s$, which switches in each iteration. This means that $i$ is incremented by $3$ every two iterations, and the loop needs around $(2/3)N$ iterations to reach or exceed $N$. Thus, the fragment's complexity is in $\mathcal{O}(N)$.
 
 <br/>
 

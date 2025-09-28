@@ -53,7 +53,7 @@ for (int i = 42; i < 7*N; i += 3) {
 }
 ```
 
-The variable $s$ does not affect the complexity of the fragment. The loop runs $(7N - 42)/3$ $= 7/3N - 14$ times. The fragment's time complexity is therefore in $\mathcal{O}(N)$.
+The variable $s$ does not affect the complexity of the fragment. The loop runs $(7N - 42)/3$ $= (7/3)N - 14$ times. The fragment's time complexity is therefore in $\mathcal{O}(N)$.
 
 <br/>
 

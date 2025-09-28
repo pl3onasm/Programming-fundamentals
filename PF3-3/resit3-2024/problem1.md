@@ -283,7 +283,7 @@ while (i > 0) {
 }
 ```
 
-The first loop terminates when $i$ is the smallest power of $2$ such that $i^2 \geq N$, which is equivalent to $i \geq \sqrt{N}$. A tight upper bound for the final value of $i$ is $2\sqrt{N}$, so that in the worst case the first loop runs $\log(2\sqrt{N}) = 1/2\log(N) + 1$ times.
+The first loop terminates when $i$ is the smallest power of $2$ such that $i^2 \geq N$, which is equivalent to $i \geq \sqrt{N}$. A tight upper bound for the final value of $i$ is $2\sqrt{N}$, so that in the worst case the first loop runs $\log(2\sqrt{N}) = (1/2)\log(N) + 1$ times.
 
 The second while loop is nested. The outer loop runs $\sqrt{N}$ times, while the inner loop runs $i$ times, for each value of $i$ in the range $[1, 2\sqrt{N}]$, so that the total number of iterations can be computed as follows:
 

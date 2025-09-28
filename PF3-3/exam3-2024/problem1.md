@@ -90,7 +90,7 @@ for (int i = 0; i < s; i++) {
 }
 ```
 
-The first loop computes $s \approx \sqrt{N}$ in $\log(\sqrt{N}) = 1/2 \log(N)$ steps. The second loop, on the other hand, runs a total number of $s^2 \approx N$ times. Thus, the nested loop dominates the fragment's total complexity, which is in $\mathcal{O}(N)$.
+The first loop computes $s \approx \sqrt{N}$ in $\log(\sqrt{N}) = (1/2) \log(N)$ steps. The second loop, on the other hand, runs a total number of $s^2 \approx N$ times. Thus, the nested loop dominates the fragment's total complexity, which is in $\mathcal{O}(N)$.
 
 <br/>
 

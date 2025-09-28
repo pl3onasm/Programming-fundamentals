@@ -49,7 +49,7 @@ for (int i = 0; i < 2*N; i += 2) {
 }
 ```
 
-The outer loop runs $N$ times, and the inner loop runs $N/3$ times. This means that the loop body is executed $N^2/3$ times, so that the total running time is in $\mathcal{O}(N^2)$.
+The outer loop runs $N$ times, and the inner loop runs $N/3$ times. This means that the inner loop body is executed $N^2/3$ times, so that the total running time is in $\mathcal{O}(N^2)$.
 
 <br/>
 
