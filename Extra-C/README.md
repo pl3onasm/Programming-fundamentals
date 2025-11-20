@@ -18,4 +18,5 @@ $\Large{\color{rosybrown}\text{Problems}}$
 | Problem 06 | [Balanced brackets](prob06) |
 | Problem 07 | [Matching bitstrings](prob07) |
 | Problem 08 | [Segments](prob08) |
+| Problem 09 | [Maze runner](prob09) |
 |||

@@ -54,9 +54,9 @@
   }
 
   // macro for creating an array of a given type and length
-  // Examples:  CREATE_ARRAY(myInts, int, 10, 0);
-  //            CREATE_ARRAY(myDbls, double, 20, DOUBLE_MIN);
-  //            CREATE_ARRAY(myString, 15, '\0');
+  // Examples:  CREATE_ARRAY(int, myInts 10, 0);
+  //            CREATE_ARRAY(double, myDls, 20, DOUBLE_MIN);
+  //            CREATE_ARRAY(char, myChrs, 15, '\0');
 #define CREATE_ARRAY(type, arr, len, init)\
   type *arr = safeCalloc(len, sizeof(type));\
   if (init)\
@@ -64,9 +64,9 @@
       arr[arr##i] = init;
 
   // macro for creating a matrix of given type and dimensions
-  // Examples:  CREATE_MATRIX(myInts, int, 10, 10, INT_MAX);
-  //            CREATE_MATRIX(myDbls, double, 10, 15, 1);
-  //            CREATE_MATRIX(myChrs, char, 15, 10, '\0');
+  // Examples:  CREATE_MATRIX(int, myInts 10, 10, INT_MAX);
+  //            CREATE_MATRIX(double, myDbls, 10, 15, 1);
+  //            CREATE_MATRIX(char, myChrs, 15, 10, '\0');
 #define CREATE_MATRIX(type, matrix, rows, cols, init) \
   type **matrix = safeCalloc(rows, sizeof(type *)); \
   for (int matrix##i = 0; matrix##i < rows; ++matrix##i) { \
@@ -95,17 +95,19 @@
   //            READ_MATRIX(myDbls, "%lf", 8, 8);
   //            READ_MATRIX(myChrs, "%c", 5, 10);
 #define READ_MATRIX(matrix, format, rows, cols) \
-  for (int arr##i = 0; arr##i < rows; ++arr##i) \
+  for (int arr##i = 0; arr##i < rows; ++arr##i) {\
     for (int arr##j = 0; arr##j < cols; ++arr##j) \
-      (void)! scanf(format, &matrix[arr##i][arr##j]);
+      (void)! scanf(format, &matrix[arr##i][arr##j]); \
+    getchar(); /* consume newline */ \
+  }
 
   // macro for reading input from stdin as long as it lasts
   // creates a new array of the given type and format, and
   // a new variable size with the number of elements read
   // also sets the last element to '\0'
-  // Examples:  READ(int, "%d", myInts, myIntsLen);
-  //            READ(double, "%lf", myDbls, myDblsLen);
-  //            READ(char, "%c", myChrs, myChrsLen);
+  // Examples:  READ(int, myInts, "%d", myIntsLen);
+  //            READ(double, myDbls, "%lf", myDblsLen);
+  //            READ(char, myChrs, "%c", myChrsLen);
 #define READ(type, arr, format, size) \
   type *arr = safeCalloc(100, sizeof(type)); \
   int size = 0; type arr##var; \
