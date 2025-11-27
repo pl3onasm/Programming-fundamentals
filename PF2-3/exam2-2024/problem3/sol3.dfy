@@ -8,18 +8,20 @@ requires a == 2*X - n || a == 3*n - 2*X + 1
 ensures b == X
 {
   if (a + n) % 2 == 0 {
-    // a + n == 2*X
-    //    (prepare b := (a + n) / 2)
-    // (a + n) / 2 == X
+      // a + n == 2*X
+      //    (prepare b := (a + n) / 2)
+      // (a + n) / 2 == X
     b := (a + n) / 2;
-    assert (b == X);
+      // b == X
   } else {
-    // a + n == 2*(2*n - X) + 1
-    // -3*n + a - 1 == -2*X;
-    //    (prepare b := (3*n - a + 1) / 2)
-    // (3*n - a + 1) / 2 == X
+      // a + n == 2*(2*n - X) + 1
+      // -3*n + a - 1 == -2*X;
+      //    (prepare b := (3*n - a + 1) / 2)
+      // (3*n - a + 1) / 2 == X
     b := (3*n - a + 1) / 2;
-    assert (b == X);
+      // b == X
   }
+    // collecting both branches
+  assert b == X;
 }
 
