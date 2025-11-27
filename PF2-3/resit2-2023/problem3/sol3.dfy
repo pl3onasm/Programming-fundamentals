@@ -23,4 +23,6 @@ ensures p == X && p*p + q == Y
     q := m;
       // p == X && p*p + q == Y
   }
+    // collect branches
+  assert p == X && p*p + q == Y;
 }

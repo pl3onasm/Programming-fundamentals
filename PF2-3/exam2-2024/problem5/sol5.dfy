@@ -13,18 +13,16 @@ ghost function f(x: nat): nat {
 
 method problem5(n: nat) returns (x: nat)
 ensures x == f(n)
-{
+{ 
   x := 0;
-  var y: nat := 1;
-  var k: nat := n;
-  var z: int := 0;
+  var k, y, z: int := n, 1, 0;
   
   while k > 0
-    invariant f(n) == x + z + y * f(k)
+    invariant f(n) == z + y * f(k)
     decreases k
   { 
     if k % 2 == 0 {
-      x := x + y;
+      z := z + y;
       y := y * 2;
     } else {
       z := z - 2 * y; 
@@ -32,7 +30,7 @@ ensures x == f(n)
     }
     k := k / 2;
   }
-  assert x + y > -z;
-  x := x + y + z;   // active finalization
+  assert y > -z;  // to ensure x is nat
+  x := y + z;     // active finalization
 }
 

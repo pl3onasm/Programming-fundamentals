@@ -31,10 +31,10 @@ void freeMem(char **maze, int rows) {
 //=================================================================
 // Reads the maze from standard input
 char **readMaze(int rows, int cols, int *r, int *c) {
-  char **maze = safeCalloc(rows, sizeof *maze);
+  char **maze = safeCalloc(rows, sizeof(char *));
 
   for (int i = 0; i < rows; ++i) {
-    maze[i] = safeCalloc(cols, sizeof *maze[i]);
+    maze[i] = safeCalloc(cols, sizeof (char));
 
       // Pre-fill with '#', so any unused cells become walls
     for (int j = 0; j < cols; ++j)
