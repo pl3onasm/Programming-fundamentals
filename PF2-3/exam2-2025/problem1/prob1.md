@@ -14,7 +14,7 @@ $\Large{\color{darkkhaki}\text{Prob 1.1}}$
 // x + y = 42 
 ```
 
-${\color{peru}(a)} \quad x := 6*y; \space y := 3;$  
+${\color{peru}(a)} \quad x := 6 * y; \space y := 3;$  
 ${\color{peru}(b)} \quad x := x - y; \space y := 21;$  
 ${\color{peru}(c)} \quad y := 14; \space x := 2*y;$  
 
@@ -30,10 +30,10 @@ $\Large{\color{darkkhaki}\text{Prob 1.2}}$
 // x = B ∧ y = A 
 ```
 
-${\color{peru}(a)} \quad x := y - 2*x; \space y := y - x;$  
+${\color{peru}(a)} \quad x := y - 2 * x; \space y := y - x;$  
 $\qquad \space x := x + y; \space y := y/2;$  
-${\color{peru}(b)} \quad x := y - 2*x; \space y := y - x/2;$  
-$\qquad \space x := x + 2*y;$  
+${\color{peru}(b)} \quad x := y - 2 * x; \space y := y - x/2;$  
+$\qquad \space x := x + 2 * y;$  
 ${\color{peru}(c)} \quad y := x + y; \space x := y - x;$  
 $\qquad \space y := y + x$  
 
@@ -50,9 +50,9 @@ $\Large{\color{darkkhaki}\text{Prob 1.3}}$
 ```
 
 ${\color{peru}(a)} \quad x := x + 1; \space y := y - 1;$  
-${\color{peru}(b)} \quad  x := 1; \space y := x*y - y;$  
+${\color{peru}(b)} \quad  x := 1; \space y := x * y - y;$  
 $\qquad \space x := x + 1;$  
-${\color{peru}(c)} \quad x := x + 1; \space y := x*y - y;$  
+${\color{peru}(c)} \quad x := x + 1; \space y := x * y - y;$  
 $\qquad \space x := 1;$  
 
 <br/>
