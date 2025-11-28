@@ -18,4 +18,6 @@ ensures r == X
     r := (n - 5) / 2;
       // r == X
   }
+    // collect branches
+  assert r == X;
 }

@@ -31,11 +31,11 @@ $\Large{\color{darkkhaki}\text{Prob 1.2}}$
 ```
 
 ${\color{peru}(a)} \quad x := y - 2 * x; \space y := y - x;$  
-$\qquad \space x := x + y; \space y := y/2;$  
+$\qquad \quad x := x + y; \space y := y/2;$  
 ${\color{peru}(b)} \quad x := y - 2 * x; \space y := y - x/2;$  
-$\qquad \space x := x + 2 * y;$  
+$\qquad \quad x := x + 2 * y;$  
 ${\color{peru}(c)} \quad y := x + y; \space x := y - x;$  
-$\qquad \space y := y + x$  
+$\qquad \quad y := y + x$  
 
 <br/>
 
@@ -51,9 +51,9 @@ $\Large{\color{darkkhaki}\text{Prob 1.3}}$
 
 ${\color{peru}(a)} \quad x := x + 1; \space y := y - 1;$  
 ${\color{peru}(b)} \quad  x := 1; \space y := x * y - y;$  
-$\qquad \space x := x + 1;$  
+$\qquad \quad x := x + 1;$  
 ${\color{peru}(c)} \quad x := x + 1; \space y := x * y - y;$  
-$\qquad \space x := 1;$  
+$\qquad \quad x := 1;$  
 
 <br/>
 
