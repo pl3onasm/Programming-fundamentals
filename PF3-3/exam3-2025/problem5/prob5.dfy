@@ -17,16 +17,19 @@ method factorial(n: nat) returns (f: nat)
 {
   f := ??;
   var i := ??;
+  
   while (??) 
     invariant ??
   {
     var v,j := f,0;
+
     while (??) 
       invariant ??
     {
       f := f + v;
       j:= j + 1;
     }
+
     i := i + 1;
   }
 }

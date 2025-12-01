@@ -9,9 +9,13 @@ ensures x == X && y == Y
 {
     // 3*m + 2*n - 2*m == 2*X + Y - X - Y
     // m + 2*n == X
+
   x := m + 2*n;
+
     // x == X && 2*m == X + Y
     // x == X && 2*m - x == Y
+
   y := 2*m - x;
+  
     // x == X && y == Y
 }

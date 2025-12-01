@@ -12,13 +12,16 @@ ensures z == x*y
   var a := x;
   var b := y;
   z := 0;
+
   while ??
     invariant ??
   {
-    if ?? {
+    if ?? 
+    {
       z := ??;
       b := b - 1;
     }
+    
     b := b/2;
     a := 2*a;
   }

@@ -16,11 +16,16 @@ ensures 0 <= k < a.Length - 1 && a[k] >= a[k+1]
     decreases ??
   {
     var m := (i + j)/2;
-    if ?? {
+
+    if ?? 
+    {
       i := ??;
-    } else {
+    } 
+    else 
+    {
       j := ??;
     }
   }
+  
   k := ??;
 }

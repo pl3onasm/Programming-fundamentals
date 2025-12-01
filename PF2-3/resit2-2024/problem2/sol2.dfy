@@ -13,12 +13,16 @@ method problem2(m:int, n:int, ghost X:int, ghost Y:int) returns (x:int, y:int)
     //     and then subtracting the second from the first)
     // 3*m + n == 11*X && 2*m + 3*n == 5*X + 7*Y
     // (3*m + n)/11 == X && 2*m + 3*n == 5*X + 7*Y
+
   x := (3*m + n) / 11;
+
     // x == X && 2*m + 3*n == 5*X + 7*Y
     //    (substitute X by x in the second equality)
     // x == X && 2*m + 3*n == 5*x + 7*Y
     //    (isolate Y in the second equality)
     // x == X && (2*m + 3*n - 5*x)/7 == Y
+    
   y := (2*m + 3*n - 5*x) / 7;
+
     // x == X && y == Y
 }

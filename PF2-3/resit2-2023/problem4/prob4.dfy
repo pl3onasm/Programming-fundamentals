@@ -8,18 +8,25 @@ method problem4(a: int, b:int, c:int) returns (i: int, j: int, k: int)
 requires 0 <= a <= b <= c
 ensures i == j || j == k
 {
-  i,j,k:=a,b,c;
+  i, j, k := a, b, c;
+
   while i < j < k
     invariant ?      // choose a suitable invariant
     decreases ?      // choose a suitable variant function
   {
-    if i < j - 1 {
+    if i < j - 1 
+    {
       i := i + 1;
       j := j - 1;
-    } else {
-      if j < k {
+    } 
+    else 
+    {
+      if j < k
+      {
         j := j + 1;
-      } else {
+      } 
+      else 
+      {
         k := k - 1;
       }
     }

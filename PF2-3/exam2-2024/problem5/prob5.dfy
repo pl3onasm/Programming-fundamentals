@@ -3,7 +3,8 @@
    description: 2-3rd exam 2024, problem 5
 */
 
-ghost function f(x: nat): nat {
+ghost function f(x: nat): nat 
+{
   // you are not allowed to remove 'ghost', so an assignment
   // like x := f(n) is not allowed.
   if x < 2 then 1

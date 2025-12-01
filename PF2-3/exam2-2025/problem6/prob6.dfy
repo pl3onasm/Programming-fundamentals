@@ -3,7 +3,8 @@
    description: 2-3rd exam 2025, problem 6
 */
 
-ghost function f(n: nat): int {
+ghost function f(n: nat): int 
+{
   if n <= 1 
   then n
   else if n % 2 == 0
@@ -11,7 +12,8 @@ ghost function f(n: nat): int {
        else f(n - 1) + f(n - 3)
 }
 
-ghost function fSum(n: nat): int {
+ghost function fSum(n: nat): int 
+{
   if n == 0 then 0 else f(n - 1) + fSum(n - 1)
 }
 

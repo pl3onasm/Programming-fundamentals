@@ -12,11 +12,14 @@ method problem4(a: nat, b: nat, c: nat) returns (x: nat, y: nat, z: nat)
     invariant ??? == a + b + c
     decreases ???
   {
-    if x > y {
+    if x > y 
+    {
       x := x - 1;
       y := y + 1;
     }
-    if y > z {
+
+    if y > z 
+    {
       y := y - 1;
       z := z + 1;
     }

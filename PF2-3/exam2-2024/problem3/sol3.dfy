@@ -13,6 +13,7 @@ ensures b == X
       // (a + n) / 2 == X
     b := (a + n) / 2;
       // b == X
+
   } else {
       // a + n == 2*(2*n - X) + 1
       // -3*n + a - 1 == -2*X;
@@ -21,6 +22,7 @@ ensures b == X
     b := (3*n - a + 1) / 2;
       // b == X
   }
+  
     // collecting both branches
   assert b == X;
 }

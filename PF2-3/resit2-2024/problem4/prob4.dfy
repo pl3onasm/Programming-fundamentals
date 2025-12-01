@@ -9,15 +9,19 @@ requires a > 0 && b > 0
   var y:nat;
   x := a;
   y := b;
+  
   while x != y
   // find a suitable invariant and decreases clause such 
   // that Dafny is able to prove termination
   invariant ??
   decreases ??
   {
-    if x > y {
+    if x > y 
+    {
       x := x - y;
-    } else {
+    } 
+    else 
+    {
       y := y - x;
     }
   }

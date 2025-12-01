@@ -8,6 +8,7 @@ method problem3(n: int) returns (a: int, b: int, c: int)
   ensures a < b + 1 < c + 2 < a + 4
 { 
   var k: int := n / 3;
+  
   match n % 3
   {
     case 0 =>         // n == 3*k + 0
@@ -25,6 +26,7 @@ method problem3(n: int) returns (a: int, b: int, c: int)
       b := k + 1;     // b == (n + 1) / 3 == k + 1
       c := k + 1;     // c == (n + 2) / 3 == k + 1
   }
+
   assert a + b + c == n;
   assert a < b + 1 < c + 2 < a + 4;  
 }

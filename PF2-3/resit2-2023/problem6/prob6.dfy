@@ -3,11 +3,13 @@
    description: 2-3rd resit 2023, problem 6
 */
 
-ghost function f(n: nat): int {
+ghost function f(n: nat): int 
+{
   if n <= 2 then 1 else 3*f(n-1) + 2*f(n-2) - f(n-3)
 }
 
-ghost function fProd(n: nat): int {
+ghost function fProd(n: nat): int 
+{
   // give the body of this function
   // it should return Product(i: 0<=i<n: f(i))
 }

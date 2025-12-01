@@ -17,12 +17,15 @@ ensures z == x * y
     invariant b >= 0
     decreases b
   {
-    if b % 2 == 1 {
+    if b % 2 == 1 
+    {
       z := z + a;
       b := b - 1;
     }
+
     assert b % 2 == 0;   
     assert z + a * b == z + a * (b / 2) * 2;
+    
     b := b / 2;
     a := 2 * a;
   }

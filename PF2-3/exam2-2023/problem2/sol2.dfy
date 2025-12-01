@@ -12,10 +12,14 @@ ensures r == X && s == Y
     // n == Y + 1 && t - 2*n == X - 2
     //     (prepare r := t - 2*n + 2)
     // n == Y + 1 && t - 2*n + 2 == X
+
   r := t - 2*n + 2;
+
     // n == Y + 1 && r == X
     //     (prepare s := n - 1)
     // n - 1 == Y && r == X
+
   s := n - 1;
+  
     // s == Y && r == X
 }
