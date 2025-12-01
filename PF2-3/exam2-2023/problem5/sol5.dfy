@@ -61,7 +61,7 @@ ensures x == f(n)
       
        then we get:
          f(n) = x' + y' * f(k')
-       and the invariant is preserved
+       and the invariant is preserved for the updated values.
     */
     x := x + y * (k % 7);
     y := y * 2;

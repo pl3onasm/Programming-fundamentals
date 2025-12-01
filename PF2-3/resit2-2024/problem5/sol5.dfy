@@ -58,7 +58,7 @@ method problem5(n: nat) returns (x: int)
 
     For these initial values, the invariant gives:
       x*f(k) + y = 1 * f(n) + 0 = f(n),
-    so it holds initially.
+    so it holds at the start.
 
     In each iteration, we compute m = k/3 and distinguish three
     cases based on k % 3. In each case we rewrite f(k) using the
@@ -92,7 +92,7 @@ method problem5(n: nat) returns (x: int)
              x'*f(k') + y'
                = 3*x * f(m+1) + (x + y)
                = f(n)
-           and the invariant is preserved.
+           and the invariant is preserved for the updated values.
         */
                 y := y + x;
                 x := 3*x;
@@ -117,7 +117,7 @@ method problem5(n: nat) returns (x: int)
               x'*f(k') + y'
                 = 2*x * f(m) + (y - x)
                 = f(n)
-           and the invariant is preserved.
+           and the invariant is preserved for the updated values.
         */
                 y := y - x;
                 x := 2*x;
@@ -142,7 +142,7 @@ method problem5(n: nat) returns (x: int)
               x'*f(k') + y'
                 = 2*x * f(m+1) + (y - x)
                 = f(n)
-           and the invariant is preserved.
+           and the invariant is preserved for the updated values.
         */
                 y := y - x;
                 x := 2*x;

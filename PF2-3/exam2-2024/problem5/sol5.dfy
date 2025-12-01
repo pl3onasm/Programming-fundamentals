@@ -22,8 +22,9 @@ ensures x == f(n)
            = 3 * f(x/2) - 2       if x >= 2 and x is odd
 
     The recursive calls always halve the argument (x/2),
-    and each step adds or subtracts some constant multiple
-    of the current scaling factor.
+    and each step adds or subtracts a constant term (either 
+    +1 or -2) and scales the recursive call (either by 2 
+    or by 3).
 
     To simulate this computation iteratively, we unfold f(n)
     step by step, and keep track of three things:
@@ -84,7 +85,7 @@ ensures x == f(n)
 
          then we obtain:
            f(n) = z' + y' * f(k')
-         and the invariant is preserved for the new k'
+         and the invariant is preserved for the updated values.
       */
       z := z + y;
       y := y * 2;
@@ -107,7 +108,7 @@ ensures x == f(n)
 
          then we again have:
            f(n) = z' + y' * f(k')
-         and the invariant is preserved
+         and the invariant is preserved for the updated values.
       */
       z := z - 2 * y; 
       y := y * 3;

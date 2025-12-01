@@ -58,18 +58,18 @@ requires n >= 0
 
       When k reaches n, a will equal fProduct(n).
 
-      Initialisation:
+      We initialise as follows:
           k = 0
           x = f(0) = 1
           y = f(1) = 2
           z = f(2) = 3
           a = fProduct(0) = 1
 
-      So that the invariant holds initially.
+      So that the invariant holds at the start.
   */
 
-
   a, k, x, y, z := 1, 0, 1, 2, 3;
+  
   while k < n
   invariant 0 <= k <= n &&  x == f(k) && y == f(k + 1) 
             && z == f(k + 2) && a == fProduct(k)

@@ -8,11 +8,14 @@ method problem2(m:int, n:int, ghost X:int, ghost Y:int) returns (x:int, y:int)
   ensures x == X && y == Y
 {
     // m + n == 3*X + 2*Y && 2*m + 3*n == 5*X + 7*Y
-    //    (isolate X in the first equality)
+    //    (isolate X in the first equality by multiplying
+    //     the first equality by 7 and the second equality by 2
+    //     and then subtracting the second from the first)
     // 3*m + n == 11*X && 2*m + 3*n == 5*X + 7*Y
+    // (3*m + n)/11 == X && 2*m + 3*n == 5*X + 7*Y
   x := (3*m + n) / 11;
     // x == X && 2*m + 3*n == 5*X + 7*Y
-    //    (substitute x for X in the second equality)
+    //    (substitute X by x in the second equality)
     // x == X && 2*m + 3*n == 5*x + 7*Y
     //    (isolate Y in the second equality)
     // x == X && (2*m + 3*n - 5*x)/7 == Y

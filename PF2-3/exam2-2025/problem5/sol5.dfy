@@ -59,7 +59,7 @@ ensures x == f(n)
              y' = 3 * y
              k' = k / 2
            then we have again f(n) = x' + y' * f(k')
-           and the invariant is maintained
+           and the invariant is maintained for the updated values.
         */
       x := x + y * k;
       y := y * 3;
@@ -76,7 +76,7 @@ ensures x == f(n)
              y' = 2 * y
              k' = k / 2
            then we have again f(n) = x' + y' * f(k')
-           and the invariant is maintained
+           and the invariant is maintained for the updated values.
         */
       x := x + y; 
       y := y * 2;

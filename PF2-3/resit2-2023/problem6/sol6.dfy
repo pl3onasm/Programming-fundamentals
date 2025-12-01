@@ -24,7 +24,7 @@ ensures r == fProd(n)
         f(n) = 3*f(n-1) + 2*f(n-2) - f(n-3) for n > 2
         with base cases f(0) = f(1) = f(2) = 1
 
-      We want to compute this product of the first n values
+      We want to compute the product of the first n values
       of f in an efficient, non-recursive way. That is, we 
       want to compute: fProd(n) = Π_{i=0}^{n-1} f(i)
 
@@ -53,14 +53,14 @@ ensures r == fProd(n)
 
       When k reaches n, r will equal fProd(n).
 
-      Initialisation:
+      We initialise as follows:
           k = 0,
           x = f(0) = 1
           y = f(1) = 1
           z = f(2) = 1
           r = fProd(0) = 1
 
-      So that the invariant holds initially.
+      So that the invariant holds at the start.
   */   
 
   r, k, x, y, z := 1, 0, 1, 1, 1;
@@ -72,9 +72,11 @@ ensures r == fProd(n)
       // Step (1) : multiply r by f(k) (which is x) to
       //   incorporate f(k) into the running product r
     r := r*x;
+
       // Step (2) : shift (x,y,z) forward by 1 
       //   using f's recurrence
     x, y, z := y, z, 3*z + 2*y - x;
+    
       // Step (3) : increment k
     k := k + 1;
   }

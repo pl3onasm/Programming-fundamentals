@@ -44,10 +44,9 @@ ensures r == f(a, b)
     At the end we want i = 0, so that f(i, z) = f(0, z) = 1
     and thus r * 1 = f(a, b), the desired result.
 
-    Initially:
-      i = a, z = b, r = 1.
+    We initialise as follows: i = a, z = b, r = 1.
       So r * f(i, z) = 1 * f(a, b) = f(a, b)
-      and the invariant holds.
+      and the invariant holds at the start.
   */
 
   r := 1;
@@ -81,6 +80,7 @@ ensures r == f(a, b)
         */
       z := z * z;
       i := i / 2;
+      
     } else {           
         /* Case 2: i is odd.
           
@@ -108,8 +108,8 @@ ensures r == f(a, b)
     }
   }
 
-  /* When the loop terminates: i == 0, 
-     so the invariant gives:
+  /* At loop exit: i == 0
+     The invariant is then:
        r * f(0, z) = f(a, b)
      Since f(0, z) = 1, we have r * 1 = f(a, b), 
      so r == f(a, b), and the postcondition holds.

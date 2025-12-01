@@ -45,7 +45,7 @@ ensures a == fSum(n)
       In other words, at loop entry we have:
           (a, x, y, z, k) = (fSum(k), f(k), f(k+1), f(k+2), k)
 
-      Inside the loop body, the code performs:
+      Inside the loop body, we perform these steps:
           (1) increment k
           (2) add the value x, which still holds f(k-1)
               with respect to the new k, so afterwards:
@@ -69,14 +69,14 @@ ensures a == fSum(n)
 
       When k reaches n, a will equal fSum(n).
 
-      Initialisation:
+      We initialise as follows:
           k = 0
           x = f(0) = 0
           y = f(1) = 1
           z = f(2) = 1      (since f(2) = 1 + f(0) = 1)
           a = fSum(0) = 0
 
-      So that the invariant holds initially.
+      So that the invariant holds at the start.
   */
 
   a, k, x, y, z := 0, 0, 0, 1, 1;

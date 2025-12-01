@@ -56,14 +56,14 @@ ensures a == fSum(n)
 
     When k reaches n, a will equal fSum(n).
 
-    Initialisation:
+    We initialise as follows:
         k = 0
         x = f(0) = 0
         y = f(1) = 2
         z = f(2) = 4
         a = fSum(0) = 0
 
-    So that the invariant holds initially.
+    So that the invariant holds at the start.
   */
 
   a, k, x, y, z := 0, 0, 0, 2, 4; 
