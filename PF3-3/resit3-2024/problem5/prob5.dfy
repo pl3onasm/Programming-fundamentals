@@ -7,7 +7,7 @@ However, you are allowed to insert assert statements if needed.
 
 method problem5(x: int, y: int) returns (z: int)
 requires y >= 0
-ensures z == x*y
+ensures z == x * y
 {
   var a := x;
   var b := y;
@@ -22,7 +22,7 @@ ensures z == x*y
       b := b - 1;
     }
     
-    b := b/2;
-    a := 2*a;
+    b := b / 2;
+    a := 2 * a;
   }
 }

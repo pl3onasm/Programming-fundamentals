@@ -84,9 +84,7 @@ method problem5(a: array<int>) returns (k: nat)
 
       • The second invariant says that the value at the left 
         end of the interval is always at least as large as the 
-        value at the right end:
-
-            a[i] >= a[j]
+        value at the right end:  a[i] >= a[j]
 
         Initially, we have:
           i = 0, j = a.Length - 1 and a[0] == a[a.Length - 1]
