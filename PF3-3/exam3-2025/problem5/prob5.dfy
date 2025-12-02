@@ -9,7 +9,7 @@ expressions
 function fac(n: nat): nat
   requires n >= 0
 {
-  if n == 0 then 1 else n*fac(n-1)
+  if n == 0 then 1 else n * fac(n-1)
 }
  
 method factorial(n: nat) returns (f: nat)
@@ -21,13 +21,13 @@ method factorial(n: nat) returns (f: nat)
   while (??) 
     invariant ??
   {
-    var v,j := f,0;
+    var v, j := f, 0;
 
     while (??) 
       invariant ??
     {
       f := f + v;
-      j:= j + 1;
+      j := j + 1;
     }
 
     i := i + 1;

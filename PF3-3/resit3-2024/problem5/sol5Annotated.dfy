@@ -41,9 +41,9 @@ method problem5(x: int, y: int) returns (z: int)
     has in the exponentiation algorithm.
 
     In order to prove correctness, we maintain the following
-    invariants throughout the loop:
-        z + a * b == x * y
-        b >= 0
+    invariant throughout the loop:
+    
+          z + a * b == x * y && b >= 0
 
     Where:
       • z is the accumulated sum that will eventually 
@@ -53,16 +53,16 @@ method problem5(x: int, y: int) returns (z: int)
       • b is the counter indicating how many times we 
         still need to add a to z. So, initially b = y
 
-    Thus, at all times, the invariant states that the sum of
-    the accumulated total z and the remaining product a * b
-    equals the original product x * y that we want to compute,
+    Thus, at all times, the first part of the invariant states that 
+    the sum of the accumulated total z and the remaining product 
+    a * b equals the original product x * y that we want to compute,
     while b >= 0 ensures that b can validly serve as a counter.
 
     Initially, we have:
       a = x, b = y, z = 0.
     From the precondition y >= 0 we get b >= 0.
     Also: z + a * b = 0 + x * y = x * y
-    So both invariants hold at the start.
+    So the invariant holds at the start.
 
     The loop then proceeds as long as counter b > 0. In each 
     iteration, we do the following:
@@ -71,7 +71,7 @@ method problem5(x: int, y: int) returns (z: int)
           z := z + a;
           b := b - 1;
 
-        Here we “peel off” one copy of a, and add it to z, 
+        Here we 'peel off' one copy of a, and add it to z, 
         thereby decreasing b by 1 and making b even. The
         invariant is preserved because:
           (z + a) + a * (b - 1)  =  z + a * b

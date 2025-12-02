@@ -10,8 +10,7 @@ ensures 0 <= k < a.Length - 1 && a[k] >= a[k+1]
 {
   var i, j := 0, a.Length - 1;
   while i + 1 < j
-    invariant 0 <= i < j <= a.Length - 1  
-    invariant a[i] >= a[j]
+    invariant 0 <= i < j <= a.Length - 1 && a[i] >= a[j]
     decreases j - i
   {
     var m := (i + j)/2;

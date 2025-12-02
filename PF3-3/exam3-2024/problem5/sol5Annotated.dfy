@@ -21,70 +21,69 @@ method problem5(a: array<int>) returns (k: nat)
 
         0 <= k < a.Length - 1  and  a[k] >= a[k+1]
 
-    In other words, we want to find a position k where
-    the array is non-increasing from a[k] to a[k+1].
+    In other words, we want to find a position k where the array is 
+    non-increasing from a[k] to a[k+1].
 
-    It is guaranteed that such a k exists because of the
-    precondition a[0] == a[a.Length - 1]. After all, if
-    the array were strictly increasing at every adjacent
-    pair, we would have:
+    It is guaranteed that such a k exists because of the precondition 
+    a[0] == a[a.Length - 1]. After all, if the array were strictly 
+    increasing at every adjacent pair, we would have:
 
         a[0] < a[1] < a[2] < ... < a[a.Length - 1],
 
-    which contradicts a[0] == a[a.Length - 1]. So there
-    must be at least one position where the array is
-    non-increasing.
+    which contradicts a[0] == a[a.Length - 1]. So there must be at 
+    least one position where the array is non-increasing.
 
-    The given program uses a binary-search approach on 
-    indices i and j, which mark a current interval [i, j] 
-    containing a non-increasing pair. We maintain i < j 
-    and search until the interval shrinks to length 2, 
-    i.e. j == i + 1. Then we can take k = i.
+    The given program uses a binary-search approach on indices i 
+    and j. At every step, [i, j] is a current search interval whose
+    endpoints satisfy a[i] >= a[j]. In particular, the endpoints
+    themselves form a non-increasing pair, and this relationship is
+    preserved while we shrink the interval.
 
-    So, the program continues as long as i + 1 < j,
-    which means the interval [i, j] has length at least 3.
+    We maintain i < j and search until the interval shrinks to 
+    length 2, i.e. j == i + 1. Then we can take k = i.
+
+    So, the program continues as long as i + 1 < j, which means the 
+    interval [i, j] has length at least 3.
 
     Inside the loop, we compute the current midpoint:
 
-      m = (i + j) / 2
+        m = (i + j) / 2
 
     and compare a[i] and a[m]:
 
-      • If a[i] < a[m], then since a[i] >= a[j]
-        (from the invariant given below), we have:
+      • If a[i] < a[m], then since a[i] >= a[j] (from the  
+        invariant given below), we have:
 
             a[m] > a[i] >= a[j]
 
-        so a[m] >= a[j]. Therefore, the non-increasing
-        pair must be in the right half [m, j], and we
-        can move the left bound up to m:   i := m
+        so a[m] >= a[j]. Therefore, we can safely continue
+        the search in the right half [m, j], whose endpoints
+        again satisfy a[m] >= a[j].
 
-      • If a[i] >= a[m], then the non-increasing pair
-        must be in the left half [i, m], so we move
-        the right bound down to m:         j := m
-
+      • If a[i] >= a[m], then we know the endpoints of the
+        left half [i, m] satisfy a[i] >= a[m], so we can
+        continue the search in [i, m] by moving the right
+        bound down to m.
 
     To prove correctness, we still have to provide:
       (1) a suitable loop invariant
       (2) a suitable variant to show termination
 
-    (1) We select the following two invariants:
+    (1) We select the following invariant:
 
-        invariant 0 <= i < j <= a.Length - 1  
-        invariant a[i] >= a[j]
+            0 <= i < j <= a.Length - 1 && a[i] >= a[j]
 
-      • The first invariant says that [i, j] is always a 
-        valid, non-empty interval inside the array, with 
-        at least 2 elements.
+      • The first part says that [i, j] is always a valid, 
+        non-empty interval inside the array, with at least 2 items.
 
         Initially, we have: i = 0, j = a.Length - 1.
         From the precondition a.Length > 1, we obtain:
           0 <= i < j <= a.Length - 1 
-        Thus, the first invariant holds at the start.
+        Thus, the first part of the invariant holds at the start.
 
-      • The second invariant says that the value at the left 
-        end of the interval is always at least as large as the 
-        value at the right end:  a[i] >= a[j]
+      • The second part of the invariant states that the value
+        at the left end of the interval is always at least as large 
+        as the value at the right end:  a[i] >= a[j]
 
         Initially, we have:
           i = 0, j = a.Length - 1 and a[0] == a[a.Length - 1]
@@ -115,8 +114,7 @@ method problem5(a: array<int>) returns (k: nat)
   */
 
   while i + 1 < j
-    invariant 0 <= i < j <= a.Length - 1  
-    invariant a[i] >= a[j]
+    invariant 0 <= i < j <= a.Length - 1  && a[i] >= a[j]
     decreases j - i
   {
     var m := (i + j) / 2;
@@ -126,9 +124,9 @@ method problem5(a: array<int>) returns (k: nat)
       /* 
         We have a[i] < a[m] and a[i] >= a[j] ⇒ a[m] > a[i] >= a[j],
         so a[m] >= a[j]. We move the left bound up to m, and leave
-        the right bound j unchanged: i' = m, j' = j
-        Thus, the new interval has been reduced to [m, j],
-        and the invariant has been restored: a[i'] >= a[j']
+        the right bound j unchanged: i' = m, j' = j.
+        Thus, the new interval [i', j'] = [m, j] again has endpoints
+        satisfying the invariant a[i'] >= a[j'].
       */
       i := m;
     } 
@@ -137,16 +135,16 @@ method problem5(a: array<int>) returns (k: nat)
     {
       /* 
         We have a[i] >= a[m]. We move the right bound down to m,
-        and leave the left bound i unchanged: i' = i, j' = m
-        Thus, the new interval has been reduced to [i, m],
-        and the invariant has been restored: a[i'] >= a[j']
+        and leave the left bound i unchanged: i' = i, j' = m.
+        Thus, the new interval [i', j'] = [i, m] again has endpoints
+        satisfying the invariant a[i'] >= a[j'].
       */
       j := m;
     }
   }
 
   /*  
-    At loop exit, the invariants still hold:
+    At loop exit, the invariant still holds:
 
       (1) 0 <= i < j <= a.Length - 1
       (2) a[i] >= a[j]
@@ -159,12 +157,11 @@ method problem5(a: array<int>) returns (k: nat)
 
     implies:                j == i + 1
 
-    Thus, at loop exit, the interval [i, j] has length 2,
-    with j == i + 1
+    Thus, at loop exit, the interval [i, j] has length 2, 
+    with j == i + 1.
     From (2) we have a[i] >= a[j], so we can satisfy the
-    postcondition by setting k := i
+    postcondition by setting k := i.
   */
 
   k := i;
 }
- 
