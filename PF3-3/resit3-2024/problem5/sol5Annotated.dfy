@@ -111,7 +111,14 @@ method problem5(x: int, y: int) returns (z: int)
     {
       /* b is odd: peel off one copy of a, making b even.
         The invariant is preserved because:
-           z + a*b  ⇒  (z + a) + a*(b - 1)  =  z + a*b.
+           z + a*b  ⇒  (z + a) + a*(b - 1)  
+
+        Next, we set:
+          z' := z + a
+          b' := b - 1
+
+        so that the invariant holds again for the updated
+        values:  z' + a * b' == x * y
       */
       z := z + a;
       b := b - 1;
@@ -119,9 +126,17 @@ method problem5(x: int, y: int) returns (z: int)
 
     /* At this point b is even, so we can rewrite:
          a * b  =  a * (2 * (b / 2))  =  (2 * a) * (b / 2),
-       and replace (a, b) by (2*a, b/2), preserving a*b
-       and thus z + a*b.
-       The assertions help Dafny to verify these facts.
+       
+       Next, we set:
+         a' := 2 * a
+         b' := b / 2
+
+       so that the invariant holds again for the updated
+       values:  z' + a * b' == x * y
+
+       The below assertions help Dafny to verify that b is indeed
+       even here, so that the division by 2 does not lose
+       any information.
     */
 
     assert b % 2 == 0;    

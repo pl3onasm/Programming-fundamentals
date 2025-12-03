@@ -31,7 +31,7 @@ method factorial(n: nat) returns (f: nat)
     an outer loop which keeps track of how many factors have been
     processed so far (using the counter i), and an inner loop which
     performs the multiplication of the current factorial value by
-    (i+1) by starting from f = v and adding v to f exactly i times.
+    (i+1) using repeated addition.
 
     We maintain the following outer invariant: 
       
@@ -85,6 +85,13 @@ method factorial(n: nat) returns (f: nat)
         and increment j by 1, thereby maintaining the
         invariant, since:
           f = v + j * v  =>  f + v = v + (j + 1) * v
+
+        Next, we set:
+          f' := f + v
+          j' := j + 1
+
+        so that the invariant holds again for the updated
+        values:  f' == v + j' * v
       */
       f := f + v;
       j := j + 1;
