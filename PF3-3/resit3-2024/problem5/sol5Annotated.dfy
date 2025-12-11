@@ -85,8 +85,8 @@ method problem5(x: int, y: int) returns (z: int)
         z + a * b, and thus preserving the invariant. 
 
     To prove termination, we use b as the variant. By the second 
-    invariant we always have b >= 0. In each iteration where b > 0,
-    we show that b strictly decreases:
+    part of the invariant we always have b >= 0. In each iteration 
+    where b > 0, we show that b strictly decreases:
 
       • If b is odd, we first do b := b - 1, which makes b even 
         and smaller, then b := b / 2, which makes it smaller again 

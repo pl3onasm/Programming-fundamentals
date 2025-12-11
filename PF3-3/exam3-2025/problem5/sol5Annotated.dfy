@@ -106,8 +106,16 @@ method factorial(n: nat) returns (f: nat)
       we obtain:
         f == (i + 1) * fac(i) == fac(i + 1)
 
-      We now increment i so that the outer invariant
-      f == fac(i) holds again with the new value of i.
+      In order to maintain the outer invariant for the next
+      iteration, we set:
+        i' := i + 1;
+
+      At this point, we have:
+        0 <= i' <= n   (since i < n at loop entry)
+        f == fac(i')
+
+      Thus, the invariant of the outer loop holds again for
+      the updated values.
     */
 
     i := i + 1;       

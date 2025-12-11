@@ -7,20 +7,50 @@ method problem2(a: int, b: int) returns (r: int, s: int)
 requires a % 2 == b % 2
 ensures r + s == a && r - s == b
 {
-    // r + s == a && r - s == b
-    //    (add the two equalities)
-    // 2*r == a + b
-    // r == (a + b) / 2
+  if a % 2 == 0
+  {
+      // a % 2 == 0 && a % 2 == b % 2 
+      // a % 2 == 0 && b % 2 == 0
+      //   (as both a and b are even integers,
+      //    their sum and difference are also even integers;
+      //    let k and l be integers that express this fact)
+      // a + b == 2 * k && a - b == 2 * l
+      //   (divide both equations by 2)
+      // (a + b) / 2 == k && (a - b) / 2 == l
+      //   (choose r := k and s := l)
+    r := (a + b) / 2;
+    s := (a - b) / 2;
+      //  r + s == (a + b) / 2 + (a - b) / 2 
+      //        == (2 * a) / 2 
+      //        == a
+      //  && 
+      //  r - s == (a + b) / 2 - (a - b) / 2 
+      //        == (2 * b) / 2 
+      //        == b
+  }
+    
+  else 
+  {   
+      // a % 2 != 0 && a % 2 == b % 2
+      // a % 2 != 0 && b % 2 != 0
+      //   (as both a and b are odd integers,
+      //    their sum and difference are even integers;
+      //    let k and l be integers that express this fact)
+      // a + b == 2 * k && a - b == 2 * l
+      //   (divide both equations by 2)
+      // (a + b) / 2 == k && (a - b) / 2 == l
+      //   (choose r := k and s := l)
+    r := (a + b) / 2;
+    s := (a - b) / 2;
+      //  r + s == (a + b) / 2 + (a - b) / 2 
+      //        == (2 * a) / 2 
+      //        == a
+      //  && 
+      //  r - s == (a + b) / 2 - (a - b) / 2 
+      //        == (2 * b) / 2 
+      //        == b
+  }
 
-  r := (a + b) / 2;
-
-    //    (substitute r into the 2nd equality)
-    // (a + b) / 2 - s == b
-    //    (isolate s)
-    // s == (a + b) / 2 - b
-    // s == (a - b) / 2
-
-  s := (a - b) / 2;
-  
+    // collect branches
   assert r + s == a && r - s == b;
 }
