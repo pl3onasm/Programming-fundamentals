@@ -11,13 +11,14 @@ ensures r + s == a && r - s == b
   {
       // a % 2 == 0 && a % 2 == b % 2 
       // a % 2 == 0 && b % 2 == 0
-      //   (as both a and b are even integers,
-      //    their sum and difference are also even integers;
-      //    let k and l be integers that express this fact)
-      // a + b == 2 * k && a - b == 2 * l
-      //   (divide both equations by 2)
-      // (a + b) / 2 == k && (a - b) / 2 == l
-      //   (choose r := k and s := l)
+      //   (as both a and b are even integers, there 
+      //    exist integers k and l such that this fact holds)
+      // a == 2 * k && b == 2 * l
+      //   (this implies their sum and difference are also even)
+      // a + b == 2 * (k + l) && a - b == 2 * (k - l)
+      //   (divide both equalities by 2)
+      // (a + b) / 2 == k + l && (a - b) / 2 == k - l
+      //   (choose r := k + l and s := k - l)
     r := (a + b) / 2;
     s := (a - b) / 2;
       //  r + s == (a + b) / 2 + (a - b) / 2 
@@ -33,13 +34,14 @@ ensures r + s == a && r - s == b
   {   
       // a % 2 != 0 && a % 2 == b % 2
       // a % 2 != 0 && b % 2 != 0
-      //   (as both a and b are odd integers,
-      //    their sum and difference are even integers;
-      //    let k and l be integers that express this fact)
-      // a + b == 2 * k && a - b == 2 * l
-      //   (divide both equations by 2)
-      // (a + b) / 2 == k && (a - b) / 2 == l
-      //   (choose r := k and s := l)
+      //   (as both a and b are odd integers, there
+      //    exist integers k and l such that this fact holds)
+      // a == 2 * k + 1 && b == 2 * l + 1
+      //   (this implies their sum and difference are also even)
+      // a + b == 2 * (k + l + 1) && a - b == 2 * (k - l)
+      //   (divide both equalities by 2)
+      // (a + b) / 2 == k + l + 1 && (a - b) / 2 == k - l
+      //   (choose r := k + l + 1 and s := k - l)
     r := (a + b) / 2;
     s := (a - b) / 2;
       //  r + s == (a + b) / 2 + (a - b) / 2 
