@@ -14,7 +14,7 @@ ensures r + s == a && r - s == b
       //   (as both a and b are even integers, there 
       //    exist integers k and l such that this fact holds)
       // a == 2 * k && b == 2 * l
-      //   (this implies their sum and difference are also even)
+      //   (take their sum and difference)
       // a + b == 2 * (k + l) && a - b == 2 * (k - l)
       //   (divide both equalities by 2)
       // (a + b) / 2 == k + l && (a - b) / 2 == k - l
@@ -37,7 +37,7 @@ ensures r + s == a && r - s == b
       //   (as both a and b are odd integers, there
       //    exist integers k and l such that this fact holds)
       // a == 2 * k + 1 && b == 2 * l + 1
-      //   (this implies their sum and difference are also even)
+      //   (take their sum and difference)
       // a + b == 2 * (k + l + 1) && a - b == 2 * (k - l)
       //   (divide both equalities by 2)
       // (a + b) / 2 == k + l + 1 && (a - b) / 2 == k - l
