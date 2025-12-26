@@ -5,18 +5,18 @@
 #   status messages instead of raw compiler commands.          #
 #                                                              #
 #   Targets:                                                   #
-#     make           -> build library + tests									 #
+#     make           -> build library + tests                  #
 #     make lib       -> build libclib.a into build/lib/        #
 #     make tests     -> build tests into build/bin/            #
 #     make run-tests -> run the built test binaries            #
 #     make clean     -> remove build output                    #
 #     make help      -> show this help message                 #
-#																														   #
-#   Verbose mode:											                         #
+#                                                              #
+#   Verbose mode:                                              #
 #     make V=1       -> show full commands (gcc/ar/etc.)       #
-#																						                   #								
-#   Override variables if desired:														 #
-#     make CC=clang CSTD=c11															     #
+#                                                              #
+#   Override variables if desired:                             #
+#     make CC=clang CSTD=c11                                   #
 #===============================================================
 
 MAKEFLAGS += --no-print-directory
