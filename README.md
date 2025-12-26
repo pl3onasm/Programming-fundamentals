@@ -78,7 +78,7 @@ output with the corresponding `.out` files.
 
 By default you get a clean summary (PASS or FAIL per test case).
 
-If a test fails, and want to see the difference in expected and actual output, or you want to have extra Valgrind tests, you can use the following options:
+If a test fails, and you want to see the difference in expected and actual output, or you want to have extra Valgrind tests, you can use the following options:
 
 - `--show-diff` or `-d` shows a small preview of the output differences for failed tests, including the first 5 lines of the expected output and the first 5 lines of your actual output (both indented under the test case).
 - `--valgrind` or `-v` enables Valgrind checks (PASS or FAIL per test case).
@@ -139,14 +139,15 @@ ctest.sh myprogram.c > results.txt
 ```
 
 <br/>
+
 ----------------------------------
 
 $\Large{\color{cadetblue}\text{Functions library}}$
 <br/>
 
-The folder [Functions](Functions) contains a small C utility library called `clib` comprising various helpers for arrays, strings, matrices, sorting, searching, etc..
+The folder [Functions](Functions) contains a small C utility library called `clib` comprising various helpers for arrays, strings, matrices, sorting, searching, etc. This library is intended to be used as a support library for the exercises in this repository.
 
-Keeping the shared helper code in a separate library makes the exercise solutions themselves shorter and easier to read. It also makes the repoeasy to extend: you can add your own helpers under `Functions/src` and declare them under `Functions/include/clib`, rebuild the static library, and all programs in the repo can immediately use the new functionality while the core stays compact and maintainable.
+This library is easy to extend: you can add your own helpers under `Functions/src` and declare them under `Functions/include/clib`, rebuild the static library, and all programs in the repo can immediately use the new functionality while the core stays compact and maintainable.
 
 The library is organized as:
 
