@@ -5,18 +5,20 @@
   version: 6.2, using the clib library
 */
 
-#include "../../Functions/clib/clib.h"
+#include "../../Functions/include/clib/clib.h"
 
-int isBalanced(char *s, int len) {
-  CREATE_ARRAY(char, stack, len, 0);
-  int top = 0;
-  for (int i = 0; i < len; i++) {
+//=================================================================
+// Checks if the string of brackets is balanced using a stack
+int isBalanced(char *s, size_t len) {
+  char *stack; int top = 0;
+  C_NEW_ARRAY(char, stack, len);
+  
+  for (size_t i = 0; i < len; ++i) {
     if (s[i] == '(' || s[i] == '[' || s[i] == '{') {
       stack[top++] = s[i];
       continue;
     } 
-    --top;
-    if (top < 0 
+    if (--top < 0 
       || (s[i] == ')' && stack[top] != '(') 
       || (s[i] == ']' && stack[top] != '[') 
       || (s[i] == '}' && stack[top] != '{')) {
@@ -28,10 +30,13 @@ int isBalanced(char *s, int len) {
   return top == 0;  
 }
 
+//=================================================================
 
 int main () {
  
-  READ_STR_UNTIL(str, '\n', len);
+  char *str; 
+  size_t len;
+  C_READ_LINE(str, len);
   
   printf(isBalanced(str, len) ? "YES\n" : "NO\n");
 

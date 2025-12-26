@@ -6,49 +6,57 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 #define MAX(a,b) ((a)>(b)?(a):(b))
 #define MIN(a,b) ((a)<(b)?(a):(b))
 
+//=================================================================
+// Segment structure
 typedef struct {
-  int start, end;
+  size_t start, end;
 } Seg;
 
-void *safeMalloc (int n) {
-  /* checks if memory has been allocated successfully */
+//=================================================================
+// Allocates memory and checks if allocation was successful
+void *safeMalloc (size_t n) {
   void *p = malloc(n);
   if (p == NULL) {
-    printf("Error: malloc(%d) failed. Out of memory?\n", n);
+    printf("Error: malloc(%zu) failed. Out of memory?\n", n);
     exit(EXIT_FAILURE);
   }
   return p;
 }
 
-Seg* readInput (int len) {
-  /* reads the input and stores it as an array of segments */
-  Seg *segments = safeMalloc(len*sizeof(Seg));
+//=================================================================
+// Reads the input segments and returns them as an array
+Seg* readInput (size_t len) {
+  Seg *segments = safeMalloc(len * sizeof(Seg));
   
-  for (int i = 0; i < len; ++i)
-    (void)! scanf("[%d,%d),", &segments[i].start, &segments[i].end);
+  for (size_t i = 0; i < len; ++i)
+    assert(scanf("[%zu,%zu),", &segments[i].start, 
+                               &segments[i].end) == 2);
   
   return segments;
 }
 
-Seg *copySubArray(int left, int right, Seg *arr) {
-  /* copies a part of a given segment array from the left
-   * index to the right one */
+//=================================================================
+// Copies a part of a given segment array from the left index to 
+// the right one
+Seg *copySubArray(size_t left, size_t right, Seg *arr) {
   Seg *copy = safeMalloc((right - left)*sizeof(Seg));
 
-  for (int i = left; i < right; i++)
+  for (size_t i = left; i < right; i++)
     copy[i - left] = arr[i];
   
   return copy;
 }
 
-void mergeSort(int length, Seg *arr) {
-  /* sorts the array in increasing order on the value of the
-   * start field of each segment */
-  int l = 0, r = 0, idx = 0, mid = length/2;
+//=================================================================
+// Mergesorts the given array of segments by their start field 
+// in increasing order
+void mergeSort(size_t length, Seg *arr) {
+  size_t l = 0, r = 0, idx = 0, mid = length/2;
 
   if (length <= 1) return;
 
@@ -75,25 +83,25 @@ void mergeSort(int length, Seg *arr) {
   free(right);
 }
 
-void printSegments (Seg *segments, int n) {
-  /* prints the segments in the array */
-  for (int i = 0; i <= n; ++i) {
-    printf("[%d,%d)", segments[i].start, segments[i].end);
+//=================================================================
+// Prints the segments in the array
+void printSegments (Seg *segments, size_t n) {
+  for (size_t i = 0; i <= n; ++i) {
+    printf("[%zu,%zu)", segments[i].start, segments[i].end);
     printf(i == n ? "\n" : ",");
   }
 }
 
-void mergeSegments(Seg *segments, int n) {
-  /* checks each segment pair and keeps merging them as long 
-   * as the value of the end field of the current segment
-   * overlaps the start field's value of the next */
-  
-  int curr = 0; // index of current segment in the merged (sub)array
+//=================================================================
+// Keeps merging overlapping segments in the array until no more
+// merges are possible
+void mergeSegments(Seg *segments, size_t n) {
+  size_t curr = 0;  // index of current segment 
 
-  for (int i = 1; i < n; ++i) {
+  for (size_t i = 1; i < n; ++i) {
     Seg a = segments[curr], b = segments[i];
     if (a.end >= b.start) {   
-      // merge segments
+        // overlapping segments, merge them
       segments[curr].start = MIN (a.start, b.start);
       segments[curr].end = MAX (a.end, b.end);
     } else segments[++curr] = b;
@@ -101,9 +109,11 @@ void mergeSegments(Seg *segments, int n) {
   printSegments (segments, curr);
 }
 
+//=================================================================
+
 int main() {
-  int n;
-  (void)! scanf("%d:", &n);
+  size_t n;
+  assert(scanf("%zu:", &n) == 1);
 
   Seg *segments = readInput (n);
 

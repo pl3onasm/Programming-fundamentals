@@ -6,29 +6,33 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void *safeCalloc (int n, int size) {
-  /* allocates memory and checks if it was successful */
+//=================================================================
+// Allocates memory and checks if allocation was successful
+void *safeCalloc (size_t n, size_t size) {
   void *ptr = calloc(n, size);
   if (ptr == NULL) {
-    printf("Error: calloc(%d, %d) failed. Out of memory?\n", n, size);
+    printf("Error: calloc(%zu, %zu) failed. " 
+           "Out of memory?\n", n, size);
     exit(EXIT_FAILURE);
   }
   return ptr;
 }
 
-void *safeRealloc (void *p, int n) {
-  // checks if memory has been reallocated successfully
+//=================================================================
+// Reallocates memory and checks if reallocation was successful
+void *safeRealloc (void *p, size_t n) {
   p = realloc(p, n);
   if (p == NULL) {
-    printf("Error: realloc(%d) failed. Out of memory?\n", n);
+    printf("Error: realloc(%zu) failed. Out of memory?\n", n);
     exit(EXIT_FAILURE);
   }
   return p;
 }
 
-char *readString(int *len) {
-  // reads a string of characters and determines its length
-  int capacity = 50, size = 0;
+//=================================================================
+// Reads a string of characters and determines its length
+char *readString(size_t *len) {
+  size_t capacity = 50, size = 0;
   char ch;
   char *s = safeCalloc(capacity, sizeof(char));
   while (scanf("%c", &ch) && ch != '\n' && ch != EOF) {
@@ -43,16 +47,17 @@ char *readString(int *len) {
   return s;
 }
 
-int isBalanced(char *s, int len) {
+//=================================================================
+// Checks if the string of brackets is balanced using a stack
+int isBalanced(char *s, size_t len) {
   char *stack = safeCalloc(len, sizeof(char));
   int top = 0;
-  for (int i = 0; i < len; i++) {
+  for (size_t i = 0; i < len; i++) {
     if (s[i] == '(' || s[i] == '[' || s[i] == '{') {
       stack[top++] = s[i];
       continue;
     } 
-    --top;
-    if (top < 0 
+    if (--top < 0 
       || (s[i] == ')' && stack[top] != '(') 
       || (s[i] == ']' && stack[top] != '[') 
       || (s[i] == '}' && stack[top] != '{')) {
@@ -64,9 +69,10 @@ int isBalanced(char *s, int len) {
   return top == 0;  
   }
 
+//=================================================================
 
-int main (int argc, char *argv[]) {
-  int len;
+int main () {
+  size_t len;
   char *s = readString(&len);
 
   printf(isBalanced(s, len) ? "YES\n" : "NO\n");

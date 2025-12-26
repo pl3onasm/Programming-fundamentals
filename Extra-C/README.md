@@ -19,4 +19,10 @@ $\Large{\color{rosybrown}\text{Problems}}$
 | Problem 07 | [Matching bitstrings](prob07) |
 | Problem 08 | [Segments](prob08) |
 | Problem 09 | [Maze runner](prob09) |
+| Problem 10 | [Counting cards](prob10) |
+| Problem 11 | [Anagrams for palindromes](prob11) |
+| Problem 12 | [Separated by distance](prob12) |
+| Problem 13 | [Joining forces](prob13) |
+| Problem 14 | [Columnnar transposition](prob14) |
+| Problem 15 | [Tricky squares](prob15) |
 |||

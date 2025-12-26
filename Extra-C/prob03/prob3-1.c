@@ -6,44 +6,49 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 
-void *safeMalloc (int n) {
-  /* allocates memory and checks whether it was successful */
+//=================================================================
+// Allocates memory and checks if allocation was successful
+void *safeMalloc (size_t n) {
   void *ptr = malloc(n);
   if (ptr == NULL) {
-    printf("Error: malloc(%d) failed. Out of memory?\n", n);
+    printf("Error: malloc(%zu) failed. Out of memory?\n", n);
     exit(EXIT_FAILURE);
   }
   return ptr;
 }
 
-int **readTriangle (int n) {
-  /* reads the triangle from stdin */
+//=================================================================
+// Reads a triangle of n rows from stdin
+int **readTriangle (size_t n) {
   int **triangle = safeMalloc(n * sizeof(int *));
-  for (int i = 0; i < n; ++i) {
+  for (size_t i = 0; i < n; ++i) {
     triangle[i] = safeMalloc((i + 1) * sizeof(int));
-    for (int j = 0; j <= i; ++j)
+    for (size_t j = 0; j <= i; ++j)
       (void)! scanf("%d ", &triangle[i][j]);
   }
   return triangle;
 }
 
-void free2Dmem (int **arr, int n) {
-  /* frees the memory allocated to a 2D array */
-  for (int i = 0; i < n; ++i)
+//=================================================================
+// Frees the memory allocated to a 2D array
+void free2Dmem (int **arr, size_t n) {
+  for (size_t i = 0; i < n; ++i)
     free(arr[i]);
   free(arr);
 }
 
-int maxPath (int **triangle, int n) {
-  /* computes the maximum path cost */
-  int i, j, max;
+//=================================================================
+// Computes the maximum path cost in a triangle of n rows
+int maxPath (int **triangle, size_t n) {
+  int max;
 
-  // calculate the maximum path cost for each cell
-  for (i = 1; i < n; ++i) {
-    for (j = 0; j <= i; ++j) {
+    // calculate the maximum path cost for each cell
+  for (size_t i = 1; i < n; ++i) {
+    for (size_t j = 0; j <= i; ++j) {
       max = 0;
       if (j < i) max = triangle[i - 1][j];
       if (j > 0) max = MAX(max, triangle[i - 1][j - 1]);
@@ -51,17 +56,19 @@ int maxPath (int **triangle, int n) {
     }
   }
   
-  // take maximum of the last row
+    // take maximum of the last row
   max = triangle[n - 1][0];
-  for (j = 1; j < n; ++j)
+  for (size_t j = 1; j < n; ++j)
     max = MAX(max, triangle[n - 1][j]);
 
   return max;
 }
 
+//=================================================================
+
 int main() {
-  int n;
-  (void)! scanf("%d", &n);
+  size_t n;
+  assert(scanf("%zu", &n) == 1);
 
   int **triangle = readTriangle(n);
 

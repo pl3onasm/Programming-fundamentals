@@ -1,40 +1,46 @@
-/* file: prob7-1.c
-* author: David De Potter
-* description: extra, problem 7,
-*   matching bitstrings
+/* 
+  file: prob7-1.c
+  author: David De Potter
+  description: extra, problem 7,
+    matching bitstrings
 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h> 
 
-void *safeMalloc (int n) {
-  // checks if memory has been allocated successfully
+//=================================================================
+// Allocates memory and checks if successful
+void *safeMalloc (size_t n) {
   void *p = malloc(n);
   if (p == NULL) {
-    printf("Error: malloc(%d) failed. Out of memory?\n", n);
+    printf("Error: malloc(%zu) failed. Out of memory?\n", n);
     exit(EXIT_FAILURE);
   }
   return p;
 }
 
-char *readString (int n) {
-  // reads a string of n bits
-  char *bits = safeMalloc((n+1)*sizeof(char));
-  (void)! scanf("%s", bits);
+//=================================================================
+// Reads a string of n bits
+char *readString (size_t n) {
+  char *bits = safeMalloc(n * sizeof(char));
+  assert(scanf("%s", bits) == 1);
   return bits;
 }
 
-void getBitstrings (char *bits, int idx, int n, int count0, int count1) {
-  // prints, in lexicographical order, all bitstrings of length n 
-  // with no more than 2 consecutive 0s or 1s
-
-  // base case
+//=================================================================
+// Prints, in lexicographical order, all bitstrings of length n 
+// with no more than 2 consecutive 0s or 1s
+void getBitstrings (char *bits, size_t idx, size_t n, 
+                    size_t count0, size_t count1) {
+  
+    // base case
   if (idx == n) {
     printf("%s\n", bits);
     return;
   }
 
-  // recursive case
+    // recursive case
   switch (bits[idx]) {
     case '?':
       bits[idx] = '0';
@@ -52,10 +58,12 @@ void getBitstrings (char *bits, int idx, int n, int count0, int count1) {
   }
 }
 
-int main (int argc, char *argv[]) {
-  int n;
+//=================================================================
 
-  (void)! scanf("%d ", &n);
+int main () {
+  size_t n;
+
+  assert(scanf("%zu ", &n) == 1);
 
   char *bits = readString(n);
 

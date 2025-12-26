@@ -32,28 +32,34 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 typedef unsigned long long int llu;
 
+//=================================================================
+// Computes the greatest common divisor of a and b
 llu GCD (llu a, llu b) {
-  // returns the greatest common divisor of a and b
   if (b == 0) return a;
   return GCD(b, a % b);
 }
 
+//=================================================================
+// Computes the least common multiple of a and b
 llu LCM (llu a, llu b) {
-  // returns the least common multiple of a and b
   return a / GCD(a, b) * b;
 }
 
+//=================================================================
+// Computes the sum of all integers from 1 to n
 llu addInts (llu n) {
-  // returns the sum of all integers from 1 to n
   return n * (n + 1) / 2;
 }
-  
+
+//=================================================================
+
 int main() {
   llu a, b, n;
 
-  (void)! scanf("%llu %llu %llu", &a, &b, &n);
+  assert(scanf("%llu %llu %llu", &a, &b, &n) == 3);
 
   --n;  // we want the sum of all multiples 
         // of a and b below n, not including n

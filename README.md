@@ -72,9 +72,20 @@ $\Large{\color{darkseagreen}\text{PF 3-3 exams}}$
 $\Large{\color{cadetblue}\text{Testing}}$
 <br/>
 
-You can test your own C code with the [test script](ctest.sh). It will try to compile your code and run it on all the test cases. It will also compare your output with the expected output, and check for memory leaks by running a Valgrind test. If a test fails, the script will display the line numbers where a mismatch between the expected and the actual output was found, followed by the corresponding lines themselves, so you can easily spot the error. Lines in green and preceded by `<` represent the expected output, while lines in red and preceded by `>` are the actual (incorrect) output. If you only see lines in red, it means that your program produced the expected output, but also some additional, unexpected output. The script will only display the first 5 lines where mismatches were found and will indicate how many more there are if applicable.
+You can test your own C code with the [test script](ctest.sh). The script
+compiles your program, runs it on all `.in` test cases, and compares the
+output with the corresponding `.out` files.
 
-If you want to use the script, you basically have two options:  
+By default you get a clean summary (PASS or FAIL per test case).
+
+If a test fails, and want to see the difference in expected and actual output, or you want to have extra Valgrind tests, you can use the following options:
+
+- `--show-diff` or `-d` shows a small preview of the output differences for failed tests, including the first 5 lines of the expected output and the first 5 lines of your actual output (both indented under the test case).
+- `--valgrind` or `-v` enables Valgrind checks (PASS or FAIL per test case).
+- `--show-vg` or `-e` shows Valgrind error details for failed Valgrind checks.
+- `--help` or `-h` prints the full usage message.
+
+If you want to use this script, you basically have two options:  
 
 <br/>
 
@@ -93,12 +104,17 @@ Then run the script by using the following command:
 ../../../ctest.sh myprogram.c
 ```
 
+You can add options before the program file:
+
+```shell
+../../../ctest.sh --show-diff --valgrind myprogram.c
+```
+
 <br/>
 
 $\Large{\color{rosybrown}\text{2. Execution from PATH}}$
 
-Alternatively, you can add the script to your PATH variable and run it from anywhere.  
-To display the current $PATH, run the following command:
+Alternatively, you can add the script to your PATH variable and run it from anywhere. To display the current $PATH, run the following command:
 
 ```shell
 echo $PATH
@@ -114,31 +130,48 @@ Now you can run the script from the directory containing your program and the fo
 
 ```shell
 ctest.sh myprogram.c
-```  
+```
 
-You may also choose to redirect the output to a file, in which case the color codes will be removed automatically to render a plain text file:
+You may also choose to redirect the output to a file, in which case the script automatically disables ANSI colors to render a plain text file:
 
 ```shell
 ctest.sh myprogram.c > results.txt
 ```
 
 <br/>
-
 ----------------------------------
 
 $\Large{\color{cadetblue}\text{Functions library}}$
 <br/>
 
-The folder [functions](Functions) contains some useful function implementations in C. Have a look at the [header file](Functions/clib/clib.h) to see which functions are available and how to use them.  
+The folder [Functions](Functions) contains a small C utility library called `clib` comprising various helpers for arrays, strings, matrices, sorting, searching, etc..
 
-You can choose to include these functions in your own code, or use them as a reference to write your own implementation. If you want to work with these functions, just add the include directive with the appropriate path. For example:
+Keeping the shared helper code in a separate library makes the exercise solutions themselves shorter and easier to read. It also makes the repoeasy to extend: you can add your own helpers under `Functions/src` and declare them under `Functions/include/clib`, rebuild the static library, and all programs in the repo can immediately use the new functionality while the core stays compact and maintainable.
+
+The library is organized as:
+
+- headers in `Functions/include/clib/`
+- sources in `Functions/src/`
+- build output in `Functions/build/`
+
+You can include the full library with the umbrella header:
 
 ```c
-#include "../../../Functions/clib/clib.h"
+#include "../../Functions/include/clib/clib.h"
 ```
 
-Including the header file in this way will also make the test script compile your own code along with the functions from the library. Since the library is small, it is not necessary to work with a static or dynamic library. Some concrete examples of how to use the functions can be found in the [Functions](Functions) and [Extra-C](Extra-C) folders.
+Or include only what you need (for example just integers):
 
+```c
+#include "../../Functions/include/clib/integers.h"
+```
+
+Available headers include:  
+`clib.h`, `integers.h`, `strings.h`, `sorting.h`, `searching.h`, `math.h`, `memory.h`, and `macros.h`.
+
+The library is built as a static library via the [Makefile](Functions/Makefile) in the `Functions` folder. You can build it manually by running `make` in that folder. This will create the static library file `build/libclib.a`. However, when you use `ctest.sh`, and include a header from the library in your program, the script will automatically call the Makefile to build the library if it is not already built.
+
+Some concrete examples of how to use the library can be found in the [Functions](Functions) and [Extra-C](Extra-C) folders.
 <br/>
 
 ----------------------------------
@@ -148,7 +181,7 @@ $\Large{\color{cadetblue}\text{Notes}}$
 
 All commands were given with Ubuntu in mind. If you are using a different Linux distribution, you may need to change the commands accordingly.
 
-The script was tested on Ubuntu 22.04 LTS, using GCC 13.1.0, Valgrind 3.18.1, and GNU bash 5.1.16(1)-release.
+The script was tested on Ubuntu 24.04 LTS, using GCC 14.2.0, and Valgrind 3.22.0.
 
 If you want to compile and test your code manually, you can use the following commands:
 
@@ -164,12 +197,7 @@ valgrind --leak-check=full ./a.out < tests/1.in
 
 ----------------------------------
 
-$\Large{\color{cadetblue}\text{Output example of the script}}$
+$\Large{\color{cadetblue}\text{Output examples of the script}}$
 <br/>
 
-<IMG src="example.jpg"
-     alt="Example output"
-     title="Example output"
-     hspace=5%
-     width=90%
-     style="float: left" />
+-- This will be added later --

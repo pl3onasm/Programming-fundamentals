@@ -7,52 +7,30 @@ method problem2(a: int, b: int) returns (r: int, s: int)
 requires a % 2 == b % 2
 ensures r + s == a && r - s == b
 {
-  if a % 2 == 0
-  {
-      // a % 2 == 0 && a % 2 == b % 2 
-      // a % 2 == 0 && b % 2 == 0
-      //   (as both a and b are even integers, there 
-      //    exist integers k and l such that this fact holds)
-      // a == 2 * k && b == 2 * l
-      //   (take their sum and difference)
-      // a + b == 2 * (k + l) && a - b == 2 * (k - l)
-      //   (divide both equalities by 2)
-      // (a + b) / 2 == k + l && (a - b) / 2 == k - l
-      //   (choose r := k + l and s := k - l)
-    r := (a + b) / 2;
-    s := (a - b) / 2;
-      //  r + s == (a + b) / 2 + (a - b) / 2 
-      //        == (2 * a) / 2 
-      //        == a
-      //  && 
-      //  r - s == (a + b) / 2 - (a - b) / 2 
-      //        == (2 * b) / 2 
-      //        == b
-  }
-    
-  else 
-  {   
-      // a % 2 != 0 && a % 2 == b % 2
-      // a % 2 != 0 && b % 2 != 0
-      //   (as both a and b are odd integers, there
-      //    exist integers k and l such that this fact holds)
-      // a == 2 * k + 1 && b == 2 * l + 1
-      //   (take their sum and difference)
-      // a + b == 2 * (k + l + 1) && a - b == 2 * (k - l)
-      //   (divide both equalities by 2)
-      // (a + b) / 2 == k + l + 1 && (a - b) / 2 == k - l
-      //   (choose r := k + l + 1 and s := k - l)
-    r := (a + b) / 2;
-    s := (a - b) / 2;
-      //  r + s == (a + b) / 2 + (a - b) / 2 
-      //        == (2 * a) / 2 
-      //        == a
-      //  && 
-      //  r - s == (a + b) / 2 - (a - b) / 2 
-      //        == (2 * b) / 2 
-      //        == b
-  }
+    //  (if a % 2 == 0, then a and b are both even, 
+    //     and their sum and difference are also even
+    //   if a % 2 != 0, then a and b are both odd,
+    //     but their sum and difference are again even
+    //   thus, (a + b) and (a - b) are always even, 
+    //   meaning there exist integers k and l such that 
+    //   the below expression holds)
+    // a + b == 2 * k && a - b == 2 * l
+    //   (divide both equalities by 2)
+    // (a + b) / 2 == k && (a - b) / 2 == l
+    //   (now we set r := k and s := l)
 
-    // collect branches
+  r := (a + b) / 2;
+  s := (a - b) / 2;
+
+    //   (verify the postcondition)
+    // r + s == (a + b) / 2 + (a - b) / 2
+    //       == (a + b + a - b) / 2
+    //       == (2 * a) / 2
+    //       == a
+    // r - s == (a + b) / 2 - (a - b) / 2
+    //       == (a + b - a + b) / 2
+    //       == (2 * b) / 2
+    //       == b
+
   assert r + s == a && r - s == b;
 }

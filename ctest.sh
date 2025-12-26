@@ -1,221 +1,442 @@
 #!/bin/bash
 # Author: David De Potter
-# Developed and tested on Ubuntu 22.04 LTS, with GNU bash, version 5.1.16
+# Tested on Ubuntu 24.04 LTS, using GCC 14.2.0, and Valgrind 3.22.0.
 
-# This script will try to compile your program and test its correctness
-# by running it on all test cases for the current problem.
-# It will also perform a test for memory leaks.
-# The argument is the name of the program to test.
-# Example: $ ../../../ctest.sh myprogram.c 
-# If the program includes the functions library, it will be compiled with it.
+#===================================================================#
+# ctest.sh                                                          #
+#                                                                   #
+# Compiles a user's C program and runs it on all test cases         #
+# found in a test folder (default: ./tests).                        #
+#                                                                   #
+# Each test case consists of:                                       #
+#   - <name>.in   input                                             #
+#   - <name>.out  expected output                                   #
+#                                                                   #
+# If the user's program includes a clib header from the new         #
+# layout (.../include/clib/<header>.h), the script will:            #
+#   - infer the library root                                        #
+#   - build libclib.a if missing (make -C <root> lib)               #
+#   - compile and link against build/lib/libclib.a                  #
+#                                                                   #
+# Options:                                                          #
+#   --show-diff, -d                                                 #   
+#     Show first 5 lines of expected vs actual output for each      #
+#     failed correctness test.                                      #
+#                                                                   #   
+#   --show-vg, -e                                                   #
+#     Show valgrind error details for each failed valgrind check.   #
+#                                                                   #
+#   --valgrind, -v                                                  #
+#     Run valgrind on all test cases (summary stays clean unless    #
+#     --show-vg or -e is also enabled).                             #
+#                                                                   #
+#   --help, -h                                                      #
+#     Show this help message.                                       #
+#                                                                   #
+# Examples:                                                         #
+#   ./ctest.sh prog.c                                               #             
+#   ./ctest.sh prog.c -d                                            #
+#   ./ctest.sh prog.c -v                                            #
+#   ./ctest.sh prog.c -v -e                                         #
+#   ./ctest.sh prog.c -d -v -e                                      #
+#                                                                   #
+#===================================================================#
 
 
-# Define some colors for output
-function cyan {
-  printf "\e[1;36m$@\e[0m"
-}
-function blue {
-  printf "\e[1;34m$@\e[0m"
-}
-function red {
-  printf "\e[31m$@\e[0m"
-}
-function green {
-  printf "\e[32m$@\e[0m"
-}
-function magenta {
-  printf "\e[35m$@\e[0m"
-}
+#-------------------------------------------------------------------#
+#    Colors                                                         #
+#                                                                   #            
+# Behavior depends on whether stdout is a terminal:                 #
+#   - If stdout is a terminal: use ANSI colors                      #
+#   - Otherwise: disable colors (so redirected output is clean)     #
+#-------------------------------------------------------------------#
 
-PASSED=0  # number of passed tests
-
-# Check if an argument, the program to test, is provided
-if [ $# -eq 0 ]; then
-  echo -e "\nNo argument supplied!"
-  echo "Usage: $0 myprogram.c"
-  exit 1
-fi
-
-# Check if compiler is installed
-if ! [ -x "$(command -v gcc)" ]; then
-  echo -e "\nCompiler not found! Please install gcc."
-  exit 1
-fi
-
-# Extract the include line for clib.h from the program if it exists
-# it should not be commented out
-INCLUDE=$(grep -E "^#include[ /.\"a-zA-Z0-9]*clib.h" "$1")
-
-if [ -n "$INCLUDE" ]; then
-  # Extract the path to the clib library and remove 'clib.h' at the end
-  LIBPATH=$(echo "$INCLUDE" | cut -d '"' -f 2 | rev | cut -d '/' -f 2- | rev)
-  # Check if the library path is valid and contains clib.h
-  if [ -d "$LIBPATH" ] && [ -f "$LIBPATH/clib.h" ]; then
-    echo -e "\nClib library found in $LIBPATH"
-  else
-    echo -e "\nClib library not found in $LIBPATH"
-    exit 1
-  fi
-  # Compile the program with the library included
-  echo -e "\nCompiling the program with library clib..."
-  gcc -O2 -std=c99 -pedantic -Wall -o a.out "$1" "$LIBPATH"/*.c -lm
+if [ -t 1 ]; then
+  CYAN=$'\033[1;36m'
+  BBLUE=$'\033[1;34m'
+  BLUE=$'\033[0;34m'
+  GREEN=$'\033[32m'
+  RED=$'\033[31m'
+  MAGENTA=$'\033[35m'
+  NC=$'\033[0m'
 else
-  # Compile the program without the library
-  gcc -O2 -std=c99 -pedantic -Wall -o a.out "$1" -lm
+  CYAN=""
+  BLUE=""
+  GREEN=""
+  RED=""
+  MAGENTA=""
+  NC=""
 fi
 
-# Check if compilation was successful
-if [[ $? -ne 0 ]]; then
-  echo -e "\nCompilation failed."
+#-------------------------------------------------------------------#
+#    Helper functions                                               #
+#-------------------------------------------------------------------#
+
+function die {
+  echo -e "\n${RED}Error:${NC} $*"
   exit 1
+}
+
+function print_help {
+  cat <<EOF
+
+Usage:
+  $0 <program.c> [options]
+
+Description:
+  Compiles <program.c> and runs it against all test cases in ./tests
+  (or a folder you provide if ./tests is not found).
+
+Options:
+  --show-diff, -d
+      Show the first 5 lines of expected vs actual output for each
+      failed correctness test.
+
+  --show-vg, -e
+      Show valgrind error details for each failed valgrind check.
+
+  --valgrind, -v
+      Run valgrind on all test cases. Output remains a clean summary
+      unless --show-vg or -e is enabled.
+
+  --help, -h
+      Show this message and exit.
+
+Examples:
+  $0 prog.c
+  $0 prog.c --show-diff
+  $0 prog.c --valgrind
+  $0 prog.c --valgrind --show-vg 
+  $0 prog.c --show-diff --valgrind --show-vg
+
+EOF
+}
+
+
+#-------------------------------------------------------------------#
+#    Parse arguments                                                #             
+#-------------------------------------------------------------------#
+
+[ $# -ge 1 ] || { print_help; exit 1; }
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
+  print_help
+  exit 0
 fi
 
-echo -e "\nProgram successfully compiled as a.out"
+PROG="$1"
+shift
 
-DIR=./tests   # default test folder
-# If ./tests does not exist, ask for a test folder or exit
+SHOW_DIFF=0
+SHOW_VG=0
+DO_VALGRIND=0
+
+for arg in "$@"; do
+  case "$arg" in
+    --show-diff|-d) SHOW_DIFF=1 ;;
+    --show-vg|-e)   SHOW_VG=1 ;;
+    --valgrind|-v)  DO_VALGRIND=1 ;;
+    --help|-h)      print_help; exit 0 ;;
+    *)
+      echo -e "\nUnknown option: $arg"
+      print_help
+      exit 1
+      ;;
+  esac
+done
+
+
+#-------------------------------------------------------------------#
+#    Sanity checks                                                  #
+#-------------------------------------------------------------------#
+
+[ -f "$PROG" ] || die "File not found: $PROG"
+command -v gcc >/dev/null 2>&1 \
+        || die "gcc not found. Please install gcc."
+
+if [ $DO_VALGRIND -eq 1 ]; then
+  command -v valgrind >/dev/null 2>&1 || \
+    die "valgrind not found. Install it or run without --valgrind."
+fi
+
+
+#-------------------------------------------------------------------#
+#    Compile program (with optional clib linking)                   #
+#-------------------------------------------------------------------#
+
+function compile_program {
+  local include_line header hdr_dir include_dir libroot liba
+
+  # Detect clib usage:
+  # any non-commented include containing ".../include/clib/<...>.h"
+  RE='^[[:space:]]*#include[[:space:]]*["<][^">]*include/clib/[^">]+\.h[">]'
+
+  include_line=$(grep -hE "$RE" "$PROG" | head -n 1)
+
+  if [ -n "$include_line" ]; then
+  header=$(
+    sed -E \
+      's/^[[:space:]]*#include[[:space:]]*["<]([^">]+)[">].*$/\1/'\
+      <<< "$include_line"
+  )
+
+    hdr_dir=$(dirname "$header")           # .../include/clib
+    include_dir=$(dirname "$hdr_dir")      # .../include
+    libroot=$(dirname "$include_dir")      # .../Functions
+
+    [ -f "$libroot/include/clib/clib.h" ] \
+      || die "clib not found for include path: $header"
+    [ -d "$libroot/src" ]                 \
+      || die "clib src/ not found in: $libroot"
+    [ -f "$libroot/Makefile" ]            \
+      || die "Makefile not found in: $libroot"
+
+    liba="$libroot/build/lib/libclib.a"
+
+    # Build libclib.a only if needed
+    if [ ! -f "$liba" ]; then
+      echo -e "\nBuilding clib static library..."
+      make -C "$libroot" lib >/dev/null \
+              || die "Building clib failed."
+    fi
+
+    [ -f "$liba" ] || die "Static library not found: $liba"
+
+    echo -e "\nCompiling the program with library clib..."
+    gcc -O2 -std=c99 -pedantic -Wall -o a.out \
+      -I"$libroot/include" "$PROG" "$liba" -lm \
+      || die "Compilation failed."
+  else
+    echo -e "\nCompiling the program..."
+    gcc -O2 -std=c99 -pedantic -Wall -o a.out "$PROG" -lm \
+      || die "Compilation failed."
+  fi
+
+  echo -e "\nProgram successfully compiled as a.out"
+}
+
+compile_program
+
+
+#-------------------------------------------------------------------#
+#    Locate tests directory                                         #
+#-------------------------------------------------------------------#
+
+DIR="./tests"
 while [ ! -d "$DIR" ]; do
   echo -e "\nCould not find $DIR"
   echo "Please provide a test folder (Enter to quit):"
   read -r DIR
-  if [ -z "$DIR" ]; then
+  [ -n "$DIR" ] || {
     echo "Compiled program not tested."
     exit 0
-  fi
+  }
 done
 
-# Get all the input files from the test folder in DIR and sort them
+
+#-------------------------------------------------------------------#
+#    Load test cases                                                #
+#-------------------------------------------------------------------#
+
 readarray -d '' INFILES < <(printf '%s\0' "$DIR"/*.in | sort -zV)
 LEN=${#INFILES[@]}
-if [ $LEN -eq 0 ]; then
-  echo "No test cases found!"
-  exit 1
-fi
+[ $LEN -gt 0 ] || die "No test cases found in $DIR"
+
+
+#-------------------------------------------------------------------#
+#    Output header                                                  #
+#-------------------------------------------------------------------#
 
 echo
-
-# Print header for test results
 if [ -t 1 ]; then
-  echo -e $(cyan "┌──────────────────────────┐") 
-  echo -e "$(cyan "│")       $(blue "TEST RESULTS")       $(cyan "│")"
-  echo -e $(cyan "└──────────────────────────┘")
+  echo -e "${CYAN}┌────────────────────────┐${NC}"
+  echo -e "${BBLUE}│      TEST RESULTS      │${NC}"  
+  echo -e "${CYAN}└────────────────────────┘\n${NC}"
 else
-  echo -e "┌──────────────────────────┐" 
-  echo -e "│       TEST RESULTS       │"
-  echo -e "└──────────────────────────┘"
+  echo -e "┌────────────────────────┐"
+  echo -e "│      TEST RESULTS      │"
+  echo -e "└────────────────────────┘"  
 fi
 
-echo
+#-------------------------------------------------------------------#
+#    Diff summary: show first 5 lines                               #
+#-------------------------------------------------------------------#
 
-# Compare the output of the program with the expected output
-for INFILE in "${INFILES[@]}"; do
-  if [ -t 1 ]; then 
-    echo -e $(blue "Test ${INFILE##*/}")  # print filename without path   
-    echo -e $(blue "----------")
-  else echo -e "Test ${INFILE##*/}\n---------- "; fi
-  OUTFILE="${INFILE%.*}.out"     # replace .in with .out
-  if [ ! -f "$OUTFILE" ]; then
-    echo -e "Test file $OUTFILE not found!\n"
-    continue
+function show_diff_summary {
+  local exp_file="$1"
+  local got_file="$2"
+
+  echo -e "         ${GREEN}Expected:${NC}"
+  if [ -s "$exp_file" ]; then
+    while IFS= read -r line || [ -n "$line" ]; do
+      echo -e "         ${GREEN}${line}${NC}"
+    done < <(head -n 5 "$exp_file")
   else
-    # run the program with the input file
-    OUTPUT=$(./a.out < "$INFILE")  
-    # compare the output with the expected output
-    DIF="$(diff -Z "$OUTFILE" <(echo "$OUTPUT"))" 
-
-    if [ -n "$DIF" ]; then
-      # test failed if there are differences
-      if [ -t 1 ]; then echo -e $(red "Failed.")
-      else echo -e "Failed."; fi
-      
-      EXP=0; GOT=0  # number of expected and actual lines in the diff
-
-      # print the first 5 mismatches
-      echo "$DIF" | (while [[ $EXP -lt 5 ]] && read -r line; do
-        if [[ $line == "<"* ]]; then
-          if [ -t 1 ]; then echo -e "  $(green "$line")"
-          else echo -e "  $line"; fi
-          EXP=$((EXP + 1))
-        elif [[ $line == ">"* ]]; then  
-          if [ -t 1 ]; then echo -e "  $(red "$line")"
-          else echo -e "  $line"; fi
-          GOT=$((GOT + 1))
-        elif [[ $line == *"c"* ]]; then 
-          OUT=$(echo "$line" | cut -d "c" -f 1)
-          OUT=$(echo "$OUT" | sed 's/,/-/g')
-          echo -e "\n  line "$OUT""
-        fi
-      done
-      while [[ $GOT -ne $EXP ]] && read -r line; do
-        # get next > lines until they match the number of < lines
-        if [[ $line == ">"* ]]; then  
-          if [ -t 1 ]; then echo -e "  $(red "$line")"
-          else echo -e "  $line"; fi
-          GOT=$((GOT + 1))
-        fi
-      done
-      # indicate if there are more mismatches than shown
-      LINES=$(echo "$DIF" | grep -c "<")
-      if [[ $LINES -gt EXP ]]; then
-        echo -e "\n  ... ($((LINES - EXP)) more)"
-      fi
-      echo)
-    else
-      # test passed
-      if [ -t 1 ]; then 
-        echo -e $(green "PASSED!")
-        echo
-      else echo -e "PASSED!\n"; fi
-      PASSED=$((PASSED + 1))
-    fi
+    echo "         (empty)"
   fi
-done
 
-# Check for memory issues with valgrind
-if [ -t 1 ]; then 
-  echo -e $(blue "Valgrind test")
-  echo -e $(blue "------------- ")
-else echo -e "Valgrind test\n------------- "; fi
-
-if ! [ -x "$(command -v valgrind)" ]; then
-  echo -e "Test failed. Valgrind not installed.\n"
-else
-  TEST=$(valgrind ./a.out < "${INFILES["$((LEN-1))"]}" 2>&1 >/dev/null)\
-  CHECK1=$(echo "$TEST" | grep -c "in use at exit: 0 bytes in 0 blocks")
-  CHECK2=$(echo "$TEST" | grep -c "0 errors from 0 contexts")
-  if [[ $CHECK1 -ne 0 && $CHECK2 -ne 0 ]]; then
-    if [ -t 1 ]; then echo -e $(green "PASSED!")
-    else echo -e "PASSED!"; fi
-    PASSED=$((PASSED + 1))
+  echo
+  echo -e "         ${RED}Actual:${NC}"
+  if [ -s "$got_file" ]; then
+    while IFS= read -r line || [ -n "$line" ]; do
+      echo -e "         ${RED}${line}${NC}"
+    done < <(head -n 5 "$got_file")
   else
-    if [ -t 1 ]; then echo -e $(red "Failed.")
-      if [ $CHECK1 -eq 0 ]; then echo -e $(red "Not all memory freed."); fi
-      if [ $CHECK2 -eq 0 ]; then echo -e $(red "Memory errors detected."); fi
-    else echo -e "Failed."
-      if [ $CHECK1 -eq 0 ]; then echo -e "Not all memory freed."; fi
-      if [ $CHECK2 -eq 0 ]; then echo -e "Memory errors detected."; fi
-    fi
+    echo "         (empty)"
   fi
   echo
+}
+
+#-------------------------------------------------------------------#
+#    Valgrind reporting                                             #
+#-------------------------------------------------------------------#
+
+function valgrind_passed {
+  local out="$1"
+  local c1 c2
+  c1=$(echo "$out" | grep -c "in use at exit: 0 bytes in 0 blocks")
+  c2=$(echo "$out" | grep -c "0 errors from 0 contexts")
+  [[ $c1 -ne 0 && $c2 -ne 0 ]]
+}
+
+function show_valgrind_details {
+  local out="$1"
+    # Key summary lines
+  echo "$out" | grep -E "==.*(HEAP SUMMARY|LEAK SUMMARY|\
+    'ERROR SUMMARY|in use at exit:|definitely lost:|\
+    'indirectly lost:|possibly lost:|still reachable:)"\
+    | head -n 40 | sed 's/^/         /'
+
+    # First few invalid access messages (if present)
+  local inv
+  inv=$(echo "$out" | grep -E "==.*(Invalid read|Invalid write|\
+    Use of uninitialised value|Conditional jump|Invalid free)"\
+    | head -n 12)
+
+  if [ -n "$inv" ]; then
+    echo
+    echo "         Details:"
+    echo "$inv" | sed 's/^/         /'
+  fi
+}
+
+#-------------------------------------------------------------------#
+#    Run tests                                                      #
+#-------------------------------------------------------------------#
+
+PASS_OK=0
+PASS_VG=0
+
+for INFILE in "${INFILES[@]}"; do
+  NAME="${INFILE##*/}"
+  DISPLAY_NAME="$NAME"
+  if [[ "$NAME" =~ ^(.*[^0-9])?([0-9]+)(\.in)$ ]]; then
+    PAD=$(printf "%02d" "${BASH_REMATCH[2]}")
+    DISPLAY_NAME="${BASH_REMATCH[1]}${PAD}${BASH_REMATCH[3]}"
+  fi
+
+  OUTFILE="${INFILE%.*}.out"
+
+  if [ ! -f "$OUTFILE" ]; then
+    echo "Test $DISPLAY_NAME: missing expected output file\
+          ${OUTFILE##*/}"
+    continue
+  fi
+
+  # Run program, capture output to a temp file 
+  TMP_OUT=$(mktemp)
+  ./a.out < "$INFILE" > "$TMP_OUT"
+  RC=$?
+
+  # Correctness check
+  if [ $RC -ne 0 ]; then
+    echo -e "   Test $DISPLAY_NAME: \t  ${RED}FAILED${NC} "
+    echo -e "   (program exited with code $RC)"
+    if [ $SHOW_DIFF -eq 1 ]; then
+      echo "   (no diff shown: program did not produce "
+      echo "   normal output)"
+    fi
+  else
+    TMP_EXP=$(mktemp)
+    TMP_GOT=$(mktemp)
+
+    cp "$OUTFILE" "$TMP_EXP"
+    cp "$TMP_OUT" "$TMP_GOT"
+
+      # Add a final newline if missing, so that absence of final 
+      # newline does not count as a difference.
+    if [ -s "$TMP_EXP" ]; then
+      LAST=$(tail -c 1 "$TMP_EXP" | od -An -t u1 | tr -d ' ')
+      if [ "$LAST" != "10" ]; then
+        echo >> "$TMP_EXP"
+      fi
+    fi
+
+    if [ -s "$TMP_GOT" ]; then
+      LAST=$(tail -c 1 "$TMP_GOT" | od -An -t u1 | tr -d ' ')
+      if [ "$LAST" != "10" ]; then
+        echo >> "$TMP_GOT"
+      fi
+    fi
+
+    DIF="$(diff -Z "$TMP_EXP" "$TMP_GOT")"
+
+    rm -f "$TMP_EXP" "$TMP_GOT"
+    if [ -n "$DIF" ]; then
+      echo -e "   Test $DISPLAY_NAME: \t  ${RED}FAIL${NC}"
+      if [ $SHOW_DIFF -eq 1 ]; then
+        echo
+        echo "     Output details:"
+        show_diff_summary "$OUTFILE" "$TMP_OUT"
+      fi
+    else
+      echo -e "   Test $DISPLAY_NAME: \t  ${GREEN}PASS${NC}"
+      PASS_OK=$((PASS_OK + 1))
+    fi
+  fi
+
+  rm -f "$TMP_OUT"
+
+  # Optional valgrind pass
+  if [ $DO_VALGRIND -eq 1 ]; then
+    VG_OUT=$(valgrind \
+      --leak-check=full \
+      --show-leak-kinds=all \
+      --track-origins=yes \
+      ./a.out < "$INFILE" 2>&1 >/dev/null)
+
+    if valgrind_passed "$VG_OUT"; then
+      echo -e "     Valgrind: \t  ${BLUE}PASS${NC}"
+      PASS_VG=$((PASS_VG + 1))
+    else
+      echo -e "     Valgrind: \t  ${RED}FAIL${NC}"
+      if [ $SHOW_VG -eq 1 ]; then
+        echo
+        echo "     Valgrind details:"
+        show_valgrind_details "$VG_OUT"
+      fi
+    fi
+  fi
+
+  echo
+done
+
+#-------------------------------------------------------------------#
+#    Output final summary                                           #
+#-------------------------------------------------------------------#
+
+TOTAL=$LEN
+
+echo -e "──────────────────────────\n"
+CORR_LINE=$(printf "%-16s %2d/%d" "   Correctness:" "$PASS_OK" \
+            "$TOTAL")
+echo -e "${MAGENTA}${CORR_LINE}${NC}"
+
+if [ $DO_VALGRIND -eq 1 ]; then
+  VG_LINE=$(printf "%-16s %2d/%d" "   Valgrind:" "$PASS_VG" \
+            "$TOTAL")
+  echo -e "${MAGENTA}${VG_LINE}${NC}"
 fi
 
-LEN=$((LEN + 1))  # Add 1 for valgrind test
-
-# Print final result
-if [ $PASSED -eq $LEN ]; then
-  if [ -t 1 ]; then echo -e $(green "Passed all tests! \(ᵔᵕᵔ)/")
-  else echo "All tests passed!"; fi
-elif [ $PASSED -eq $(($LEN-1)) ]; then 
-  if [ -t 1 ]; then echo -e $(magenta "Passed $PASSED out of $LEN tests.")
-  echo -e $(magenta "Almost there...! (◎_◎)")
-  else echo -e "Passed $PASSED out of $LEN tests."; fi
-else    
-  if [ -t 1 ]; then echo -e $(magenta "Passed $PASSED out of $LEN tests. 
-  (._.)")
-  else echo "Passed $PASSED out of $LEN tests."; fi
-fi
-echo
-
-# Clean exit with status 0
+echo -e "\n"
 exit 0
-

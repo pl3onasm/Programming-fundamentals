@@ -5,19 +5,21 @@
   version: 7.2, using the clib library
 */
 
-#include "../../Functions/clib/clib.h"
+#include "../../Functions/include/clib/clib.h"
 
-void getBitstrings (char *bits, int idx, int n, int count0, int count1) {
-  // prints, in lexicographical order, all bitstrings of length n 
-  // with no more than 2 consecutive 0s or 1s
+//=================================================================
+// Prints, in lexicographical order, all bitstrings of length n 
+// with no more than 2 consecutive 0s or 1s
+void getBitstrings (char *bits, size_t idx, size_t n, 
+                    size_t count0, size_t count1) {
 
-  // base case
+    // base case
   if (idx == n) {
     printf("%s\n", bits);
     return;
   }
 
-  // recursive case
+    // recursive case
   switch (bits[idx]) {
     case '?':
       bits[idx] = '0';
@@ -35,14 +37,16 @@ void getBitstrings (char *bits, int idx, int n, int count0, int count1) {
   }
 }
 
-int main (int argc, char *argv[]) {
-  int n;
+//=================================================================
 
-  (void)! scanf("%d ", &n);
+int main () {
+  char *bits; size_t n;
 
-  CREATE_ARRAY(char, bits, n + 1, 0);
+  assert(scanf("%zu ", &n) == 1);
+  
+  C_NEW_ARRAY(char, bits, n + 1);
 
-  READ_ARRAY(bits, "%c", n);
+  C_READ_ARRAY(bits, "%c", n);
 
   getBitstrings(bits, 0, n, 0, 0);
 
