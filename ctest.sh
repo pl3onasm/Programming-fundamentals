@@ -61,6 +61,7 @@ if [ -t 1 ]; then
   NC=$'\033[0m'
 else
   CYAN=""
+  BBLUE=""
   BLUE=""
   GREEN=""
   RED=""
@@ -247,16 +248,9 @@ LEN=${#INFILES[@]}
 #    Output header                                                  #
 #-------------------------------------------------------------------#
 
-echo
-if [ -t 1 ]; then
-  echo -e "${CYAN}┌────────────────────────┐${NC}"
-  echo -e "${BBLUE}│      TEST RESULTS      │${NC}"  
-  echo -e "${CYAN}└────────────────────────┘\n${NC}"
-else
-  echo -e "┌────────────────────────┐"
-  echo -e "│      TEST RESULTS      │"
-  echo -e "└────────────────────────┘"  
-fi
+echo -e "${CYAN}\n┌────────────────────────┐${NC}"
+echo -e "${BBLUE}│      TEST RESULTS      │${NC}"  
+echo -e "${CYAN}└────────────────────────┘\n${NC}"
 
 #-------------------------------------------------------------------#
 #    Diff summary: show first 5 lines                               #
@@ -350,7 +344,7 @@ for INFILE in "${INFILES[@]}"; do
 
   # Correctness check
   if [ $RC -ne 0 ]; then
-    echo -e "   Test $DISPLAY_NAME: \t  ${RED}FAILED${NC} "
+    echo -e "   Test $DISPLAY_NAME: \t  ${RED}FAIL${NC} "
     echo -e "   (program exited with code $RC)"
     if [ $SHOW_DIFF -eq 1 ]; then
       echo "   (no diff shown: program did not produce "

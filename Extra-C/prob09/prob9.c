@@ -10,10 +10,10 @@
 
 //=================================================================
 // Allocates memory and checks for successful allocation
-void *safeCalloc(int n, int size) {
+void *safeCalloc(size_t n, size_t size) {
   void *ptr = calloc(n, size);
   if (ptr == NULL) {
-    printf("Error: calloc(%d, %d) failed. "
+    printf("Error: calloc(%zu, %zu) failed. "
            "Out of memory?\n", n, size);
     exit(EXIT_FAILURE);
   }
@@ -22,25 +22,26 @@ void *safeCalloc(int n, int size) {
 
 //=================================================================
 // Deallocates 2D array (matrix) of characters
-void freeMem(char **maze, int rows) {
-  for (int i = 0; i < rows; ++i) 
+void freeMem(char **maze, size_t rows) {
+  for (size_t i = 0; i < rows; ++i) 
     free(maze[i]);
   free(maze);
 }
 
 //=================================================================
 // Reads the maze from standard input
-char **readMaze(int rows, int cols, int *r, int *c) {
+char **readMaze(size_t rows, size_t cols, size_t *r, size_t *c) {
   char **maze = safeCalloc(rows, sizeof(char *));
 
-  for (int i = 0; i < rows; ++i) {
+  for (size_t i = 0; i < rows; ++i) {
     maze[i] = safeCalloc(cols, sizeof (char));
 
       // Pre-fill with '#', so any unused cells become walls
-    for (int j = 0; j < cols; ++j)
+    for (size_t j = 0; j < cols; ++j)
       maze[i][j] = '#';
 
-    int j = 0, ch;
+    size_t j = 0;
+    int ch;
       // Read one line of the maze
     while ((ch = getchar()) != EOF && ch != '\n') 
       if (j < cols) {
@@ -59,10 +60,11 @@ char **readMaze(int rows, int cols, int *r, int *c) {
 //=================================================================
 // Recursive function to explore the maze and find the longest path
 // using Depth-First Search (DFS) with backtracking
-int processMaze(char **maze, int rows, int cols, int r, int c) {
+size_t processMaze(char **maze, size_t rows, size_t cols, 
+                   size_t r, size_t c) {
   
     // base case: out of bounds, wall or empty cell
-  if (r < 0 || r >= rows || c < 0 || c >= cols ||
+  if (r >= rows || c >= cols ||
       maze[r][c] == '#'  || maze[r][c] == ' ')
     return 0;
 
@@ -70,16 +72,16 @@ int processMaze(char **maze, int rows, int cols, int r, int c) {
   char original = maze[r][c];
   maze[r][c] = ' ';
 
-  int maxLength = 0;
+   size_t maxLength = 0;
     // direction vectors: up, down, left, right
   static const int dr[] = {-1, 1,  0, 0};
   static const int dc[] = { 0, 0, -1, 1};
 
     // explore all 4 directions for each step
-  for (int k = 0; k < 4; ++k) {
+  for (size_t k = 0; k < 4; ++k) {
     int ur = r + dr[k];
     int uc = c + dc[k];
-    int length = processMaze(maze, rows, cols, ur, uc);
+    size_t length = processMaze(maze, rows, cols, ur, uc);
     if (length > maxLength) 
       maxLength = length;
   }
@@ -93,14 +95,14 @@ int processMaze(char **maze, int rows, int cols, int r, int c) {
 
 int main() {
 
-  int rows, cols, r, c;
-  assert(scanf("%d %d ", &rows, &cols) == 2);
+  size_t rows, cols, r, c;
+  assert(scanf("%zu %zu ", &rows, &cols) == 2);
 
   char **maze = readMaze(rows, cols, &r, &c);
 
-  int length = processMaze(maze, rows, cols, r, c);
+  size_t length = processMaze(maze, rows, cols, r, c);
 
-  printf("%d\n", length);
+  printf("%zu\n", length);
 
   freeMem(maze, rows);
 

@@ -8,8 +8,8 @@ This folder contains some extra problems. If you are looking for more practice i
 
 $\Large{\color{rosybrown}\text{Problems}}$
 
-|||
-|:---:|:---|
+| | |
+| :---: | :--- |
 | Problem 01 | [Sum of multiples](prob01) |
 | Problem 02 | [Pandigital divisibility](prob02) |
 | Problem 03 | [Maximum path](prob03) |
@@ -23,6 +23,6 @@ $\Large{\color{rosybrown}\text{Problems}}$
 | Problem 11 | [Anagrams for palindromes](prob11) |
 | Problem 12 | [Separated by distance](prob12) |
 | Problem 13 | [Joining forces](prob13) |
-| Problem 14 | [Columnnar transposition](prob14) |
+| Problem 14 | [Columnar transposition](prob14) |
 | Problem 15 | [Tricky squares](prob15) |
-|||
+| | |

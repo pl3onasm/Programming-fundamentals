@@ -65,22 +65,23 @@
     free((mat));                                                    \
   } while (0)
 
-/* Prints an array */
-#define C_PRINT_ARRAY(arr, format, len)                             \
+/* Prints an array. Elements are separated by 'sep' */
+#define C_PRINT_ARRAY(arr, format, len, sep)                        \
   do {                                                              \
     for (size_t _i = 0; _i < (size_t)(len); ++_i) {                 \
       printf((format), (arr)[_i]);                                  \
-      printf(_i + 1 == (size_t)(len) ? "\n" : ", ");                \
+      printf(_i + 1 == (size_t)(len) ? "\n" : (sep));               \
     }                                                               \
   } while (0)
 
-/* Prints a matrix */
-#define C_PRINT_MATRIX(mat, format, rows, cols)                     \
+/* Prints a matrix. Elements are separated by 'sep' 
+   and rows by newlines */
+#define C_PRINT_MATRIX(mat, format, rows, cols, sep)                \
   do {                                                              \
     for (size_t _i = 0; _i < (size_t)(rows); ++_i) {                \
       for (size_t _j = 0; _j < (size_t)(cols); ++_j) {              \
         printf((format), (mat)[_i][_j]);                            \
-        printf(_j + 1 == (size_t)(cols) ? "\n" : " ");              \
+        printf(_j + 1 == (size_t)(cols) ? "\n" : (sep));            \
       }                                                             \
     }                                                               \
   } while (0)

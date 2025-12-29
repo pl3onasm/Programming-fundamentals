@@ -24,7 +24,9 @@ int main(void) {
   C_READ_MATRIX(matrix, "%d", rows, cols);  
     // print the matrix  
   printf("\nThe integer matrix is:\n");  
-  C_PRINT_MATRIX(matrix, "%02d", rows, cols);  
+  C_PRINT_MATRIX(matrix, "%02d", rows, cols, " ");  
+
+    // free the allocated memory for the matrix
   C_FREE_MATRIX(matrix, rows);  
 
     // read an array of integers 
@@ -32,12 +34,12 @@ int main(void) {
   int *ints;  
   C_READ_UNTIL_SENTINEL(int, ints, size, "%d ", -1);  
     // print the integer array  
-  printf("\nThe integer input has %zu elements:\n", size);  
-  C_PRINT_ARRAY(ints, "%d", size);  
+  printf("\nThe integer input array has %zu elements:\n", size);  
+  C_PRINT_ARRAY(ints, "%d", size, ", ");
     // sort the integer array  
   c_mergeSort(ints, size);  
   printf("\nThe sorted integer array is:\n");  
-  C_PRINT_ARRAY(ints, "%d", size);  
+  C_PRINT_ARRAY(ints, "%d", size, ", ");
   free(ints);  
 
     // read the array of doubles (size is not given)  
@@ -47,8 +49,8 @@ int main(void) {
   C_READ_UNTIL_DELIM(double, dbls, dblLen, "%lf ", '-');  
      
     // print the array  
-  printf("\nThe double input has %zu elements:\n", dblLen);  
-  C_PRINT_ARRAY(dbls, "%.2lf", dblLen);  
+  printf("\nThe double input array has %zu elements:\n", dblLen);  
+  C_PRINT_ARRAY(dbls, "%.2lf", dblLen, ", ");  
   free(dbls);  
 
     // read one line of input  
@@ -63,7 +65,8 @@ int main(void) {
   size_t textLen;  
   char *text;
   C_READ_STR_UNTIL(text, textLen, EOF); 
-  printf("\nThe piece of text has %zu characters:\n", textLen);  
+  printf("\nThe final piece of text has %zu characters:\n", 
+         textLen);  
   printf("%s\n\n", text);  
   free(text);  
   
