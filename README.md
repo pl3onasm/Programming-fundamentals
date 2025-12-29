@@ -147,7 +147,7 @@ $\Large{\color{cadetblue}\text{Functions library}}$
 
 The folder [Functions](Functions) contains a small C utility library called `clib` comprising various helpers for arrays, strings, matrices, sorting, searching, etc. This library is intended to be used as a support library for the exercises in this repository.
 
-This library is easy to extend: you can add your own helpers under `Functions/src` and declare them under `Functions/include/clib`, rebuild the static library, and all programs in the repo can immediately use the new functionality while the core stays compact and maintainable.
+It is easy to extend: you can add your own helpers under `Functions/src` and declare them under `Functions/include/clib`, rebuild the static library, and all programs in the repo can immediately use the new functionality while the core stays compact and maintainable.
 
 The library is organized as:
 
@@ -173,6 +173,7 @@ Available headers include:
 The library is built as a static library via the [Makefile](Functions/Makefile) in the `Functions` folder. You can build it manually by running `make` in that folder. This will create the static library file `build/libclib.a`. However, when you use `ctest.sh`, and include a header from the library in your program, the script will automatically call the Makefile to build the library if it is not already built.
 
 Some concrete examples of how to use the library can be found in the [Functions](Functions) and [Extra-C](Extra-C) folders.
+
 <br/>
 
 ----------------------------------
@@ -201,4 +202,29 @@ valgrind --leak-check=full ./a.out < tests/1.in
 $\Large{\color{cadetblue}\text{Output examples of the script}}$
 <br/>
 
--- This will be added later --
+<table>
+  <tr>
+    <td valign="top"align="center">
+      <a href="images/im01.png"><img src="images/im01.png" width="200" alt="im01"></a>
+    </td>
+    <td valign="top" align="center">
+      <a href="images/im02.png"><img src="images/im02.png" width="200" alt="im02"></a>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="center">
+      <a href="images/im03.png"><img src="images/im03.png" width="200" alt="im03"></a>
+    </td>
+    <td valign="top" align="center">
+      <a href="images/im04.png"><img src="images/im04.png" width="200" alt="im04"></a>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"align="center">
+      <a href="images/im05.png"><img src="images/im05.png" width="200" alt="im05"></a>
+    </td>
+    <td valign="top" align="center">
+      <a href="images/im06.png"><img src="images/im06.png" width="200" alt="im06"></a>
+    </td>
+  </tr>
+</table>
