@@ -205,26 +205,26 @@ $\Large{\color{cadetblue}\text{Output examples of the script}}$
 <table>
   <tr>
     <td valign="top"align="center">
-      <a href="images/im01.png"><img src="Images/im01.png" width="200" alt="im01"></a>
+      <a href="Images/im01.png"><img src="Images/im01.png" width="200" alt="im01"></a>
     </td>
     <td valign="top" align="center">
-      <a href="images/im02.png"><img src="Images/im02.png" width="200" alt="im02"></a>
+      <a href="Images/im02.png"><img src="Images/im02.png" width="200" alt="im02"></a>
     </td>
   </tr>
   <tr>
     <td valign="top" align="center">
-      <a href="images/im03.png"><img src="Images/im03.png" width="200" alt="im03"></a>
+      <a href="Images/im03.png"><img src="Images/im03.png" width="200" alt="im03"></a>
     </td>
     <td valign="top" align="center">
-      <a href="images/im04.png"><img src="Images/im04.png" width="200" alt="im04"></a>
+      <a href="Images/im04.png"><img src="Images/im04.png" width="200" alt="im04"></a>
     </td>
   </tr>
   <tr>
     <td valign="top"align="center">
-      <a href="images/im05.png"><img src="Images/im05.png" width="200" alt="im05"></a>
+      <a href="Images/im05.png"><img src="Images/im05.png" width="200" alt="im05"></a>
     </td>
     <td valign="top" align="center">
-      <a href="images/im06.png"><img src="Images/im06.png" width="200" alt="im06"></a>
+      <a href="Images/im06.png"><img src="Images/im06.png" width="200" alt="im06"></a>
     </td>
   </tr>
 </table>
