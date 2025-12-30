@@ -11,7 +11,7 @@
 // Checks if the string of brackets is balanced using a stack
 int isBalanced(char *s, size_t len) {
   char *stack; int top = 0;
-  C_NEW_ARRAY(char, stack, len);
+  C_NEW_ARRAY(char, stack, len + 1);
   
   for (size_t i = 0; i < len; ++i) {
     if (s[i] == '(' || s[i] == '[' || s[i] == '{') {

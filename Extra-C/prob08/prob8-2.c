@@ -14,9 +14,18 @@ typedef struct {
 } Seg;
 
 //=================================================================
-// Compares two segments by their start field
-int compareSegs (const void *a, const void *b) {
-  return ((Seg *)a)->start - ((Seg *)b)->start;
+// Compares two segments by (start, end) in increasing order
+int compareSegs(const void *pa, const void *pb) {
+  Seg const *a = (Seg const *)pa;
+  Seg const *b = (Seg const *)pb;
+
+  if (a->start < b->start) return -1;
+  if (a->start > b->start) return  1;
+
+  if (a->end < b->end) return -1;
+  if (a->end > b->end) return  1;
+
+  return 0;
 }
 
 //=================================================================
@@ -31,29 +40,32 @@ Seg* readInput (size_t len) {
 }
 
 //=================================================================
-// Prints the segments in the array
-void printSegments (Seg *segments, size_t n) {
-  for (size_t i = 0; i <= n; ++i) {
+// Prints segments[0..last] (inclusive)
+void printSegments (Seg *segments, size_t last) {
+  for (size_t i = 0; i <= last; ++i) {
     printf("[%zu,%zu)", segments[i].start, segments[i].end);
-    printf(i == n ? "\n" : ",");
+    printf(i == last ? "\n" : ",");
   }
 }
 
 //=================================================================
-// Keeps merging overlapping segments in the array until no more 
-// merges are possible
+// Merges overlapping or touching segments and prints the result
 void mergeSegments(Seg *segments, size_t n) {
-  size_t curr = 0;  // index of current segment
+  size_t out = 0;  // index of last merged segment
 
   for (size_t i = 1; i < n; ++i) {
-    Seg a = segments[curr], b = segments[i];
-    if (a.end >= b.start) {   
-        // overlapping segments, merge them
-      segments[curr].start = C_MIN (a.start, b.start);
-      segments[curr].end = C_MAX (a.end, b.end);
-    } else segments[++curr] = b;
+
+      // segments are sorted by start, 
+      //so segments[i].start >= segments[out].start
+    if (segments[i].start <= segments[out].end) 
+        // overlap or touch: just extend the end if needed
+      segments[out].end = C_MAX(segments[out].end, segments[i].end);
+    else 
+        // disjoint: start a new merged segment
+      segments[++out] = segments[i];
   }
-  printSegments (segments, curr);
+
+  printSegments(segments, out);
 }
 
 //=================================================================
@@ -62,7 +74,7 @@ int main() {
   size_t n;
   assert(scanf("%zu:", &n) == 1);
 
-  Seg *segments = readInput (n);
+  Seg *segments = readInput(n);
 
     // sort the segments
   qsort(segments, n, sizeof(Seg), compareSegs);

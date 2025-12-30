@@ -1,8 +1,21 @@
 /* 
   file: prob7-1.c
   author: David De Potter
-  description: extra, problem 7,
-    matching bitstrings
+  description: extra, problem 7, matching bitstrings
+  Approach:
+    The input string contains fixed bits ('0'/'1') and wildcards 
+    ('?'). We fill the wildcards using recursion (backtracking) 
+    from left to right, ensuring we never place three equal bits 
+    in a row.
+
+    While constructing the string, we keep track of the current run
+    length of consecutive 0s (count0) or consecutive 1s (count1) 
+    ending at the previous position. When we place a 0 we increase 
+    count0 and reset count1 to 0 (and vice versa). A choice is only 
+    allowed if its run length would not exceed 2.
+
+    To output solutions in lexicographical (binary) order, we 
+    always try '0' before '1' when we encounter a '?'.
 */
 
 #include <stdio.h>
@@ -23,8 +36,8 @@ void *safeMalloc (size_t n) {
 //=================================================================
 // Reads a string of n bits
 char *readString (size_t n) {
-  char *bits = safeMalloc(n * sizeof(char));
-  assert(scanf("%s", bits) == 1);
+  char *bits = safeMalloc((n + 1) * sizeof(char));
+  assert(scanf("%1000s", bits) == 1);
   return bits;
 }
 
@@ -63,9 +76,11 @@ void getBitstrings (char *bits, size_t idx, size_t n,
 int main () {
   size_t n;
 
-  assert(scanf("%zu ", &n) == 1);
+  assert(scanf("%zu", &n) == 1);
 
   char *bits = readString(n);
+
+  assert(strlen(bits) == n);
 
   getBitstrings(bits, 0, n, 0, 0);
 

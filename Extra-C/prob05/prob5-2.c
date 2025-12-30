@@ -11,35 +11,45 @@
 
 int main() {
   char arr[20];
-  assert(scanf("%s", arr) == 1);
-  
-  int len = strlen(arr);
+  assert(scanf("%19s", arr) == 1);
+
+  int len = (int)strlen(arr);
   int i = len - 2;
 
     // find 1st digit from the right that breaks the 
-    // descending order from right to left
-  while (i >= 0 && arr[i] <= arr[i + 1]) i--;
+    // nondecreasing order (so arr[i] > arr[i+1])
+  while (i >= 0 && arr[i] <= arr[i + 1]) 
+    --i;
 
   if (i < 0) {  
-    // number is the smallest possible
+    // number is the smallest possible permutation
     printf("-1\n");
     return 0;
   }
 
-    // find the next smaller digit from the right
+    // find the largest digit in the suffix that is still < arr[i]
   int j = len - 1;
-  while (arr[j] >= arr[i]) j--;
+  while (arr[j] >= arr[i]) 
+    --j;
+
+    // if there are duplicates of arr[j], use the leftmost one
+    // (this gives the largest possible result after reversing)
+  while (j > i + 1 && arr[j] == arr[j - 1])
+    --j;
 
   C_SWAP(arr[i], arr[j]);
 
-    // sort the rest of the string in descending order
-  j = len - 1;
-  i++;
-  while (i < j) 
-    C_SWAP(arr[i++], arr[j--]);
+    // reverse the suffix to make it as large as possible 
+  int left = i + 1;
+  int right = len - 1;
+  while (left < right)
+    C_SWAP(arr[left++], arr[right--]);
 
-    // print if there are no leading zeros
-  printf(arr[0] == '0' ? "-1\n" : "%s\n", arr);
+    // reject leading zero
+  if (arr[0] == '0')
+    printf("-1\n");
+  else
+    printf("%s\n", arr);
 
   return 0;
 }

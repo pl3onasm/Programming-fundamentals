@@ -2,6 +2,16 @@
   file: prob8-1.c
   author: David De Potter
   description: extra, problem 8, segments
+  Approach:
+    We read the n half-open segments [a,b) into an array, then sort
+    them by increasing start value. After sorting, we perform one
+    linear sweep to fuse all segments that overlap or touch.
+
+    Because the segments are half-open, two segments should be 
+    fused whenever next.start <= current.end. During the sweep we 
+    maintain the last merged segment and extend its end when 
+    needed. The result is printed in increasing order of the lower 
+    bounds.
 */
 
 #include <stdio.h>
@@ -9,7 +19,6 @@
 #include <assert.h>
 
 #define MAX(a,b) ((a)>(b)?(a):(b))
-#define MIN(a,b) ((a)<(b)?(a):(b))
 
 //=================================================================
 // Segment structure
@@ -96,17 +105,21 @@ void printSegments (Seg *segments, size_t n) {
 // Keeps merging overlapping segments in the array until no more
 // merges are possible
 void mergeSegments(Seg *segments, size_t n) {
-  size_t curr = 0;  // index of current segment 
+  size_t out = 0;  // index of last merged segment
 
   for (size_t i = 1; i < n; ++i) {
-    Seg a = segments[curr], b = segments[i];
-    if (a.end >= b.start) {   
-        // overlapping segments, merge them
-      segments[curr].start = MIN (a.start, b.start);
-      segments[curr].end = MAX (a.end, b.end);
-    } else segments[++curr] = b;
+
+      // segments are sorted by start, 
+      // so segments[i].start >= segments[out].start
+    if (segments[i].start <= segments[out].end) 
+        // overlap or touch: just extend the end if needed
+      segments[out].end = MAX(segments[out].end, segments[i].end);
+    else 
+        // disjoint: start a new merged segment
+      segments[++out] = segments[i];
   }
-  printSegments (segments, curr);
+
+  printSegments(segments, out);
 }
 
 //=================================================================

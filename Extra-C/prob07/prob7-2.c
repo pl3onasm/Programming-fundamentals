@@ -42,11 +42,12 @@ void getBitstrings (char *bits, size_t idx, size_t n,
 int main () {
   char *bits; size_t n;
 
-  assert(scanf("%zu ", &n) == 1);
+  assert(scanf("%zu", &n) == 1);
   
   C_NEW_ARRAY(char, bits, n + 1);
 
-  C_READ_ARRAY(bits, "%c", n);
+  C_READ_ARRAY(bits, " %c", n);
+  bits[n] = '\0';
 
   getBitstrings(bits, 0, n, 0, 0);
 

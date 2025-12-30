@@ -15,15 +15,15 @@
 // Computes the maximum path cost in a triangle of n rows
 int maxPath (size_t n) {
     // read the first row
-  int *row1, *row2;
+  int *row1, *row2, max;
   C_NEW_ARRAY(int, row1, n);
   C_NEW_ARRAY(int, row2, n);
   
-  C_READ_ARRAY(row1, "%d ", 1);
+  C_READ_ARRAY(row1, "%d", 1);
 
   for (size_t i = 1; i < n; ++i) {
       // read the next row
-    C_READ_ARRAY(row2, "%d ", i + 1);
+    C_READ_ARRAY(row2, "%d", i + 1);
     
       // calculate the maximum path cost for each cell
     for (size_t j = 0; j <= i; ++j) {
@@ -36,7 +36,7 @@ int maxPath (size_t n) {
   }
 
     // take maximum of the last row
-  int max = row1[0];
+  max = row1[0];
   for (size_t j = 1; j < n; ++j)
     max = C_MAX(max, row1[j]);
 
