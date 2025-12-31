@@ -227,4 +227,11 @@ $\Large{\color{cadetblue}\text{Output examples of the script}}$
       <a href="Images/im06.png"><img src="Images/im06.png" width="200" alt="im06"></a>
     </td>
   </tr>
+  <tr>
+    <td valign="top"align="center">
+      <a href="Images/im05.png"><img src="Images/im07.png" width="200" alt="im05"></a>
+    </td>
+    <td valign="top"align="center">
+    </td>
+  </tr>
 </table>
