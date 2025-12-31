@@ -5,21 +5,20 @@
    Approach:
     We must print all 10-digit pandigital numbers (containing 
     digits 0..9 exactly once) that are divisible by the given 
-    divisor d. 
-    Numbers with a leading 0 are not allowed, and the output must 
-    be in ascending order without sorting.
+    divisor d. Numbers with a leading 0 are not allowed, and 
+    the output must be in ascending order without sorting.
 
-    We generate the numbers by recursive backtracking. At each 
+    We generate these numbers by recursive backtracking. At each 
     position we try the digits 0..9 in increasing order. This 
     produces the 10-digit numbers in lexicographic order.
 
-    To check divisibility, we maintain the remainder of the 
-    currently constructed prefix modulo d. If the prefix has 
+    In order to check divisibility, we maintain the remainder of 
+    the currently constructed prefix modulo d. If the prefix has 
     remainder rem, then after appending a digit x, the new 
     remainder is:
         nextRem = (rem * 10 + x) % d.
-    When we have placed all 10 digits, the full number is 
-    divisible by d iff rem == 0.
+    When we have constructed a full 10-digit number, we check if 
+    the final remainder is 0, in which case we print the number.
 */
 
 #include <stdio.h>
@@ -46,7 +45,7 @@ void permute(int *digits, int *taken, size_t pos,
     // recursive case: try each digit that has not yet been taken
   for (int digit = 0; digit < 10; ++digit) {
     if (!taken[digit]                     // take each digit once   
-        && !(pos == 0 && digit == 0)) { // no leading 0
+        && !(pos == 0 && digit == 0)) {   // no leading 0
       
         // choose digit
       taken[digit] = 1;

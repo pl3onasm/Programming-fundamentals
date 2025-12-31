@@ -5,9 +5,9 @@
 
   Approach: dynamic programming with sliding window optimization
 
-  We have d distinct labels. Label i has capacity caps[i] (number 
-  of cards available with that label). A "hand" of size h is 
-  determined by how many cards we take from each label:
+  We have d distinct labels. Label i has capacity caps[i], which 
+  is the number of cards available with that label. A "hand" of 
+  size h is determined by how many cards we take from each label:
 
     x0, x1, ..., x(d-1)  with  0 <= xi <= caps[i]  and  sum(xi) = h
 
@@ -36,8 +36,8 @@
 
     When j increases by 1, the window updates in O(1):
       - add dp[j] (the new term entering the window)
-      - subtract dp[j - (c + 1)] (the term that falls out once the 
-        window exceeds length (c + 1))
+      - if j > c, subtract dp[j - c - 1] (the term leaving 
+        the window)
 
     This makes each label processed in O(h) time instead of 
     O(h * c), leading to a total time complexity of O(h * d).
@@ -117,8 +117,7 @@ int main(){
 
   size_t *caps = readCaps(d);
 
-  size_t nHands = getNumHands(h, d, caps);
-  printf("%zu\n", nHands);
+  printf("%zu\n", getNumHands(h, d, caps));
 
   free(caps);
   

@@ -4,6 +4,18 @@
   description: extra, problem 11, anagrams for palindromes
   time complexity:  O(n)
   space complexity: O(1)
+
+  Approach:
+    A string can be rearranged into a palindrome iff at most one
+    character occurs an odd number of times. All other characters
+    must occur an even number of times so they can be mirrored 
+    around the center of the palindrome.
+    
+    That is why we build a small histogram of letter frequencies 
+    while reading the input, mapping both uppercase and lowercase 
+    letters to the same 26 bins. Afterwards, we count how many bins 
+    have an odd frequency. If more than one letter has an odd 
+    count, we output NO. Otherwise we output YES.
 */
 
 #include "../../Functions/include/clib/clib.h"
@@ -45,8 +57,7 @@ int containsPalin(char *hist) {
 int main() {
   char *hist = getHistogram();
 
-  containsPalin(hist) ? printf("YES\n") 
-                      : printf("NO\n");   
+  printf(containsPalin(hist) ? "YES\n" : "NO\n");
 
   free(hist);
 

@@ -13,8 +13,9 @@
     where dp[i-1][j-1] exists only if j > 0 and dp[i-1][j] exists 
     only if j < i. We compute these values row by row from top to 
     bottom and store them in-place in the triangle array 
-    (overwriting each cell by its best reachable sum). The answer 
-    is the maximum value in the last row after this update pass.
+    (overwriting each cell by its best reachable sum). The final 
+    answer is then the maximum value in the last row after filling 
+    the dp table.
 */
 
 #include <stdio.h>

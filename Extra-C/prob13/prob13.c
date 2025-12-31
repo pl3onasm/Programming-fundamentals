@@ -4,6 +4,18 @@
   description: extra, problem 13, joining forces
   time complexity: O(N log K), with N the total number of elements
                    and K the number of arrays
+
+  Approach:
+    Each input line is already sorted, but we receive an unknown 
+    number of such lines (K) and the total number of integers (N) 
+    is also unknown. So we start by reading every line into its own 
+    dynamic array until we encounter an empty line. 
+
+    To merge all these lines efficiently, we use a divide-and-
+    conquer strategy: we recursively merge the left half of the 
+    arrays and the right half, then merge those two sorted results. 
+    Each merge is linear in the sizes of the two arrays, and the 
+    recursion depth is O(log K), giving total O(N log K) time.
 */
 
 #include "../../Functions/include/clib/clib.h"

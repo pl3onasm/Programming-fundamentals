@@ -97,8 +97,9 @@ void printU128(u128 n) {
     n /= 10;
   }
 
-  while (index--) putchar(buffer[index]);
-  putchar('\n');
+  while (index--) 
+    printf("%c", buffer[index]);
+  printf("\n");
 }
 
 //=================================================================

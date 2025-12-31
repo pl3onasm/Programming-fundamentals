@@ -4,6 +4,19 @@
   description: extra, problem 12, separated by distance
   time complexity: O(n log n)
   space complexity: O(n)
+
+  Approach:
+    We need the number of unique value-pairs (x, y) from the input
+    such that y - x = k. Duplicates should be ignored, i.e., each
+    value can only be used once in the counting.
+
+    First, we sort the input array (O(n log n)) and then remove 
+    duplicates in-place so each value appears once. On this 
+    strictly increasing array, we use a two-pointer technique:
+    we maintain indices left <= right and compare the difference 
+    arr[right] - arr[left] to k. If the difference is too small we 
+    increase right, if it is too large we increase left, and if it 
+    equals k we found one unique pair and advance both pointers. 
 */
 
 #include "../../Functions/include/clib/clib.h"
@@ -12,17 +25,13 @@
 // Removes duplicates from a sorted array
 void removeDups(int **arr, size_t *size) {
   int *newArr = *arr;
-  size_t newSz = *size;
 
-  if (newSz == 0) return;
+  if (*size == 0) return;
 
   size_t writeIdx = 1;
-  for (size_t readIdx = 1; readIdx < newSz; ++readIdx) {
-    if (newArr[readIdx] != newArr[readIdx - 1]) {
-      newArr[writeIdx] = newArr[readIdx];
-      ++writeIdx;
-    }
-  }
+  for (size_t readIdx = 1; readIdx < *size; ++readIdx) 
+    if (newArr[readIdx] != newArr[readIdx - 1]) 
+      newArr[writeIdx++] = newArr[readIdx];
 
   *size = writeIdx;
   *arr = c_safeRealloc(newArr, writeIdx * sizeof(int));

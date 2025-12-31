@@ -20,7 +20,8 @@
       - If L is even (L = 2m), choose m bits (with leading bit 1) 
         and mirror all m bits to the right.
 
-    We iterate lengths L from 1 to 31, and for each L iterate 
+    We iterate over all possible bit-lengths L (1..31, since
+    b < 2^31), and for each L we enumerate all possible left
     halves in increasing order. This generates palindromes in 
     ascending numeric order, so no sorting is needed. We then 
     filter by [a, b] and odd number of 1 bits.

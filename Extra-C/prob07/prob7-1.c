@@ -10,12 +10,13 @@
 
     While constructing the string, we keep track of the current run
     length of consecutive 0s (count0) or consecutive 1s (count1) 
-    ending at the previous position. When we place a 0 we increase 
-    count0 and reset count1 to 0 (and vice versa). A choice is only 
-    allowed if its run length would not exceed 2.
+    ending at the previous position. Whenever we place a 0 we 
+    increase count0 and reset count1 to 0 (and vice versa). If we
+    encounter a '?', we try both '0' and '1' branches, but only
+    allow a choice if its run length would not exceed 2.
 
     To output solutions in lexicographical (binary) order, we 
-    always try '0' before '1' when we encounter a '?'.
+    always try '0' before '1' when we encounter a '?'. 
 */
 
 #include <stdio.h>

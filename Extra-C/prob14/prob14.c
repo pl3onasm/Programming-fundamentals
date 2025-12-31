@@ -9,11 +9,10 @@
     which indicates the reading order of the n columns.
   - We do not build an explicit 2D grid. Instead, we use index 
     arithmetic: character at (row, col) in an n-column grid is at 
-    linear index row*n + col.
-    Reading a column top-to-bottom means visiting indices:
-      col, col + n, col + 2n, ...
+    linear index row*n + col. Reading a column top-to-bottom thus 
+    means visiting indices: col, col + n, col + 2n, ...
   - We first compute an inverse mapping pos[label] = column index, 
-    so that we can output columns in label order 1..n.
+    so that we can then output columns in label order 1..n.
 */
 
 #include "../../Functions/include/clib/macros.h"

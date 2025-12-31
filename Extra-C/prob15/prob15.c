@@ -7,7 +7,7 @@
   - We need to count all numbers n in [a, b] that are perfect 
     squares and additionally satisfy the "tricky" digit condition.
   - Since b <= 10^10, the largest square root is 10^5. Therefore, 
-    we can enumerate all candidate roots i in 
+    we can simply iterate over all integers i in
     [ceil(sqrt(a)), floor(sqrt(b))], compute i*i, and test whether 
     that square is "tricky".
   - A square is "tricky" if exactly one digit (0..9) appears more 
@@ -30,25 +30,26 @@ int isTrickySquare(llu n) {
   size_t freq[10] = {0};
 
   while (n) {
-      freq[n % 10]++;
-      n /= 10;
+    ++freq[n % 10];
+    n /= 10;
   }
 
   size_t repeated = 0;
-  for (size_t d = 0; d < 10; d++) {
-      if (freq[d] > 1)  repeated++;
-      if (repeated > 1) return 0;  
+  for (size_t d = 0; d < 10; ++d) {
+    if (freq[d] > 1)  ++repeated;
+    if (repeated > 1) return 0;  
   }
 
   return repeated == 1;
 }
+
 //=================================================================
 
 int main() {
   llu a, b;
   assert (scanf ("%llu %llu", &a, &b) == 2);
 
-  llu start = ceil(sqrt((long double)a));
+  llu start = ceil (sqrt((long double)a));
   llu end   = floor(sqrt((long double)b));
 
   size_t count = 0;
