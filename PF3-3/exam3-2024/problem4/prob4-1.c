@@ -10,17 +10,21 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 
+//=================================================================
+// Reads the input from stdin into an array
 void readInput(int f[], int *size) {
-  // read size and f-values from stdin
-  (void)! scanf("%d:", size);
+  assert(scanf("%d:", size) == 1);
   for (int i = 0; i < *size; i++) 
-    (void)! scanf("%d", &f[i]);
+    assert(scanf("%d", &f[i]) == 1);
 }
 
+//=================================================================
+// Computes the maximal f-sum for size. Precondition: size < 20,
+// since the time complexity is in O(2^n) !!
 int maxfSum(int f[], int size) {
-  // naive but working solution for n < 20
   if (size == 0) 
     return 0;
   int max = -1;
@@ -28,6 +32,8 @@ int maxfSum(int f[], int size) {
     max = MAX(max, f[i - 1] + maxfSum(f, size - i));
   return max;
 }
+
+//=================================================================
 
 int main(int argc, char *argv[]) {
   int f[100], size;

@@ -15,7 +15,7 @@ void *safeCalloc(size_t n, size_t size) {
   
   void *ptr = calloc(n, size);
   if (ptr == NULL) {
-    printf("Error: calloc(%lu, %zu) failed. "
+    printf("Error: calloc(%zu, %zu) failed. "
            "Out of memory?\n", n, size);
     exit(EXIT_FAILURE);
   }
@@ -26,26 +26,28 @@ void *safeCalloc(size_t n, size_t size) {
 // Reads the input from stdin and stores it in an array
 int *readInput(int n) {
   int *arr = safeCalloc(n, sizeof(int));
-  for (int i = 0; i < n; i++)
+  for (int i = 0; i < n; ++i)
     assert(scanf("%d", &arr[i]) == 1);
   return arr;
 }
 
 //===================================================================
-// Detects a cycle in the array
+// Detects a cycle in the array 
 void detectCycle(int *arr, int n) {
   
   int *visited = safeCalloc(n, sizeof(int));
   int idx = 0, i = 1;
-  visited[idx] = i;
+  visited[idx] = i;       // i = visit time of idx
 
   while (1) {
-    if (visited[arr[idx]]) {
-      printf("%d %d\n", arr[idx], i - visited[arr[idx]] + 1);
+    int next = arr[idx];
+
+    if (visited[next]) {
+      printf("%d %d\n", arr[idx], i + 1 - visited[next]);
       break;
     }
-    visited[arr[idx]] = ++i;
-    idx = arr[idx];
+    visited[next] = ++i;
+    idx = next;
   }
   free(visited);
 }

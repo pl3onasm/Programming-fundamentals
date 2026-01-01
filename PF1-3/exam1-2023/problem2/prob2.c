@@ -5,35 +5,35 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
+//=================================================================
+// Checks whether x is prime
 int isPrime (int x) {
-  //checks whether x is prime
   if (x == 2) return 1;
-  if (x % 2 == 0 || x == 1) return 0;
-  for (int i = 3; i*i <= x; i += 2) {
+  if (x % 2 == 0 || x < 2) return 0;
+  for (int i = 3; i <= x / i; i += 2) 
     if (x % i == 0) return 0;
-  }
   return 1;
 }
+
+//=================================================================
 
 int main(int argc, char *argv[]) {
   int n;
 
-  (void)! scanf("%d", &n);
+  assert(scanf("%d", &n) == 1);
 
-  if (n == 0) {       // special case for input 0
-    printf("NO\n");
-    return 0;
+  if (n < 2) {
+    printf("NO\n"); 
+    return 0; 
   }
 
-  while (n) {         // check if all right-truncable numbers are prime
-    if (isPrime(n)) 
-      n /= 10;        // remove last digit
-    else {
-      printf("NO\n"); // at least one of the remainders is not prime
-      return 0;
-    }
+  while (n) {
+    if (!isPrime(n)) { printf("NO\n"); return 0; }
+    n /= 10;
   }
+
   printf("YES\n");
   return 0;
 }

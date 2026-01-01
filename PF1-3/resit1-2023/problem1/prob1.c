@@ -5,16 +5,20 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
-int main(int argc, char *argv[]) {
+//=================================================================
+
+int main() {
   int n;
-                  // Epoch starts on a Thursday
+    // Epoch is a Thursday, so index 0 corresponds to Thursday
   char *days[] = {"Thursday", "Friday", "Saturday", "Sunday",
                   "Monday", "Tuesday", "Wednesday"};
   
-  (void)! scanf ("%d", &n);
-  
-  printf("%s\n", days[n / 86400 % 7]);
+  assert(scanf ("%d", &n) == 1);
+    
+    // 86400 seconds in a day = 24 * 60 * 60
+  printf("%s\n", days[(n / 86400) % 7]);
 
   return 0;
 }

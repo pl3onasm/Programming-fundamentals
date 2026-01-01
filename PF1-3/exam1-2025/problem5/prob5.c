@@ -9,7 +9,8 @@
 #include <assert.h>
 
 //===================================================================
-// reads input integer array and returns the number of digits read
+// Reads the initial input digits array and returns the number of 
+// digits read. We assume at most 965 digits are read.
 int readInput(int *runs) {
   int c, i = 0;
   while ((c = getchar()) != ' ' && c != EOF) 
@@ -18,7 +19,7 @@ int readInput(int *runs) {
 }
 
 //===================================================================
-// stores the decimal representation of n in the array runs at 
+// Stores the decimal representation of n in the array runs at 
 // position idx
 void storeCount(int n, int *runs, int *idx) {
   int rev[10], j = 0;
@@ -33,7 +34,7 @@ void storeCount(int n, int *runs, int *idx) {
 }
 
 //===================================================================
-// computes the next run-length encoding of the input array
+// Computes the next run-length encoding of the input array
 void computeRuns(int *runs, int *len) {
   int count = 1, j = 0, newruns[965];
 

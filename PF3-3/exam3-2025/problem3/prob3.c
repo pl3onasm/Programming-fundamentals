@@ -11,10 +11,10 @@
 
 //===================================================================
 // Allocates memory for n bytes, exits if malloc fails
-void *safeMalloc (int n) {
+void *safeMalloc (size_t n) {
   void *ptr = malloc(n);
   if (ptr == NULL) {
-    printf("Error: malloc(%d) failed. Out of memory?\n", n);
+    printf("Error: malloc(%zu) failed. Out of memory?\n", n);
     exit(EXIT_FAILURE);
   }
   return ptr;
@@ -40,7 +40,7 @@ int *copySubArray(int *arr, int left, int right) {
 }
 
 //===================================================================
-// Sorts the array arr using the merge sort algorithm
+// Sorts the integer array in ascending order
 void mergeSort(int *arr, int length) {
   int l = 0, r = 0, idx = 0, mid = length/2;
   if (length <= 1) return;
@@ -51,12 +51,11 @@ void mergeSort(int *arr, int length) {
   mergeSort(left, mid);
   mergeSort(right, length - mid);
   
-  while (l < mid && r < length - mid) {
+  while (l < mid && r < length - mid) 
     if (left[l] < right[r]) 
       arr[idx++] = left[l++];
     else 
       arr[idx++] = right[r++];
-  }
 
   while (l < mid)
     arr[idx++] = left[l++];
@@ -74,7 +73,7 @@ void countPairs(int *arr, int size, int n) {
   int count = 0, l = 0, r = size - 1;
   while (l < r) {
     if (arr[l] + arr[r] >= n) {
-      count += r - l;
+      count += r - l;   // all pairs (l..r-1, r) are valid
       r--;
     } else l++;
   }

@@ -7,40 +7,49 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
+//=================================================================
+// Reads the moduli and returns the number of moduli read
 int readModuli(int moduli[]) {
-  // reads the moduli and returns the number of moduli read
   int d = 0, count = 0; 
   for (int i = 0; i < 10; i++) {
-    (void)! scanf("%d", &d);
+    assert(scanf("%d", &d) == 1);
     if (!d) break;
     moduli[count++] = d;
   }
   return count;
 }
 
+//=================================================================
+// Computes the greatest common divisor of a and b
 int GCD (int a, int b) {
-  // returns the greatest common divisor of a and b
   if (b == 0) return a;
   return GCD(b, a % b);
 }
 
+//=================================================================
+// Computes the least common multiple of a and b
 int LCM (int a, int b) {
-  // returns the least common multiple of a and b
   return a / GCD(a, b) * b;
 }
 
+//=================================================================
+// Computes the least common multiple of all moduli
 int moduliLCM(int moduli[], int size) {
-  // returns the LCM of all moduli
   int lcm = moduli[0];
   for (int i = 1; i < size; i++) 
     lcm = LCM(lcm, moduli[i]);
   return lcm;
 }
 
+//=================================================================
+
 int main(int argc, char *argv[]) {
   int moduli[10];
   int size = readModuli(moduli);
+
   printf("%d\n", moduliLCM(moduli, size));
+  
   return 0;
 }

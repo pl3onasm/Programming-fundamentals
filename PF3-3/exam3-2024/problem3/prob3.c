@@ -6,36 +6,41 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
-void *safeMalloc (int n) {
-  /* allocates memory and checks whether this was successful */
+//=================================================================
+// Allocates memory, and checks whether this was successful
+void *safeMalloc (size_t n) {
   void *ptr = malloc(n);
   if (ptr == NULL) {
-    printf("Error: malloc(%d) failed. Out of memory?\n", n);
+    printf("Error: malloc(%zu) failed. Out of memory?\n", n);
     exit(EXIT_FAILURE);
   }
   return ptr;
 }
 
+//=================================================================
+// Reads the input from stdin into an array
 int *readInput(int *size) {
-  /* reads the input from stdin */
-  (void)! scanf("%d:", size);
+  assert(scanf("%d:", size) == 1);
   int *arr = safeMalloc((*size + 1) * sizeof(int));
   for (int i = 0; i < *size; i++) 
-    (void)! scanf("%d", &arr[i]);
+    assert(scanf("%d", &arr[i]) == 1);
   return arr;
 }
 
+//=================================================================
+// Copies the subarray arr[left..right] into a new array
 int *copySubArray(int *arr, int left, int right) {
-  /* copies the subarray arr[left..right] into a new array */
   int *copy = safeMalloc((right - left)*sizeof(int));
   for (int i = left; i < right; i++) 
     copy[i - left] = arr[i];
   return copy;
 }
 
+//=================================================================
+// Sorts the integer array arr of given length
 void mergeSort(int *arr, int length) {
-  /* sorts an array of integers in O(n log n) time */
   int l = 0, r = 0, idx = 0, mid = length/2;
   if (length <= 1) return;
   
@@ -62,10 +67,14 @@ void mergeSort(int *arr, int length) {
   free(right);
 }
 
+//=================================================================
+// Selects the largest contiguous selection from arr
 void selectLargest(int *arr, int size) {
-  arr[size] = arr[size - 1] + 2;  // sentinel to force final break
   int max = 0, sum = 1, start = 0,
       maxStart = 0, maxEnd = 0;
+
+  arr[size] = -1; // sentinel to flush last selection
+                  // safe since all inputs are non-negative
 
   for (int i = 1; i <= size; i++) {
     if (arr[i] == arr[i - 1] || arr[i] == arr[i - 1] + 1) {
@@ -84,7 +93,9 @@ void selectLargest(int *arr, int size) {
   printf("%d: [%d,%d)\n", max, arr[maxStart], arr[maxEnd] + 1);
 }
 
-int main(int argc, char *argv[]) {
+//=================================================================
+
+int main() {
   int size;
 
   int *arr = readInput(&size);

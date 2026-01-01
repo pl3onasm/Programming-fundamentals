@@ -22,10 +22,13 @@ int power(int n, int exp) {
 //===================================================================
 
 int main() {
-  int n, sum = 1, exp = 1;
+  int n, sum = 0, exp = 0;
   assert(scanf("%d", &n) == 1);
 
-  n /= 10;
+  if (n == 0) {
+    printf("1\n");
+    return 0;
+  }
 
   while (n) {
     sum += power(n % 10, exp++);

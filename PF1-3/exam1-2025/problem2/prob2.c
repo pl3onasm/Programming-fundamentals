@@ -30,7 +30,7 @@ int main() {
   assert(scanf("%d", &number) == 1);
 
   iter = 0;
-  while (number > 10) {
+  while (number >= 10) {
     number = transform(number);
     iter++;
   }

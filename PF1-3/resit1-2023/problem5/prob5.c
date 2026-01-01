@@ -6,19 +6,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char *argv[]) {
-  int a, b, ints[10000]={0};
+//=================================================================
 
-  // read the intervals and update counts
+int main() {
+  int a, b, ints[10001] = {0};
+
+    // read the intervals and update counts
   while (scanf("%d %d", &a, &b) == 2 && (a || b)){
-    ints[a]++;
-    ints[b]--;
+    ++ints[a];
+    --ints[b];
   }
 
-  // calculate the cumulative sum
+    // calculate the cumulative sum and track
+    // smallest index with maximum frequency
   int max = 0, maxFreq = ints[0];
-  for (int i = 1; i < 10000; i++) {
-    ints[i] += ints[i-1];
+  for (int i = 1; i < 10000; ++i) {
+    ints[i] += ints[i - 1];
     if (ints[i] > maxFreq) {
       maxFreq = ints[i];
       max = i;

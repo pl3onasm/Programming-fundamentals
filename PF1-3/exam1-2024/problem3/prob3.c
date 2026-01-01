@@ -11,10 +11,10 @@
 //===================================================================
 // Returns the product between the number of distinct
 // prime factors of n and the sum of those factors
-// Returns n if n is prime
+// For prime n, this is just n. Precondition: n > 1
 int compProduct(int n) {
   int sum = 0, nFactors = 0;
-  for (int i = 2; n > 1 && i * i <= n; i += i == 2 ? 1 : 2) {
+  for (int i = 2; n > 1 && i <= n / i; i += i == 2 ? 1 : 2) {
     if (n % i == 0) {
       sum += i;
       ++nFactors;
@@ -23,6 +23,9 @@ int compProduct(int n) {
     }
   }
 
+    // If n > 1 here, then n itself is a remaining prime factor,
+    // either the original n (if it is prime) or the last remaining
+    // prime factor > sqrt(original n)
   if (n > 1) {
     ++nFactors;
     sum += n;
@@ -41,9 +44,10 @@ int main() {
 
   for (int i = a; i <= b; i++) {
     int nIter, n = i;
-    for (nIter = 0; n != 10 && n != 30 ; nIter++) {
+    for (nIter = 0; n != 10 && n != 30 ; ++nIter) {
       int m = compProduct(n);
-      if (m == n) break;  // we have reached a prime number
+      if (m == n)
+        break;  // we have reached a prime number
       n = m;
     }
 

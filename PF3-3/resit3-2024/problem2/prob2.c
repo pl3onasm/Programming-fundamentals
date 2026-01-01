@@ -7,34 +7,46 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
-int isSpecial(int n) {
-  // determines if n is a special number
+//===================================================================
+// Returns 1 iff n can be written as p*q where p and q are distinct 
+// primes. Returns 0 otherwise.
+// Precondition: n >= 1
+int isProdOfTwoDistPrimes(int n) {
   int count = 0;
-  // check number of prime factors up to sqrt(n)
-  for (int i = 2; i * i <= n; i += (i == 2) ? 1 : 2) {
+    // check number of prime factors up to sqrt(n)
+  for (int i = 2; i <= n / i; i += (i == 2) ? 1 : 2) {
     while (n % i == 0) {
       n /= i;     
       if (++count > 1) 
+          // If we divide by any prime more than once 
+          // (square factor), or we find more than one  
+          // prime factor in total, we can exit early
         return 0;
     }
   }
-  return count;  // 0 if prime, 1 if special
+  return count == 1 && n > 1; 
 }
+
+//===================================================================
 
 int main(){
   int m, count = 0, a = 0, b = 0, c = 0;
 
-  (void)! scanf("%d", &m);
+  assert(scanf("%d", &m) == 1);
 
-  // we check for n, n - 1 and n - 2 for efficiency
-  // so we start at n = 3 and go up to m + 1
+   // We maintain a rolling window of size 3 to efficiently
+   // check for triplets.
+   // At iteration n, (c,b,a) corresponds to (n-2, n-1, n),
+   // so if (a && b && c) then x = n-1 is special.
   for (int n = 3; n < m + 2; ++n) {
     c = b;
     b = a;
-    a = isSpecial(n);
+    a = isProdOfTwoDistPrimes(n);
 
     if (a && b && c) 
+        // b is special
       ++count;
   } 
 

@@ -5,15 +5,22 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
+
+//=================================================================
 
 int main(int argc, char *argv[]) {
   int butts, cigarettes = 0, total = 0;
-  (void)! scanf("%d", &butts);
-  
+  assert(scanf("%d", &butts) == 1);
+    
+    // Each iteration:
+    // - exchange 4 butts for 1 cigarette
+    // - smoke those cigarettes (each yields 1 new butt)
+    // - keep leftover butts (butts % 4) for the next round
   while (butts >= 4) { 
-    cigarettes = butts / 4;         // 4 butts make 1 cigarette
-    total += cigarettes;            // add cigarettes to total
-    butts = cigarettes + butts % 4; // remaining butts after smoking
+    cigarettes = butts / 4;         
+    total += cigarettes;            
+    butts = cigarettes + butts % 4; 
   }
 
   printf("%d\n", total);

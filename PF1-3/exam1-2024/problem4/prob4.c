@@ -11,7 +11,7 @@
 void readInput(int histogram[]) {
   int x;
   while (scanf("%d", &x) == 1 && x)
-    histogram[x]++;
+    ++histogram[x];
 }
 
 //===================================================================
@@ -23,11 +23,13 @@ int main() {
 
   int max = 0, maxIdx = 0;
 
-  for (int i = 0; i < 1001; i++)
-    if (histogram[i] * i > max) {
-      max = histogram[i] * i;
+  for (int i = 0; i < 1001; ++i) {
+    int impact = histogram[i] * i;
+    if (impact > max) {
+      max = impact;
       maxIdx = i;
     }
+  }
 
   printf("%d\n", maxIdx);
 

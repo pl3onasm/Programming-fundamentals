@@ -5,33 +5,40 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
+//=================================================================
+// Checks whether year is a leap year
 int isLeapYear(int year) {
   return (year % 4 == 0 && year % 100 != 0) 
           || year % 400 == 0;
 }
 
-int main(int argc, char *argv[]) {
-  int year = 2023, count = 0, leapDays = 0;
-  int totalDays, n;
+//=================================================================
 
-  (void)! scanf ("%d", &n);
+int main() {
+  int year = 2023, count = 0;
+  int shift = 0, n;
 
-  /* A year has 365 days if not a leap year. 365-1 = 364
-   * is divisible by 7 (number of days in a week), which
-   * means we can count a day for each year and an extra
-   * day for a leap year as we skip through the years */
+  assert(scanf ("%d", &n) == 1);
+
+  /* Since 364 is a multiple of 7, the weekday of Oct 13 shifts by:
+   * - +1 for a normal year (365 % 7 == 1)
+   * - +2 for a leap year (366 % 7 == 2)
+   *
+   * Therefore, compared to Oct 13, 2023 (a Friday), Oct 13 of a 
+   * later year is again a Friday exactly when the total shift in 
+   * weekdays is a multiple of 7.
+   */
   while (count != n) {
-    year++;
-    if (isLeapYear(year)) leapDays++;
-    totalDays = year - 2023 + leapDays;
-    if (totalDays % 7 == 0) count++;
-    // if divisible by 7 we reached a point where Oct 13 
-    // is a Friday again
+    ++year;
+    shift += 1 + isLeapYear(year); 
+    if (shift % 7 == 0) ++count;
   }
 
-  // the nth next year starting from 2023 in which 
-  // Oct 13 is a Friday
+    // the nth next year starting from 2023 in which 
+    // Oct 13 is a Friday
   printf("%d\n", year);
+
   return 0;
 }

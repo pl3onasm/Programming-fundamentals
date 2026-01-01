@@ -2,37 +2,39 @@
   file: prob2.c
   author: David De Potter
   description: PF 3/3rd term 2024, problem 2, lychrel
-  note: the check for overflow in reverseInt is not 
-    required to pass the test cases that are given,
-    but should be included for a correct implementation
+  note: the check for overflow is not required to pass 
+    the test cases that are given, but should be included 
+    for a correct implementation
 */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <assert.h>
 
-int reverseInt (int n) {
-  // reverses an integer n 
-  // returns INT_MAX if the reverse overflows
-  int rev = 0;
+//=================================================================
+// Reverses the digits of n and returns the reversed number
+// If the reversed number exceeds INT_MAX, returns -1
+int reverseInt(int n) {
+  long long rev = 0;
   while (n) {
-    // check for overflow
-    if (rev >= INT_MAX / 10 - n % 10)
-      return INT_MAX;
-    rev = rev * 10 + n % 10;
+    rev = rev * 10 + (n % 10);
     n /= 10;
   }
-  return rev;   
+  if (rev > INT_MAX) return -1;
+  return (int) rev;
 }
 
-int main(int argc, char *argv[]) {
+//=================================================================
+
+int main() {
   int n, rev;
-  (void)! scanf("%d", &n);
+  assert(scanf("%d", &n) == 1);
 
   // keep adding the reverse of n to n until n is 
   // a palindrome or until the sum exceeds INT_MAX
   while ((rev = reverseInt(n)) != n) {
-    if (rev >= INT_MAX - n) {
+    if (rev == -1 || rev > INT_MAX - n) {
       printf("YES\n");
       return 0;
     }
