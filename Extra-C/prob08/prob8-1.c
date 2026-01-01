@@ -31,7 +31,8 @@ typedef struct {
 void *safeMalloc (size_t n) {
   void *p = malloc(n);
   if (p == NULL) {
-    printf("Error: malloc(%zu) failed. Out of memory?\n", n);
+    fprintf(stderr, "Error: malloc(%zu) failed. " 
+                    "Out of memory?\n", n);
     exit(EXIT_FAILURE);
   }
   return p;
@@ -75,12 +76,11 @@ void mergeSort(size_t length, Seg *arr) {
   mergeSort(mid, left);
   mergeSort(length - mid, right);
   
-  while (l < mid && r < length - mid) {
+  while (l < mid && r < length - mid) 
     if (left[l].start < right[r].start)
       arr[idx++] = left[l++];
     else
       arr[idx++] = right[r++];
-  }
 
   while (l < mid) 
     arr[idx++] = left[l++];

@@ -70,12 +70,11 @@ IntArr mergeArrays (IntArr arr1, IntArr arr2) {
 
   size_t r = 0, l = 0, m = 0;
 
-  while (r < arr1.size && l < arr2.size) {
+  while (r < arr1.size && l < arr2.size) 
     if (arr1.arr[r] <= arr2.arr[l]) 
       merged.arr[m++] = arr1.arr[r++];
     else 
       merged.arr[m++] = arr2.arr[l++];
-  }
 
   while (r < arr1.size) 
     merged.arr[m++] = arr1.arr[r++];

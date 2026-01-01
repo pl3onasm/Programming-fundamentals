@@ -2,13 +2,13 @@ $\huge\color{cadetblue}{\text{Separated by distance}}$
 
 <br/>
 
-The input for this problem consists of two lines. The ﬁrst line holds the number $k$, while the second holds a sequence of integer numbers. The goal is to count the number of unique pairs $(i, j)$ in the sequence that are exactly $k$ apart.
+The input for this problem consists of two lines. The ﬁrst line holds the number $k$, while the second holds a sequence of integer numbers. The goal is to count the number of unique pairs $(i, j)$ in the sequence that are exactly $k$ apart, i.e., $j - i = k$.
 
 For example, suppose $k = 7$ and consider the sequence below.
 
 $$[1, 2, 3, 1, 4, 7, 4, 8, 9, 6, 5, 10, 10, 8]$$
 
-This sequence has exactly three unique pairs that are $7$ apart: $(1, 8)$, $(2, 9)$, and $(3, 10)$. Note that the duplicate numbers should not result in additional pairs.
+This sequence has exactly three unique pairs that are $7$ apart: $(1, 8)$, $(2, 9)$, and $(3, 10)$. Note that duplicate numbers should produce additional pairs, i.e., only unique pairs should be counted.
 
 <br/>
 

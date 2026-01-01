@@ -28,12 +28,12 @@ char *getHistogram() {
   char *hist, ch;
   C_NEW_ARRAY(char, hist, 26);
 
-  while ((ch = getchar()) != EOF && ch != '\n') {
+  while ((ch = getchar()) != EOF && ch != '\n') 
     if (ch >= 'a' && ch <= 'z') 
-      hist[ch - 'a']++;
+      ++hist[ch - 'a'];
     else if (ch >= 'A' && ch <= 'Z') 
-      hist[ch - 'A']++;
-  }
+      ++hist[ch - 'A'];
+  
   return hist;
 }
 
@@ -44,8 +44,8 @@ int containsPalin(char *hist) {
   size_t oddCount = 0;
 
   for (size_t i = 0; i < 26; ++i) {
-    if (hist[i] % 2 != 0) 
-      oddCount++;
+    if (hist[i] % 2) 
+      ++oddCount;
     if (oddCount > 1) 
       return 0;
   }

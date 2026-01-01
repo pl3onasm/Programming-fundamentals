@@ -20,7 +20,7 @@ void *safeCalloc (size_t n, size_t size) {
   void *ptr = calloc(n, size);
   if (ptr == NULL) {
     fprintf(stderr, "Error: calloc(%zu, %zu) failed.\n"
-           "Out of memory?\n", n, size);
+                    "Out of memory?\n", n, size);
     exit(EXIT_FAILURE);
   }
   return ptr;

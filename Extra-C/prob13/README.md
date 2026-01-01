@@ -2,15 +2,15 @@ $\huge\color{cadetblue}{\text{Joining forces}}$
 
 <br/>
 
-The input for this exercise is an unknown number of sorted sequences of unknown length. Each input sequence is on its own line. The input ends with an empty line. The output should be the sorted sequence that consists of all the input sequences. For example, suppose the input consists of the following three sequences.
+The input for this exercise is an unknown number of sorted integer sequences of unknown length. Each input sequence is on its own line. The input ends with an empty line. The output should be the sorted sequence that consists of all the input sequences. For example, suppose the input consists of the following three sequences.
 
-$\qquad 1 2 4 5 7$
-$\qquad 3 8 9$  
-$\qquad 6 10$
+$\qquad 1 \space 2 \space 4 \space 5 \space 7$  
+$\qquad 3 \space 8 \space 9$  
+$\qquad 6 \space 10$  
 
-The output should be the sorted sequence: 
+Then the output should be the sorted sequence:
 
-$\qquad 1 2 3 4 5 6 7 8 9 10$
+$\qquad 1 \space 2 \space 3 \space 4 \space 5 \space 6 \space 7 \space 8 \space 9 \space 10$
 
 <br/>
 
