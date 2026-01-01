@@ -23,13 +23,13 @@ void readInput(int f[], int *size) {
 //=================================================================
 
 int maxfSum(int f[], int size, int memo[]) {
-  // base case
+    // base case
   if (size == 0)         
     return 0;
-  // return memoized value if available
-  if (memo[size] != -1)   
-    return memo[size];
-  // otherwise compute and memoize
+    // return memoized value if available
+  if (memo[size - 1] != -1)   
+    return memo[size - 1];
+    // otherwise compute and memoize
   int max = -1;
   for (int i = 1; i <= size; ++i) {
     int cand = f[i - 1] + maxfSum(f, size - i, memo);
