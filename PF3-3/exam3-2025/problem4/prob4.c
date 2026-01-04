@@ -27,7 +27,8 @@
 void *safeMalloc (size_t n) {
   void *ptr = malloc(n);
   if (ptr == NULL) {
-    printf("Error: malloc(%zu) failed. Out of memory?\n", n);
+    fprintf(stderr, "Error: malloc(%zu) failed. "
+                    "Out of memory?\n", n);
     exit(EXIT_FAILURE);
   }
   return ptr;
@@ -46,7 +47,7 @@ int *readInput(int *size) {
 //===================================================================
 // Returns 1 iff C is an interleaving of A and B from positions (i,j)
 int isInterl(int *arrA, int sizeA, int *arrB, int sizeB,
-                      int *arrC, int i, int j) {
+             int *arrC, int i, int j) {
 
     // Base case: reached the end of both A and B
   if (i == sizeA && j == sizeB)

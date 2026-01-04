@@ -14,7 +14,8 @@
 void *safeMalloc (size_t n) {
   void *ptr = malloc(n);
   if (ptr == NULL) {
-    printf("Error: malloc(%zu) failed. Out of memory?\n", n);
+    fprintf(stderr, "Error: malloc(%zu) failed. "
+                    "Out of memory?\n", n);
     exit(EXIT_FAILURE);
   }
   return ptr;
@@ -52,7 +53,7 @@ void mergeSort(int *arr, int length) {
   mergeSort(right, length - mid);
   
   while (l < mid && r < length - mid) 
-    if (left[l] < right[r]) 
+    if (left[l] <= right[r]) 
       arr[idx++] = left[l++];
     else 
       arr[idx++] = right[r++];

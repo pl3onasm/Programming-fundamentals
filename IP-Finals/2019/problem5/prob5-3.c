@@ -8,34 +8,53 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
+//=================================================================
+// Computes the Fibonacci series up to n using recursion. 
+// The Fibonacci numbers are stored in fib[], and the length is
+// returned via the len pointer.
 void computeFibSeries (int n, int idx, int *len, int *fib) {
-  /* Base case */
-  if (fib[idx-1] >= n || idx > 47) {
-    *len = idx-1;
+  
+    // Base case: we have reached or exceeded n
+  if (fib[idx - 1] >= n || idx > 47) {
+    *len = idx - 1;
     return;
   }
-  /* Recursive case */
-  fib[idx] = fib[idx-2] + fib[idx-1];
-  computeFibSeries (n, idx+1, len, fib);
+  
+    // Recursive case: compute next Fibonacci number
+  fib[idx] = fib[idx - 2] + fib[idx - 1];
+  computeFibSeries (n, idx + 1, len, fib);
 }
 
+//=================================================================
+// Checks all subsets of Fibonacci numbers to count how many
+// sum up to the target value.
 int checkFibSums (int target, int sum, int idx, int *fib) {
-  /* Base case */
+    
+    // Base case: no more Fibonacci numbers to consider
   if (idx < 0) return target == sum;
-  /* Recursive case */
-  return checkFibSums (target, sum + fib[idx], idx-1, fib)
-       + checkFibSums (target, sum, idx-1, fib);
+
+    // Prune branches that exceed the target sum to avoid
+    // unnecessary computations
+  if (sum > target)
+    return 0;
+
+    // Recursive case: include or exclude the current 
+  return checkFibSums (target, sum + fib[idx], idx - 1, fib)
+       + checkFibSums (target, sum, idx - 1, fib);
 }
 
-int main (int argc, char *argv[]) {
+//=================================================================
+
+int main () {
   int n, len = 0, fib[48] = {1, 2};
 
-  (void)! scanf("%d", &n);
+  assert(scanf("%d", &n) == 1);
 
   computeFibSeries (n, 2, &len, fib);
 
-  printf ("%d\n", checkFibSums (n, 0, len-1, fib));
+  printf ("%d\n", checkFibSums (n, 0, len - 1, fib));
 
   return 0;
 }

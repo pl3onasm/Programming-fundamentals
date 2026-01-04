@@ -32,7 +32,7 @@ void c_mergeSort(int *arr, size_t len) {
   
   size_t l = 0, r = 0, idx = 0; 
   while (l < mid && r < len - mid)  
-    if (left[l] < right[r])
+    if (left[l] <= right[r])
       arr[idx++] = left[l++];    
     else                    
       arr[idx++] = right[r++];  

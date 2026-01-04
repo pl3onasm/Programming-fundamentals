@@ -6,21 +6,33 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
+//=================================================================
+// Recursively computes the maximum sum of non-adjacent elements
 int getMaxSum(int arr[], int idx, int sum, int len) {
-  // get maximum sum of subsequences with len >= 2
-  if (idx < 0) return len >= 2 ? sum : 0; 
-  int x = getMaxSum(arr, idx - 2, sum + arr[idx], len+1); // take
-  int y = getMaxSum(arr, idx - 1, sum, len);              // skip
+  
+    // base case
+  if (idx < 0) 
+    return len >= 2 ? sum : 0; 
+
+    // recursive case: either take or skip arr[idx]
+  int x = getMaxSum(arr, idx - 2, sum + arr[idx], len + 1); 
+  int y = getMaxSum(arr, idx - 1, sum, len);              
+
   return x > y ? x : y;
 }
 
-int main(int argc, char **argv){
+//=================================================================
+
+int main(){
   int arr[35], n; 
-  (void)! scanf("%d", &n);
-  for(int i = 0; i < n; i++)
-    (void)! scanf("%d ", &arr[i]);
-  printf("%d\n", getMaxSum(arr, n-1, 0, 0));
+  assert(scanf("%d", &n) == 1);
+
+  for(int i = 0; i < n; ++i)
+    assert(scanf("%d", &arr[i]) == 1);
+
+  printf("%d\n", getMaxSum(arr, n - 1, 0, 0));
   return 0; 
 }
 

@@ -6,24 +6,46 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
+//=================================================================
+// Counts the number of times t appears as a subsequence in s
 int numSubsequences(int n, int m, int s[], int t[]){
-  if (m > n) return 0;
+
+      // Base case: all elements of t have been matched
   if (m == 0) return 1;
-  if (s[n-1] == t[m-1]){ 
-    // compute the total number of subsequences if we  
-    // include the current element of s and if we don't
-    return numSubsequences(n-1, m-1, s, t) + numSubsequences(n-1, m, s, t); 
+    
+      // Base case: s is exhausted but t is not
+  if (n == 0) return 0;
+
+      // Recursive case: current elements match
+  if (s[n - 1] == t[m - 1]){ 
+      // compute the total number of subsequences by
+      // including the current element of s
+      // or by excluding it
+    return numSubsequences(n - 1, m - 1, s, t) 
+         + numSubsequences(n - 1, m, s, t); 
   }
-  return numSubsequences(n-1, m, s, t);
-    // elements from s and t don't match, so we skip current element of s
+      // Recursive case: current elements don't match, 
+      // skip current element of s
+  return numSubsequences(n - 1, m, s, t);
+    
 }
 
-int main(int argc, char *argv[]) {
-  int n, m, s[200]={0}, t[200]={0}; 
-  (void)! scanf("%d %d", &n, &m);
-  for (int i = 0; i < n; ++i) (void)! scanf("%d", &s[i]);
-  for (int i = 0; i < m; ++i) (void)! scanf("%d", &t[i]);
+//=================================================================
+
+int main() {
+  int n, m, s[200] = {0}, t[200] = {0}; 
+  
+  assert(scanf("%d %d", &n, &m) == 2);
+
+  for (int i = 0; i < n; ++i) 
+    assert(scanf("%d", &s[i]) == 1);
+
+  for (int i = 0; i < m; ++i) 
+    assert(scanf("%d", &t[i]) == 1);
+  
   printf("%d\n", numSubsequences(n, m, s, t));
+  
   return 0;
 }

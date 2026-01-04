@@ -6,36 +6,53 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
+//=================================================================
+// Checks if arr is a latin square of size N x N
 int isLatinSquare(int arr[][200], int N){
+
+    // Value range check: all values must be between 1 and N
   for (int i = 0; i < N; ++i){
     for (int j = 0; j < N; ++j){
       if (arr[i][j] < 1 || arr[i][j] > N)
         return 0;
     }
   }
-  int count[200];
+
+    // Row check
   for (int i = 0; i < N; ++i){
-    for (int j = 0; j < N; ++j){
-      count[j] = 0;
-    }
-    for (int j = 0; j < N; ++j){
+    int count[200] = {0};
+    for (int j = 0; j < N; ++j) 
       count[arr[i][j] - 1]++;
-    }
-    for (int j = 0; j < N; ++j){
-      if (count[j] != 1)
-        return 0;
-    }
+    for (int v = 0; v < N; ++v)
+      if (count[v] != 1) return 0;
   }
+
+    // Column check
+  for (int j = 0; j < N; ++j){
+    int count[200] = {0};
+    for (int i = 0; i < N; ++i) 
+      count[arr[i][j] - 1]++;
+    for (int v = 0; v < N; ++v)
+      if (count[v] != 1) return 0;
+  }
+
   return 1;
 }
 
-int main(int argc, char *argv[]) {
+//=================================================================
+
+int main() {
   int n, square[200][200];
-  (void)! scanf("%d", &n); 
-  for (int i = 0; i < n; i++)
-    for (int j = 0; j < n; j++)
-      (void)! scanf("%d", &square[i][j]);
+
+  assert(scanf("%d", &n) == 1); 
+  
+  for (int i = 0; i < n; ++i)
+    for (int j = 0; j < n; ++j)
+      assert(scanf("%d", &square[i][j]) == 1);
+
   printf(isLatinSquare(square, n) ? "YES\n" : "NO\n");
+
   return 0;
 }

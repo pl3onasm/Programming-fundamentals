@@ -332,8 +332,8 @@ for INFILE in "${INFILES[@]}"; do
   OUTFILE="${INFILE%.*}.out"
 
   if [ ! -f "$OUTFILE" ]; then
-    echo "Test $DISPLAY_NAME: missing expected output file\
-          ${OUTFILE##*/}"
+    echo -e "   Test $DISPLAY_NAME: \t  ${RED}NA${NC} "
+    echo -e "     output file ${OUTFILE##*/} not found\n"
     continue
   fi
 

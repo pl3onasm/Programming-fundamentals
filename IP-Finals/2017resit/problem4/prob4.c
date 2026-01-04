@@ -6,38 +6,49 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
+//=================================================================
+// Computes the greatest common divisor (GCD) of a and b
 int GCD(int a, int b) {
   if (b == 0) return a;
-  return GCD(b, a%b);
+  return GCD(b, a % b);
 }
 
+//=================================================================
+// Computes the least common multiple (LCM) of a and b
 int LCM(int a, int b) {
-  return a/GCD(a, b)*b;
+  return a / GCD(a, b) * b;
 }
 
-int main(int argc, char *argv[]) {
-  int n, op[100], cycles[100], count[100] = {0};
-  (void)! scanf("%d", &n);
-  for (int i = 0; i < n; i++) {
-    (void)! scanf("%d", op + i);
-    cycles[i] = op[i];
-  }
-  for (int i = 0; i < n; i++) {
-    if (cycles[i] < 0) continue;
+//=================================================================
+
+int main() {
+  int n, cycles[100], steps[100] = {0};
+  assert(scanf("%d", &n) == 1);
+
+  for (int i = 0; i < n; ++i) 
+    assert(scanf("%d", cycles + i) == 1);
+
+  for (int i = 0; i < n; ++i) {
+    if (cycles[i] < 0) 
+      continue;
     int j = i;
-    while (cycles[j] > 0) {
+    while (cycles[j] >= 0) {
       int k = cycles[j];
       cycles[j] = -1;
       j = k;
-      count[i]++;
+      ++steps[i];
     }
   }
-  int lcm = count[0];
-  for (int i = 1; i < n; i++) {
-    if (count[i] == 0) continue;
-    lcm = LCM(lcm, count[i]);
+
+  int lcm = steps[0];
+  for (int i = 1; i < n; ++i) {
+    if (steps[i] == 0) 
+      continue;
+    lcm = LCM(lcm, steps[i]);
   }
+
   printf("%d\n", lcm);
   return 0;
 }

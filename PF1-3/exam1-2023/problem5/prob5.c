@@ -14,7 +14,7 @@
 void readPuzzle(int n, int eCell[], int puzzle[][8]) {
   for (int i=0; i<n; ++i) 
     for (int j=0; j<n; ++j) {
-      (void)! scanf("%d", &puzzle[i][j]);
+      assert(scanf("%d", &puzzle[i][j]) == 1);
       if (puzzle[i][j] == 0)        
           // store position of empty cell
         eCell[0] = i, eCell[1] = j;  

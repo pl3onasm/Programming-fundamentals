@@ -5,21 +5,35 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
-int main(int argc, char *argv[]) {
+//=================================================================
+
+int main() {
   int n, a[100];
-  (void)! scanf("%d", &n);
-  for (int i = 0; i < n; i++) 
-    (void)! scanf("%d", a + i);
-  for (int i = 0; i < n; i++) {
-    int j = i, count=0; 
+
+  assert(scanf("%d", &n) == 1);
+
+  for (int i = 0; i < n; ++i) 
+    assert(scanf("%d", a + i) == 1);
+
+  for (int i = 0; i < n; ++i) {
+    if (a[i] == -1) continue;
+
+    int j = i, len = 0;
     while (a[j] != -1) {
-      count++; 
       int k = a[j];
       a[j] = -1;
-      if (a[k] == -1) printf("%d %d\n", k, count); 
+      ++len;
+      
+      if (k == i) {  
+          // cycle found, i is its smallest element
+        printf("%d %d\n", i, len); 
+        break;
+      }
       j = k;
     }
   }
+
   return 0;
 }

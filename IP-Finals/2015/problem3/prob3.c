@@ -5,19 +5,27 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
+//=================================================================
+// Computes the bit reversal of n
 int bitrev(int n) {
-  int bitrev = 0;
-  while (n>0) {
-    bitrev = bitrev*2 + n%2;
+  int rev = 0;
+  while (n > 0) {
+    rev = rev * 2 + (n & 1);
     n >>= 1;
   }
-  return bitrev;
+  return rev;
 }
+
+//=================================================================
 
 int main() {
   int n;
-  (void)! scanf ("%d", &n); /* you may assume that n >= 0 */
+  
+  assert(scanf("%d", &n) == 1);  
+  
   printf("bitrev(%d)=%d\n", n, bitrev(n));
+  
   return 0;
 }

@@ -7,25 +7,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <assert.h>
 
-int main(int argc, char *argv[]) {
+//=================================================================
+
+int main() {
   int n, jobs[100];
-  (void)! scanf("%d", &n);
-  for (int i = 0; i < n; ++i) {
-    (void)! scanf("%d\n", &jobs[i]);
-  }
+
+  assert(scanf("%d", &n) == 1);
+  
+  for (int i = 0; i < n; ++i) 
+    assert(scanf("%d", &jobs[i]) == 1);
+  
   for (int i = 0; i < n; ++i) {
     int min = INT_MAX, minIndex = 0;
-    for (int j=0; j<n; ++j) {
+    for (int j = 0; j < n; ++j) {
       if (jobs[j] < min) {
         min = jobs[j];
         minIndex = j;
       }
     }
-    printf("%d", minIndex+1);
-    if (i < n-1) printf(",");
+
+    printf("%d", minIndex + 1);
+    if (i < n - 1) 
+      printf(",");
     jobs[minIndex] = INT_MAX;
   }
+
   printf("\n");
+
   return 0;
 }

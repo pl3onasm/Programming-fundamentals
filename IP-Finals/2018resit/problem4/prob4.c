@@ -6,10 +6,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char **argv){ 
+//=================================================================
+
+int main(){ 
   int sum = 0, max = 0, n; 
-  // since at least one number is positive, the max sum is at least 0
-  while (scanf("%d", &n) && n != 0) {
+    // Since at least one number is positive, the maximal subseries 
+    // sum is > 0. Therefore initializing max = 0 is safe.
+    // sum holds the running sum of the current candidate subseries 
+    // When it becomes negative we reset it to 0, because a 
+    // negative prefix can never help a future maximum.
+  while (scanf("%d", &n) == 1 && n != 0) {
     sum += n;
     if (sum > max)    // update max
       max = sum;

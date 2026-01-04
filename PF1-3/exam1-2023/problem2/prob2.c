@@ -19,7 +19,7 @@ int isPrime (int x) {
 
 //=================================================================
 
-int main(int argc, char *argv[]) {
+int main() {
   int n;
 
   assert(scanf("%d", &n) == 1);
@@ -30,7 +30,10 @@ int main(int argc, char *argv[]) {
   }
 
   while (n) {
-    if (!isPrime(n)) { printf("NO\n"); return 0; }
+    if (!isPrime(n)) { 
+      printf("NO\n"); 
+      return 0; 
+    }
     n /= 10;
   }
 

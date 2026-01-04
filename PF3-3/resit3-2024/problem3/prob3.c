@@ -10,9 +10,21 @@
 #include <assert.h>
 
 //===================================================================
+// Allocates memory for n bytes, exits if malloc fails
+void *safeMalloc (size_t n) {
+  void *ptr = malloc(n);
+  if (ptr == NULL) {
+    fprintf(stderr, "Error: malloc(%zu) failed. "
+                    "Out of memory?\n", n);
+    exit(EXIT_FAILURE);
+  }
+  return ptr;
+}
+
+//===================================================================
 // Copies the subarray arr[left..right] into a new array
 int *copySubArray(int *arr, int left, int right) {
-  int *copy = malloc((right - left) * sizeof(int));
+  int *copy = safeMalloc((right - left) * sizeof(int));
   for (int i = left; i < right; i++) 
     copy[i - left] = arr[i];
   return copy;
@@ -31,7 +43,7 @@ void mergeSort(int *arr, int length) {
   mergeSort(right, length - mid);
   
   while (l < mid && r < length - mid) 
-    if (left[l] < right[r]) 
+    if (left[l] <= right[r]) 
       arr[idx++] = left[l++];
     else 
       arr[idx++] = right[r++];
@@ -49,7 +61,7 @@ void mergeSort(int *arr, int length) {
 //===================================================================
 // Reads n integers from stdin into an array
 int *readArray(int n) {
-  int *arr = malloc(n * sizeof(int));
+  int *arr = safeMalloc(n * sizeof(int));
   for (int i = 0; i < n; ++i) 
     assert(scanf("%d", &arr[i]) == 1);
   return arr;

@@ -8,14 +8,14 @@
 
 //=================================================================
 // Checks whether ch is a letter (A-Z or a-z)
-static int isLetter(int ch) {
+int isLetter(int ch) {
   return ('A' <= ch && ch <= 'Z') || ('a' <= ch && ch <= 'z');
 }
 
 //=================================================================
 // Converts uppercase letter to lowercase. 
 // Leaves other chars unchanged
-static int toLower(int ch) {
+int toLower(int ch) {
   if ('A' <= ch && ch <= 'Z')
     return ch + ('a' - 'A');
   return ch;

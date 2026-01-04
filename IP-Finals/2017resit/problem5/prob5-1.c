@@ -8,35 +8,56 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
-void generateExpressions(char ops[], int n, int index, int *count){
-  if (index > 7) {      // all 8 operators have been set
-    int eval=0, digits[] = {1,2,3,4,5,6,7,8,9}; 
-    for (int i = 0; i < 8; ++i){  // evaluate products first
+//=================================================================
+// Generates all possible expressions by placing '+' or '*'
+// operators between the digits 1 to 9, evaluates them,
+// and counts how many evaluate to n
+void generateExpressions(char ops[], int n, int idx, int *count){
+    
+    // base case: all operators have been set
+  if (idx > 7) {      
+    int eval = 0, digits[] = {1,2,3,4,5,6,7,8,9}; 
+    for (int i = 0; i < 8; ++i){  
+        // evaluate products first
       if (ops[i] == '*') {
-        digits[i+1] = digits[i]*digits[i+1];
-        digits[i] = 0;  // cannot be used in below summation anymore
+        digits[i + 1] = digits[i] * digits[i + 1];
+          // mark digit as used, so it is not added later
+        digits[i] = 0;  
       }
     }
-    for (int i = 0; i < 9; ++i) eval += digits[i];
-    if (eval == n) ++*count;
+      // sum up remaining digits
+    for (int i = 0; i < 9; ++i) 
+      eval += digits[i];
+      // check if evaluation matches n
+    if (eval == n) 
+      ++*count;
     return;
   }
-  ops[index] = '+';
-  generateExpressions(ops, n, index+1, count);
-  ops[index] = '*';
-  generateExpressions(ops, n, index+1, count);
+
+    // recursive case: set operator at position idx to '+' or '*'
+  ops[idx] = '+';
+  generateExpressions(ops, n, idx + 1, count);
+  ops[idx] = '*';
+  generateExpressions(ops, n, idx + 1, count);
 }
 
+//=================================================================
+// Initiates the generation of expressions and counting
 int prodSum(int n){
-  int count=0; char ops[8];
+  int count = 0; char ops[8];
   generateExpressions(ops, n, 0, &count); 
   return count; 
 }
 
-int main(int argc, char *argv[]) {
+//=================================================================
+
+int main() {
   int n;
-  (void)! scanf("%d", &n);
+  assert(scanf("%d", &n) == 1);
+
   printf("%d\n", prodSum(n)); 
+  
   return 0;
 }

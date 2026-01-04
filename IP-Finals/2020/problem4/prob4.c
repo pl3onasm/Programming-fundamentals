@@ -6,27 +6,33 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
-void *safeMalloc (int n) {
+//=================================================================
+// Allocates memory and checks for allocation errors
+void *safeMalloc (size_t n) {
   void *ptr = malloc(n);
   if (ptr == NULL) {
-    printf("Error: malloc(%d) failed. Out of memory?\n", n);
+    fprintf(stderr, "Error: malloc(%zu) failed. "
+                    "Out of memory?\n", n);
     exit(EXIT_FAILURE);
   }
   return ptr;
 }
 
+//=================================================================
+// Copies a subarray arr[left..right-1] into a new array
 int *copySubArray(int *arr, int left, int right) {
-  /* copies the subarray arr[left..right] into a new array */
-  int *copy = safeMalloc((right - left)*sizeof(int));
+  int *copy = safeMalloc((right - left) * sizeof(int));
   for (int i = left; i < right; i++) 
     copy[i - left] = arr[i];
   return copy;
 }
 
+//=================================================================
+// Sorts an integer array in ascending order using merge sort
 void mergeSort(int *arr, int length) {
-  /* sorts an array of integers in O(n log n) time */
-  int l = 0, r = 0, idx = 0, mid = length/2;
+  int l = 0, r = 0, idx = 0, mid = length / 2;
   if (length <= 1) return;
   
   int *left = copySubArray(arr, 0, mid);
@@ -35,12 +41,11 @@ void mergeSort(int *arr, int length) {
   mergeSort(left, mid);
   mergeSort(right, length - mid);
   
-  while (l < mid && r < length - mid) {
-    if (left[l] < right[r]) 
+  while (l < mid && r < length - mid) 
+    if (left[l] <= right[r]) 
       arr[idx++] = left[l++];
     else 
       arr[idx++] = right[r++];
-  }
 
   while (l < mid)
     arr[idx++] = left[l++];
@@ -52,13 +57,19 @@ void mergeSort(int *arr, int length) {
   free(right);
 }
 
+//=================================================================
+// Reads an integer vector from standard input
 int *readIntVector(int size) {
-  int i, *vec = safeMalloc(size*sizeof(int));
+  int i, *vec = safeMalloc(size * sizeof(int));
   for (i=0; i < size; i++) 
-    (void)! scanf("%d", &vec[i]);
+    assert(scanf("%d", &vec[i]) == 1);
   return vec;
 }
 
+//=================================================================
+// Computes and prints the minimal number of deletions required
+// so that after deletions, the remaining elements of both arrays
+// form the same multiset (and thus become identical after sorting)
 void computeDeletions(int n, int *arr1, int m, int *arr2){
   mergeSort(arr1, n);
   mergeSort(arr2, m);
@@ -73,16 +84,22 @@ void computeDeletions(int n, int *arr1, int m, int *arr2){
     }
   }
   printf("%d\n", dels + n - i + m - j); 
-  // dels + remaining elements in arr1 or arr2
+    // dels + remaining elements in arr1 or arr2
 }
 
-int main(int argc, char **argv){
+//=================================================================
+
+int main(){
   int n, m; 
-  (void)! scanf("%d: ", &n);
+  assert(scanf("%d: ", &n) == 1);
   int *arr1 = readIntVector(n); 
-  (void)! scanf("%d: ", &m);
+  
+  assert(scanf("%d: ", &m) == 1);
   int *arr2 = readIntVector(m);
+  
   computeDeletions(n, arr1, m, arr2);
-  free(arr1); free(arr2);
+  
+  free(arr1); 
+  free(arr2);
   return 0; 
 }

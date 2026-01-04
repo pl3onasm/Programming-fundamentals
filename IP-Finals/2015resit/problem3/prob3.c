@@ -5,18 +5,21 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
-int isPrime (int x) {
-  //checks if x is prime
-  if (x == 2) return 1;
-  if (x % 2 == 0 || x == 1) return 0;
-  for (int i = 3; i*i <= x; i += 2)
-    if (x % i == 0) return 0;
+//=================================================================
+// Checks if n is prime
+int isPrime (int n) {
+  if (n == 2) return 1;
+  if (n % 2 == 0 || n < 2) return 0;
+  for (int i = 3; i <= n / i; i += 2) 
+    if (n % i == 0) return 0;
   return 1;
 }
 
+//=================================================================
+// Reverses the digits of n
 int reverse(int n) {
-  //reverses the digits of n
   int rev = 0;
   while (n > 0) {
     rev = rev * 10 + n % 10;
@@ -25,18 +28,25 @@ int reverse(int n) {
   return rev;
 }
 
+//=================================================================
+// Prints all emirps in the interval [a,b]
 void printEmirps(int a, int b) {
-  for (int i = a; i <= b; i++) {
+  for (int i = a; i <= b; ++i) {
     int rev = reverse(i);
     if (isPrime(i) && isPrime(rev) && i != rev)
       printf("%d\n", i); 
   }
 }
 
-int main(int argc, char *argv[]) {
+//=================================================================
+
+int main() {
   int a, b; 
-  (void)! scanf("%d %d", &a, &b);
+
+  assert(scanf("%d %d", &a, &b) == 2);
+
   printEmirps(a,b); 
+
   return 0; 
 }
   

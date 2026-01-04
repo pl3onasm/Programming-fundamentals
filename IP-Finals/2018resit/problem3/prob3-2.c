@@ -11,27 +11,33 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
-void *safeMalloc (int n) {
+//=================================================================
+// Allocates memory and checks for allocation errors
+void *safeMalloc (size_t n) {
   void *ptr = malloc(n);
   if (ptr == NULL) {
-    printf("Error: malloc(%d) failed. Out of memory?\n", n);
+    fprintf(stderr, "Error: malloc(%zu) failed. "
+                    "Out of memory?\n", n);
     exit(EXIT_FAILURE);
   }
   return ptr;
 }
 
+//=================================================================
+// Copies a subarray arr[left..right-1] into a new array
 int *copySubArray(int *arr, int left, int right) {
-  /* copies the subarray arr[left..right] into a new array */
   int *copy = safeMalloc((right - left)*sizeof(int));
-  for (int i = left; i < right; i++) 
+  for (int i = left; i < right; ++i) 
     copy[i - left] = arr[i];
   return copy;
 }
 
+//=================================================================
+// Adaptation of merge sort that counts the number of inversions
 int countInversions(int *arr, int length) {
-  /* sorts an array of integers in O(n log n) time */
-  int l = 0, r = 0, idx = 0, mid = length/2, count = 0;
+  int l = 0, r = 0, idx = 0, mid = length / 2, count = 0;
   if (length <= 1) return 0;
   
   int *left = copySubArray(arr, 0, mid);
@@ -40,14 +46,16 @@ int countInversions(int *arr, int length) {
   count += countInversions(left, mid);
   count += countInversions(right, length - mid);
   
-  while (l < mid && r < length - mid) {
-    if (left[l] <= right[r])    // no inversions in this case
+  while (l < mid && r < length - mid) 
+    if (left[l] <= right[r])    
+        // no inversions in this case
       arr[idx++] = left[l++];
-    else {                      // total number of inversions to add               
-      arr[idx++] = right[r++];  // is the number of elements currently 
-      count += mid - l;         // left in the left subarray: mid - l
+    else {                      
+        // total number of inversions to add is the number of
+        // elements remaining in the left subarray: mid - l         
+      arr[idx++] = right[r++];  
+      count += mid - l;         
     }
-  }
 
   while (l < mid)
     arr[idx++] = left[l++];
@@ -60,18 +68,23 @@ int countInversions(int *arr, int length) {
   return count;
 }
 
+//=================================================================
+// Reads an integer vector from standard input
 int *readIntVector (int size) {
   int *vect = safeMalloc(size * sizeof(int));
-  for (int i = 0; i < size; i++)
-    (void)! scanf("%d", vect + i);
+  for (int i = 0; i < size; ++i)
+    assert(scanf("%d", vect + i) == 1);
   return vect;
 }
 
-int main(int argc, char **argv){
+int main(){
   int size; 
-  (void)! scanf("%d\n", &size);
-  int *vect = readIntVector(size); 
+  assert(scanf("%d", &size) == 1);
+
+  int *vect = readIntVector(size);
+
   printf("%d\n", countInversions(vect, size));
+
   free(vect); 
   return 0; 
 }

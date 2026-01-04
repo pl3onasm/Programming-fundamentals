@@ -6,17 +6,31 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
-int computeSubsetSum(int arr[], int index, int sum){
-  if (index < 0) return sum;
-  return computeSubsetSum(arr, index-1, sum) 
-       + computeSubsetSum(arr, index-1, sum+arr[index]);
+//=================================================================
+// Computes the sum of all subset sums of arr[0..index]
+int computeSubsetSum(int arr[], int idx, int sum){
+
+    // base case: no more elements to consider
+  if (idx < 0) 
+    return sum;
+
+    // recursive case: include or exclude arr[index]
+  return computeSubsetSum(arr, idx - 1, sum) 
+       + computeSubsetSum(arr, idx - 1, sum + arr[idx]);
 }
 
-int main(int argc, char **argv){
+//=================================================================
+
+int main(){
   int arr[20], n;
-  for (int i=0; i<20; ++i) arr[i]=i+1;
-  (void)! scanf("%d ", &n);
-  printf("%d\n", computeSubsetSum(arr, n-1, 0));
+    // initialize array with values 1..20
+  for (int i = 0; i < 20; ++i) 
+    arr[i] = i + 1;
+  
+  assert(scanf("%d", &n) == 1);
+
+  printf("%d\n", computeSubsetSum(arr, n - 1, 0));
   return 0; 
 }

@@ -7,18 +7,30 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
-int main(int argc, char **argv){
-  int target, hist[1001] = {0}, n, solution = 0;
-  (void)! scanf("%d\n", &target);
-  while (scanf("%d", &n) && n != 0) hist[n] = 1;
-  for (int i = 1; i <= target/2; ++i){
+//=================================================================
+
+int main(){
+  int target, hist[1000] = {0}, n, solution = 0;
+  assert(scanf("%d", &target) == 1);
+
+  while (scanf("%d", &n) == 1 && n != 0) 
+    hist[n] = 1;
+
+  int upper = target / 2;
+  if (target > 999) 
+    upper = 999;
+  
+  for (int i = 1; i <= upper; ++i){
     int j = target - i;
-    if (j < 1000 && hist[i] && hist[j] && i != j){
+    if (0 <= j && j < 1000 && hist[i] && hist[j] && i < j){
       solution = 1; 
       printf("%d+%d\n", i, j); 
     }
   }
+
   if (! solution) printf("NONE\n");
+
   return 0; 
 }

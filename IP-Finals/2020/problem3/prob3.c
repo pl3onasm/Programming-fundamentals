@@ -6,23 +6,31 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//=================================================================
+// Reads the digits of a number from standard input
 void readDigits(int digits[]){
   char d; 
   while ((d = getchar()) >= '0' && d <= '9')
-    digits[d - '0']++;
+    ++digits[d - '0'];
 }
 
-int checkDigitFrequencies(int m[], int n[]){
+//=================================================================
+// Checks whether the digit frequencies in m and n are the same
+int sameDigitFrequencies(int m[], int n[]){
   for (int i = 0; i < 10; i++)
     if (m[i] != n[i]) return 0;
   return 1;
 }
 
-int main(int argc, char **argv){
+//=================================================================
+
+int main(){
   int m[10] = {0}, n[10] = {0};
-  readDigits(n);
-  readDigits(m); 
-  if (checkDigitFrequencies(n, m)) printf("YES\n");
-  else printf("NO\n");
+
+  readDigits(m);
+  readDigits(n); 
+
+  printf("%s\n", sameDigitFrequencies(m, n) ? "YES" : "NO");
+  
   return 0; 
 }

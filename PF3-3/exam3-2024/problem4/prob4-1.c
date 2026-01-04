@@ -15,32 +15,31 @@
 
 //=================================================================
 // Reads the input from stdin into an array
-void readInput(int f[], int *size) {
-  assert(scanf("%d:", size) == 1);
-  for (int i = 0; i < *size; i++) 
+void readInput(int f[], int *n) {
+  assert(scanf("%d:", n) == 1);
+  for (int i = 0; i < *n; i++) 
     assert(scanf("%d", &f[i]) == 1);
 }
 
 //=================================================================
-// Computes the maximal f-sum for size. Precondition: size < 20,
+// Computes the maximal f-sum for n. Precondition: n < 20,
 // since the time complexity is in O(2^n) !!
-int maxfSum(int f[], int size) {
-  if (size == 0) 
+int maxfSum(int f[], int n) {
+  if (n == 0) 
     return 0;
   int max = -1;
-  for (int i = 1; i <= size; i++)
-    max = MAX(max, f[i - 1] + maxfSum(f, size - i));
+  for (int i = 1; i <= n; i++)
+    max = MAX(max, f[i - 1] + maxfSum(f, n - i));
   return max;
 }
 
 //=================================================================
 
-int main(int argc, char *argv[]) {
-  int f[100], size;
+int main() {
+  int f[100], n;
 
-  readInput(f, &size);
-
-  printf("%d\n", maxfSum(f, size));
+  readInput(f, &n);
+  printf("%d\n", maxfSum(f, n));
   
   return 0;
 }

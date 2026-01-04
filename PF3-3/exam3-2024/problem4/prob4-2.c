@@ -14,41 +14,41 @@
 
 //=================================================================
 // Reads the input from stdin into an array
-void readInput(int f[], int *size) {
-  assert(scanf("%d:", size) == 1);
-  for (int i = 0; i < *size; i++)
+void readInput(int f[], int *n) {
+  assert(scanf("%d:", n) == 1);
+  for (int i = 0; i < *n; i++)
     assert(scanf("%d", &f[i]) == 1);
 }
 
 //=================================================================
-
-int maxfSum(int f[], int size, int memo[]) {
+// Computes the maximal f-sum that can be obtained for size
+int maxfSum(int f[], int n, int memo[]) {
     // base case
-  if (size == 0)         
+  if (n == 0)         
     return 0;
     // return memoized value if available
-  if (memo[size - 1] != -1)   
-    return memo[size - 1];
+  if (memo[n - 1] != -1)   
+    return memo[n - 1];
     // otherwise compute and memoize
   int max = -1;
-  for (int i = 1; i <= size; ++i) {
-    int cand = f[i - 1] + maxfSum(f, size - i, memo);
+  for (int i = 1; i <= n; ++i) {
+    int cand = f[i - 1] + maxfSum(f, n - i, memo);
     if (cand > max) max = cand;
   }
-  return memo[size - 1] = max;
+  return memo[n - 1] = max;
 }
 
 //=================================================================
 
 int main() {
-  int f[100], size = 0, memo[100];
+  int f[100], n = 0, memo[100];
 
-  readInput(f, &size);
+  readInput(f, &n);
 
-  for (int i = 0; i <= size; i++)
+  for (int i = 0; i <= n; i++)
     memo[i] = -1;
 
-  printf("%d\n", maxfSum(f, size, memo));
+  printf("%d\n", maxfSum(f, n, memo));
   
   return 0;
 }
