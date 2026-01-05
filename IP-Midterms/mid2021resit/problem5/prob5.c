@@ -5,39 +5,42 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
-void *safeMalloc (int n) {
+//=================================================================
+// Allocates n bytes of memory, exits if allocation fails
+void *safeMalloc (size_t n) {
   void *ptr = malloc(n);
   if (ptr == NULL) {
-    printf("Error: malloc(%d) failed. Out of memory?\n", n);
+    fprintf(stderr, "Error: malloc(%zu) failed. "
+                    "Out of memory?\n", n);
     exit(EXIT_FAILURE);
   }
   return ptr;
 }
 
-char *createArray (int n) {
-  char *arr = safeMalloc((n+1) * sizeof(char));
-  return arr;
-}
+//=================================================================
 
-int main(int argc, char *argv[]) {
-  int msgLen, keyLen, j=0;
-  (void)! scanf("%d %d:", &msgLen, &keyLen);
+int main() {
+  int msgLen, keyLen, j = 0;
+  assert(scanf("%d %d", &msgLen, &keyLen) == 2);
   
-  char *word = createArray(msgLen);
-  char *key = createArray(keyLen);
+  char *word = safeMalloc((msgLen + 1) * sizeof(char));
+  char *key  = safeMalloc((keyLen + 1) * sizeof(char));
   
-  (void)! scanf("%s", word);
-  (void)! scanf("%s", key);
+  assert(scanf("%s", word) == 1);
+  assert(scanf("%s", key)  == 1);
   
-  for (int i = 0; i < msgLen; i++) {
-    int c = word[i] - 'A';
+  for (int i = 0; i < msgLen; ++i) {
+    int c = word[i]  - 'A';
     int k = key[j++] - 'A';
     printf("%c", (c + k) % 26 + 'A');
     if (j == keyLen) j = 0;
   }
   
   printf("\n");
-  free (word); free (key);
+  free (word); 
+  free (key);
+
   return 0;
 }

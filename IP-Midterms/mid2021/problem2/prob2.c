@@ -5,16 +5,20 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
-int isPrime (int x) {
-  //checks whether given number is prime
-  if (x == 2) return 1;
-  if (x % 2 == 0 || x == 1) return 0;
-  for (int i = 3; i*i <= x; i += 2)
-    if (x % i == 0) return 0;
+//=================================================================
+// Check if n is prime
+int isPrime(int n) {
+  if (n == 2) return 1;
+  if (n % 2 == 0 || n < 2) return 0;
+  for (int i = 3; i <= n / i; i += 2) 
+    if (n % i == 0) return 0;
   return 1;
 }
 
+//=================================================================
+// Calculates the sum of the digits of n
 int digitSum (int n) {
   int sum = 0;
   while (n) {
@@ -24,7 +28,10 @@ int digitSum (int n) {
   return sum; 
 }
 
+//=================================================================
+// Calculates the product of the digits of n
 int digitProduct (int n) {
+  if (n == 0) return 0;
   int prod = 1;
   while (n) {
     prod *= n % 10;
@@ -33,18 +40,23 @@ int digitProduct (int n) {
   return prod; 
 }
 
+//=================================================================
+// Returns 1 if n is a perfect square, 0 otherwise
 int isPerfSquare (int n) {
-  // returns 1 if n is a perfect square, 0 otherwise
+  if (n <  0) return 0;
+  if (n == 0) return 1;
   int i; 
-  for (i=1; i*i < n; ++i);
-  return (i*i == n); 
+  for (i = 1; i < n / i; ++i);
+  return (i * i == n); 
 }
 
-int main(int argc, char *argv[]) {
-  int a, b, count=0;
+//=================================================================
+
+int main() {
+  int a, b, count = 0;
   
-  (void)! scanf("%d %d", &a, &b);
-  for (int i = a; i<=b; ++i)
+  assert(scanf("%d %d", &a, &b) == 2);
+  for (int i = a; i <= b; ++i)
     count += isPrime(digitSum(i)) && isPerfSquare(digitProduct(i)); 
 
   printf("%d\n", count);

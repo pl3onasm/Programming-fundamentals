@@ -9,7 +9,7 @@
 
 //=================================================================
 
-int main(int argc, char *argv[]) {
+int main() {
   int butts, cigarettes = 0, total = 0;
   assert(scanf("%d", &butts) == 1);
     

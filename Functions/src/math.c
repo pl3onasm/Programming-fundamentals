@@ -13,7 +13,7 @@ int c_isPrime(int n) {
 int c_isPerfSquare(int n) {
   if (n < 0) 
     return 0;
-  int root = sqrt((double)n);  
+  int root = sqrt((double)n) + 0.5;  
   return root * root == n;
 }
 

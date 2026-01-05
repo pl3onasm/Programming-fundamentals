@@ -10,16 +10,40 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
-int main(int argc, char *argv[]) {
+//=================================================================
+// Check if n is prime
+int isPrime(int n) {
+  if (n == 2) return 1;
+  if (n % 2 == 0 || n < 2) return 0;
+  for (int i = 3; i <= n / i; i += 2) 
+    if (n % i == 0) return 0;
+  return 1;
+}
+
+//=================================================================
+
+int main() {
   int p; 
-  (void)! scanf("%d", &p);
-  for (int q = 2; q < p; ++q) {
-    if (p == 3*q*(q+1)+1) {
+  assert(scanf("%d", &p) == 1);
+
+    // A Cuban prime must be prime
+  if (!isPrime(p)) {
+    printf("NO\n");
+    return 0;
+  }
+
+    // Check if there exists q such that p = 3*q*(q+1) + 1
+  for (int q = 1; ; ++q) {
+    int val = 3 * q * (q + 1) + 1;
+    if (val > p) break;
+    if (p == val) {
       printf("YES\n");
       return 0;
     }
   }
+
   printf("NO\n");
   return 0;
 }

@@ -6,23 +6,36 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 
+//=================================================================
+// Swaps the characters pointed to by a and b
 void swap(char *a, char *b) {
   char temp = *a;
   *a = *b;
   *b = temp;
 }
 
-int main(int argc, char *argv[]) {
-  char input[27], command[5]; int x,y;
+//=================================================================
+
+int main() {
+  char input[27], command[5]; 
+  int x, y;
   char abc[27] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   
-  (void)! scanf("%s", input);
+  assert(scanf("%26s", input) == 1);
   
-  while (scanf("%s %d %d", command, &x, &y) != 1) 
-    swap(&input[x], &input[y]);
+  while (scanf("%4s", command) == 1) {
+    if (! strcmp(command, "stop"))
+      break;
 
-  printf(!strcmp(input,abc) ? "YES\n" : "NO\n");
+    assert(! strcmp(command, "swap"));
+    assert(scanf("%d %d", &x, &y) == 2);
+
+    swap(&input[x], &input[y]);
+  }
+
+  printf(! strcmp(input,abc) ? "YES\n" : "NO\n");
 
   return 0;
 }

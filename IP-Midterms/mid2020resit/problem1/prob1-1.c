@@ -1,6 +1,6 @@
-/* file: prob2.c
+/* file: prob1.c
   author: David De Potter
-  description: IP mid2020, problem 2, Disarium numbers
+  description: IP mid2020 resit, problem 1, Nine's complement
 */
 
 #include <stdio.h>
@@ -23,9 +23,9 @@ int power(int n, int exp) {
 // Counts the number of digits in n
 int countDigits(int n) {
   int count = 0;
-  while (n) {
-    n /= 10; 
+  while (n > 0) {
     ++count;
+    n /= 10;
   }
   return count;
 }
@@ -33,26 +33,24 @@ int countDigits(int n) {
 //=================================================================
 
 int main() {
-  int n, idx = 0, digits[10];  // int has at most 10 digits
-  assert(scanf("%d", &n) == 1);
+  int n;
+  assert(scanf("%d",&n) == 1);
+
+  if (n == 0) {
+    printf("9\n");
+    return 0;
+  }
+  
   int len = countDigits(n);
-
-    // Store digits from least significant 
-    // to most significant
-  int m = n;
-  while (m) {
-    digits[idx++] = m % 10;
-    m /= 10;
+  
+  for (int i = len - 1; i >= 0; --i) {
+    int p = power(10, i);
+    int digit = (n / p) % 10;
+    printf("%d", 9 - digit);
   }
 
-    // Walk from most significant to least significant digit;
-    // digits[len-1] is the most significant digit
-  int sum = 0;
-  for (int pos = 1; pos <= len; ++pos) {
-    int digit = digits[len - pos];  
-    sum += power(digit, pos);
-  }
+  printf("\n");
 
-  printf(n == sum ? "YES\n" : "NO\n");
   return 0;
 }
+

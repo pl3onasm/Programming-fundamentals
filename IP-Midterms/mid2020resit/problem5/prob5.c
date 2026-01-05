@@ -5,40 +5,52 @@
 
 #include <stdio.h>
 #include <stdlib.h> 
+#include <assert.h>
 
+//=================================================================
+// Reads an 8x8 chess board from standard input into a grid
+// and stores the position of the king in (x,y)
 void readInput(char grid[][8], int *x, int *y){
-  for (int i=0; i<8; ++i) {
-    for (int j=0; j<8; j++) {
-      (void)! scanf("%c", &grid[i][j]);
+  for (int i = 0; i < 8; ++i) {
+    for (int j = 0; j < 8; ++j) {
+      assert(scanf(" %c", &grid[i][j]) == 1);
       if (grid[i][j] == 'k') {
         *x = i;
         *y = j;
       }
     }
-    getchar();  //gets newline character
   }
 }
 
+//=================================================================
+// Checks if the king at position (x,y) is in check by any queen
+// on the board grid 
 int inCheck(char grid[][8], int x, int y) {
-  int ux, uy, dirx, diry; 
+
   int dir[] = {1,0,-1,0,0,1,0,-1,1,1,-1,1,-1,-1,1,-1}; 
   
   for (int i = 0; i < 16; i += 2){
-    dirx = dir[i]; diry = dir[i+1];  
-    ux = x + dirx; uy = y + diry; 
-    while ((ux < 8 && ux >= 0) && (uy < 8 && uy >= 0)) {
-      if (grid[ux][uy] == 'Q') return 1;   
-      if (grid[ux][uy] == 'p') break;  
-      if (grid[ux][uy] == 'K') break;
-      ux += dirx; uy += diry;
+    int dx = x + dir[i];
+    int dy = y + dir[i + 1];
+    while (dx < 8 && dx >= 0 && dy < 8 && dy >= 0) {
+      if (grid[dx][dy] == 'Q') return 1;   
+      if (grid[dx][dy] != '#') break;  
+      dx += dir[i]; 
+      dy += dir[i + 1];
     }
   }
   return 0;
 }
 
-int main(int argc, char *argv[]) {
-  int x, y; char grid[8][8];
+//=================================================================
+
+int main() {
+  int x, y; 
+  char grid[8][8];
+  
   readInput(grid, &x, &y);
-  printf(inCheck(grid, x, y) ?  "YES\n" : "NO\n");
+  
+  printf(inCheck(grid, x, y) ? "YES\n" : "NO\n");
+  
   return 0;
 }

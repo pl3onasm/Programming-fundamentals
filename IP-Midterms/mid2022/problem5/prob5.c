@@ -9,9 +9,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
+//=================================================================
+// Modular exponentiation: computes n^exp mod m
 int modExp (int n, int exp, int m) {
-  /* computes n^exp mod m using modular exponentiation */
   int pow = 1; n %= m;
   while (exp) {
     if (exp & 1) pow = (pow * n) % m;
@@ -21,10 +23,14 @@ int modExp (int n, int exp, int m) {
   return pow;
 }
 
-int main(int argc, char *argv[]) {
+//=================================================================
+
+int main() {
   int n; 
-  (void)! scanf("%d", &n);
+  assert(scanf("%d", &n) == 1);
   
-  printf((modExp(2,n,2*n+1) + 1) % (2*n + 1) ? "NO\n" : "YES\n");
+  printf((modExp(2, n, 2 * n + 1) + 1) % (2 * n + 1) ? 
+         "NO\n" : "YES\n");
+  
   return 0;
 }

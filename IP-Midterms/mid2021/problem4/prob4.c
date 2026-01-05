@@ -5,54 +5,65 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
-void *safeMalloc(int sz) {
-  void *p = calloc(sz, 1);
-  if (p == NULL) {
-    fprintf(stderr, "Fatal error: safeMalloc(%d) failed.\n", sz);
+//=================================================================
+// Allocates n bytes of memory, exits if allocation fails
+void *safeMalloc (size_t n) {
+  void *ptr = malloc(n);
+  if (ptr == NULL) {
+    fprintf(stderr, "Error: malloc(%zu) failed. "
+                    "Out of memory?\n", n);
     exit(EXIT_FAILURE);
   }
-  return p;
+  return ptr;
 }
 
-int *makeIntArray(int n) {
-  return safeMalloc(n*sizeof(int));
-}
-
+//=================================================================
+// Reads len integers from standard input into array arr
 void readInput(int *arr, int len) {
-  for (int i=0; i<len; i++)
-    (void)! scanf("%d ", &arr[i]);
+  for (int i = 0; i < len; ++i)
+    assert(scanf("%d", &arr[i]) == 1);
 }
 
+//=================================================================
+// Prints the array of given length
 void printArray (int *arr, int len){
-  for (int i=0; i<len; i++){
-    printf("%d",arr[i]);
-    if (i<len-1) printf(" "); 
+  for (int i = 0; i < len; ++i) {
+    printf("%d", arr[i]);
+    if (i < len - 1) printf(" "); 
   }
   printf("\n");
 }
 
+//=================================================================
+// Returns the absolute difference between a and b
 int absDiff (int a, int b) {
-  if (a-b < 0) return b-a;
-  return a-b;
+  return (a < b) ? (b - a) : (a - b);
 }
 
+//=================================================================
+// Computes the difference array of given length
 void computeDiffArray (int *arr, int len) {
-  for (int i=0; i<len-1; ++i) 
-    arr[i] = absDiff(arr[i],arr[i+1]);
+  for (int i = 0; i < len - 1; ++i) 
+    arr[i] = absDiff(arr[i], arr[i + 1]);
 }
 
-int main(int argc, char *argv[]) {
+//=================================================================
+
+int main() {
   int n, *a;
   
-  (void)! scanf("%d", &n);
-  a = makeIntArray(n);
-  readInput(a,n); 
+  assert(scanf("%d", &n) == 1);
+  a = safeMalloc(n * sizeof(int));
+  readInput(a, n); 
   
-  for (int i=n; i>0; --i){
-    printArray(a,i); 
-    computeDiffArray(a,i); 
+  for (int i = n; i > 0; --i){
+    printArray(a, i); 
+    computeDiffArray(a, i); 
   }
+
   free(a);
+
   return 0;
 }

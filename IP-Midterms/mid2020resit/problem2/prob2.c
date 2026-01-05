@@ -5,24 +5,32 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
+//=================================================================
+// Computes the greatest common divisor of a and b
 int GCD (int a, int b) {
-  // returns the greatest common divisor of a and b
   if (b == 0) return a;
   return GCD(b, a % b);
 }
 
+//=================================================================
+// Checks if a and b have no common divisors, 
+// i.e. if they are coprime
 int haveNoCommonDivs (int a, int b) {
-  // checks if a and b have no common divisors, i.e. if they're coprime
   return GCD(a, b) == 1;
 }
 
-int main(int argc, char *argv[]) {
+//=================================================================
+
+int main() {
   int n, d; 
   
-  (void)! scanf("%d %d", &d, &n);
-  if (n%d == 0 && haveNoCommonDivs(d, n/d)) printf("YES\n");
-  else printf("NO\n");
+  assert(scanf("%d %d", &d, &n) == 2);
+  if (n % d == 0 && haveNoCommonDivs(d, n/d)) 
+    printf("YES\n");
+  else 
+    printf("NO\n");
 
   return 0;
 }

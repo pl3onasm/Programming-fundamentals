@@ -5,25 +5,22 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
-void readTime(int time[]){
-  for (int i = 0; i < 3; i++){
-    time[i] = (getchar() - '0') * 10 + (getchar() - '0');
-    getchar(); // skip ':' or ' '
-  }
-}
+//=================================================================
 
-int main(int argc, char *argv[]) {
-  int time1[3], time2[3]; 
+int main() {
+  int h1, m1, s1, h2, m2, s2;
 
-  readTime(time1);
-  readTime(time2);
+  assert(scanf("%d:%d:%d %d:%d:%d", 
+         &h1, &m1, &s1, &h2, &m2, &s2) == 6);
 
-  int diff = (time2[0] - time1[0]) * 3600 + 
-    (time2[1] - time1[1]) * 60 + (time2[2] - time1[2]);
+  int t1 = 3600 * h1 + 60 * m1 + s1;
+  int t2 = 3600 * h2 + 60 * m2 + s2;
+
+  int d = abs(t2 - t1);
+
+  printf("%02d:%02d:%02d\n", d / 3600, (d % 3600) / 60, d % 60);
   
-  printf("%02d:%02d:%02d\n", abs(diff / 3600),
-          abs((diff % 3600) / 60), abs(diff % 60));
-          
   return 0;
 }

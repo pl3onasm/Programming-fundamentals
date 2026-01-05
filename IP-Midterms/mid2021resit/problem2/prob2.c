@@ -5,7 +5,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
+//=================================================================
+// Check if the integer n is a palindrome
 int isPalindrome(int n) {
   int rev = 0, m = n;
   while (m > 0) {
@@ -15,6 +18,8 @@ int isPalindrome(int n) {
   return rev == n;
 }
 
+//=================================================================
+// Check if the integer n contains the digit 0  
 int containsZero(int n) {
   while (n > 0) {
     if (n % 10 == 0) return 1;
@@ -23,23 +28,29 @@ int containsZero(int n) {
   return 0;
 }
 
-int nested(int n) {
-  int m=0, factor = 1;
+//=================================================================
+// Check if n is a nested palindrome
+int isNested(int n) {
+  int m = 0, factor = 1;
   while (n >= 10) {
     m += factor * (n % 10); 
     factor *= 10;
     n /= 10;
-    if (isPalindrome(m) && isPalindrome(n)) return 1; 
+    if (isPalindrome(m) && isPalindrome(n)) 
+      return 1; 
   }
   return 0;
 }
 
-int main(int argc, char *argv[]) {
+//=================================================================
+
+int main() {
   int n; 
-  (void)! scanf("%d", &n);
+  assert(scanf("%d", &n) == 1);
 
   if (isPalindrome(n)) {
-    if (containsZero(n) || !nested(n)) printf("PALINDROME\n");
+    if (containsZero(n) || ! isNested(n)) 
+      printf("PALINDROME\n");
     else printf("NESTED\n");
   } else printf("NONE\n");
   

@@ -5,52 +5,52 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
-void *safeMalloc (int n) {
-  void *p = malloc(n);
-  if (p == NULL) {
-    printf("Error: malloc(%d) failed. Out of memory?\n", n);
-    exit(EXIT_FAILURE);
-  }
-  return p;
-}
-
-int *makeIntArray(int n) {
-  /* allocates int array of size n */
-  return safeMalloc(n * sizeof(int));
-}
-
-void readInput(int *f, int n) {
+//=================================================================
+// Reads parent-child relationships from standard input
+// and fills the parent array accordingly
+void readInput(int *parent, int n) {
   int x, y;
-  while (scanf("father(%d)=%d\n", &x, &y)) 
-    f[x] = y;
+  while (scanf(" father(%d)=%d", &x, &y) == 2)
+    parent[x] = y;
 }
 
-void initializeArray(int *f, int n) {
-  for (int i=0; i<n; i++) f[i] = -1; 
+//=================================================================
+// Initializes the parent array to -1 (no parent)
+void initializeArray(int *parent, int n) {
+  for (int i = 0; i < n; ++i) 
+    parent[i] = -1; 
 }
 
-int isAncestor(int *f, int n, int anc, int desc) {
-  while (1) {
-    if (desc < 0 || desc >= n) return 0;
-    if (f[desc] == anc) return 1;
-    desc = f[desc];
-  }
-}
+//=================================================================
+// Checks if anc is an ancestor of desc using the parent array
+int isAncestor(int *parent, int n, int anc, int desc) {
+  if (anc < 0 || anc >= n || desc < 0 || desc >= n)
+    return 0;
+  if (anc == desc)
+    return 0;  
 
-int main(int argc, char *argv[]) {
-  int n, *f, anc, desc;
+  for (int cur = parent[desc]; cur != -1; cur = parent[cur])
+    if (cur == anc)
+      return 1;
   
-  (void)! scanf("%d\n", &n); 
+  return 0;
+}
 
-  f = makeIntArray(n);
-  initializeArray(f,n);
-  readInput(f,n);
 
-  (void)! scanf("ancestor(%d,%d)\n", &anc, &desc);
+//=================================================================
 
-  printf(isAncestor(f, n, anc, desc) ? "YES\n" : "NO\n");
+int main() {
+  int n, anc, desc, parent[1000];
+  assert(scanf("%d", &n) == 1);
+
+  initializeArray(parent, n);
+  readInput(parent, n);
+
+  assert(scanf(" ancestor(%d,%d)", &anc, &desc) == 2);
+
+  printf(isAncestor(parent, n, anc, desc) ? "YES\n" : "NO\n");
   
-  free(f);
   return 0;
 }

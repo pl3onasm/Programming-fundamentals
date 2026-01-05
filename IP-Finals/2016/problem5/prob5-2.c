@@ -1,6 +1,6 @@
-/* file: prob5-3.c
+/* file: prob5-2.c
    author: David De Potter
-   version: 5.3, using an int function
+   version: 5.2, using an int function
    description: IP Final 2016, problem 5, balanced subsequences
 */
 
@@ -17,8 +17,8 @@ int countSequences(int a[], int idx, int evens, int odds){
     return evens == odds && evens > 0;
 
     // recursive case: put a[idx] into the sequence or skip it
-  int up = a[idx] % 2;
-  return countSequences(a, idx - 1, evens + !up, odds + up)
+  int odd = a[idx] % 2;
+  return countSequences(a, idx - 1, evens + !odd, odds + odd)
        + countSequences(a, idx - 1, evens, odds);
 }
 
