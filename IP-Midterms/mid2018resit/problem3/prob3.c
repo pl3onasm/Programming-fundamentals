@@ -1,14 +1,33 @@
 /* file: prob3.c
-* author: David De Potter
-* description: problem 3, takuzu numbers, resit mid2018
+   author: David De Potter
+   description: problem 3, takuzu numbers, resit mid2018
 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
+//=================================================================
+// Returns 1 if n has an even bit-length (ignoring leading 0-bits)
+int hasEvenBitLength(int n) {
+  int len = 0;
+  while (n) {
+    ++len;
+    n >>= 1;
+  }
+  return (len % 2 == 0);
+}
+
+//=================================================================
+// Checks if n meets the Takuzu criteria
 int checkIfTakuzu (int n) {
-  /* checks to see if n meets the Takuzu criteria */
-  int count0 = 0, count1 = 0, countAdj1 = 0, countAdj0 = 0;
+
+    // Filter: takuzu numbers must have an even bit-length
+  if (!hasEvenBitLength(n))
+    return 0;
+
+  int count0 = 0, count1 = 0; 
+  int countAdj1 = 0, countAdj0 = 0;
 
   while (n) {
     if (n & 1) {
@@ -27,14 +46,17 @@ int checkIfTakuzu (int n) {
   return count1 == count0;
 }
 
-int main(int argc, char *argv[]) {
+//=================================================================
+
+int main() {
   int n, index = 0, number = 1;
 
-  (void)! scanf("%d", &n);
+  assert(scanf("%d", &n) == 1);
   
   while (index != n) {
-    number++;
-    if (checkIfTakuzu(number)) index++;
+    ++number;
+    if (checkIfTakuzu(number))
+      ++index;
   }
 
   printf("%d\n", number);

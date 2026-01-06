@@ -52,8 +52,8 @@ int main() {
   g = safeMalloc(m * sizeof(int));
   readInput(g, m); 
   
-  printf("%d\n", n < m ? countPairs(f,n,g,m) 
-                       : countPairs(g,m,f,n));
+  printf("%d\n", n < m ? countPairs(f, n, g, m) 
+                       : countPairs(g, m, f, n));
 
   free(f); 
   free(g);

@@ -1,26 +1,40 @@
 /* file: prob1.c
-* author: David De Potter
-* description: problem 1, minimum bounding rectangle, resit mid2018
+   author: David De Potter
+   description: problem 1, minimum bounding rectangle, 
+     resit mid2018
 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
-#define MIN(a, b) ((b) > (a) ? (a) : (b))
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
 
-int main (int argc, char *argv[]) {
+//=================================================================
+
+int main() {
   int n, x0, y0, x1, y1, x2, y2;
-  int maxx = 0, maxy = 0, minx = 1000000, miny = 1000000;
+  int maxx, maxy, minx, miny;
 
-  (void)! scanf ("%d", &n);
+  assert(scanf("%d", &n) == 1);
 
-  for (int i = 1; i <=n; ++i) {
-    (void)! scanf("%d %d %d %d %d %d", &x0, &y0, &x1, &y1, &x2, &y2);
-    maxx = MAX(MAX(x0, x1), MAX(x2, maxx));
-    maxy = MAX(MAX(y0, y1), MAX(y2, maxy));
-    minx = MIN(MIN(x0, x1), MIN(x2, minx));
-    miny = MIN(MIN(y0, y1), MIN(y2, miny));
+  assert(scanf("%d %d %d %d %d %d",
+               &x0, &y0, &x1, &y1, &x2, &y2) == 6);
+
+  maxx = MAX(x0, MAX(x1, x2));
+  minx = MIN(x0, MIN(x1, x2));
+  maxy = MAX(y0, MAX(y1, y2));
+  miny = MIN(y0, MIN(y1, y2));
+
+  for (int i = 2; i <= n; ++i) {
+    assert(scanf("%d %d %d %d %d %d",
+                 &x0, &y0, &x1, &y1, &x2, &y2) == 6);
+
+    maxx = MAX(maxx, MAX(x0, MAX(x1, x2)));
+    minx = MIN(minx, MIN(x0, MIN(x1, x2)));
+    maxy = MAX(maxy, MAX(y0, MAX(y1, y2)));
+    miny = MIN(miny, MIN(y0, MIN(y1, y2)));
   }
 
   printf("%d %d %d %d\n", minx, miny, maxx, maxy);

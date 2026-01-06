@@ -1,13 +1,15 @@
 /* file: prob5.c
-* author: David De Potter
-* description: problem 5, modular Fermat, resit mid2018
+   author: David De Potter
+   description: problem 5, modular Fermat, resit mid2018
 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
+//=================================================================
+// Computes n^exp mod m using modular exponentiation
 int modExp (int n, int exp, int m) {
-  /* computes n^exp mod m using modular exponentiation */
   int pow = 1; n %= m;
   while (exp) {
     if (exp & 1) pow = (pow * n) % m;
@@ -17,18 +19,32 @@ int modExp (int n, int exp, int m) {
   return pow;
 }
 
-int main(int argc, char *argv[]) {
-  int n, count=0;
+//=================================================================
+// Precomputes x^n mod n for x = 1..n-1
+void precomputeModExp(int n, int me[]) {
+  for (int x = 1; x < n; ++x) 
+    me[x] = modExp(x, n, n);
+}
 
-  (void)! scanf ("%d", &n);
+//=================================================================
 
-  for (int a = 1; a <= n - 2; ++a) 
-    for (int b = a + 1; b <= n - 1; ++b){ 
+int main() {
+  int n, count = 0, me[5001];
+
+  assert(scanf ("%d", &n) == 1);
+
+  precomputeModExp(n, me);
+  
+  for (int a = 1; a <= n - 2; ++a) {
+      // c = n - a - b must satisfy c > b  
+      // <=>  2*b < n - a
+    int bMax = (n - a - 1) / 2;
+    for (int b = a + 1; b <= bMax; ++b){ 
       int c = n - a - b; 
-      if (c > b && ((modExp(a,n,n) 
-          + modExp(b,n,n)) % n == modExp(c,n,n) % n)) 
-        count++;
+      if ((me[a] + me[b]) % n == me[c])
+        ++count;
     }
+  }
     
   printf("%d\n", count);
   return 0;

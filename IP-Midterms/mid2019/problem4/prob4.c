@@ -1,13 +1,15 @@
 /* file: prob4.c
-* author: David De Potter
-* description: IP mid2019, problem 4, Armstrong numbers
+   author: David De Potter
+   description: IP mid2019, problem 4, Armstrong numbers
 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
+//=================================================================
+// Computes n raised to the power exp using binary exponentiation
 int power(int n, int exp) {
-  // returns n^exp using binary exponentiation
   int pow = 1;
   while (exp) {
     if (exp & 1) pow *= n; 
@@ -17,34 +19,40 @@ int power(int n, int exp) {
   return pow;
 }
 
+//=================================================================
+// Counts the number of digits in n
 int countDigits (int n) {
-  /* returns length of integer n */
-  int count=0;
-  while (n != 0) {
-    count++; n /= 10;
+  int count = 0;
+  while (n) {
+    ++count; 
+    n /= 10;
   }
   return count;
 }
 
+//=================================================================
+// Checks if n is an Armstrong number
 int isArmstrongNumber (int n) {
-  /* returns 1 if n is an Armstrong number,
-   * else 0 */
   int digitSum = 0, p = n;
   int len = countDigits(n);
   for (int i = 0; i < len; ++i) {
     digitSum += power(p % 10, len);
     p /= 10;
   }
-  return (n==digitSum);
+  return n == digitSum;
 }
 
-int main(int argc, char *argv[]) {
-  int n, x, index=0;
-  (void)! scanf("%d", &n);
-  for (x = 1; ;++x) {
-    if (isArmstrongNumber(x)) index++;
+//=================================================================
+
+int main() {
+  int n, x, index = 0;
+  assert(scanf("%d", &n) == 1);
+  
+  for (x = 1; ; ++x) {
+    if (isArmstrongNumber(x)) ++index;
     if (index == n) break;
   }
+
   printf("%d\n", x);
   return 0;
 }
