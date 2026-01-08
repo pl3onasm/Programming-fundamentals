@@ -17,7 +17,7 @@ int GCD (int a, int b) {
 //=================================================================
 // Checks if a and b have no common divisors, 
 // i.e. if they are coprime
-int haveNoCommonDivs (int a, int b) {
+int areComprime (int a, int b) {
   return GCD(a, b) == 1;
 }
 
@@ -27,7 +27,7 @@ int main() {
   int n, d; 
   
   assert(scanf("%d %d", &d, &n) == 2);
-  if (n % d == 0 && haveNoCommonDivs(d, n/d)) 
+  if (n % d == 0 && areComprime(d, n / d)) 
     printf("YES\n");
   else 
     printf("NO\n");

@@ -9,7 +9,7 @@
 //=================================================================
 // Reads the digits of a number from standard input
 void readDigits(int digits[]){
-  char d; 
+  int d; 
   while ((d = getchar()) >= '0' && d <= '9')
     ++digits[d - '0'];
 }

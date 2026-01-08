@@ -12,8 +12,9 @@
 int main() {
   int n;
     // Epoch is a Thursday, so index 0 corresponds to Thursday
-  char *days[] = {"Thursday", "Friday", "Saturday", "Sunday",
-                  "Monday", "Tuesday", "Wednesday"};
+  char const * days[] = {"Thursday", "Friday", "Saturday", 
+                         "Sunday","Monday", "Tuesday", 
+                         "Wednesday"};
   
   assert(scanf ("%d", &n) == 1);
     

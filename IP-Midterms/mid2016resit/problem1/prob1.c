@@ -1,14 +1,16 @@
 /* file: prob1.c
-* author: David De Potter
-* description: problem 1, 9's complement
-* subtraction, resit mid2016
+   author: David De Potter
+   description: problem 1, 9's complement
+   subtraction, resit mid2016
 */
 
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdlib.h> 
+#include <assert.h>
 
+//=================================================================
+// Computes n to the power of exp using binary exponentiation
 int power(int n, int exp) {
-  // returns n^exp using binary exponentiation
   int pow = 1;
   while (exp) {
     if (exp & 1) pow *= n; 
@@ -18,32 +20,32 @@ int power(int n, int exp) {
   return pow;
 }
 
+//=================================================================
+// Counts the number of digits in n
 int countDigits (int n) {
   int count = 0;
-  while (n) {
-    count++; 
+  do {
+    ++count;
     n /= 10;
-  }
+  } while (n);
   return count;
 }
 
-int complement (int x) {
-  return (power(10, countDigits(x)) -1 - x);
-}
+//=================================================================
 
-int main (int argc, char *argv[]) {
+int main () {
   int p, c, a, b;
-  
-  (void)! scanf ("%d %d", &a, &b);
-  
+
+  assert(scanf ("%d %d", &a, &b) == 2);
+
   p = power(10, countDigits(a)) - 1;
-  c = complement(a);
-  
+  c = p - a;
+
   printf("%d-%d=", a, b);
   printf("%d-((%d-%d)+%d)=", p, p, a, b);
   printf("%d-(%d+%d)=", p, c, b);
-  printf("%d-%d=", p, b+c);
-  printf("%d\n", complement(b+c));
+  printf("%d-%d=", p, b + c);
+  printf("%d\n", p - (b + c));
 
   return 0;
 }

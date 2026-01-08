@@ -9,12 +9,12 @@
 
 //=================================================================
 // Counts the number of digits in n
-int countDigits(int n) {
+int countDigits (int n) {
   int count = 0;
-  while (n > 0) {
-    n /= 10; 
+  do {
     ++count;
-  }
+    n /= 10;
+  } while (n);
   return count;
 }
 

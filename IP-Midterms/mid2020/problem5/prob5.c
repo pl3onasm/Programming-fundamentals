@@ -19,10 +19,13 @@ int findEmptyCell(int grid[][7], int col) {
 // Checks if current player has won after placing a disc at 
 // (row,col)
 int checkWin (int grid[][7], int row, int col) {
+
+    // Directions: down, up, right, left, 
+    // down-right, up-left, down-left, up-right
   int dir[] = {1,0,-1,0,0,1,0,-1,1,1,-1,-1,1,-1,-1,1};
   int count = 0;
 
-    // Count discs in each of the 4 directions
+    // Count discs in all directions
   for (int i = 0; i < 16; i += 2) {
     if (i % 4 == 0) count = 1; 
     int r = row + dir[i], c = col + dir[i + 1];
@@ -44,12 +47,12 @@ int fillGrid(int grid[][7]) {
   int turn = 0, row, col; 
   while(scanf("%d%*[,]", &col) == 1) {
     row = findEmptyCell(grid, col);
-      // if column full, ignore move
+      // If column full, ignore move
     if (row == -1) continue;
-      // yellow starts (turn 0), then alternate
-      // yellow disc = 1, red disc = 2
+      // Yellow starts (turn 0), then alternate
+      // Yellow disc = 1, red disc = 2
     grid[row][col] = (turn % 2) + 1; 
-      // after each move, check for a win
+      // After each move, check for a win
     if (checkWin(grid, row, col)) 
       return turn % 2;
     ++turn;

@@ -6,16 +6,13 @@
 #include "clib/clib.h"
 
 //=================================================================
-int c_countDigits(int n) {
-  if (n == 0) 
-    return 1;  
-  if (n < 0) 
-    n = -n;
-  int count = 0;    
-  while (n > 0) {    
-    n /= 10;    
-    ++count;  
-  }  
+int c_countDigits(int n) {  
+  if (n < 0) n = -n;    
+  int count = 0;
+  do {
+    ++count;
+    n /= 10;
+  } while (n);
   return count;
 }
 

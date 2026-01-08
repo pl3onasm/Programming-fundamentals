@@ -24,9 +24,9 @@
 //=================================================================
 // Builds histogram of character frequencies from standard input
 // considering only alphabetic characters and ignoring case
-char *getHistogram() {
-  char *hist, ch;
-  C_NEW_ARRAY(char, hist, 26);
+int *getHistogram() {
+  int *hist, ch;
+  C_NEW_ARRAY(int, hist, 26);
 
   while ((ch = getchar()) != EOF && ch != '\n') 
     if (ch >= 'a' && ch <= 'z') 
@@ -40,7 +40,7 @@ char *getHistogram() {
 //=================================================================
 // Checks if a palindrome can be formed from the histogram by
 // ensuring at most one character has an odd frequency
-int containsPalin(char *hist) {
+int containsPalin(int *hist) {
   size_t oddCount = 0;
 
   for (size_t i = 0; i < 26; ++i) {
@@ -55,7 +55,7 @@ int containsPalin(char *hist) {
 //=================================================================
 
 int main() {
-  char *hist = getHistogram();
+  int *hist = getHistogram();
 
   printf(containsPalin(hist) ? "YES\n" : "NO\n");
 

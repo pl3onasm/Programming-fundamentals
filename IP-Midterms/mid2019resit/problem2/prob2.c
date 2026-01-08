@@ -10,8 +10,7 @@
 //=================================================================
 
 int main() {
-  int digit, pos = 1, evenSum = 0, oddSum = 0;
-  char ch;
+  int digit, pos = 1, evenSum = 0, oddSum = 0, ch;
 
   while ((ch = getchar()) != EOF && ch != '\n') {
     digit = ch - '0';

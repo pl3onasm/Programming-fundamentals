@@ -15,12 +15,14 @@
 //=================================================================
 static int isValidInt(char *str, int *n) {
     // check if the input is a valid positive integer  
-  char *end;  
-  if (str[strlen(str) - 1] != '\n') {    
+  size_t len = strlen(str);
+  if (len == 0 || str[len - 1] != '\n') {    
     // if the input is too long, clear stdin buffer    
-    while (getchar() != '\n');    
+    int ch;
+    while ((ch = getchar()) != '\n' && ch != EOF) ;   
     return 0;  
   }  
+  char *end;  
     // try to convert the input to an int  
   *n = (int)strtol(str, &end, 10);  
     // return 1 if the input was fully converted to a pos int  
@@ -35,16 +37,22 @@ int main() {
   while (1) {     
     printf("\nGive a positive integer of at most 9 digits "
       "(q to quit): ");    
-    if (!fgets(input, sizeof(input), stdin) || input[0] == 'q')      
-    break;  
+    if (!fgets(input, sizeof(input), stdin))      
+      break; 
+
+    if (input[0] == 'q' && (input[1] == '\n' || input[1] == '\0'))
+      break;
+
       // check if the input is valid    
     if (!isValidInt(input, &n)) {      
       printf("Invalid input\n");      
       continue;    
     }  
+
       // print some properties of the input number    
     char *bin = c_toBinary(n);    
     int nDigits = c_countDigits(n);  
+
     printf("The input has %d digit%s.\n"         
            "The number is %sa prime.\n"         
            "It is %sa perfect square.\n"         
@@ -57,8 +65,8 @@ int main() {
            c_reverseInt(n), bin,         
            c_isStrPalindrome(bin, bin + strlen(bin) - 1) ? 
                                   "" : "not ");  
-           free(bin); 
-    }  
+    free(bin); 
+  }  
            
-    return 0;
+  return 0;
 }

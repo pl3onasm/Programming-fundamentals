@@ -27,7 +27,9 @@ void readInput(char grid[][8], int *x, int *y){
 // on the board grid 
 int inCheck(char grid[][8], int x, int y) {
 
-  int dir[] = {1,0,-1,0,0,1,0,-1,1,1,-1,1,-1,-1,1,-1}; 
+    // Directions: down, up, right, left, 
+    // down-right, up-left, down-left, up-right
+  int dir[] = {1,0,-1,0,0,1,0,-1,1,1,-1,-1,1,-1,-1,1};
   
   for (int i = 0; i < 16; i += 2){
     int dx = x + dir[i];

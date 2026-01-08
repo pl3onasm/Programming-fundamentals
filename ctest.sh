@@ -12,10 +12,9 @@
 #   - <name>.in   input                                             #
 #   - <name>.out  expected output                                   #
 #                                                                   #
-# If the user's program includes a clib header from the new         #
-# layout (.../include/clib/<header>.h), the script will:            #
+# If the user's program includes a clib header, the script will:    #
 #   - infer the library root                                        #
-#   - build libclib.a if missing (make -C <root> lib)               #
+#   - build libclib.a if missing                                    #
 #   - compile and link against build/lib/libclib.a                  #
 #                                                                   #
 # Options:                                                          #

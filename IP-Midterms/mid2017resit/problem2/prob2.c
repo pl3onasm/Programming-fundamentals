@@ -5,31 +5,37 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
+//=================================================================
+// checks whether a year is a leap year
 int isLeapYear(int year) {
-  //determines whether the given year is a leap year
   return (year % 4 == 0 && year % 100 != 0) 
           || year % 400 == 0;
 }
 
-int main(int argc, char *argv[]) {
-  int y=2017, n, count=0, currTotal, leapDays=0;
+//=================================================================
 
-  //reads in the given number
-  (void)! scanf("%d", &n);
+int main() {
+  int year = 2017, count = 0, n, shift = 0;
+  assert(scanf("%d", &n) == 1);
 
-  /* A year has 365 days if not a leap year. 365-1 = 364
-   * is divisible by 7 (number of days in a week), which
-   * means we can count a day for each year and an extra
-   * day for a leap year as we skip through the years */
+  /* Since 364 is a multiple of 7, the weekday of Oct 4 shifts by:
+   * - +1 for a normal year (365 % 7 == 1)
+   * - +2 for a leap year (366 % 7 == 2)
+   *
+   * We know Oct 4, 2017 is a Friday. We keep track of the total 
+   * weekday shift since 2017: one day per year passed, plus one 
+   * extra day for each leap year we pass. Whenever the total shift 
+   * is a multiple of 7, Oct 4 is a Friday again.
+   */
   while (count != n) {
-    y++;
-    if (isLeapYear(y)) leapDays++;
-    currTotal = y - 2017 + leapDays;
-    if (currTotal % 7 == 0) count++;
-    //if divisible by 7 we know Oct 13 is a Friday again
+    ++year;
+    shift += 1 + isLeapYear(year); 
+    if (shift % 7 == 0) ++count;
   }
-  //prints the nth next year in which Oct 13 is a Friday
-  printf("%d\n", y);
+
+  printf("%d\n", year);
+
   return 0;
 }

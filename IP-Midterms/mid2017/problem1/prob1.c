@@ -1,28 +1,42 @@
 /* file: prob1.c
-* author: David De Potter
-* description: problem 1, amicable pairs, mid2017
+   author: David De Potter
+   description: problem 1, amicable pairs, mid2017
 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
+//=================================================================
+// Returns the sum of n's proper divisors
 int sumDivisors (int n) {
-  // returns the sum of n's proper divisors
+  if (n == 1) return 0;
+
   int sum = 1;
-  for (int d = 2; d * d <= n; ++d) {
+  
+  for (int d = 2; d <= n / d; ++d) {
     if (n % d == 0) {
-      if (d * d != n) sum += d + n / d;
-      else sum += d; //count square root only once
+      int q = n / d;
+      if (q != d)
+        sum += d + q;
+      else
+        sum += d;     // count square root only once
     }
   }
   return sum;
 }
 
-int main(int argc, char *argv[]) {
+//=================================================================
+
+int main() {
   int a, b;
-  (void)! scanf("%d %d", &a, &b);
+
+  assert(scanf("%d %d", &a, &b) == 2);
+
   if (sumDivisors(a) == b && a == sumDivisors(b))
     printf("YES\n");
-  else printf("NO\n");
+  else 
+    printf("NO\n");
+
   return 0;
 }

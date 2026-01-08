@@ -1,38 +1,29 @@
 /* file: prob3.c
-* author: David De Potter
-* description: problem 3, ABC, resit mid2017
+   author: David De Potter
+   description: problem 3, ABC, resit mid2017
 */
 
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char *argv[]) {
-  char prefixes[100];
-  int len=0, counta, countb, countc;
-  char c;
-  //reads the input string and computes its length
-  while ((c = getchar()) != '.') {
-    prefixes[len] = c;
-    ++len;
+//=================================================================
+
+int main() {
+  int counta = 0, countb = 0, countc = 0;
+  int valid = 1;
+  int ch;
+
+  while ((ch = getchar()) != EOF && ch != '.') {
+    if      (ch == 'a') ++counta;
+    else if (ch == 'b') ++countb;
+    else if (ch == 'c') ++countc;
+    else continue;   // ignore unexpected characters
+
+    if (countb > counta || countc > counta + countb)
+      valid = 0;
   }
 
-  /* goes through the different prefixes one by one and
-   * checks whether they comply with the rules */
-  for (int prefixLen=0; prefixLen <= len-1; ++prefixLen) {
-    counta = countb = countc = 0;
-    for (int j=0; j <= prefixLen; ++j) {
-      if (prefixes[j] == 'a') counta++;
-      if (prefixes[j] == 'b') countb++;
-      if (prefixes[j] == 'c') countc++;
-    }
-    if ((countb > counta) || (countc > counta + countb)) {
-      /* at least one of the prefixes does not comply,
-       * so the input string is invalid */
-      printf("INVALID\n");
-      return 0;
-    }
-  }
-
-  printf("VALID\n");
+  printf(valid ? "VALID\n" : "INVALID\n");
+  
   return 0;
 }

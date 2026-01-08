@@ -4,7 +4,7 @@
 #include "../include/clib/memory.h"
 
 //=================================================================
-// Initialize list of primes up to floor(sqrt(INT_MAX))
+// Initializes a list of primes up to floor(sqrt(INT_MAX))
 // using Sieve of Eratosthenes
 static int initialized = 0;
 static int *plist = NULL;

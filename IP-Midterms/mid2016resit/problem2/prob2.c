@@ -1,20 +1,23 @@
 /* file: prob2.c
-* author: David De Potter
-* description: problem 2, sorting numbers, resit mid2016
+   author: David De Potter
+   description: problem 2, sorting numbers, resit mid2016
 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
-int main(int argc, char *argv[]) {
+//=================================================================
+
+int main() {
   int numbers[100] = {0}, n, last = 0;
 
-  (void)! scanf("%d ", &n);
+  assert(scanf("%d", &n) == 1);
  
   while (n) {
-    numbers[n]++;
-    last++;
-    (void)! scanf("%d ", &n);
+    ++numbers[n];
+    ++last;
+    assert(scanf("%d", &n) == 1);
   }
   
   int count = 0;

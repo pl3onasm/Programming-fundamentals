@@ -23,10 +23,10 @@ int power(int n, int exp) {
 // Counts the number of digits in n
 int countDigits (int n) {
   int count = 0;
-  while (n) {
-    ++count; 
+  do {
+    ++count;
     n /= 10;
-  }
+  } while (n);
   return count;
 }
 
