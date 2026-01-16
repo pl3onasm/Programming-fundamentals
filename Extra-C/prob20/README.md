@@ -6,8 +6,7 @@ The input for this exercise is a list of an unknown number of integers. The give
 
 For example, the input $1 \space 2 \space 0$ represents the path $0 \rightarrow 1 \rightarrow 2 \rightarrow 0$, which forms one cycle that visits all indices exactly once. However, the input $2 \space 1 \space 0$ contains two separate cycles: $0 \rightarrow 2 \rightarrow 0$ and $1 \rightarrow 1$.
 
-The goal of this exercise is to determine how many distinct cycles occur in
-the given structure. The output should be this number of cycles. You may assume that all numbers in the input are valid indices of the list.
+The goal of this exercise is to determine how many distinct cycles occur in the input list. The output should be this number of cycles. You may assume that all numbers in the input are valid indices of the list.
 
 <br/>
 
