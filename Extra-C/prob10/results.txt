@@ -1,0 +1,34 @@
+
+Compiling the program with library clib...
+
+Program successfully compiled as a.out
+
+┌────────────────────────┐
+│      TEST RESULTS      │
+└────────────────────────┘
+
+   Test 01.in: 	  PASS
+
+   Test 02.in: 	  PASS
+
+   Test 03.in: 	  PASS
+
+   Test 04.in: 	  PASS
+
+   Test 05.in: 	  PASS
+
+   Test 06.in: 	  PASS
+
+   Test 07.in: 	  PASS
+
+   Test 08.in: 	  PASS
+
+   Test 09.in: 	  PASS
+
+   Test 10.in: 	  PASS
+
+──────────────────────────
+
+   Correctness:	 10/10
+
+

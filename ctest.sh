@@ -68,6 +68,7 @@ else
   NC=""
 fi
 
+
 #-------------------------------------------------------------------#
 #    Helper functions                                               #
 #-------------------------------------------------------------------#
@@ -248,8 +249,9 @@ LEN=${#INFILES[@]}
 #-------------------------------------------------------------------#
 
 echo -e "${CYAN}\n┌────────────────────────┐${NC}"
-echo -e "${BBLUE}│      TEST RESULTS      │${NC}"  
+echo -e "${CYAN}│     ${BBLUE} TEST RESULTS      ${CYAN}│${NC}"  
 echo -e "${CYAN}└────────────────────────┘\n${NC}"
+
 
 #-------------------------------------------------------------------#
 #    Diff summary: show first 5 lines                               #
@@ -279,6 +281,7 @@ function show_diff_summary {
   fi
   echo
 }
+
 
 #-------------------------------------------------------------------#
 #    Valgrind reporting                                             #
@@ -312,6 +315,7 @@ function show_valgrind_details {
     echo "$inv" | sed 's/^/         /'
   fi
 }
+
 
 #-------------------------------------------------------------------#
 #    Run tests                                                      #
@@ -414,6 +418,7 @@ for INFILE in "${INFILES[@]}"; do
   echo
 done
 
+
 #-------------------------------------------------------------------#
 #    Output final summary                                           #
 #-------------------------------------------------------------------#
@@ -421,12 +426,12 @@ done
 TOTAL=$LEN
 
 echo -e "──────────────────────────\n"
-CORR_LINE=$(printf "%-16s %2d/%d" "   Correctness:" "$PASS_OK" \
+CORR_LINE=$(printf "%-16s %2d/%d" "   Correctness:\t" "$PASS_OK" \
             "$TOTAL")
 echo -e "${MAGENTA}${CORR_LINE}${NC}"
 
 if [ $DO_VALGRIND -eq 1 ]; then
-  VG_LINE=$(printf "%-16s %2d/%d" "   Valgrind:" "$PASS_VG" \
+  VG_LINE=$(printf "%-16s %2d/%d" "   Valgrind:\t" "$PASS_VG" \
             "$TOTAL")
   echo -e "${MAGENTA}${VG_LINE}${NC}"
 fi

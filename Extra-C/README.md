@@ -10,19 +10,24 @@ $\Large{\color{rosybrown}\text{Problems}}$
 
 | | |
 | :---: | :--- |
-| Problem 01 | [Sum of multiples](prob01) |
-| Problem 02 | [Pandigital divisibility](prob02) |
-| Problem 03 | [Maximum path](prob03) |
-| Problem 04 | [Binary palindromes](prob04) |
-| Problem 05 | [Next smaller number](prob05) |
-| Problem 06 | [Balanced brackets](prob06) |
-| Problem 07 | [Matching bitstrings](prob07) |
-| Problem 08 | [Segments](prob08) |
-| Problem 09 | [Maze runner](prob09) |
-| Problem 10 | [Counting cards](prob10) |
-| Problem 11 | [Anagrams for palindromes](prob11) |
-| Problem 12 | [Separated by distance](prob12) |
-| Problem 13 | [Joining forces](prob13) |
-| Problem 14 | [Columnar transposition](prob14) |
-| Problem 15 | [Tricky squares](prob15) |
+| 01 | [Sum of multiples](prob01) |
+| 02 | [Pandigital divisibility](prob02) |
+| 03 | [Maximum path](prob03) |
+| 04 | [Binary palindromes](prob04) |
+| 05 | [Next smaller number](prob05) |
+| 06 | [Balanced brackets](prob06) |
+| 07 | [Matching bitstrings](prob07) |
+| 08 | [Segments](prob08) |
+| 09 | [Maze runner](prob09) |
+| 10 | [Counting cards](prob10) |
+| 11 | [Anagrams for palindromes](prob11) |
+| 12 | [Separated by distance](prob12) |
+| 13 | [Joining forces](prob13) |
+| 14 | [Columnar transposition](prob14) |
+| 15 | [Tricky squares](prob15) |
+| 16 | [Prime choice](prob16) |
+| 17 | [Suitcase packing](prob17) |
+| 18 | [Summing with step k](prob18) |
+| 19 | [Increasing numbers](prob19) |
+| 20 | [Cycle counting](prob20) |
 | | |
