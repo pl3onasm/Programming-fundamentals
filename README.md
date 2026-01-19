@@ -62,7 +62,8 @@ $\Large{\color{darkseagreen}\text{PF 3-3 exams}}$
 
 ||||
 |:---:|:---:|:---:|
-|**[2024](PF3-3/exam3-2024)**| **[2024 resit](PF3-3/resit3-2024)** | **[2025](PF3-3/exam3-2025)**|
+|**[2024](PF3-3/exam3-2024)**| **[2024 resit](PF3-3/resit3-2024)** | **[2025](PF3-3/exam3-2025)**| 
+| **[2025 resit](PF3-3/resit3-2025)**| |  |
 ||||
 
 <br/>
@@ -104,10 +105,10 @@ Then run the script by using the following command:
 ../../../ctest.sh myprogram.c
 ```
 
-You can add options before the program file:
+You can add options before or after the program name.
 
 ```shell
-../../../ctest.sh --show-diff --valgrind myprogram.c
+../../../ctest.sh -d -v myprogram.c
 ```
 
 <br/>
