@@ -301,7 +301,7 @@ function show_valgrind_details {
   echo "$out" | grep -E "==.*(HEAP SUMMARY|LEAK SUMMARY|\
     'ERROR SUMMARY|in use at exit:|definitely lost:|\
     'indirectly lost:|possibly lost:|still reachable:)"\
-    | head -n 40 | sed 's/^/         /'
+    | head -n 40 | sed 's/^/ /'
 
     # First few invalid access messages (if present)
   local inv
@@ -312,7 +312,7 @@ function show_valgrind_details {
   if [ -n "$inv" ]; then
     echo
     echo "         Details:"
-    echo "$inv" | sed 's/^/         /'
+    echo "$inv" | sed 's/^/ /'
   fi
 }
 
@@ -335,7 +335,7 @@ for INFILE in "${INFILES[@]}"; do
   OUTFILE="${INFILE%.*}.out"
 
   if [ ! -f "$OUTFILE" ]; then
-    echo -e "   Test $DISPLAY_NAME: \t  ${RED}NA${NC} "
+    echo -e "   Test $DISPLAY_NAME:    ${RED}NA${NC} "
     echo -e "     output file ${OUTFILE##*/} not found\n"
     continue
   fi
@@ -347,7 +347,7 @@ for INFILE in "${INFILES[@]}"; do
 
   # Correctness check
   if [ $RC -ne 0 ]; then
-    echo -e "   Test $DISPLAY_NAME: \t  ${RED}FAIL${NC} "
+    echo -e "   Test $DISPLAY_NAME:    ${RED}FAIL${NC} "
     echo -e "   (program exited with code $RC)"
     if [ $SHOW_DIFF -eq 1 ]; then
       echo "   (no diff shown: program did not produce "
@@ -380,14 +380,14 @@ for INFILE in "${INFILES[@]}"; do
 
     rm -f "$TMP_EXP" "$TMP_GOT"
     if [ -n "$DIF" ]; then
-      echo -e "   Test $DISPLAY_NAME: \t  ${RED}FAIL${NC}"
+      echo -e "   Test $DISPLAY_NAME:    ${RED}FAIL${NC}"
       if [ $SHOW_DIFF -eq 1 ]; then
         echo
         echo "     Output details:"
         show_diff_summary "$OUTFILE" "$TMP_OUT"
       fi
     else
-      echo -e "   Test $DISPLAY_NAME: \t  ${GREEN}PASS${NC}"
+      echo -e "   Test $DISPLAY_NAME:    ${GREEN}PASS${NC}"
       PASS_OK=$((PASS_OK + 1))
     fi
   fi
@@ -403,10 +403,10 @@ for INFILE in "${INFILES[@]}"; do
       ./a.out < "$INFILE" 2>&1 >/dev/null)
 
     if valgrind_passed "$VG_OUT"; then
-      echo -e "     Valgrind: \t  ${BLUE}PASS${NC}"
+      echo -e "     Valgrind:    ${BLUE}PASS${NC}"
       PASS_VG=$((PASS_VG + 1))
     else
-      echo -e "     Valgrind: \t  ${RED}FAIL${NC}"
+      echo -e "     Valgrind:    ${RED}FAIL${NC}"
       if [ $SHOW_VG -eq 1 ]; then
         echo
         echo "     Valgrind details:"
@@ -426,12 +426,12 @@ done
 TOTAL=$LEN
 
 echo -e "──────────────────────────\n"
-CORR_LINE=$(printf "%-16s %2d/%d" "   Correctness:\t" "$PASS_OK" \
+CORR_LINE=$(printf "%-16s %2d/%d" "   Correctness: " "$PASS_OK" \
             "$TOTAL")
 echo -e "${MAGENTA}${CORR_LINE}${NC}"
 
 if [ $DO_VALGRIND -eq 1 ]; then
-  VG_LINE=$(printf "%-16s %2d/%d" "   Valgrind:\t" "$PASS_VG" \
+  VG_LINE=$(printf "%-16s %2d/%d" "   Valgrind:    " "$PASS_VG" \
             "$TOTAL")
   echo -e "${MAGENTA}${VG_LINE}${NC}"
 fi
