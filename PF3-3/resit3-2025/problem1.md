@@ -117,7 +117,7 @@ for (int i = N; i >= 0; i--) {
 
 The outer loop runs $N+1$ times, while the inner loop runs $\log(i)$ times for each value of $i$ ranging from $N$ down to $1$, as $j$ is divided by $2$ at each iteration. The total number of iterations of the inner loop can therefore be computed as follows:
 
-&nbsp; $\sum_{i=N}^{1} \log(i) $ [^1]
+&nbsp; $\sum_{i=N}^{1} \log(i)$ [^1]
 
 &nbsp; $\quad = \log(N) + \log(N-1) + \ldots + \log(2) + \log(1)$
 
