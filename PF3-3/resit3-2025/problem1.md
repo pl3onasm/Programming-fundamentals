@@ -57,7 +57,7 @@ while (s > 0) {
 }
 ```
 
-The outer loop runs $\sqrt{N}$ times, as it terminates when $i^2 \geq N$. Similarly, the inner loop also runs $\sqrt{N}$ times. Since the loops are nested, their combined complexity is in $\mathcal{O}(N)$. The while loop runs $s$ times, where $s$ is equal to the total number of iterations of the nested loops, which is in $\mathcal{O}(N)$. Thus, the fragment's overall complexity is in $\mathcal{O}(N)$.
+The outer for loop runs $\sqrt{N}$ times, as it terminates when $i^2 \geq N$. Similarly, the inner for loop also runs $\sqrt{N}$ times. Since the for loops are nested, their combined complexity is in $\mathcal{O}(N)$. The while loop runs $s$ times, where $s$ is equal to the total number of iterations of the nested loops, which is in $\mathcal{O}(N)$. Thus, the fragment's overall complexity is in $\mathcal{O}(N)$.
 
 <br/>
 
@@ -78,7 +78,7 @@ while (i < j) {
 }
 ```
 
-In the worst case scenario, $N$ is prime so that the condition $N \space \% \space i = 0$ is never satisfied. In that case, $j$ is decremented by $1$ and $i$ is incremented by $1$ at each iteration, making the loop run $(N - 3) / 2$ times. Therefore, the fragment's complexity is in $\mathcal{O}(N)$.
+In the worst case scenario, $N$ is prime so that the condition `N % i == 0` is never satisfied. In that case, $j$ is decremented by $1$ and $i$ is incremented by $1$ at each iteration, making the loop run $(N - 3) / 2$ times. Therefore, the fragment's complexity is in $\mathcal{O}(N)$.
 
 <br/>
 
@@ -240,7 +240,7 @@ while (s > 0) {
 
 In the for loop, $i$ takes on the even values from $0$ to $N-1$. The sum of the first $k$ even numbers is given by the formula $k(k + 1) / 4$. So, the value of $s$ after the for loop is approximately $N^2 / 4$.
 
-Next, the while loop decrements $s$ by $2$ at each iteration until $s$ reaches $0$. Since $s$ starts at approximately $N^2 / 4$, the while loop will run about $N^2 / 8$ times. Therefore, the fragment's complexity is in $\mathcal{O}(N^2)$.
+Next, the while loop decrements $s$ by $2$ at each iteration until $s$ reaches $0$. Since $s$ starts at approximately $N^2 / 4$, the while loop will run about $N^2 / 8$ times. Since the two loops are not nested, the overall complexity is dominated by the while loop. Therefore, the fragment's complexity is in $\mathcal{O}(N^2)$.
 
 <br/>
 
@@ -261,8 +261,8 @@ while (s > 0) {
 }
 ```
 
-The variable $s$ is updated in the same way as in Problem 1.11, so after the for loop, $s$ is approximately $N^2 / 4$. However, in the while loop, $s$ is now halved at each iteration. This means that the while loop will run $\log(N^2 / 4)$ times, which simplifies to $2 \log(N) - 2$. 
+The variable $s$ is updated in the same way as in Problem 1.11, so after the for loop, $s$ is approximately $N^2 / 4$. However, in the while loop, $s$ is now halved at each iteration. This means that the while loop will run $\log(N^2 / 4)$ times, which simplifies to $2 \log(N) - 2$.
 
-The two loops are not nested, so the overall complexity is dominated by the loop with the highest complexity, which is the for loop. Therefore, the fragment's complexity is in $\mathcal{O}(N)$.
+The loops run sequentially, so the overall complexity is dominated by the loop that incurs the highest cost, which is the for loop. Therefore, the fragment's complexity is in $\mathcal{O}(N)$.
 
 <br/>
