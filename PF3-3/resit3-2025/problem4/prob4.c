@@ -56,10 +56,10 @@ int solve(int *arr, int l, int r) {
 //===================================================================
 
 int main() {
-  int n;
+  int n, arr[25];
+  
   assert(scanf("%d", &n) == 1);
 
-  int arr[25];
   for (int i = 0; i < n; ++i)
     assert(scanf(" %d", &arr[i]) == 1);
 
