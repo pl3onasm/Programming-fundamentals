@@ -62,8 +62,9 @@ int main(){
 
   int totalSum = readInput(arr, n);
     
-    // We enforce partitions L to always include arr[0] to avoid
-    // counting duplicates where L and R can be swapped
+    // We enforce all sets L to contain arr[0] and exclude it from
+    // all sets R to ensure unique partitions and avoid double 
+    // counting
   int rem = totalSum - arr[0];
 
   int count = countBalParts(arr, n, 1, arr[0], 0, rem);

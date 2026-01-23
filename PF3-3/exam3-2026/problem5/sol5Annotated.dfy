@@ -44,11 +44,11 @@ method square(n: nat) returns (s: nat)
         be added. This part is necessary to let Dafny verify both  
         the update of s (next square) and the update of odd
         (next odd number).
-      • s == i*i expresses that s equals the sum of the first i odd
-        numbers at the start of each loop iteration.
+      • s == i*i expresses that s equals the sum of the first i 
+        odd numbers at the start of each loop iteration.
 
-    We initialize the variables as follows, so the invariant holds  
-    at the start:
+    We initialize the variables as follows, so the invariant   
+    holds at the start:
       i   = 0
       odd = 1
       s   = 0
@@ -72,6 +72,7 @@ method square(n: nat) returns (s: nat)
           s' = s + odd
              = i^2 + (2*i + 1)           (using the invariant)
              = (i + 1)^2                 (next square)
+             = i'^2                      (using i' = i + 1)
 
       2) Update of odd:
           odd' = odd + 2
