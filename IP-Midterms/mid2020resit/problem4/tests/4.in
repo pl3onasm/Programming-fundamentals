@@ -1,0 +1,5 @@
+5
+father(1)=0
+father(2)=1
+father(3)=4
+ancestor(3,3)

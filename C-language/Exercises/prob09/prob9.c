@@ -1,0 +1,122 @@
+/* 
+  file: prob9.c
+  author: David De Potter
+  description: extra, problem 9, maze runner
+
+  Approach:
+    We must find the maximum number of pellets ('.') that Pacman 
+    can eat consecutively starting from '@' without ever stepping 
+    onto an empty cell (' ') or a wall ('#').
+
+    Brute-forcing all paths is done with depth-first search (DFS) 
+    and backtracking. From the current position we recursively 
+    explore all 4 directions, and temporarily mark the current cell 
+    as empty (' ') to prevent revisiting cells in the current path. 
+    The recursion returns the best pellet count achievable from 
+    that position, and we add 1 if the current cell was a pellet. 
+    At the end we unmark the cell (backtrack) to allow other paths 
+    to use it.
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h> 
+
+//=================================================================
+// Allocates memory and checks for successful allocation
+void *safeCalloc(size_t n, size_t size) {
+  void *ptr = calloc(n, size);
+  if (ptr == NULL) {
+    printf("Error: calloc(%zu, %zu) failed. "
+           "Out of memory?\n", n, size);
+    exit(EXIT_FAILURE);
+  }
+  return ptr;
+}
+
+//=================================================================
+// Deallocates 2D array (matrix) of characters
+void freeMem(char **maze, int rows) {
+  for (int i = 0; i < rows; ++i) 
+    free(maze[i]);
+  free(maze);
+}
+
+//=================================================================
+// Reads the maze from standard input
+char **readMaze(int rows, int cols, int *r, int *c) {
+  char **maze = safeCalloc(rows, sizeof(char *));
+
+  for (int i = 0; i < rows; ++i) {
+    maze[i] = safeCalloc(cols, sizeof (char));
+
+      // Pre-fill with '#', so any unused cells become walls
+    for (int j = 0; j < cols; ++j)
+      maze[i][j] = '#';
+
+    int j = 0, ch;
+      // Read one line of the maze
+    while ((ch = getchar()) != EOF && ch != '\n') 
+      if (j < cols) {
+        maze[i][j] = ch;
+        if (maze[i][j] == '@') {  // starting position
+          *r = i;
+          *c = j;
+        }
+        ++j;
+      }
+  }
+
+  return maze;
+}
+
+//=================================================================
+// Recursive function to explore the maze and find the longest path
+// using Depth-First Search (DFS) with backtracking
+size_t processMaze(char **maze, int rows, int cols, int r, int c) {
+  
+    // base case: out of bounds, wall or empty cell
+  if (r < 0 || r >= rows || c < 0 || c >= cols ||
+      maze[r][c] == '#'  || maze[r][c] == ' ')
+    return 0;
+
+    // mark cell as visited
+  char original = maze[r][c];
+  maze[r][c] = ' ';
+
+  size_t maxLength = 0;
+    // direction vectors: up, down, left, right
+  static const int dr[] = {-1, 1,  0, 0};
+  static const int dc[] = { 0, 0, -1, 1};
+
+    // explore all 4 directions for each step
+  for (int k = 0; k < 4; ++k) {
+    int ur = r + dr[k];
+    int uc = c + dc[k];
+    size_t length = processMaze(maze, rows, cols, ur, uc);
+    if (length > maxLength) 
+      maxLength = length;
+  }
+
+    // unmark (backtrack)
+  maze[r][c] = original;
+  return maxLength + (original == '.');
+}
+
+//=================================================================
+
+int main() {
+
+  int rows, cols, r, c;
+  assert(scanf("%d %d ", &rows, &cols) == 2);
+
+  char **maze = readMaze(rows, cols, &r, &c);
+
+  size_t length = processMaze(maze, rows, cols, r, c);
+
+  printf("%zu\n", length);
+
+  freeMem(maze, rows);
+
+  return 0;
+}

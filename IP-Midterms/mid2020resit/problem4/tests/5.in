@@ -1,0 +1,7 @@
+10
+father(0)=9
+father(1)=8
+father(6)=7
+father(8)=0
+father(9)=7
+ancestor(7,4)

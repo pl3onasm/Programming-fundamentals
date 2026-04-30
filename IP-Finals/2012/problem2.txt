@@ -1,0 +1,10 @@
+
+Corrections
+
+in between lines 9 and 10:  amount = 0
+in line 14: amount = hanoi(amountofDisks-1, from, via);
+in line 15: showMove(from, to);
+in line 16: amount = 1 + amount + hanoi(amountofDisks-1, via, to);
+in line 22: int amount = hanoi(3, 1, 3); 
+
+

@@ -1,0 +1,10 @@
+
+Corrections
+
+in line 1: void swap(int i, int j, int arr[]) {
+in line 17: while ((left < right) && (pivot < arr[right - 1])) {
+in between lines 29 and 30: arr[left] = pivot;
+in between lines 33 and 34: int boundary;
+in line 41: quicksort(length - boundary -1, &arr[boundary + 1]);
+
+

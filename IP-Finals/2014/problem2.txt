@@ -1,0 +1,10 @@
+
+Corrections
+
+1. in between lines 10-11: return input;
+2. in between lines 21-22: int m=1;
+3. in line 22: while (exponent != 0) {
+4. in line 35: 1 is not a prime number, so: int divisor = 2
+5. in line 52: int number = readNumber(); 
+
+
