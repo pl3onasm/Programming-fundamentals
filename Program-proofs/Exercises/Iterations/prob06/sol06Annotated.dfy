@@ -21,13 +21,14 @@ ghost function f(n:nat): int
 lemma OddEquationBaseCase()
   ensures f(1) == 6 - 3 * f(1 / 2) + f(1 / 2 + 1)
 {
-  calc {
+  calc 
+  {
     f(1);
   ==  // definition of f(1)
     0;
-  ==  // f(0) == 2 and f(1) == 0
+  ==  // f(0) = 2 and f(1) = 0
     6 - 3 * f(0) + f(1);
-  ==  // since 1 / 2 == 0 and 1 / 2 + 1 == 1
+  ==  // since 1 / 2 = 0 and 1 / 2 + 1 = 1
     6 - 3 * f(1 / 2) + f(1 / 2 + 1);
   }
 }
@@ -38,7 +39,7 @@ ensures r == f(n)
     // We need an extra variable m since n is an input parameter 
     // and cannot be modified.
   var m := n;
-  
+   
     // Initialization to make J hold at the start of the loop
     // P: n ≥ 0
     //   ( use m = n )
@@ -69,7 +70,7 @@ ensures r == f(n)
     
     else 
     {
-        // m % 2 != 0 ∧ a + b * f(m) + c * f(m + 1) = f(n) ∧ m > 0 ∧ m = V
+        // m % 2 ≠ 0 ∧ a + b * f(m) + c * f(m + 1) = f(n) ∧ m > 0 ∧ m = V
         //   ( m is odd, so we can rewrite it as 2 * (m / 2) + 1 )
         // a + b * f(2 * (m / 2) + 1) + c * f(2 * (m / 2) + 2) = f(n) ∧ m > 0 ∧ m = V
         // a + b * f(2 * (m / 2) + 1) + c * f(2 * (m / 2 + 1)) = f(n) ∧ m > 0 ∧ m = V
@@ -101,7 +102,7 @@ ensures r == f(n)
   }
     
     // ¬B ∧ J
-    // m == 0 ∧ a + b * f(m) + c * f(m + 1) = f(n) ∧ m ≥ 0
+    // m = 0 ∧ a + b * f(m) + c * f(m + 1) = f(n) ∧ m ≥ 0
     // a + b * f(0) + c * f(1) = f(n)
     // a + 2 * b = f(n)
   r := a + 2 * b; 

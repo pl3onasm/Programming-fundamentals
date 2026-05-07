@@ -21,13 +21,14 @@ ghost function f(n:nat): int
 lemma OddEquationBaseCase()
   ensures f(1) == 6 - 3 * f(1 / 2) + f(1 / 2 + 1)
 {
-  calc {
+  calc 
+  {
     f(1);
-  ==  // definition of f(1)
+  ==  
     0;
-  ==  // f(0) == 2 and f(1) == 0
+  ==  
     6 - 3 * f(0) + f(1);
-  ==  // since 1 / 2 == 0 and 1 / 2 + 1 == 1
+  ==  
     6 - 3 * f(1 / 2) + f(1 / 2 + 1);
   }
 }

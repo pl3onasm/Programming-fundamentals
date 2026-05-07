@@ -36,7 +36,7 @@ ensures  r == X                 // Q
       // x * (y / 2) + r = X ∧ y / 2 < V ∧ y / 2 ≥ 0
     y := y / 2;
       // x * y + r = X ∧ y < V ∧ y ≥ 0
-      // J holds after the body, and the variant funtion has decreased (y < V)
+      // J holds after the body, and the variant function has decreased (y < V)
   }
 
     // J ∧ ¬B

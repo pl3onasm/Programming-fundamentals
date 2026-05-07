@@ -43,7 +43,7 @@ ensures x == f(k)
       // 0 ≤ n ≤ k ∧ y - x = f(n) ∧ y = f(n + 1) ∧ k - n < V
     x := y - x;
       // 0 ≤ n ≤ k ∧ x = f(n) ∧ y = f(n + 1) ∧ k - n < V
-      // J holds after the body, and the variant funtion has decreased (k - n < V)
+      // J holds after the body, and the variant function has decreased (k - n < V)
   }
 
     // J ∧ ¬B

@@ -30,17 +30,17 @@ ensures  r == X
     decreases X - r   // J ∧ B ⇒ vf = X - r > 0
   {
       // J ∧ B ∧ vf = V
-      // r ≤ X ∧ y + f(r) == f(X) ∧ y ≠ 0 ∧ X - r = V
-      // r < X ∧ y + f(r) == f(X) ∧ X - r = V
+      // r ≤ X ∧ y + f(r) = f(X) ∧ y ≠ 0 ∧ X - r = V
+      // r < X ∧ y + f(r) = f(X) ∧ X - r = V
       //   ( prepare r := r + 1; use definition of f )
-      // r < X ∧ y + f(r) == f(X) ∧ f(r + 1) == f(r) + 2 * (r + 1) - 1 ∧ X - r = V
-      //    ( substitute f(r) = f(X) - y in the equation for f(r + 1) )
-      // r < X ∧ y - (2 * r + 1) + f(r + 1) == f(X) ∧ X - r = V
+      // r < X ∧ y + f(r) = f(X) ∧ f(r + 1) = f(r) + 2 * (r + 1) - 1 ∧ X - r = V
+      //   ( substitute f(r) = f(X) - y in the equation for f(r + 1) )
+      // r < X ∧ y - (2 * r + 1) + f(r + 1) = f(X) ∧ X - r = V
     y := y - (2 * r + 1);
-      // r < X ∧ y + f(r + 1) == f(X) ∧ X - r = V
-      // r + 1 ≤ X ∧ y + f(r + 1) == f(X) ∧ X - (r + 1) < V
+      // r < X ∧ y + f(r + 1) = f(X) ∧ X - r = V
+      // r + 1 ≤ X ∧ y + f(r + 1) = f(X) ∧ X - (r + 1) < V
     r := r + 1;
-      // r ≤ X ∧ y + f(r) == f(X) ∧ X - r < V
+      // r ≤ X ∧ y + f(r) = f(X) ∧ X - r < V
       // The invariant holds again, and vf has decreased.
 
     assert y == f(X) - f(r);
@@ -50,9 +50,9 @@ ensures  r == X
   }
 
     // J ∧ ¬B
-    // r ≤ X ∧ y + f(r) == f(X) ∧ y = 0
-    // r ≤ X ∧ f(r) == f(X)
-    // r ≤ X ∧ r * r == X * X
+    // r ≤ X ∧ y + f(r) = f(X) ∧ y = 0
+    // r ≤ X ∧ f(r) = f(X)
+    // r ≤ X ∧ r * r = X * X
     //   ( since r and X are nats and r ≤ X,
     //     equality of their squares implies r = X )
     // Q: r = X

@@ -36,7 +36,7 @@ ensures r == f(y, z)
       // m * f(x/10, z) + n = f(y,z) ∧ x > 0 ∧ x = V
     x := x / 10;
       // m * f(x, z) + n = f(y,z) ∧ x ≥ 0 ∧ x < V
-      // J holds after the body, and the variant funtion has decreased (x < V)
+      // J holds after the body, and the variant function has decreased (x < V)
   }
   
     // J ∧ ¬B

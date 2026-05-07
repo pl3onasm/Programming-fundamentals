@@ -37,7 +37,7 @@ ensures r == h(n)
       // m ≥ 0 ∧ x + y * h(m/3) = h(n) ∧ m/3 ≥ 0 ∧ m/3 < V
     m := m / 3;
       // m ≥ 0 ∧ x + y * h(m) = h(n) ∧ m ≥ 0 ∧ m < V
-      // J holds after the body, and the variant funtion has decreased (m < V)
+      // J holds after the body, and the variant function has decreased (m < V)
   }
 
     // J ∧ ¬B

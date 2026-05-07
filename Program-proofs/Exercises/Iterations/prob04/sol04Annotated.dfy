@@ -37,7 +37,7 @@ ensures r == g(n)
       // m ≥ 0 ∧ r + g(m/10) = g(n) ∧ m/10 ≥ 0 ∧ m/10 < V 
     m := m / 10;
       // m ≥ 0 ∧ r + g(m) = g(n) ∧ m ≥ 0 ∧ m < V
-      // J holds after the body, and the variant funtion has decreased (m < V)
+      // J holds after the body, and the variant function has decreased (m < V)
   }
 
     // J ∧ ¬B
