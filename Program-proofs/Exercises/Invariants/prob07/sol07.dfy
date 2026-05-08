@@ -1,31 +1,39 @@
 /* file: sol07.dfy
    author: David De Potter
-   description: extra practice in Dafny, iterations, 
+   description: extra practice in Dafny, invariants, 
    solution to prob07
+   This is exercise 7.8 from the PC reader
 */
 
-ghost function f(i:nat, x:nat, y:nat):nat
+ghost function f(n:nat):nat
 {
-  match i
-  case  0 => 0
-  case  1 => 1
-  case  _ => x * f(i - 2, x, y) + y * f(i - 1, x, y)
+  if n < 2 
+    then n
+    else if n % 2 == 0 
+          then f(n / 2)
+          else f(n / 2) + f(n / 2 + 1)
 }
 
-method problem07(n:nat, x:nat, y:nat) returns (r:nat)
-ensures r == f(n, x, y)
+method problem07(n:nat) returns (r:nat)
+ensures r == f(n)
 {
-  var a , b, i := 0, 1, 0;
-
-  while i != n       
-    invariant 0 <= i <= n && a == f(i, x, y) && b == f(i + 1, x, y) 
-    decreases n - i  
+  var x, y, k:nat := 1, 0, n;
+  
+  while k != 0
+  invariant x * f(k) + y * f(k + 1) == f(n) && k <= n
+  decreases k
   {
-    var c := x * a + y * b;
-    a := b;
-    b := c;
-    i := i + 1;
-  }
+    if k % 2 == 0
+    {
+      x := x + y;
+    }
+    else
+    {
+      y := x + y;
+    }
 
-  r := a;
+    k := k / 2;
+  }
+ 
+  r := y;
 }
