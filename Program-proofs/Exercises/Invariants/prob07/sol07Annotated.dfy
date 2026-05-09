@@ -33,7 +33,9 @@ ensures r == f(n)
 
     if k % 2 == 0
     {   
-        //   ( apply the definition of f for even k )
+        //   ( apply the definition of f for even k; observe that k + 1 is odd so that
+        //     f(k + 1) = f((k + 1) / 2) + f((k + 1) / 2 + 1) = f(k / 2) + f(k / 2 + 1) 
+        //     since k is even and integer division gives (k + 1) / 2 = k / 2 )
         // x * f(k / 2) + y * [f(k / 2) + f(k / 2 + 1)] = f(n) ∧ k ≤ n ∧ k = V > 0
         //   ( prepare for updating x to x + y )
         // (x + y) * f(k / 2) + y * f(k / 2 + 1) = f(n) ∧ k ≤ n ∧ k = V > 0
@@ -43,12 +45,14 @@ ensures r == f(n)
 
     else
     {
-       //  ( apply the definition of f for odd k )
-       // x * [f(k / 2) + f(k / 2 + 1)] + y * f(k / 2 + 1) = f(n) ∧ k ≤ n ∧ k = V > 0
-       //  ( prepare for updating y to x + y )
-       // x * f(k / 2) + (x + y) * f(k / 2 + 1) = f(n) ∧ k ≤ n ∧ k = V > 0
+        //  ( apply the definition of f for odd k; observe that k + 1 is even so that
+        //    f(k + 1) = f((k + 1) / 2) = f(k / 2 + 1) 
+        //    since k is odd and integer division gives (k + 1) / 2 = k / 2 + 1 )
+        // x * [f(k / 2) + f(k / 2 + 1)] + y * f(k / 2 + 1) = f(n) ∧ k ≤ n ∧ k = V > 0
+        //  ( prepare for updating y to x + y )
+        // x * f(k / 2) + (x + y) * f(k / 2 + 1) = f(n) ∧ k ≤ n ∧ k = V > 0
       y := x + y;
-       // x * f(k / 2) + y * f(k / 2 + 1) = f(n) ∧ k ≤ n ∧ k = V > 0
+        // x * f(k / 2) + y * f(k / 2 + 1) = f(n) ∧ k ≤ n ∧ k = V > 0
     }
 
       // collect branches:
@@ -63,7 +67,7 @@ ensures r == f(n)
     // J ∧ ¬B
     // x * f(k) + y * f(k + 1) = f(n) ∧ k ≤ n ∧ k = 0
     // x * f(0) + y * f(1) = f(n) ∧ 0 ≤ n
-    //    ( apply the definition of f for 0 and 1 )
+    //   ( apply the definition of f for base cases )
     // x * 0 + y * 1 = f(n)
     // y = f(n) 
   r := y;

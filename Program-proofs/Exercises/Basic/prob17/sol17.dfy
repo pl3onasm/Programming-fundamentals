@@ -12,7 +12,7 @@ ensures  r == X
 {
   // P: a = 2 * X - n ∨ a = 3 * n - 2 * X + 1
   //   (regroup terms)
-  // a + n = 2 * X ∨ a + n = 2 * (2 *n - X) + 1
+  // a + n = 2 * X ∨ a + n = 2 * (2 * n - X) + 1
 
   if (a + n) % 2 == 0
   {   
