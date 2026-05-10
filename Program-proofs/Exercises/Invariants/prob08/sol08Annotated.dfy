@@ -14,14 +14,14 @@ function Max(a: array<int>, k: nat := a.Length): int
 requires 0 < k <= a.Length
 reads a
 {
-    // We define Max(a, k) = Max{a[i] | 0 ≤ i < k}
-    // Base case: Max(a, 1) = Max{a[i] | 0 ≤ i < 1} = a[0]
+    // We define Max(a, k) = Max(a[i] | 0 ≤ i < k}
+    // Base case: Max(a, 1) = Max(a[i] | 0 ≤ i < 1) = a[0]
     // For k > 1:
     // Max(a, k)
-    //  = Max{a[i] | 0 ≤ i < k}
+    //  = Max(a[i] | 0 ≤ i < k)
     //     ( split domain into 0 ≤ i < k - 1 and i = k - 1 )
-    //  = max{Max{a[i] | 0 ≤ i < k - 1}, a[k - 1]}
-    //     ( definition of Max(a, k - 1) )
+    //  = max{Max(a[i] | 0 ≤ i < k - 1), a[k - 1]}
+    //     ( definition of Max )
     //  = max{Max(a, k - 1), a[k - 1]}
   if k == 1 then a[0] else max(Max(a, k - 1), a[k - 1])
 }

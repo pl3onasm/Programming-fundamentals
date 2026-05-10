@@ -20,11 +20,11 @@ ensures r == Max(a)
 
     const n: ℕ
     const a: array [0..n) of ℤ
-    var   x: ℤ
+    var   r: ℤ
       
       {P: n > 0}
     T
-      {Q: x = Max{a[i] | 0 ≤ i < n}}
+      {Q: r = Max(a[i] | 0 ≤ i < n)}
   */
   
 }
