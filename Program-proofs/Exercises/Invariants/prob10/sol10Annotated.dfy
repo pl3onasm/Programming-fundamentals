@@ -10,13 +10,13 @@ requires a.Length == b.Length
 requires k <= a.Length
 reads a, b
 {
-    // We define dotProd(a, b, k) = ∑(a[i] * b[i] | 0 ≤ i < k)
-    // Base case: dotProd(a, b, 0) = ∑(a[i] * b[i] | 0 ≤ i < 0) = ∑(∅) = 0
+    // We define dotProd(a, b, k) = ∑(a[i] * b[i] | i: 0 ≤ i < k)
+    // Base case: dotProd(a, b, 0) = ∑(a[i] * b[i] | i: 0 ≤ i < 0) = ∑(∅) = 0
     // For k > 0:
     // dotProd(a, b, k)
-    //  = ∑(a[i] * b[i] | 0 ≤ i < k)
+    //  = ∑(a[i] * b[i] | i: 0 ≤ i < k)
     //     ( split domain into 0 ≤ i < k - 1 and i = k - 1 )
-    //  = (∑(a[i] * b[i] | 0 ≤ i < k - 1)) + a[k - 1] * b[k - 1]
+    //  = ∑(a[i] * b[i] | i: 0 ≤ i < k - 1) + a[k - 1] * b[k - 1]
     //     ( definition of dotProd )
     //  = dotProd(a, b, k - 1) + a[k - 1] * b[k - 1]
   if k == 0 then 0.0 else dotProd(a, b, k - 1) + a[k - 1] * b[k - 1]

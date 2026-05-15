@@ -9,18 +9,19 @@ ghost function B(a: array<int>, k: nat := a.Length): int
 requires k <= a.Length
 reads a
 {
-    // We define B(a, k) = ∑(a[i] * a[j] | 0 ≤ i < j < k) 
+    // We define B(a, k) = ∑(a[i] * a[j] | i,j: 0 ≤ i < j < k) 
     // That is, B(a, k) sums the products of all pairs of the first k elements.
-    // Base case: B(a, 0) = ∑(a[i] * a[j] | 0 ≤ i < j < 0) = ∑(a[i] * a[j] | i, j ∈ ∅) = 0
+    // Base case: B(a, 0) = ∑(a[i] * a[j] | i,j: 0 ≤ i < j < 0) 
+    //                    = ∑(a[i] * a[j] | i, j ∈ ∅) = 0
     // For k > 0:
     // B(a, k)
-    //   = ∑(a[i] * a[j] | 0 ≤ i < j < k) 
+    //   = ∑(a[i] * a[j] | i,j: 0 ≤ i < j < k) 
     //      ( split domain into 0 ≤ i < j < k - 1 and j = k - 1 )
-    //   = ∑(a[i] * a[j] | 0 ≤ i < j < k - 1) + ∑(a[i] * a[j] | 0 ≤ i < k - 1 ∧ j = k - 1)  
+    //   = ∑(a[i] * a[j] | i,j: 0 ≤ i < j < k - 1) + ∑(a[i] * a[j] | i: 0 ≤ i < k - 1 ∧ j = k - 1)  
     //      ( definition of B )
-    //   = B(a, k - 1) + ∑(a[i] * a[k - 1] | 0 ≤ i < k - 1)
-    //      ( arithmetic )
-    //   = B(a, k - 1) + a[k - 1] * ∑(a[i] | 0 ≤ i < k - 1)
+    //   = B(a, k - 1) + ∑(a[i] * a[k - 1] | i: 0 ≤ i < k - 1)
+    //      ( factor out constant a[k - 1] from the second sum )
+    //   = B(a, k - 1) + a[k - 1] * ∑(a[i] | i: 0 ≤ i < k - 1)
     //      ( definition of C )
     //   = B(a, k - 1) + a[k - 1] * C(a, k - 1)
   if k == 0 then 0 else B(a, k - 1) + a[k - 1] * C(a, k - 1)
@@ -30,13 +31,13 @@ ghost function C(a: array<int>, k: nat := a.Length): int
 requires k <= a.Length
 reads a
 {  
-    // We define C(a, k) = ∑(a[i] | 0 ≤ i < k)
-    // Base case: C(a, 0) = ∑(a[i] | 0 ≤ i < 0) = ∑(∅) = 0
+    // We define C(a, k) = ∑(a[i] | i: 0 ≤ i < k)
+    // Base case: C(a, 0) = ∑(a[i] | i: 0 ≤ i < 0) = ∑(∅) = 0
     // For k > 0:
     // C(a, k)
-    //   = ∑(a[i] | 0 ≤ i < k)
+    //   = ∑(a[i] | i: 0 ≤ i < k)
     //      ( split domain into 0 ≤ i < k - 1 and i = k - 1 )
-    //   = ∑(a[i] | 0 ≤ i < k - 1) + ∑(a[i] | i = k - 1)
+    //   = ∑(a[i] | i: 0 ≤ i < k - 1) + ∑(a[i] | i = k - 1)
     //      ( definition of C )
     //   = C(a, k - 1) + a[k - 1]
   if k == 0 then 0 else C(a, k - 1) + a[k - 1]

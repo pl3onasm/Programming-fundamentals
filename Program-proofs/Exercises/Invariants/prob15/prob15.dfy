@@ -16,7 +16,7 @@ ensures  ??
         
         {P: true}
       T
-        {Q: r = ∑(a[i] * a[j] | 0 ≤ i < n ∧ 0 ≤ j < n)}
+        {Q: r = ∑(a[i] * a[j] | i,j: 0 ≤ i < n ∧ 0 ≤ j < n)}
 
       The time compplexity of T should be linear in n, the size
       of the input array.

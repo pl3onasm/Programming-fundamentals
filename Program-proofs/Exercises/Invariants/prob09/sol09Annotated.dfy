@@ -9,13 +9,13 @@ ghost function Prod(a: array<real>, k: nat := a.Length): real
 requires k <= a.Length
 reads a
 {
-    // We define Prod(a, k) = ∏(a[i] | 0 ≤ i < k)
-    // Base case: Prod(a, 0) = ∏(a[i] | 0 ≤ i < 0) = ∏(∅) = 1
+    // We define Prod(a, k) = ∏(a[i] | i: 0 ≤ i < k)
+    // Base case: Prod(a, 0) = ∏(a[i] | i: 0 ≤ i < 0) = ∏(∅) = 1
     // For k > 0:
     // Prod(a, k)
-    //  = ∏(a[i] | 0 ≤ i < k)
+    //  = ∏(a[i] | i: 0 ≤ i < k)
     //     ( split domain into 0 ≤ i < k - 1 and i = k - 1 )
-    //  = (∏(a[i] | 0 ≤ i < k - 1)) * a[k - 1]
+    //  = (∏(a[i] | i: 0 ≤ i < k - 1)) * a[k - 1]
     //     ( definition of Prod )
     //  = Prod(a, k - 1) * a[k - 1]
   if k == 0 then 1.0 else Prod(a, k - 1) * a[k - 1]

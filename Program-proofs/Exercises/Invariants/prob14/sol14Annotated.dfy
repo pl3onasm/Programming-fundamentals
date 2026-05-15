@@ -10,31 +10,31 @@ requires k <= a.Length
 decreases a.Length - k
 reads a, b
 {
-    // We define S(a, b, k) = ∑(a[i] * b[j] | k ≤ i < j < n ∧ a[i] ≤ b[i])
-    // Base case: S(a, b, n) = ∑(a[i] * b[j] | n ≤ i < j < n ∧ a[i] ≤ b[i])
+    // We define S(a, b, k) = ∑(a[i] * b[j] | i,j: k ≤ i < j < n ∧ a[i] ≤ b[i])
+    // Base case: S(a, b, n) = ∑(a[i] * b[j] | i,j: n ≤ i < j < n ∧ a[i] ≤ b[i])
     //                       = ∑(∅) = 0
   if k == a.Length then 0 
     // For k < n:
     // S(a, b, k)
-    //   = ∑(a[i] * b[j] | k ≤ i < j < n ∧ a[i] ≤ b[i])
+    //   = ∑(a[i] * b[j] | i,j: k ≤ i < j < n ∧ a[i] ≤ b[i])
     //      ( split domain into k < i and i = k )
-    //   = ∑(a[i] * b[j] | k < i < j < n ∧ a[i] ≤ b[i]) 
-    //     + ∑(a[k] * b[j] | k < j < n ∧ a[k] ≤ b[k])
+    //   = ∑(a[i] * b[j] | i,j: k < i < j < n ∧ a[i] ≤ b[i]) 
+    //     + ∑(a[k] * b[j] | j: k < j < n ∧ a[k] ≤ b[k])
     //      ( rewrite first sum to comply with def of S 
     //        and factor out constant a[k] in second sum )
-    //   = ∑(a[i] * b[j] | k + 1 ≤ i < j < n ∧ a[i] ≤ b[i])
-    //     + a[k] * ∑(b[j] | k + 1 ≤ j < n ∧ a[k] ≤ b[k]) 
+    //   = ∑(a[i] * b[j] | i,j: k + 1 ≤ i < j < n ∧ a[i] ≤ b[i])
+    //     + a[k] * ∑(b[j] | j: k + 1 ≤ j < n ∧ a[k] ≤ b[k]) 
     //      ( apply definition of S to first sum )
-    //   = S(a, b, k + 1) + a[k] * ∑(b[j] | k + 1 ≤ j < n ∧ a[k] ≤ b[k])
+    //   = S(a, b, k + 1) + a[k] * ∑(b[j] | j: k + 1 ≤ j < n ∧ a[k] ≤ b[k])
     //      ( distinguish cases a[k] ≤ b[k] and a[k] > b[k] )
   else if a[k] > b[k] 
-      //   = S(a, b, k + 1) + a[k] * ∑(b[j] | k + 1 ≤ j < n ∧ a[k] ≤ b[k])
+      //   = S(a, b, k + 1) + a[k] * ∑(b[j] | j: k + 1 ≤ j < n ∧ a[k] ≤ b[k])
       //      ( the condition a[k] > b[k] implies that the second sum is empty )
       //   = S(a, b, k + 1) + a[k] * ∑(∅)
       //   = S(a, b, k + 1) + 0
     then S(a, b, k + 1) 
       //      ( in this branch, we have a[k] ≤ b[k] )
-      //   = S(a, b, k + 1) + a[k] * ∑(b[j] | k + 1 ≤ j < n)
+      //   = S(a, b, k + 1) + a[k] * ∑(b[j] | j: k + 1 ≤ j < n)
       //      ( apply definition of U )
       //   = S(a, b, k + 1) + a[k] * U(a, b, k + 1)
     else S(a, b, k + 1) + a[k] * U(a, b, k + 1)
@@ -46,14 +46,14 @@ requires k <= a.Length
 decreases a.Length - k
 reads a, b
 {
-    // We define U(a, b, k) = ∑(b[i] | k ≤ i < n)
-    // Base case: U(a, b, n) = ∑(b[i] | n ≤ i < n) = ∑(∅) = 0
+    // We define U(a, b, k) = ∑(b[i] | i: k ≤ i < n)
+    // Base case: U(a, b, n) = ∑(b[i] | i: n ≤ i < n) = ∑(∅) = 0
     // For k < n:
     // U(a, b, k)
-    //   = ∑(b[i] | k ≤ i < n)
+    //   = ∑(b[i] | i: k ≤ i < n)
     //      ( split domain into k < i and i = k )
-    //   = ∑(b[i] | k < i < n ) + ∑(b[i] | i = k)
-    //   = ∑(b[i] | k + 1 ≤ i < n) + b[k]
+    //   = ∑(b[i] | i: k < i < n ) + ∑(b[i] | i: i = k)
+    //   = ∑(b[i] | i: k + 1 ≤ i < n) + b[k]
     //      ( definition of U )
     //   = U(a, b, k + 1) + b[k]
   if k == b.Length then 0 else b[k] + U(a, b, k + 1)

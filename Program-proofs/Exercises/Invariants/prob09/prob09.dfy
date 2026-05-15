@@ -24,6 +24,6 @@ ensures p == Prod(a)
       
       {P: true}
     T
-      {Q: p = ∏(a[i] | 0 ≤ i < n)}
+      {Q: p = ∏(a[i] | i: 0 ≤ i < n)}
   */
 }

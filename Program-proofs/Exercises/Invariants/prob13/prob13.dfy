@@ -37,12 +37,12 @@ ensures  r == S(a, x, 0)
         
         {P: true}
       T
-        {Q: r = ∑(a[i] * x^i | 0 ≤ i < n)}
+        {Q: r = ∑(a[i] * x^i | i: 0 ≤ i < n)}
     
   
     You should work with the following function S:
 
-      S(a, x, k) = ∑(a[i] * x^{i-k} | k ≤ i < n)
+      S(a, x, k) = ∑(a[i] * x^{i-k} | i: k ≤ i < n)
   
   */
 }

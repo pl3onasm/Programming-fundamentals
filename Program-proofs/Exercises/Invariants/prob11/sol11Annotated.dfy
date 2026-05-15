@@ -14,14 +14,14 @@ ghost function Cnt7(a: array<int>, k: nat := a.Length): int
 requires k <= a.Length
 reads a
 {   
-    // We define Cnt7(a, k) = #{ i | 0 ≤ i < k ∧ a[i] = 7 }
+    // We define Cnt7(a, k) = #{ i | i: 0 ≤ i < k ∧ a[i] = 7 }
     // That is, Cnt7(a, k) counts how many of the first k elements equal 7.
-    // Base case: Cnt7(a, 0) = #{ i | 0 ≤ i < 0 ∧ a[i] = 7 } = #∅ = 0
+    // Base case: Cnt7(a, 0) = #{ i | i: 0 ≤ i < 0 ∧ a[i] = 7 } = #∅ = 0
     // For k > 0:
     // Cnt7(a, k) 
-    //   = #{ i | 0 ≤ i < k ∧ a[i] = 7 }
+    //   = #{ i | i: 0 ≤ i < k ∧ a[i] = 7 }
     //      ( split domain into 0 ≤ i < k - 1 and i = k - 1 )    
-    //   = #{ i | 0 ≤ i < k-1 ∧ a[i] = 7 } + #{ i | i = k - 1 ∧ a[i] = 7 }
+    //   = #{ i | i: 0 ≤ i < k-1 ∧ a[i] = 7 } + #{ i | i = k - 1 ∧ a[i] = 7 }
     //      ( definition of Cnt7 and Ord )
     //   = Cnt7(a, k-1) + Ord(a[k-1] = 7)
   if k == 0 then 0 else Cnt7(a, k - 1) + Ord(a[k - 1] == 7)

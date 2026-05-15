@@ -31,15 +31,15 @@ ensures  r == B(a)
       
       {P: true}
     T
-      {Q: r = ∑(a[i] * a[j] | 0 ≤ i < j < n)}
+      {Q: r = ∑(a[i] * a[j] | i, j: 0 ≤ i < j < n)}
   
   
     The algorithm should run in linear time, i.e., in O(n).
     To achieve this, you should work with functions B and C
     that satisfy the following recursive definitions:
 
-      B(a, k) = ∑(a[i] * a[j] | 0 ≤ i < j < k)
-      C(a, k) = ∑(a[i] | 0 ≤ i < k)
+      B(a, k) = ∑(a[i] * a[j] | i, j: 0 ≤ i < j < k)
+      C(a, k) = ∑(a[i] | i: 0 ≤ i < k)
   
   */
 }

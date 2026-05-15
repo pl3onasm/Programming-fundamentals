@@ -10,17 +10,17 @@ requires k <= a.Length
 decreases a.Length - k
 reads a
 {
-    // We define S(a, x, k) = ∑(a[i] * x^{i-k} | k ≤ i < n)
-    // Base case: S(a, x, n) = ∑(a[i] * x^{i-n} | n ≤ i < n) = ∑(∅) = 0
+    // We define S(a, x, k) = ∑(a[i] * x^{i-k} | i: k ≤ i < n)
+    // Base case: S(a, x, n) = ∑(a[i] * x^{i-n} | i: n ≤ i < n) = ∑(∅) = 0
     // For k < n:
     // S(a, x, k)
-    //   = ∑(a[i] * x^{i-k} | k ≤ i < n)
+    //   = ∑(a[i] * x^{i-k} | i: k ≤ i < n)
     //      (split domain into i = k and i > k)
-    //   = a[k] * x^{k-k} + ∑(a[i] * x^{i-k} | k < i < n)
+    //   = a[k] * x^{k-k} + ∑(a[i] * x^{i-k} | i: k < i < n)
     //      (rewrite x^{i-k} as x * x^{(i-1)-k} and factor out x)
-    //   = a[k] + x * ∑(a[i] * x^{(i-1)-k} | k < i < n)
+    //   = a[k] + x * ∑(a[i] * x^{(i-1)-k} | i: k < i < n)
     //      (rewrite to comply with definition of S)
-    //   = a[k] + x * ∑(a[i] * x^{i-(k+1)} | k+1 ≤ i < n)
+    //   = a[k] + x * ∑(a[i] * x^{i-(k+1)} | i: k+1 ≤ i < n)
     //      (apply definition of S)
     //   = a[k] + x * S(a, x, k + 1)
   if k == a.Length then 0.0 else a[k] + x * S(a, x, k + 1)

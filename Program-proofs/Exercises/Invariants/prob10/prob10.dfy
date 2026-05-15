@@ -25,6 +25,6 @@ ensures  r == dotProd(a, b)
       
       {P: true}
     T
-      {Q: r = ∑(a[i] * b[i] | 0 ≤ i < n)}
+      {Q: r = ∑(a[i] * b[i] | i: 0 ≤ i < n)}
   */
 }

@@ -21,7 +21,6 @@ reads a
   if k == 0 then 0 else U(a, k - 1) + a[k - 1]
 }
 
-
 method problem15(a: array<nat>) returns (r: int)
 ensures  r == S(a, a.Length)
 {

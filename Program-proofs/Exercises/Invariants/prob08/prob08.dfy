@@ -24,7 +24,7 @@ ensures r == Max(a)
       
       {P: n > 0}
     T
-      {Q: r = Max(a[i] | 0 ≤ i < n)}
+      {Q: r = Max(a[i] | i: 0 ≤ i < n)}
   */
   
 }
