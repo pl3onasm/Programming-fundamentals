@@ -5,7 +5,7 @@
    This is exercise 7.14 from the PC reader
 */
 
-function B(a: array<int>, k: nat := a.Length): int
+ghost function B(a: array<int>, k: nat := a.Length): int
 requires k <= a.Length
 reads a
 {
@@ -26,7 +26,7 @@ reads a
   if k == 0 then 0 else B(a, k - 1) + a[k - 1] * C(a, k - 1)
 }
 
-function C(a: array<int>, k: nat := a.Length): int
+ghost function C(a: array<int>, k: nat := a.Length): int
 requires k <= a.Length
 reads a
 {  

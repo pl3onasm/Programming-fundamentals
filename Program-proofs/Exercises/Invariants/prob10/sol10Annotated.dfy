@@ -5,7 +5,7 @@
    This is exercise 7.12 from the PC reader
 */
 
-function dotProd(a: array<real>, b: array<real>, k: nat := a.Length): real
+ghost function dotProd(a: array<real>, b: array<real>, k: nat := a.Length): real
 requires a.Length == b.Length
 requires k <= a.Length
 reads a, b

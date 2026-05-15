@@ -4,7 +4,7 @@
    This is exercise 7.13 from the PC reader
 */
 
-function Cnt7(a: array<int>, k: nat := a.Length): int
+ghost function Cnt7(a: array<int>, k: nat := a.Length): int
 requires ??
 reads a
 {

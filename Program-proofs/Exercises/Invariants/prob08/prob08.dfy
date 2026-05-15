@@ -3,7 +3,7 @@
    description: extra practice in Dafny, invariants, prob08
    This is exercise 7.10b from the PC reader
 */
-function Max(a: array<int>, k: nat := a.Length): int
+ghost function Max(a: array<int>, k: nat := a.Length): int
 requires ??
 reads a
 {

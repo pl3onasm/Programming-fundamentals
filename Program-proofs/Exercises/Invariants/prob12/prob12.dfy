@@ -4,14 +4,14 @@
    This is exercise 7.14 from the PC reader
 */
 
-function B(a: array<int>, k: nat := a.Length): int
+ghost function B(a: array<int>, k: nat := a.Length): int
 requires ??
 reads a
 {
   ??
 }
 
-function C(a: array<int>, k: nat := a.Length): int
+ghost function C(a: array<int>, k: nat := a.Length): int
 requires ??
 reads a
 {

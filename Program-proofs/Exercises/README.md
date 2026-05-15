@@ -14,6 +14,7 @@ This folder contains some extra problems concerning program proofs in Dafny. The
 | 7 | [Invariants](Invariants) |
 | 8 | [Searching and sorting](Searching-sorting) |
 | 9 | [Two-dim counting](2D-counting) |
+| - | [Mathematical induction](Induction) |
 |||
 
 *< in progress >*

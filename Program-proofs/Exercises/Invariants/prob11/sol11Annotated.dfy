@@ -10,7 +10,7 @@ function Ord(b: bool): int
   if b then 1 else 0
 }
 
-function Cnt7(a: array<int>, k: nat := a.Length): int
+ghost function Cnt7(a: array<int>, k: nat := a.Length): int
 requires k <= a.Length
 reads a
 {   

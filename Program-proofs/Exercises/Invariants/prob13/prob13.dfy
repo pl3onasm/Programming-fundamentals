@@ -4,7 +4,7 @@
    This is exercise 7.15 from the PC reader
 */
 
-function S(a: array<real>, x: real, k: nat): real
+ghost function S(a: array<real>, x: real, k: nat): real
 requires ??
 reads a
 {

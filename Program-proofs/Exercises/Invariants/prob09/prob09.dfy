@@ -4,7 +4,7 @@
    This is exercise 7.11 from the PC reader
 */
 
-function Prod(a: array<real>, k: nat := a.Length): real
+ghost function Prod(a: array<real>, k: nat := a.Length): real
 requires ??
 reads a
 {

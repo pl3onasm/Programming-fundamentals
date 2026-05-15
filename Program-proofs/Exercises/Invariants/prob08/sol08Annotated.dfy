@@ -10,7 +10,7 @@ function max(x: int, y: int): int
   if x >= y then x else y
 }
 
-function Max(a: array<int>, k: nat := a.Length): int
+ghost function Max(a: array<int>, k: nat := a.Length): int
 requires 0 < k <= a.Length
 reads a
 {
