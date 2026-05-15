@@ -2,7 +2,6 @@
    author: David De Potter
    description: extra practice in Dafny, invariants, 
    solution to prob14, with annotations
-   2021 HMW3 ex1
 */
 
 ghost function S(a: array<nat>, b: array<nat>, k: nat): int
@@ -36,28 +35,28 @@ reads a, b
     then S(a, b, k + 1) 
       //      ( in this branch, we have a[k] ≤ b[k] )
       //   = S(a, b, k + 1) + a[k] * ∑(b[j] | k + 1 ≤ j < n)
-      //      ( apply definition of T )
-      //   = S(a, b, k + 1) + a[k] * T(a, b, k + 1)
-    else S(a, b, k + 1) + a[k] * T(a, b, k + 1)
+      //      ( apply definition of U )
+      //   = S(a, b, k + 1) + a[k] * U(a, b, k + 1)
+    else S(a, b, k + 1) + a[k] * U(a, b, k + 1)
 }
 
-ghost function T(a: array<nat>, b: array<nat>, k: nat): int
+ghost function U(a: array<nat>, b: array<nat>, k: nat): int
 requires a.Length == b.Length 
 requires k <= a.Length
 decreases a.Length - k
 reads a, b
 {
-    // We define T(a, b, k) = ∑(b[i] | k ≤ i < n)
-    // Base case: T(a, b, n) = ∑(b[i] | n ≤ i < n) = ∑(∅) = 0
+    // We define U(a, b, k) = ∑(b[i] | k ≤ i < n)
+    // Base case: U(a, b, n) = ∑(b[i] | n ≤ i < n) = ∑(∅) = 0
     // For k < n:
-    // T(a, b, k)
+    // U(a, b, k)
     //   = ∑(b[i] | k ≤ i < n)
     //      ( split domain into k < i and i = k )
     //   = ∑(b[i] | k < i < n ) + ∑(b[i] | i = k)
     //   = ∑(b[i] | k + 1 ≤ i < n) + b[k]
-    //      ( definition of T )
-    //   = T(a, b, k + 1) + b[k]
-  if k == b.Length then 0 else b[k] + T(a, b, k + 1)
+    //      ( definition of U )
+    //   = U(a, b, k + 1) + b[k]
+  if k == b.Length then 0 else b[k] + U(a, b, k + 1)
 }
 
 method problem14(a: array<nat>, b: array<nat>) returns (r: int)
@@ -68,46 +67,47 @@ ensures r == S(a, b, 0)
 
     // Initialization to establish J before the loop
     // P: n ≥ 0
-    //   ( arithmetic; base cases of S and T )
-    // 0 ≤ 0 ≤ n ∧ 0 = S(a, b, n) ∧ 0 = T(a, b, n)
-  var s:int, t:int, k:nat := 0, 0, n;
-    // J: 0 ≤ k ≤ n ∧ s = S(a, b, k) ∧ t = T(a, b, k)
+    //   ( arithmetic; base cases of S and U )
+    // 0 ≤ 0 ≤ n ∧ 0 = S(a, b, n) ∧ 0 = U(a, b, n)
+  var s:int, u:int, k:nat := 0, 0, n;
+    // J: 0 ≤ k ≤ n ∧ s = S(a, b, k) ∧ u = U(a, b, k)
   
   while k > 0
-  invariant k <= n && s == S(a, b, k) && t == T(a, b, k)
+  invariant k <= n && s == S(a, b, k) && u == U(a, b, k)
   decreases k
   {
       // J ∧ B ∧ vf = V
-      // 0 ≤ k ≤ n ∧ s = S(a, b, k) ∧ t = T(a, b, k) ∧ k = V > 0
-      //   ( prepare updating k to k - 1 )
-      // 0 ≤ k - 1 < n ∧ S(a, b, k - 1) = s + (a[k - 1] ≤ b[k - 1] ? t * a[k - 1] : 0)
-      //   ∧ T(a, b, k - 1) = t + b[k - 1] ∧ k - 1 < V
+      // 0 ≤ k ≤ n ∧ s = S(a, b, k) ∧ u = U(a, b, k) ∧ k = V > 0
+      //   ( prepare updating k to k - 1; apply definitions of S and U )
+      // 0 ≤ k - 1 < n ∧ S(a, b, k - 1) = s + (a[k - 1] ≤ b[k - 1] ? u * a[k - 1] : 0)
+      //   ∧ U(a, b, k - 1) = u + b[k - 1] ∧ k - 1 < V
     k := k - 1;
-      // 0 ≤ k < n ∧ S(a, b, k) = s + (a[k] ≤ b[k] ? t * a[k] : 0) 
-      //   ∧ T(a, b, k) = t + b[k] ∧ k < V
+      // 0 ≤ k < n ∧ S(a, b, k) = s + (a[k] ≤ b[k] ? u * a[k] : 0) 
+      //   ∧ U(a, b, k) = u + b[k] ∧ k < V
     if a[k] <= b[k] {
-        // 0 ≤ k < n ∧ S(a, b, k) = s + t * a[k] ∧ T(a, b, k) = t + b[k] ∧ k < V
-      s := s + t * a[k];
-        // 0 ≤ k < n ∧ S(a, b, k) = s ∧ T(a, b, k) = t + b[k] ∧ k < V
+        // 0 ≤ k < n ∧ S(a, b, k) = s + u * a[k] ∧ U(a, b, k) = u + b[k] ∧ k < V
+      s := s + u * a[k];
+        // 0 ≤ k < n ∧ S(a, b, k) = s ∧ U(a, b, k) = u + b[k] ∧ k < V
     }
 
     else 
-    {   // In this branch, we have a[k] > b[k]
-        // 0 ≤ k < n ∧ S(a, b, k) = s + 0 ∧ T(a, b, k) = t + b[k] ∧ k < V
-        // 0 ≤ k < n ∧ S(a, b, k) = s ∧ T(a, b, k) = t + b[k] ∧ k < V
+    {   
+        // In this branch, we have a[k] > b[k]
+        // 0 ≤ k < n ∧ S(a, b, k) = s + 0 ∧ U(a, b, k) = u + b[k] ∧ k < V
+        // 0 ≤ k < n ∧ S(a, b, k) = s ∧ U(a, b, k) = u + b[k] ∧ k < V
     }
 
       // Collect branches:
-      // 0 ≤ k < n ∧ S(a, b, k) = s ∧ T(a, b, k) = t + b[k] ∧ k < V
-    t := t + b[k];
-      // 0 ≤ k < n ∧ S(a, b, k) = s ∧ T(a, b, k) = t ∧ k < V
-      // J is preserved, and the variant function vf decreases.
+      // 0 ≤ k < n ∧ S(a, b, k) = s ∧ U(a, b, k) = u + b[k] ∧ k < V
+    u := u + b[k];
+      // 0 ≤ k < n ∧ S(a, b, k) = s ∧ U(a, b, k) = u ∧ k < V
+      //   J is preserved, and the variant function vf has decreased
   }
 
     // J ∧ ¬B
-    // 0 ≤ k ≤ n ∧ s = S(a, b, k) ∧ t = T(a, b, k) ∧ k ≤ 0
+    // 0 ≤ k ≤ n ∧ s = S(a, b, k) ∧ u = U(a, b, k) ∧ k ≤ 0
     //   ( the conditions k ≤ 0 and 0 ≤ k imply k = 0 )
-    // s = S(a, b, 0) ∧ t = T(a, b, 0)
+    // s = S(a, b, 0) ∧ u = U(a, b, 0)
   r := s;
     // Q: r = S(a, b, 0)
 }
