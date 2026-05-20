@@ -6,7 +6,7 @@ This repository contains old exams for the course ${\color{rosybrown}\text{Imper
 
 For the C questions, the subfolders each hold one or more example solutions, a folder with test cases, and a file called *myprogram.c* which you can use to write and test your own solution. For the proof questions, both exam questions and answers are given in [Dafny](https://github.com/dafny-lang/dafny).  
   
-Found this repository useful? Help out your (future) fellow students by mailing your exam paper to [me](mailto:pl3onasm@gmail.com) or submitting a pull request. Scans or pictures with handwritten notes are perfectly fine, as any annotations will be removed. Also, feel free to report any issues you find.
+Found this repository useful? Help out your (future) fellow students by mailing your exam paper to [me](mailto:pl3onasm@gmail.com) or submitting a pull request. Scans or pictures with handwritten notes are perfectly fine, as any annotations will be removed and a clean PDF will be generated for the repository. Also, feel free to report any issues you find.
 
 <br/>
 

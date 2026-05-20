@@ -32,12 +32,13 @@ ensures r == S(a, a.Length)
   var s:int, u:int, k:nat, z:int := 0, 0, 0, 0;
 
   while k < n
-  invariant 0 <= k <= n && s == S(a, k) && u == U(a, k) && z == Z(a, k)
+  invariant 0 <= k <= n
+  invariant s == S(a, k) && u == U(a, k) && z == Z(a, k)
   decreases n - k
   {    
     z := z + a[k];
     s := s + z * u;
-    u := u + a[k] * z;
+    u := u + z * a[k];
     k := k + 1;
   }
 

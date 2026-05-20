@@ -2,7 +2,7 @@ $\huge\color{cadetblue}{\text{Extra practice in Dafny}}$
 
 <br/>
 
-This folder contains some extra problems concerning program proofs in Dafny. The problems are based on exercises from the discontinued course *Program Correctness* at the University of Groningen. They are taken from the [reader](../Tutorials/Reader%20Program%20Correctness.pdf) and from some old exams.
+This folder contains some extra problems concerning program proofs in Dafny. The problems are based on exercises from the discontinued course *Program Correctness* at the University of Groningen. They are mostly taken from the [reader](../Tutorials/Reader%20Program%20Correctness.pdf) or from some old exams.
 
 
 <br/>
