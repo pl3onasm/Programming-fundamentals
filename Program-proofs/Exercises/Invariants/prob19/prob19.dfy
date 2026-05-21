@@ -1,7 +1,6 @@
 /* file: prob19.dfy
    author: your name
    description: extra practice in Dafny, invariants, prob19
-   exam2018, april, problem 2
 */
 
 method problem19(a: array<int>) returns (r: int)
@@ -18,7 +17,7 @@ ensures  ??
         
         {P: n > 0}
       T
-        {Q: r = Max (a[i] + a[j] + a[k] | i,j,k: 0 ≤ i ≤ j < n ∧ i ≤ k < n)}
+        {Q: r = Max (a[i] + a[j] + a[h] | i,j,h: 0 ≤ i ≤ j < n ∧ i ≤ h < n)}
 
     The time complexity of T should be linear in n.
   */

@@ -8,20 +8,20 @@ ghost function S(a: array<nat>, x: nat): int
 requires x <= a.Length
 reads a
 {
-    // We define S(a, x) = ∑(a[i] + a[j] | i,j: 0 ≤ i < j < x ∧ a[j] mod 2 = 1)
+    // We define S(a, x) = ∑(a[i] + a[j] | i,j: 0 ≤ i < j < x ∧ a[j] % 2 = 1)
     // Base case: 
-    //   S(a, 0) = ∑(a[i] + a[j] | i,j: 0 ≤ i < j < 0 ∧ a[j] mod 2 = 1) 
+    //   S(a, 0) = ∑(a[i] + a[j] | i,j: 0 ≤ i < j < 0 ∧ a[j] % 2 = 1) 
     //           = ∑(∅) = 0
     // For x > 0:
     // S(a, x)
-    //   = ∑(a[i] + a[j] | i,j: 0 ≤ i < j < x ∧ a[j] mod 2 = 1)
+    //   = ∑(a[i] + a[j] | i,j: 0 ≤ i < j < x ∧ a[j] % 2 = 1)
     //      ( split domain into j < x - 1 and j = x - 1 )
-    //   = ∑(a[i] + a[j] | i,j : 0 ≤ i < j < x - 1 ∧ a[j] mod 2 = 1) 
-    //     + ∑(a[i] + a[x - 1] | i: 0 ≤ i < x - 1 ∧ a[x - 1] mod 2 = 1)
+    //   = ∑(a[i] + a[j] | i,j : 0 ≤ i < j < x - 1 ∧ a[j] % 2 = 1) 
+    //     + ∑(a[i] + a[x - 1] | i: 0 ≤ i < x - 1 ∧ a[x - 1] % 2 = 1)
     //      ( apply definition of S to first sum )
     //   = S(a, x - 1) 
-    //     + ∑(a[i] + a[x - 1] | i: 0 ≤ i < x - 1 ∧ a[x - 1] mod 2 = 1)
-    //      ( take condition a[x - 1] mod 2 = 1 out of sum )
+    //     + ∑(a[i] + a[x - 1] | i: 0 ≤ i < x - 1 ∧ a[x - 1] % 2 = 1)
+    //      ( take condition a[x - 1] % 2 = 1 out of sum )
     //   = S(a, x - 1) + (a[x - 1] % 2 = 1 ? ∑(a[i] + a[x - 1] | i: 0 ≤ i < x - 1) : 0)
     //      ( simplify by rewriting the condition as a multiplication by 0 or 1 )
     //   = S(a, x - 1) + (a[x - 1] % 2) * ∑(a[i] + a[x - 1] | i: 0 ≤ i < x - 1)
