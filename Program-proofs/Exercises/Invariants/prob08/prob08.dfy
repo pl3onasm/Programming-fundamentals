@@ -25,6 +25,8 @@ ensures r == Max(a)
       {P: n > 0}
     T
       {Q: r = Max(a[i] | i: 0 ≤ i < n)}
+
+    The time complexity of T should be linear in n, i.e., in O(n).
   */
   
 }

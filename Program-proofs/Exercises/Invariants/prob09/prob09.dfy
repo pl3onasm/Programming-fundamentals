@@ -25,5 +25,7 @@ ensures p == Prod(a)
       {P: true}
     T
       {Q: p = ∏(a[i] | i: 0 ≤ i < n)}
+
+    The time complexity of T should be linear in n.
   */
 }

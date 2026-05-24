@@ -18,10 +18,10 @@ ensures  ??
         
         {P: n > 0}
       T
-        {Q: r = ∑( Max(a[i] + a[j] | i,j: 0 ≤ i ≤ j ≤ k) | k: 0 ≤ k < n)}
+        {Q: r = ∑( Max(a[i] + a[j] | i,j: 0 ≤ i ≤ j ≤ h) | h: 0 ≤ h < n)}
 
 
-    The time complexity of the command sequence T should be in O(n).
+    The time complexity of T should be in O(n).
   */
 
 }

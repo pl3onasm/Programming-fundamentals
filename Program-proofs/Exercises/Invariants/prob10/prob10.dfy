@@ -26,5 +26,7 @@ ensures  r == dotProd(a, b)
       {P: true}
     T
       {Q: r = ∑(a[i] * b[i] | i: 0 ≤ i < n)}
+
+    The time complexity of T should be linear in n, i.e., in O(n).
   */
 }

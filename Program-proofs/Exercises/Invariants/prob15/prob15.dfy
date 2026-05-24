@@ -18,7 +18,7 @@ ensures  ??
       T
         {Q: r = ∑(a[i] * a[j] | i,j: 0 ≤ i < n ∧ 0 ≤ j < n)}
 
-      The time compplexity of T should be linear in n, the size
-      of the input array.
+    The time complexity of T should be linear in n, the size
+    of the input array.
   */
 }

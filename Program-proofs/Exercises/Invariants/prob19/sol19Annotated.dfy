@@ -37,7 +37,7 @@ reads a
     //     ( apply definition of U to the third term )
     //   = mxm (mxm (S(a, x - 1), a[x - 1] + U(a, x - 1)), a[x - 1] + U(a, x))
     //     ( since U(a, x) includes all pairs counted by U(a, x - 1),
-    //       the third term dominates the second term so we can drop the second term )
+    //       the third term dominates the second term and we can drop the second term )
     //   = mxm (S(a, x - 1), a[x - 1] + U(a, x))
   if x == 1 then 3 * a[0] else mxm(S(a, x - 1), a[x - 1] + U(a, x))
 }

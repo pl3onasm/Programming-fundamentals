@@ -1,7 +1,7 @@
-/* file: sol14.dfy
+/* file: sol19.dfy
    author: David De Potter
    description: extra practice in Dafny, invariants, 
-   solution to prob14
+   solution to prob19
 */
 
 function mxm(x: int, y: int): int
@@ -24,7 +24,7 @@ reads a
 {
   if x == 1
   then 2 * a[0] 
-  else mxm (U(a, x - 1), a[x - 1] + mxm (Z(a, x - 1), a[x - 1]))
+  else mxm(U(a, x - 1), a[x - 1] + mxm(Z(a, x - 1), a[x - 1]))
 }
 
 ghost function Z(a: array<int>, x: nat): int
@@ -33,7 +33,7 @@ reads a
 {
   if x == 1 
   then a[0] 
-  else mxm (Z(a, x - 1), a[x - 1])
+  else mxm(Z(a, x - 1), a[x - 1])
 }
 
 method problem19(a: array<int>) returns (r: int)

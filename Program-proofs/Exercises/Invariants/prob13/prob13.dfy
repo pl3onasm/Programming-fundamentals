@@ -43,6 +43,7 @@ ensures  r == S(a, x, 0)
     You should work with the following function S:
 
       S(a, x, k) = ∑(a[i] * x^{i-k} | i: k ≤ i < n)
-  
+    
+    The time complexity of T should be linear in n.
   */
 }

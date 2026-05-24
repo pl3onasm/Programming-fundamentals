@@ -25,5 +25,7 @@ ensures  r == Cnt7(a)
       {P: true}
     T
       {Q: r = #{ i | i: 0 ≤ i < n ∧ a[i] = 7 }}
+
+    The time complexity of T should be linear in n.
   */
 }
