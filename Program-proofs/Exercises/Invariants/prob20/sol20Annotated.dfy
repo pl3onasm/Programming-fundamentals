@@ -85,9 +85,11 @@ ensures r == P(a, a.Length)
     p := p * s;
       // 0 ≤ k < n ∧ p = P(a, k + 1) ∧ s = S(a, k) ∧ u = U(a, k) ∧ n - k = V
       //   ( apply definition of U to obtain U(a, k + 1) in terms of u and a[k] )
+      // 0 ≤ k < n ∧ p = P(a, k + 1) ∧ s = S(a, k) ∧ u + a[k] = U(a, k + 1) ∧ n - k = V
     u := u + a[k];
       // 0 ≤ k < n ∧ p = P(a, k + 1) ∧ s = S(a, k) ∧ u = U(a, k + 1) ∧ n - k = V
       //   ( apply definition of S to obtain S(a, k + 1) in terms of s and u )
+      // 0 ≤ k < n ∧ p = P(a, k + 1) ∧ s + a[k] * u = S(a, k + 1) ∧ u = U(a, k + 1) ∧ n - k = V
     s := s + a[k] * u;
       // 0 ≤ k < n ∧ p = P(a, k + 1) ∧ s = S(a, k + 1) ∧ u = U(a, k + 1) ∧ n - k = V
       //   ( prepare for updating k to k + 1 )
