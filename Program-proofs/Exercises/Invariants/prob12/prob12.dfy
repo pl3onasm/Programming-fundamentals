@@ -41,6 +41,5 @@ ensures  r == B(a)
       B(a, k) = ∑(a[i] * a[j] | i, j: 0 ≤ i < j < k)
       C(a, k) = ∑(a[i] | i: 0 ≤ i < k)
     
-    The time complexity of T should be linear in n.
   */
 }

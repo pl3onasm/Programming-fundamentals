@@ -40,9 +40,9 @@ ensures x == n * n && y == n * n * n
       //     ∧ y = (k + 1) * (k + 1) * (k + 1) ∧ n - k = V
       //   ( prepare to update k to k + 1 )
       // k + 1 ≤ n ∧ x = (k + 1) * (k + 1) 
-      //     ∧ y = (k + 1) * (k + 1) * (k + 1) ∧ n - (k + 1) = V - 1
+      //     ∧ y = (k + 1) * (k + 1) * (k + 1) ∧ n - (k + 1) < V
     k := k + 1;
-      // k ≤ n ∧ x = k * k ∧ y = k * k * k ∧ n - k = V - 1
+      // k ≤ n ∧ x = k * k ∧ y = k * k * k ∧ n - k < V
       //   J is preserved, and the variant function has decreased.
   }
 
