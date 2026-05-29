@@ -5,12 +5,13 @@
    This is exercise 9.2 from the PC reader
 */
 
-ghost predicate AscDesc(f:(nat,nat) -> int) {
+ghost predicate AscDesc(f:(nat,nat) -> int) 
+{
   (forall i,j,k:: i <= j  ==>  f(i,k) <= f(j,k)) &&
   (forall i,j,k:: j <= k  ==>  f(i,j) >= f(i,k))
 }
 
-method search2D(h:(nat,nat) -> int, c: int, ghost X: nat, ghost Y: nat)
+method problem01(h:(nat,nat) -> int, c: int, ghost X: nat, ghost Y: nat)
 returns (x: nat, y: nat)
 requires AscDesc(h) && h(X,Y) == c
 ensures x <= X && y <= Y && h(x,y) == c 

@@ -5,7 +5,8 @@
    This is exercise 9.2 from the PC reader
 */
 
-ghost predicate AscDesc(f:(nat,nat) -> int) {
+ghost predicate AscDesc(f:(nat,nat) -> int) 
+{
     // Expresses the property that f is ascending in its first 
     // argument and descending in its second argument, i.e. 
     // ∀ i,j,k ∈ ℕ:
@@ -15,7 +16,7 @@ ghost predicate AscDesc(f:(nat,nat) -> int) {
   (forall i,j,k:: j <= k  ==>  f(i,j) >= f(i,k))
 }
 
-method search2D(h:(nat,nat) -> int, c: int, ghost X: nat, ghost Y: nat)
+method problem01(h:(nat,nat) -> int, c: int, ghost X: nat, ghost Y: nat)
 returns (x: nat, y: nat)
 requires AscDesc(h) && h(X,Y) == c
 ensures x <= X && y <= Y && h(x,y) == c 
@@ -74,6 +75,7 @@ ensures x <= X && y <= Y && h(x,y) == c
       // J ∧ vf < V
   }
 
-  // J ∧ ¬B
-  // 0 ≤ x ≤ X ∧ 0 ≤ y ≤ Y ∧ h(x,y) = c
+    // J ∧ ¬B
+    // 0 ≤ x ≤ X ∧ 0 ≤ y ≤ Y ∧ ¬(h(x,y) != c)
+    // Q: 0 ≤ x ≤ X ∧ 0 ≤ y ≤ Y ∧ h(x,y) = c
 }
