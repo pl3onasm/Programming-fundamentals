@@ -4,7 +4,7 @@
    This is exercise 9.3 from the PC reader
 */
 
-ghost predicate DescAsc(f:(nat,nat) -> int) 
+ghost predicate DescAsc(f:(int,int) -> int) 
 {
     // Expresses the property that f is descending in its first 
     // argument and ascending in its second argument, i.e. 
@@ -15,7 +15,13 @@ ghost predicate DescAsc(f:(nat,nat) -> int)
   (forall i,j,k:: j <= k  ==>  f(i,j) <= f(i,k))
 }
 
-method problem02(g:(int,int) -> int, m:int, n:int) 
+ghost function F(g:(int,int) -> int, x:nat, y:nat): int
+requires DescAsc(g)
+{   
+  ??
+}
+
+method problem02(g:(int,int) -> int, m:nat, n:nat) 
 returns (r: int)
 requires DescAsc(g)
 ensures r == g(m,n)
@@ -31,7 +37,7 @@ ensures r == g(m,n)
     Derive a command sequence T that satifies the following 
     specification:
   
-      const m,n: ℤ
+      const m,n: ℕ
       var   r: ℤ
 
         {P: Z = F(g,m,n)}

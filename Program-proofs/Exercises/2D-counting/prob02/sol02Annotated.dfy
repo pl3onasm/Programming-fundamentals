@@ -16,55 +16,56 @@ ghost predicate DescAsc(f:(int,int) -> int)
   (forall i,j,k :: j <= k  ==>  f(i,j) <= f(i,k))
 }
 
-function F(g:(int,int) -> int, x:int, y:int): int
+ghost function F(g:(int,int) -> int, x:int, y:int): int
 requires DescAsc(g)
 {   
-    // We define
-    //   F(x,y) = #{ (i,j) | i,j: 0 ≤ i < x ∧ 0 ≤ j < y ∧ g(i,j) ≤ 0 }
+    // We want to find a recursive definition of F that we can use to derive T.
+    // F is defined as:
+    //   F(g,x,y) = #{ (i,j) | i,j: 0 ≤ i < x ∧ 0 ≤ j < y ∧ g(i,j) ≤ 0 }
     // This function counts the number of points in the rectangle [0,x) × [0,y) 
     // that satisfy g(i,j) ≤ 0. 
-    // Base case: x ≤ 0 or y ≤ 0, then the rectangle is empty and F(x,y) = # ∅ = 0.
+    // Base case: x ≤ 0 or y ≤ 0, then the rectangle is empty and F(g,x,y) = # ∅ = 0.
     // Recursive case: in this case we want to shrink the rectangle by either
     //                 decrementing x or y. 
     //
     // What happens if we decrement x? 
-    //   F(x,y)
+    //   F(g,x,y)
     //   = #{ (i,j) | i,j: 0 ≤ i < x ∧ 0 ≤ j < y ∧ g(i,j) ≤ 0 }
     //       ( split domain into 0 ≤ i < x-1 and i = x-1 )
     //   = #{ (i,j) | i,j: 0 ≤ i < x-1 ∧ 0 ≤ j < y ∧ g(i,j) ≤ 0 }
     //     + #{ (x-1,j) | j: 0 ≤ j < y ∧ g(x-1,j) ≤ 0 }
     //       ( apply definition of F to the first term )
-    //   = F(x-1,y) + #{ (x-1,j) | j: 0 ≤ j < y ∧ g(x-1,j) ≤ 0 }
+    //   = F(g, x-1,y) + #{ (x-1,j) | j: 0 ≤ j < y ∧ g(x-1,j) ≤ 0 }
     //       ( note that the second term counts the number of points in the last column,
     //         which is determined by the value of g in the rectangle's upper-right 
     //         corner (x-1,y-1):
     //         assume g(x-1,y-1) ≤ 0, then since g is ascending in its second argument, 
     //         g(x-1,y-1) is maximal and we have g(x-1,j) ≤ 0 for all 0 ≤ j < y )
-    //   = F(x - 1,y) + #{ j | j: 0 ≤ j < y }
+    //   = F(g, x - 1,y) + #{ j | j: 0 ≤ j < y }
     //        ( size of half-open interval [0,y) = y - 0 = y )
-    //   = F(x - 1,y) + y
+    //   = F(g, x - 1,y) + y
     //
     // What happens if we decrement y?
-    //   F(x,y)
+    //   F(g, x,y)
     //   = #{ (i,j) | i,j: 0 ≤ i < x ∧ 0 ≤ j < y ∧ g(i,j) ≤ 0 }
     //       ( split domain into 0 ≤ j < y-1 and j = y-1 )
     //   = #{ (i,j) | i,j: 0 ≤ i < x ∧ 0 ≤ j < y-1 ∧ g(i,j) ≤ 0 }
     //     + #{ (i,y-1) | i: 0 ≤ i < x ∧ g(i,y-1) ≤ 0 }
     //       ( apply definition of F to the first term )
-    //   = F(x,y-1) + #{ (i,y-1) | i: 0 ≤ i < x ∧ g(i,y-1) ≤ 0 }
+    //   = F(g, x, y-1) + #{ (i,y-1) | i: 0 ≤ i < x ∧ g(i,y-1) ≤ 0 }
     //       ( note that the second term counts the number of points in the upper row;
     //         assume g(x-1,y-1) > 0, then since g is descending in its first argument,
     //         g(x-1,y-1) is minimal and we have g(i,y-1) > 0 for all 0 ≤ i < x )
-    //   = F(x,y-1) + # ∅
+    //   = F(g, x, y-1) + # ∅
     //       ( size of empty set is 0 )
-    //   = F(x,y-1)
+    //   = F(g, x, y-1)
 
   if x <= 0 || y <= 0 then 0
   else if g(x - 1, y - 1) <= 0 then F(g, x - 1, y) + y
   else F(g, x, y - 1)
 }
 
-method problem02(g:(int,int) -> int, m:int, n:int) 
+method problem02(g:(int,int) -> int, m:nat, n:nat) 
 returns (r: int)
 requires DescAsc(g)
 ensures r == F(g, m ,n)
@@ -77,8 +78,8 @@ ensures r == F(g, m ,n)
     // J: z + F(g,x,y) = F(g,m,n)
 
   while x > 0 && y > 0
-    invariant z + F(g, x, y) == F(g, m, n)
-    decreases x + y
+  invariant z + F(g, x, y) == F(g, m, n)
+  decreases x + y
   {
       // J ∧ B ∧ vf = V
       // z + F(g,x,y) = F(g,m,n) ∧ x > 0 ∧ y > 0 ∧ x + y = V
@@ -93,11 +94,10 @@ ensures r == F(g, m ,n)
         // z + F(g,x-1,y) + y = F(g,m,n) ∧ x + y = V
       z := z + y;
         // z + F(g,x-1,y) = F(g,m,n) ∧ x + y = V
-        //    ( prepare for decrementing x )
+        //   ( prepare for decrementing x )
         // z + F(g,x-1,y) = F(g,m,n) ∧ x - 1 + y < V
       x := x - 1;
         // z + F(g,x,y) = F(g,m,n) ∧ x + y < V
-        // J ∧ vf < V
     }
 
     else
@@ -106,15 +106,16 @@ ensures r == F(g, m ,n)
         //   ( apply definition of F; 
         //     since x > 0 ∧ y > 0, we are not in the base case )
         // z + F(g,x,y-1) = F(g,m,n) ∧ x + y = V
-        //    ( prepare for decrementing y )
+        //   ( prepare for decrementing y )
         // z + F(g,x,y-1) = F(g,m,n) ∧ x + y - 1 < V
       y := y - 1;
         // z + F(g,x,y) = F(g,m,n) ∧ x + y < V
-        // J ∧ vf < V
     }
 
-      // collect branches:
+      // Collect branches:
+      // z + F(g,x,y) = F(g,m,n) ∧ x + y < V
       // J ∧ vf < V
+      //   ( J is preserved and vf has decreased )
   }
 
     // J ∧ ¬B

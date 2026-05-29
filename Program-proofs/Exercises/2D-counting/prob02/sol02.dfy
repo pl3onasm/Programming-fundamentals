@@ -11,15 +11,17 @@ ghost predicate DescAsc(f:(int,int) -> int)
   (forall i,j,k :: j <= k  ==>  f(i,j) <= f(i,k))
 }
 
-function F(g:(int,int) -> int, x:int, y:int): int
+ghost function F(g:(int,int) -> int, x:int, y:int): int
 requires DescAsc(g)
 {   
-  if x <= 0 || y <= 0 then 0
-  else if g(x - 1, y - 1) <= 0 then F(g, x - 1, y) + y
-  else F(g, x, y - 1)
+  if x <= 0 || y <= 0 
+  then 0
+  else if g(x - 1, y - 1) <= 0
+       then F(g, x - 1, y) + y
+       else F(g, x, y - 1)
 }
 
-method problem02(g:(int,int) -> int, m:int, n:int) 
+method problem02(g:(int,int) -> int, m:nat, n:nat) 
 returns (r: int)
 requires DescAsc(g)
 ensures r == F(g, m ,n)
@@ -27,8 +29,8 @@ ensures r == F(g, m ,n)
   var x, y, z := m, n, 0;
   
   while x > 0 && y > 0
-    invariant z + F(g, x, y) == F(g, m, n)
-    decreases x + y
+  invariant z + F(g, x, y) == F(g, m, n)
+  decreases x + y
   {
     if g(x - 1, y - 1) <= 0
     {

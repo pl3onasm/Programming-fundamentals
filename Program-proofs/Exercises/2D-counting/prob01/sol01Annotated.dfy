@@ -53,7 +53,6 @@ ensures x <= X && y <= Y && h(x,y) == c
         // 0 ≤ x + 1 ≤ X ∧ 0 ≤ y ≤ Y ∧ X - (x + 1) + Y - y < V
       x := x + 1;
         // 0 ≤ x ≤ X ∧ 0 ≤ y ≤ Y ∧ X - x + Y - y < V
-        // J ∧ vf < V
     } 
     
     else
@@ -68,11 +67,12 @@ ensures x <= X && y <= Y && h(x,y) == c
         // 0 ≤ x ≤ X ∧ 0 ≤ y + 1 ≤ Y ∧ X - x + Y - (y + 1) < V
       y := y + 1;
         // 0 ≤ x ≤ X ∧ 0 ≤ y ≤ Y ∧ X - x + Y - y < V
-        // J ∧ vf < V
     }
 
       // collect branches:
+      // 0 ≤ x ≤ X ∧ 0 ≤ y ≤ Y ∧ X - x + Y - y < V
       // J ∧ vf < V
+      //   ( J is preserved and vf has decreased )
   }
 
     // J ∧ ¬B
