@@ -15,25 +15,14 @@ ghost predicate DecrAsc(f:(int,int) -> int)
   (forall i,j,k:: j <= k  ==>  f(i,j) <= f(i,k))
 }
 
-ghost function F(h:(int,int) -> int, x:nat, y:nat, w:int): int
-requires DecrAsc(h)
-{
-  ??
-}
-
 method problem03(h:(int,int) -> int, m:nat, n:nat, w:int) 
 returns (r: int)
 requires DecrAsc(h)
-ensures r == F(h, m ,n, w)
+ensures r == ???
 {
   /* 
     Given is a function h: ℤ × ℤ → ℤ that is strictly decreasing in its 
-    first argument and ascending in its second argument. We define
-    a function F that counts the number of points (i,j) such that
-    h(i,j) = w:
-
-      F(h,x,y,w) = #{ (i,j) | i,j: 0 ≤ i < x ∧ 0 ≤ j < y ∧ h(i,j) = w }
-    
+    first argument and ascending in its second argument. 
     Derive a command sequence T that satisfies the following 
     specification:
   
@@ -41,7 +30,7 @@ ensures r == F(h, m ,n, w)
       const w: ℤ
       var   r: ℤ
 
-        {P: Z = F(h,m,n,w)}
+        {P: Z = #{ (i,j) | i,j: 0 ≤ i < m ∧ 0 ≤ j < n ∧ h(i,j) = w } }
       T
         {Q: r = Z}
      

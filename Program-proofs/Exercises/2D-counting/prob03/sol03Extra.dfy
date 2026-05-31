@@ -1,7 +1,7 @@
-/* file: sol03.dfy
+/* file: sol03Extra.dfy
    author: David De Potter
    description: extra practice in Dafny, 2D counting, 
-   solution to prob03
+   alternative solution to prob03
    This is exercise 9.4 from the PC reader
 */
 

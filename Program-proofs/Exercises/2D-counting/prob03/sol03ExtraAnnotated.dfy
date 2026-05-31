@@ -1,7 +1,7 @@
-/* file: sol03Annotated.dfy
+/* file: sol03ExtraAnnotated.dfy
    author: David De Potter
    description: extra practice in Dafny, 2D counting, 
-   solution to prob03, with annotations
+   alternative solution to prob03, with annotations
    This is exercise 9.4 from the PC reader
 
    NOTE: here we take an alternative approach to the solution of prob03, 
@@ -13,13 +13,14 @@
    the definition of F to include the bounds m and n, as well as the 
    post condition of the method to reflect the new definition of F. 
    Initialization is also different, since F has a different base case.
+   Other changes include the guard and the variant function.
 */
 
 ghost predicate DecrAsc(f:(int,int) -> int) 
 {
     // Expresses the property that f is decreasing in its first 
     // argument and ascending in its second argument, i.e. 
-    // ∀ i,j,k ∈ ℕ:
+    // ∀ i,j,k ∈ ℤ:
     //   if i < j then f(i,k) > f(j,k)
     //   if j ≤ k then f(i,j) ≤ f(i,k)
   (forall i,j,k:: i <  j  ==>  f(i,k) >  f(j,k)) &&
@@ -81,7 +82,12 @@ returns (r: int)
 requires DecrAsc(h)
 ensures r == F(h, 0, 0, m, n, w)
 {
+    // Initialization to establish J before the loop
+    // P: F(h,0,0,m,n,w) = Z
+    //   ( arithmetic )
+    // 0 + F(h,0,0,m,n,w) = F(h,0,0,m,n,w)
   var x, y, z := 0, 0, 0;
+    // J: z + F(h,x,y,m,n,w) = F(h,0,0,m,n,w)
   
   while x < m && y < n
   invariant z + F(h, x, y, m, n, w) == F(h, 0, 0, m, n, w)
@@ -127,5 +133,6 @@ ensures r == F(h, 0, 0, m, n, w)
     // z + 0 = F(h,0,0,m,n,w)
     // z = F(h,0,0,m,n,w)
   r := z;    
-    // Q: r = F(h,0,0,m,n,w)
+    // r = F(h,0,0,m,n,w)
+    // Q: r = Z
 }

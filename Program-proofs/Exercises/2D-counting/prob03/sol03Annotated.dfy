@@ -13,7 +13,7 @@ ghost predicate DecrAsc(f:(int,int) -> int)
 {
     // Expresses the property that f is decreasing in its first 
     // argument and ascending in its second argument, i.e. 
-    // ∀ i,j,k ∈ ℕ:
+    // ∀ i,j,k ∈ ℤ:
     //   if i < j then f(i,k) > f(j,k)
     //   if j ≤ k then f(i,j) ≤ f(i,k)
   (forall i,j,k:: i <  j  ==>  f(i,k) >  f(j,k)) &&
