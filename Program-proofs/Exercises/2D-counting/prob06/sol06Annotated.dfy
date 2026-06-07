@@ -48,7 +48,7 @@ decreases n - (x + y)
     //   = F(g,x+1,y,n,w) + #{ (x,j) | j: y ≤ j < n ∧ x + j < n ∧ g(x,j) = w }
     //        ( g(x,j) is descending in j, so the value of g(x,y) is maximal;
     //          if we assume g(x,y) < w, then g(x,j) ≤ g(x,y) < w for all j 
-    //          with y <= j < n and x + j < n, so that we can discard the whole 
+    //          with y ≤ j < n and x + j < n, so that we can discard the whole 
     //          column as it contains no matching points )
     //   = F(g,x+1,y,n,w) + # ∅
     //        ( size of the empty set is 0 )
