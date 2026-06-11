@@ -55,22 +55,22 @@ decreases n - x + y
     //        ( split domain into 0 ≤ j < y - 1 and j = y - 1 )
     //   = #{ (i,j) | i,j: x ≤ i < n ∧ 0 ≤ j < y - 1 ∧ i + j < n ∧ h(i,j) > 0 }
     //     + #{ (i,y-1) | i: x ≤ i < n ∧ i + y - 1 < n ∧ h(i,y-1) > 0 }
-    //        ( apply definition of F to the first term )
-    //   = F(h,x,y-1,n) + #{ (i,y-1) | i: x ≤ i < n ∧ i < n - (y - 1) ∧ h(i,y-1) > 0 }
+    //        ( apply definition of F to the first term; i + y - 1 < n ≡ i + y ≤ n )
+    //   = F(h,x,y-1,n) + #{ (i,y-1) | i: x ≤ i < n ∧ i + y ≤ n ∧ h(i,y-1) > 0 }
     //        ( h(i,y-1) is ascending in i, so the value of h(x,y-1) is minimal;
     //          if we assume h(x,y-1) > 0, then h(i,y-1) > 0 for all i ≥ x, 
     //          so all points in the row y - 1 that lie below the diagonal are matching points;
     //          in other words, if x + y ≤ n then the diagonal-clipped row segment contributes
     //          to the count, otherwise the segment is empty and contributes nothing )
-    //   = F(h,x,y-1,n) + x ≤ n - (y - 1) ? # { (i,y-1) | i: x ≤ i < n ∧ i < n - (y - 1) } : # ∅
+    //   = F(h,x,y-1,n) + ( x + y ≤ n ? #{ (i,y-1) | i: x ≤ i < n ∧ i + y ≤ n } : # ∅ )
     //        ( size of half-open interval is upper bound - lower bound;
     //          size of the empty set is 0 )
-    //   = F(h,x,y-1,n) + x ≤ n - (y - 1) ? n - x - y + 1 : 0
+    //   = F(h,x,y-1,n) + ( x + y ≤ n ? n - x - y + 1 : 0 )
 
   if x >= n || y == 0 then 0
   else if h(x, y - 1) <= 0 
        then F(h, x + 1, y, n)
-       else if x + y <= n 
+       else if x + y <= n
             then F(h, x, y - 1, n) + n - x - y + 1
             else F(h, x, y - 1, n)
 }
@@ -98,7 +98,8 @@ ensures r == F(h,0,n,n)
 
     if h(x, y - 1) <= 0 
     {
-        // z + F(h,x,y,n) = F(h,0,n,n) ∧ h(x,y-1) ≤ 0 ∧ x < n ∧ y > 0 ∧ n - x + y = V
+        // z + F(h,x,y,n) = F(h,0,n,n) ∧ h(x,y-1) ≤ 0 
+        //   ∧ x < n ∧ y > 0 ∧ n - x + y = V
         //   ( apply definition of F )
         // z + F(h,x+1,y,n) = F(h,0,n,n) ∧ n - x + y = V
         //   ( prepare incrementing x ) 
@@ -109,9 +110,10 @@ ensures r == F(h,0,n,n)
 
     else 
     {
-      if x + y <= n 
+      if x + y <= n
       {
-          // z + F(h,x,y,n) = F(h,0,n,n) ∧ h(x,y-1) > 0 ∧ x + y ≤ n ∧ x < n ∧ y > 0 ∧ n - x + y = V
+          // z + F(h,x,y,n) = F(h,0,n,n) ∧ h(x,y-1) > 0 ∧ x + y ≤ n   
+          //   ∧ x < n ∧ y > 0 ∧ n - x + y = V
           //   ( apply definition of F )
           // z + F(h,x,y-1,n) + n - x - y + 1 = F(h,0,n,n) ∧ n - x + y = V
         z := z + n - x - y + 1;
@@ -120,7 +122,8 @@ ensures r == F(h,0,n,n)
 
       else 
       {
-        // z + F(h,x,y,n) = F(h,0,n,n) ∧ h(x,y-1) > 0 ∧ x + y > n ∧ x < n ∧ y > 0 ∧ n - x + y = V
+        // z + F(h,x,y,n) = F(h,0,n,n) ∧ h(x,y-1) > 0 
+        //   ∧ x + y > n ∧ x < n ∧ y > 0 ∧ n - x + y = V
         //   ( apply definition of F )
         // z + F(h,x,y-1,n) = F(h,0,n,n) ∧ n - x + y = V
       }
@@ -142,7 +145,7 @@ ensures r == F(h,0,n,n)
   }
 
     // J ∧ ¬B
-    // z + F(h,x,y,n) = F(h,0,n,n) ∧ (x >= n || y == 0)
+    // z + F(h,x,y,n) = F(h,0,n,n) ∧ (x ≥ n || y = 0)
     //   ( apply base case of F )
     // z + 0 = F(h,0,n,n)
     // z = F(h,0,n,n)

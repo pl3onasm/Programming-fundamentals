@@ -18,7 +18,7 @@ decreases n - x + y
   if x >= n || y == 0 then 0
   else if h(x, y - 1) <= 0 
        then F(h, x + 1, y, n)
-       else if x + y <= n 
+       else if x + y <= n
             then F(h, x, y - 1, n) + n - x - y + 1
             else F(h, x, y - 1, n)
 }
@@ -41,7 +41,7 @@ ensures r == F(h,0,n,n)
 
     else 
     {
-      if x + y <= n 
+      if x + y <= n
       {
         z := z + n - x - y + 1;
       }
