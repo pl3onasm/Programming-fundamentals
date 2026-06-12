@@ -39,6 +39,6 @@ ensures r == ???
 
     Note that Z (uppercase) is a specification constant, not a program variable, 
     whereas z (lowercase) is a program variable.
-    The time complexity of T should be in O(n).
+    The time complexity of T should be in O(m + n).
   */
 }

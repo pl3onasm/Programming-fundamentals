@@ -62,10 +62,10 @@ decreases n - x + y
     //          so all points in the row y - 1 that lie below the diagonal are matching points;
     //          in other words, if x + y ≤ n then the diagonal-clipped row segment contributes
     //          to the count, otherwise the segment is empty and contributes nothing )
-    //   = F(h,x,y-1,n) + ( x + y ≤ n ? #{ (i,y-1) | i: x ≤ i < n ∧ i + y ≤ n } : # ∅ )
+    //   = F(h,x,y-1,n) + ( (x + y ≤ n) ? #{ (i,y-1) | i: x ≤ i < n ∧ i + y ≤ n } : # ∅ )
     //        ( size of half-open interval is upper bound - lower bound;
     //          size of the empty set is 0 )
-    //   = F(h,x,y-1,n) + ( x + y ≤ n ? n - x - y + 1 : 0 )
+    //   = F(h,x,y-1,n) + ( (x + y ≤ n) ? n - x - y + 1 : 0 )
 
   if x >= n || y == 0 then 0
   else if h(x, y - 1) <= 0 
