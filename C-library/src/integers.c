@@ -63,7 +63,7 @@ char *c_toBinary(int n) {
   buf[len] = '\0';  
     // reverse the string  
   char *out = c_safeMalloc(len + 1);  
-  memcpy(out, buf, len + 1);  
+  snprintf(out, len + 1, "%s", buf);  
   c_reverseString(out);  
   return out;
 }
@@ -83,7 +83,7 @@ char *c_toString(int n) {
   snprintf(buf, sizeof(buf), "%d", n);  
   size_t len = strlen(buf);  
   char *out = c_safeMalloc(len + 1);  
-  memcpy(out, buf, len + 1); 
+  snprintf(out, len + 1, "%s", buf); 
    return out;
 }
 
