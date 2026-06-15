@@ -133,7 +133,7 @@ ensures r == F(0,w,w)
 }
 
 /*
-  Since z counts the points in the half-open quadrant
+  Since z counts the points in the half-open quadrant given by
 
     { (i,j) | 0 < i ≤ w ∧ 0 ≤ j < w ∧ i² + j² < w² },
 
