@@ -21,31 +21,30 @@ function mnm(x:int, y:int): int
   if x <= y then x else y
 }
 
-ghost function F(h:(int,int) -> int, x:int, y:int, z:int, m:nat, n:nat): int
+ghost function F(h:(int,int) -> int, x:int, y:int, z:int, m:nat): int
 requires AscAsc(h)
-requires 0 < m && 0 < n
-requires 0 <= x <= m
-requires 0 <= y <= n
+requires 0 < m
+requires 0 <= x <= m && 0 <= y
 decreases m - x + y
 {
   if x >= m || y <= 0 then z
   else if h(x,y-1) < 0 
-       then F(h, x+1, y, mnm(z, abs(h(x,y-1))), m, n)
-       else F(h, x, y-1, mnm(z, abs(h(x,y-1))), m, n)
+       then F(h, x+1, y, mnm(z, abs(h(x,y-1))), m)
+       else F(h, x, y-1, mnm(z, abs(h(x,y-1))), m)
 }
 
 method problem12(h:(int,int) -> int, m:nat, n:nat)
 returns (r:int)
 requires AscAsc(h)
 requires 0 < m && 0 < n
-ensures r == F(h,0,n,abs(h(0,0)),m,n)
+ensures r == F(h,0,n,abs(h(0,0)),m)
 {
   var x:int, y:int, z:int := 0, n, abs(h(0,0));
 
   while x < m && 0 < y
   invariant 0 <= x <= m
   invariant 0 <= y <= n
-  invariant F(h,x,y,z,m,n) == F(h,0,n,abs(h(0,0)),m,n)
+  invariant F(h,x,y,z,m) == F(h,0,n,abs(h(0,0)),m)
   decreases m - x + y
   {
     z := mnm(z, abs(h(x,y-1)));
