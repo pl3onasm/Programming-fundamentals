@@ -129,6 +129,8 @@ ensures r == F(a,b,0,0)
 
     // J ∧ ¬B
     // z + F(a,b,x,y) = Z ∧ ¬(x < m ∧ y < n)
+    //   ( De Morgan's law )
+    // z + F(a,b,x,y) = Z ∧ (x >= m ∨ y >= n)
     //   ( apply base case of F )
     // z + 0 = Z
   r := z;

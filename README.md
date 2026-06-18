@@ -2,11 +2,13 @@ $\huge{\color{cadetblue} \text{Programming}} \space {\color{cadetblue} \text{Fun
 
 <br/>
 
-This repository contains old exams for the course ${\color{rosybrown}\text{Imperative}}$ ${\color{rosybrown}\text{Programming}}$ (IP) at the University of Groningen. In 2023, this course was merged with the course ${\color{rosybrown}\text{Program}}$ ${\color{rosybrown}\text{Correctness}}$ (PC) into the new course ${\color{rosybrown}\text{Programming}}$ ${\color{rosybrown}\text{Fundamentals}}$ (PF). This is why you will find exams for both courses in this repository. All exams were created by [dr. A. Meijster](https://www.rug.nl/staff/a.meijster/), and make for some good practice material.
+This repository contains past exams for the course ${\color{rosybrown}\text{Imperative}}$ ${\color{rosybrown}\text{Programming}}$ (IP) at the University of Groningen. In 2023, this course was merged with ${\color{rosybrown}\text{Program}}$ ${\color{rosybrown}\text{Correctness}}$ (PC) into the new course ${\color{rosybrown}\text{Programming}}$ ${\color{rosybrown}\text{Fundamentals}}$ (PF). For that reason, this repository contains exams from both courses. All exam papers were created by [dr. A. Meijster](https://www.rug.nl/staff/a.meijster/) and make useful practice material.
 
-For the C questions, the subfolders each hold one or more example solutions, a folder with test cases, and a file called *myprogram.c* which you can use to write and test your own solution. For the proof questions, both exam questions and answers are given in [Dafny](https://github.com/dafny-lang/dafny).  
+For the C questions, the subfolders each contain one or more example solutions, a folder with test cases, and a file called *myprogram.c* which you can use to write and test your own solution. For the proof questions, both the exam questions and answers are given in [Dafny](https://github.com/dafny-lang/dafny).  
+
+Additionally, some extra exercises are provided in the folders [C-language](C-language/Exercises/) and [Program proofs](Program-proofs/Exercises/). They are intended as extra practice material in C programming and program correctness, respectively.  
   
-Found this repository useful? Help out your (future) fellow students by mailing your exam paper to [me](mailto:pl3onasm@gmail.com) or submitting a pull request. Scans or pictures with handwritten notes are perfectly fine, as any annotations will be removed and a clean PDF will be generated for the repository. Also, feel free to report any issues you find.
+Found this repository useful? Help out your (future) fellow students by emailing your exam paper to [me](mailto:pl3onasm@gmail.com) or submitting a pull request. Scans or pictures with handwritten notes are perfectly fine, as any annotations will be removed and a clean PDF will be generated for the repository. Also, feel free to report any issues you find.
 
 <br/>
 
