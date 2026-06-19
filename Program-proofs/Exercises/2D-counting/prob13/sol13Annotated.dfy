@@ -57,7 +57,7 @@ decreases 2 * n - y - x
     //   = F(f,x+1,y,a,n) + #{ (x,j) | j: x ≤ j < n ∧ y ≤ j ∧ a = S(f,x,j) }
     //        ( below we assume that S(f,x,y) ≥ a; since a > 0, the interval
     //          [x,y) is non-empty, and hence x < y )
-    //   = F(f,x+1,y,a,n) + #{ (x,j) | j: x ≤ y ≤ j < n ∧ a = S(f,x,j) }
+    //   = F(f,x+1,y,a,n) + #{ (x,j) | j: x < y ≤ j < n ∧ a = S(f,x,j) }
     //        ( S(f,x,j) is increasing in j, so the value of S(f,x,y) is minimal;
     //          if we assume S(f,x,y) ≥ a, then only the interval [x,y) can sum 
     //          to a, since S(f,x,j) > S(f,x,y) ≥ a for all j > y. Hence, we can 
@@ -110,7 +110,6 @@ decreases y - x
     // We prove the lemma by induction on the length of the 
     // half-open interval [x,y), l = y - x.
     // The statement to prove is: S(f,x,y+1) = S(f,x,y) + f(y)
-    //
     // That is: extending the upper bound of the half-open interval
     // [x,y) by one adds exactly the new last value f(y).
     //
