@@ -47,7 +47,7 @@ decreases m - x + y
     // to derive T.
     //
     // We define F as follows:
-    //   F(h,x,y,z,m) = Min{ {z} ∪ { |h(i,j)| | x <= i < m ∧ 0 <= j < y} }
+    //   F(h,x,y,z,m) = Min{ {z} ∪ { |h(i,j)| | x ≤ i < m ∧ 0 ≤ j < y} }
     //
     // In other words, F(h,x,y,z,m) is the best value already found, 
     // namely z, minimized with the absolute values in the remaining 
@@ -60,7 +60,7 @@ decreases m - x + y
     // is equivalent to the set-based specification from the problem 
     // statement.
     //
-    // Base case: if x >= m or y <= 0, then the remaining rectangle is 
+    // Base case: if x ≥ m or y ≤ 0, then the remaining rectangle is 
     // empty, so the best value is simply z.
     //
     // Recursive case: here we want to shrink the remaining rectangle
@@ -68,35 +68,35 @@ decreases m - x + y
     //
     // What happens if we increment x?
     //   F(h,x,y,z,m)
-    //     = Min{ {z} ∪ { |h(i,j)| | x <= i < m ∧ 0 <= j < y} }
-    //          ( split domain into i = x and x+1 <= i < m )
-    //     = Min{ {z} ∪ { |h(x,j)| | 0 <= j < y} 
-    //                ∪ { |h(i,j)| | x+1 <= i < m ∧ 0 <= j < y} }
+    //     = Min{ {z} ∪ { |h(i,j)| | x ≤ i < m ∧ 0 ≤ j < y} }
+    //          ( split domain into i = x and x+1 ≤ i < m )
+    //     = Min{ {z} ∪ { |h(x,j)| | 0 ≤ j < y} 
+    //                ∪ { |h(i,j)| | x+1 ≤ i < m ∧ 0 ≤ j < y} }
     //       ( Since h is ascending in its second argument, we have
-    //         h(x,j) <= h(x,y-1) for all 0 <= j < y. If we assume
+    //         h(x,j) ≤ h(x,y-1) for all 0 ≤ j < y. If we assume
     //         h(x,y-1) < 0, then all these values are negative, and
     //         hence at least as far from 0 as h(x,y-1). Therefore
     //         the best value in column x is the corner (x,y-1) and
     //         we can update z with this value and discard the column. )
     //     = Min{ {mnm(z, abs(h(x,y-1))} 
-    //                ∪ { |h(i,j)| | x+1 <= i < m ∧ 0 <= j < y} }
+    //                ∪ { |h(i,j)| | x+1 ≤ i < m ∧ 0 ≤ j < y} }
     //        ( apply definition of F )
     //     = F(h, x+1, y, mnm(z, abs(h(x,y-1))), m)
     //
     // What happens if we decrement y?
     //   F(h,x,y,z,m)
-    //     = Min{ {z} ∪ { |h(i,j)| | x <= i < m ∧ 0 <= j < y} }
-    //          ( split domain into j = y-1 and 0 <= j < y-1 )
-    //     = Min{ {z} ∪ { |h(i,y-1)| | x <= i < m} 
-    //                ∪ { |h(i,j)| | x <= i < m ∧ 0 <= j < y-1} }
+    //     = Min{ {z} ∪ { |h(i,j)| | x ≤ i < m ∧ 0 ≤ j < y} }
+    //          ( split domain into j = y-1 and 0 ≤ j < y-1 )
+    //     = Min{ {z} ∪ { |h(i,y-1)| | x ≤ i < m} 
+    //                ∪ { |h(i,j)| | x ≤ i < m ∧ 0 ≤ j < y-1} }
     //       ( Since h is ascending in its first argument, we have
-    //         h(i,y-1) >= h(x,y-1) for all x <= i < m. If we assume
-    //         h(x,y-1) >= 0, then all these values are non-negative, and
+    //         h(i,y-1) ≥ h(x,y-1) for all x ≤ i < m. If we assume
+    //         h(x,y-1) ≥ 0, then all these values are non-negative, and
     //         hence at least as far from 0 as h(x,y-1). Therefore
     //         the best value in row y-1 is the corner (x,y-1) and
     //         we can update z with this value and discard the row. )
     //     = Min{ {mnm(z, abs(h(x,y-1))} 
-    //                ∪ { |h(i,j)| | x <= i < m ∧ 0 <= j < y-1} }
+    //                ∪ { |h(i,j)| | x ≤ i < m ∧ 0 ≤ j < y-1} }
     //        ( apply definition of F )
     //     = F(h, x, y-1, mnm(z, abs(h(x,y-1))), m)
 
@@ -126,7 +126,7 @@ ensures r == F(h,0,n,abs(h(0,0)),m)
       // J ∧ B ∧ vf = V
       // F(h,x,y,z,m) = Z ∧ x < m ∧ 0 < y ∧ m - x + y = V
       //   ( we want to apply the recursive definition of F, so we need 
-      //     to distinguish the cases h(x,y-1) < 0 and h(x,y-1) >= 0 )
+      //     to distinguish the cases h(x,y-1) < 0 and h(x,y-1) ≥ 0 )
 
     if h(x,y-1) < 0
     {
@@ -143,7 +143,7 @@ ensures r == F(h,0,n,abs(h(0,0)),m)
 
     else
     {
-        // F(h,x,y,z,m) = Z ∧ x < m ∧ 0 < y ∧ h(x,y-1) >= 0 ∧ m - x + y = V
+        // F(h,x,y,z,m) = Z ∧ x < m ∧ 0 < y ∧ h(x,y-1) ≥ 0 ∧ m - x + y = V
         //   ( apply recursive definition of F )
         // F(h,x,y-1,mnm(z, abs(h(x,y-1))),m) = Z ∧ m - x + y = V
       z := mnm(z, abs(h(x,y-1)));
@@ -163,7 +163,7 @@ ensures r == F(h,0,n,abs(h(0,0)),m)
     // J ∧ ¬B
     // F(h,x,y,z,m) = Z ∧ ¬(x < m ∧ 0 < y)
     //   ( De Morgan's law )
-    // F(h,x,y,z,m) = Z ∧ (x >= m ∨ y <= 0)
+    // F(h,x,y,z,m) = Z ∧ (x ≥ m ∨ y ≤ 0)
     //   ( apply base case of F )
     // z = Z
   r := z;

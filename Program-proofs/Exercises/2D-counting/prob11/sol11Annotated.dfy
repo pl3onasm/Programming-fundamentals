@@ -45,8 +45,8 @@ decreases a.Length - x + b.Length - y
     //        ( apply definition of F to the first term )
     //   = F(a,b,x+1,y) + #{ (x,j) | j: y ≤ j < n ∧ a[x] = b[j] }
     //        ( since b is strictly increasing, b[y] is minimal among the
-    //          remaining values b[j] with j >= y. Hence, if a[x] < b[y],
-    //          then a[x] < b[j] for all j >= y, and so we can discard the
+    //          remaining values b[j] with j ≥ y. Hence, if a[x] < b[y],
+    //          then a[x] < b[j] for all j ≥ y, and so we can discard the
     //          whole column )
     //   = F(a,b,x+1,y) + # ∅
     //   = F(a,b,x+1,y)
@@ -60,8 +60,8 @@ decreases a.Length - x + b.Length - y
     //        ( apply definition of F to the first term )
     //   = F(a,b,x,y+1) + #{ (i,y) | i: x ≤ i < m ∧ a[i] = b[y] }
     //        ( since a is strictly increasing, a[x] is minimal among the
-    //          remaining values a[i] with i >= x. Hence, if a[x] >= b[y],
-    //          then for all i > x we have a[i] > a[x] >= b[y]. Therefore
+    //          remaining values a[i] with i ≥ x. Hence, if a[x] ≥ b[y],
+    //          then for all i > x we have a[i] > a[x] ≥ b[y]. Therefore
     //          only the point (x,y) can be a matching point in this row.
     //          We add it if a[x] = b[y], and ignore it if a[x] > b[y] )
     //   = F(a,b,x,y+1) + (a[x] = b[y] ? 1 : 0)
@@ -130,7 +130,7 @@ ensures r == F(a,b,0,0)
     // J ∧ ¬B
     // z + F(a,b,x,y) = Z ∧ ¬(x < m ∧ y < n)
     //   ( De Morgan's law )
-    // z + F(a,b,x,y) = Z ∧ (x >= m ∨ y >= n)
+    // z + F(a,b,x,y) = Z ∧ (x ≥ m ∨ y ≥ n)
     //   ( apply base case of F )
     // z + 0 = Z
   r := z;

@@ -34,7 +34,7 @@ decreases m - x - 2 * y
     // In the initial call, we have F(p,0,0,m), which counts the number of points (i,j) 
     // in the full triangle marked by the lines x = 0, y = 0, and i + 2 * j = m.
     //
-    // Base case: if x + 2*y >= m, then the triangle is empty, so F(p,x,y,m) = # ∅ = 0.
+    // Base case: if x + 2*y ≥ m, then the triangle is empty, so F(p,x,y,m) = # ∅ = 0.
     // Recursive case: if x + 2*y < m, we want to shrink the triangle by either
     //                 - incrementing x (which removes the leftmost column) or
     //                 - incrementing y (which removes the bottommost row)
