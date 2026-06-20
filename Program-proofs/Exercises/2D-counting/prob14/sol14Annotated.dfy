@@ -2,7 +2,7 @@
    author: David De Potter
    description: extra practice in Dafny, 2D-counting, 
    solution to prob14, with annotations
-   This is exercise 9.16 from the PC reader
+   This is exercise 9.16a from the PC reader
    NOTE: The loop is machine-verified against the recursive definition of F. 
     The connection between F(h,0,n,0,m) and the set-based specification from the 
     problem statement is manually derived and justified in the comments, but 
@@ -93,8 +93,6 @@ decreases m - x + y
 method problem14(h:(nat,nat) -> int, m:nat, n:nat)
 returns (r: int)
 requires DescDesc(h)
-requires h(m,0) <= 0
-requires h(0,n) <= 0
 ensures r == F(h,0,n,0,m)
 {
     // Initialization to establish J before the loop

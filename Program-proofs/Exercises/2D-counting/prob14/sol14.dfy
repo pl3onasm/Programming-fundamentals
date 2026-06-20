@@ -2,7 +2,7 @@
    author: David De Potter
    description: extra practice in Dafny, 2D-counting, 
    solution to prob14
-   This is exercise 9.16 from the PC reader
+   This is exercise 9.16a from the PC reader
 */
 
 ghost predicate DescDesc(f:(nat,nat) -> int) 
@@ -32,8 +32,6 @@ decreases m - x + y
 method problem14(h:(nat,nat) -> int, m:nat, n:nat)
 returns (r: int)
 requires DescDesc(h)
-requires h(m,0) <= 0
-requires h(0,n) <= 0
 ensures r == F(h,0,n,0,m)
 {
   var x:nat, y:nat, z:int := 0, n, 0;
