@@ -1,149 +1,168 @@
 /* file: sol15Annotated.dfy
    author: David De Potter
-   description: extra practice in Dafny, 2D-counting, 
+   description: extra practice in Dafny, 2D-counting,
    solution to prob15, with annotations
    This is exercise 9.17 from the PC reader
-   NOTE: The loop is machine-verified against the recursive definition of F. 
-    The connection between F(h,0,n,0,m) and the set-based specification from the 
-    problem statement is manually derived and justified in the comments, but 
-    not machine-verified. This avoids the additional technical machinery that 
-    would be needed in Dafny to introduce the corresponding finite sets, 
-    reason about their maxima, and prove the equivalence of the set-based 
-    specification and the recursive definition of F. It also keeps the solution 
-    in line with the PC lecture notes.
+
+   NOTE: The loop is machine-verified against the recursive
+   definition of F. The connection between F(h,0,0,p,w)
+   and the set-based specification from the problem statement is
+   manually derived and justified in the comments, but not
+   machine-verified. This avoids the additional technical machinery
+   needed for sets and cardinalities in Dafny, and keeps the solution
+   in line with the PC lecture notes.
 */
 
-ghost predicate DescDesc(f:(nat,nat) -> int) 
+ghost predicate IncrDecr(f:(nat,nat) -> int)
 {
-    // Expresses the property that f is descending in 
-    // both its arguments, i.e.
+    // Expresses the property that f is strictly increasing in its
+    // first argument and strictly decreasing in its second argument,
+    // i.e.
     // ∀ i,j,k ∈ ℕ:
-    //   if i ≤ j then f(i,k) ≥ f(j,k)
-    //   if j ≤ k then f(i,j) ≥ f(i,k)
-  (forall i,j,k:: i <= j  ==>  f(i,k) >= f(j,k)) &&
-  (forall i,j,k:: j <= k  ==>  f(i,j) >= f(i,k))
-} 
-
-function mxm(x:int, y:int): int
-{
-  if x >= y then x else y
+    //   if i < j then f(i,k) < f(j,k)
+    //   if j < k then f(i,j) > f(i,k)
+  (forall i,j,k :: i < j ==> f(i,k) < f(j,k)) &&
+  (forall i,j,k :: j < k ==> f(i,j) > f(i,k))
 }
 
-ghost function F(h:(nat,nat) -> int, x:nat, y:nat, z:int, m:nat): int
-requires DescDesc(h)
-requires 0 <= x <= m
-requires 0 <= y
-decreases m - x + y
+function ord(b:bool): nat
+{
+  if b then 1 else 0
+}
+
+ghost function F(h:(nat,nat) -> int, x:nat, y:nat, p:nat, w:int): int
+requires IncrDecr(h)
+requires x <= p
+requires y <= p
+decreases (p - x) + (p - y)
 {
     // We want to find a recursive definition of F that we can use to derive T.
     // We define F as follows:
-    //   F(h,x,y,z,m) = Max{ {z} ∪ { (i+1)⋅(j+1) | x ≤ i < m ∧ 0 ≤ j < y ∧ h(i,j) > 0} }
+    //   F(h,x,y,p,w) = #{ (i,j) | x ≤ i < p ∧ y ≤ j < p ∧ i² + j² < p ∧ h(i,j) = w }
+    // That is, F(h,x,y,p,w) counts the number of points (i,j) that lie 
+    // strictly inside the quarter disk of radius √p, and for which h(i,j) = w. 
+    // When this function is initially called as F(h,0,0,p,w), the remaining
+    // search area is the full quarter disk.
     //
-    // In other words, F(h,x,y,z,m) is the best value already found, namely z, maximized 
-    // with the values of (i+1)⋅(j+1) in the remaining rectangle for which h(i,j) > 0. 
-    // When this function is initially called as F(h,0,n,0,m), the remaining rectangle 
-    // is the full search area { (i,j) | 0 ≤ i < m ∧ 0 ≤ j < n }, and the best value 
-    // found so far is initialized to 0. Since every candidate product (i+1)⋅(j+1) is 
-    // positive, the value 0 represents the case where no positive h(i,j) values have
-    // been found yet. Thus, for this specification, the maximum of an empty set of 
-    // candidate products is represented by 0.
-    // 
-    // Base case: if x ≥ m or y = 0, then the remaining search area is empty, so 
-    //            F(h,x,y,z,m) = Max{ {z} ∪ ∅ } = z.
+    // Base case: if x = p or y = p or x² + y² ≥ p, then the remaining search area 
+    //            is empty, so F(h,x,y,p,w) = #∅ = 0.
+    // Note that we use p as a coarse upper bound for x and y rather than √p, 
+    // to avoid the need for square roots in the Dafny code. This does not change 
+    // the counted set, because every point satisfying i² + j² < p also satisfies 
+    // i < p and j < p. After an update, x or y may reach p, but then the loop stops 
+    // and F uses its base case.
     //
     // Recursive case: here we want to shrink the remaining search area by 
     //   - either incrementing x (which removes the leftmost column)
-    //   - or decrementing y (which removes the topmost row)
+    //   - or incrementing y (which removes the bottommost row)
     //
     // What happens if we increment x?
-    //   F(h,x,y,z,m)
-    //   = Max{ {z} ∪ { (i+1)⋅(j+1) | x ≤ i < m ∧ 0 ≤ j < y ∧ h(i,j) > 0} }
-    //        ( split domain into x + 1 ≤ i < m and i = x )
-    //   = Max{ {z} ∪ { (i+1)⋅(j+1) | x + 1 ≤ i < m ∧ 0 ≤ j < y ∧ h(i,j) > 0}
-    //              ∪ { (x+1)⋅(j+1) | j: 0 ≤ j < y ∧ h(x,j) > 0} }
-    //        ( h(x,j) is descending in j, so the value of h(x,y-1) is minimal; 
-    //          if we assume h(x,y-1) > 0, then h(x,j) > 0 for all j < y. 
-    //          The maximal product value is attained at the topmost point 
-    //          (x,y-1), which has value (x+1)⋅y. We can update z to this value and
-    //          discard the rest of the column, as it contains no larger product values )
-    //   = Max{ {mxm(z, (x+1)⋅y)} ∪ { (i+1)⋅(j+1) | x + 1 ≤ i < m ∧ 0 ≤ j < y ∧ h(i,j) > 0} }
-    //        ( apply definition of F )
-    //   = F(h,x+1,y,mxm(z, (x+1)⋅y),m)
-    //        
-    // What happens if we decrement y?
-    //   F(h,x,y,z,m)
-    //   = Max{ {z} ∪ { (i+1)⋅(j+1) | x ≤ i < m ∧ 0 ≤ j < y ∧ h(i,j) > 0} }
-    //        ( split domain into 0 ≤ j < y - 1 and j = y - 1 )
-    //   = Max{ {z} ∪ { (i+1)⋅(j+1) | x ≤ i < m ∧ 0 ≤ j < y - 1 ∧ h(i,j) > 0}
-    //              ∪ { (i+1)⋅y | i: x ≤ i < m ∧ h(i,y-1) > 0} }
-    //        ( h(i,y-1) is descending in i, so the value of h(x,y-1) is maximal; 
-    //          if we assume h(x,y-1) ≤ 0, then h(i,y-1) ≤ 0 for all i ≥ x, 
-    //          so we can discard the whole row y-1, as it contains no matching points )
-    //   = Max{ {z} ∪ { (i+1)⋅(j+1) | x ≤ i < m ∧ 0 ≤ j < y - 1 ∧ h(i,j) > 0} } 
-    //        ( apply definition of F )
-    //   = F(h,x,y-1,z,m)
+    //   F(h,x,y,p,w)
+    //   = #{ (i,j) | x ≤ i < p ∧ y ≤ j < p ∧ i² + j² < p ∧ h(i,j) = w }
+    //      ( split nonempty search domain into leftmost column and remaining area: 
+    //        i = x and x + 1 ≤ i < p )
+    //   = #{ (i,j) | x+1 ≤ i < p ∧ y ≤ j < p ∧ i² + j² < p ∧ h(i,j) = w } 
+    //     + #{ (i,j) | i = x ∧ y ≤ j < p ∧ x² + j² < p ∧ h(x,j) = w } 
+    //      ( apply definition of F to the first term )
+    //   = F(h,x+1,y,p,w) + #{ (x,j) | y ≤ j < p ∧ x² + j² < p ∧ h(x,j) = w } 
+    //      ( h is decreasing in its second argument, so the value h(x,y) is
+    //        maximal for all j ≥ y in the leftmost column. Hence, if we assume 
+    //        h(x,y) < w, then h(x,j) < w for all j ≥ y, and we can discard the 
+    //        entire column as it does not contain any points satisfying h(i,j) = w. )
+    //   = F(h,x+1,y,p,w) + # ∅
+    //   = F(h,x+1,y,p,w)
+    //
+    // What happens if we increment y?
+    //   F(h,x,y,p,w)
+    //   = #{ (i,j) | x ≤ i < p ∧ y ≤ j < p ∧ i² + j² < p ∧ h(i,j) = w }
+    //      ( split nonempty search domain into bottommost row and remaining area: 
+    //        j = y and y + 1 ≤ j < p )
+    //   = #{ (i,j) | x ≤ i < p ∧ y+1 ≤ j < p ∧ i² + j² < p ∧ h(i,j) = w } 
+    //     + #{ (i,j) | x ≤ i < p ∧ j = y ∧ i² + y² < p ∧ h(i,y) = w }
+    //      ( apply definition of F to the first term )
+    //   = F(h,x,y+1,p,w) + #{ (i,y) | x ≤ i < p ∧ i² + y² < p ∧ h(i,y) = w } 
+    //      ( h is increasing in its first argument, so the value h(x,y) is minimal 
+    //        for all i ≥ x in the bottommost row. Hence, if we assume h(x,y) ≥ w,
+    //        then the only point in the row that can satisfy h(i,y) = w is (x,y):
+    //        we add 1 to the count iff h(x,y) = w, and we can discard the rest of
+    //        the row as it does not contain any other points satisfying h(i,j) = w. )
+    //   = F(h,x,y+1,p,w) + ord(h(x,y) == w)
 
-  if x >= m || y == 0 
-  then z
-  else if h(x, y - 1) > 0 
-       then F(h, x + 1, y, mxm(z, (x + 1) * y), m)
-       else F(h, x, y - 1, z, m)
+  if x == p || y == p || x * x + y * y >= p then
+    0
+  else if h(x,y) < w then
+    F(h, x + 1, y, p, w)
+  else 
+    F(h, x, y + 1, p, w) + ord(h(x,y) == w)
 }
-    
-method problem15(h:(nat,nat) -> int, m:nat, n:nat)
-returns (r: int)
-requires DescDesc(h)
-ensures r == F(h,0,n,0,m)
+
+method problem15(h:(nat,nat) -> int, p:nat, w:int)
+returns (z:int)
+requires IncrDecr(h)
+ensures z == F(h, 0, 0, p, w)
 {
     // Initialization to establish J before the loop
-    // P: F(h,0,n,0,m) = Z
-  var x:nat, y:nat, z:int := 0, n, 0;
-    // J: F(h,x,y,z,m) = Z
+    // P: F(h,0,0,p,w) = Z
+    //   ( arithmetic )
+    // 0 + F(h,0,0,p,w) = Z
+  var x:nat, y:nat := 0, 0;
+  z := 0;
+    // J: z + F(h,x,y,p,w) = Z
 
-  while x < m && y > 0
-  invariant 0 <= x <= m && 0 <= y <= n
-  invariant F(h,x,y,z,m) == F(h,0,n,0,m)
-  decreases (m - x) + y
+  while x*x + y*y < p
+    invariant 0 <= x <= p
+    invariant 0 <= y <= p
+    invariant z + F(h, x, y, p, w) == F(h, 0, 0, p, w)
+    decreases (p - x) + (p - y)
   {
       // J ∧ B ∧ vf = V
-      // F(h,x,y,z,m) = Z ∧ x < m ∧ y > 0 ∧ (m - x) + y = V
-      //   ( we want to apply the recursive definition of F, so we need
-      //     to distinguish the two cases h(x,y-1) > 0 and h(x,y-1) ≤ 0 )
+      // z + F(h,x,y,p,w) = Z ∧ x*x + y*y < p ∧ (p - x) + (p - y) = V
+      //   ( we want to apply the recursive definition of F to shrink the
+      //     remaining search area, so we need to check the value of h(x,y) )
 
-    if h(x, y - 1) > 0
+    if h(x,y) < w 
     {
-        // F(h,x,y,z,m) = Z ∧ h(x,y-1) > 0 ∧ x < m ∧ y > 0 ∧ (m - x) + y = V
-        //   ( apply definition of F )
-        // F(h,x+1,y,mxm(z,(x+1)*y),m) = Z ∧ (m - x) + y = V
-      z := mxm(z, (x + 1) * y);
-        // F(h,x+1,y,z,m) = Z ∧ (m - x) + y = V
+        // z + F(h,x,y,p,w) = Z ∧ x*x + y*y < p ∧ h(x,y) < w ∧ (p - x) + (p - y) = V
+        //   ( apply definition of F; as x*x + y*y < p, we are not in the base case )
+        // z + F(h,x+1,y,p,w) = Z ∧ (p - x) + (p - y) = V
         //   ( prepare for incrementing x )
-        // F(h,x+1,y,z,m) = Z ∧ (m - (x + 1)) + y < V
+        // z + F(h,x+1,y,p,w) = Z ∧ (p - (x+1)) + (p - y) < V
       x := x + 1;
-        // F(h,x,y,z,m) = Z ∧ (m - x) + y < V
-    }
+        // z + F(h,x,y,p,w) = Z ∧ (p - x) + (p - y) < V
+    } 
 
-    else
+    else 
     {
-        // F(h,x,y,z,m) = Z ∧ h(x,y-1) ≤ 0 ∧ x < m ∧ y > 0 ∧ (m - x) + y = V
-        //   ( apply definition of F )
-        // F(h,x,y-1,z,m) = Z ∧ (m - x) + y = V
-        //   ( prepare for decrementing y )
-        // F(h,x,y-1,z,m) = Z ∧ (m - x) + (y - 1) < V
-      y := y - 1;
-        // F(h,x,y,z,m) = Z ∧ (m - x) + y < V
+        // z + F(h,x,y,p,w) = Z ∧ x*x + y*y < p ∧ h(x,y) ≥ w ∧ (p - x) + (p - y) = V
+        //   ( apply definition of F; as x*x + y*y < p, we are not in the base case )
+        // z + F(h,x,y+1,p,w) + ord(h(x,y) == w) = Z ∧ (p - x) + (p - y) = V 
+      z := z + ord(h(x,y) == w);
+        // z + F(h,x,y+1,p,w) = Z ∧ (p - x) + (p - y) = V
+        //   ( prepare for incrementing y )
+        // z + F(h,x,y+1,p,w) = Z ∧ (p - x) + (p - (y+1)) < V
+      y := y + 1;
+        // z + F(h,x,y,p,w) = Z ∧ (p - x) + (p - y) < V
     }
 
-    // Collect branches:
-    // F(h,x,y,z,m) = Z ∧ (m - x) + y < V
-    // J ∧ vf < V
-    //   ( J is preserved and the variant function vf has decreased )
+      // Collect branches:
+      // z + F(h,x,y,p,w) = Z ∧ (p - x) + (p - y) < V
+      // J ∧ vf < V
+      //   ( J is preserved and the variant function vf has decreased )
   }
 
     // J ∧ ¬B
-    // F(h,x,y,z,m) = Z ∧ (x ≥ m ∨ y ≤ 0)
+    // z + F(h,x,y,p,w) = Z ∧ x*x + y*y ≥ p
     //   ( apply the base case of F )
-    // z = Z
-  r := z;
-    // Q: r = Z
+    // z + 0 = Z 
+    // Q: z = Z
 }
+
+
+/*
+   Note on time complexity:
+   Each iteration increments x or y. While the loop guard holds, we have
+   x² + y² < p, which implies that x < √p and y < √p. Hence x and y
+   remain bounded by √p during the active part of the search. Since at
+   least one of them is increased in every iteration, the number of
+   iterations is in O(√p).
+*/

@@ -21,7 +21,7 @@ requires DescDesc(h)
 {
   /* 
     Given is a function h: ℕ × ℕ → ℤ that is descending in
-    both arguments. Also given is that h(m,0) ≤ 0 and h(0,n) ≤ 0. 
+    both arguments. 
     
     Derive a command sequence T that satisfies the following 
     specification:
