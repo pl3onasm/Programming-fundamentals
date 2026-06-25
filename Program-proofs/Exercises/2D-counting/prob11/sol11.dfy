@@ -30,12 +30,13 @@ decreases a.Length - x + b.Length - y
 }
     
 method problem11(a: array<int>, b: array<int>)
-returns (r: int)
+returns (z: int)
 requires Incr(a) && Incr(b)
-ensures r == F(a,b,0,0)
+ensures z == F(a,b,0,0)
 { 
   var m, n := a.Length, b.Length;
-  var x, y, z := 0, 0, 0;
+  var x, y := 0, 0;
+  z := 0;
 
   while x < m && y < n
   invariant 0 <= x <= m && 0 <= y <= n
@@ -53,6 +54,4 @@ ensures r == F(a,b,0,0)
       y := y + 1;
     }
   }
-
-  r := z;
 }

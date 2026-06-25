@@ -78,61 +78,59 @@ decreases (m - x) + (n - y)
 }
 
 method problem03(h:(int,int) -> int, m:nat, n:nat, w:int) 
-returns (r: int)
+returns (z: int)
 requires DecrAsc(h)
-ensures r == F(h, 0, 0, m, n, w)
+ensures z == F(h, 0, 0, m, n, w)
 {
     // Initialization to establish J before the loop
     // P: F(h,0,0,m,n,w) = Z
     //   ( arithmetic )
-    // 0 + F(h,0,0,m,n,w) = F(h,0,0,m,n,w)
-  var x, y, z := 0, 0, 0;
-    // J: z + F(h,x,y,m,n,w) = F(h,0,0,m,n,w)
+    // 0 + F(h,0,0,m,n,w) = Z
+  var x, y := 0, 0;
+  z := 0;
+    // J: z + F(h,x,y,m,n,w) = Z
   
   while x < m && y < n
   invariant z + F(h, x, y, m, n, w) == F(h, 0, 0, m, n, w)
   decreases (m - x) + (n - y)
   {
       // J ∧ B ∧ vf = V
-      // z + F(h,x,y,m,n,w) = F(h,0,0,m,n,w) ∧ x < m ∧ y < n ∧ (m - x) + (n - y) = V
+      // z + F(h,x,y,m,n,w) = Z ∧ x < m ∧ y < n ∧ (m - x) + (n - y) = V
       //   ( we want to apply the recursive definition of F, so we need 
       //     to distinguish the cases h(x,y) > w and h(x,y) ≤ w )
 
     if h(x, y) > w
     {
-        // z + F(h,x,y,m,n,w) = F(h,0,0,m,n,w) ∧ h(x,y) > w ∧ x < m ∧ y < n ∧ (m - x) + (n - y) = V
+        // z + F(h,x,y,m,n,w) = Z ∧ h(x,y) > w ∧ x < m ∧ y < n ∧ (m - x) + (n - y) = V
         //   ( apply definition of F; since x < m ∧ y < n, we are not in the base case )
-        // z + F(h,x+1,y,m,n,w) = F(h,0,0,m,n,w) ∧ (m - x) + (n - y) = V
+        // z + F(h,x+1,y,m,n,w) = Z ∧ (m - x) + (n - y) = V
         //   ( prepare for incrementing x )
-        // z + F(h,x+1,y,m,n,w) = F(h,0,0,m,n,w) ∧ (m - (x + 1)) + (n - y) < V
+        // z + F(h,x+1,y,m,n,w) = Z ∧ (m - (x + 1)) + (n - y) < V
       x := x + 1;
-        // z + F(h,x,y,m,n,w) = F(h,0,0,m,n,w) ∧ (m - x) + (n - y) < V
+        // z + F(h,x,y,m,n,w) = Z ∧ (m - x) + (n - y) < V
     }
 
     else
     {
-        // z + F(h,x,y,m,n,w) = F(h,0,0,m,n,w) ∧ h(x,y) ≤ w ∧ x < m ∧ y < n ∧ (m - x) + (n - y) = V
+        // z + F(h,x,y,m,n,w) = Z ∧ h(x,y) ≤ w ∧ x < m ∧ y < n ∧ (m - x) + (n - y) = V
         //   ( apply definition of F; since x < m ∧ y < n, we are not in the base case )
-        // z + F(h,x,y+1,m,n,w) + ord(h(x,y) = w) = F(h,0,0,m,n,w) ∧ (m - x) + (n - y) = V
+        // z + F(h,x,y+1,m,n,w) + ord(h(x,y) = w) = Z ∧ (m - x) + (n - y) = V
       z := z + ord(h(x, y) == w);
-        // z + F(h,x,y+1,m,n,w) = F(h,0,0,m,n,w) ∧ (m - x) + (n - y) = V
+        // z + F(h,x,y+1,m,n,w) = Z ∧ (m - x) + (n - y) = V
         //   ( prepare for incrementing y )
-        // z + F(h,x,y+1,m,n,w) = F(h,0,0,m,n,w) ∧ (m - x) + (n - (y + 1)) < V
+        // z + F(h,x,y+1,m,n,w) = Z ∧ (m - x) + (n - (y + 1)) < V
       y := y + 1;
-        // z + F(h,x,y,m,n,w) = F(h,0,0,m,n,w) ∧ (m - x) + (n - y) < V
+        // z + F(h,x,y,m,n,w) = Z ∧ (m - x) + (n - y) < V
     }
 
       // Collect branches:
-      // z + F(h,x,y,m,n,w) = F(h,0,0,m,n,w) ∧ (m - x) + (n - y) < V
+      // z + F(h,x,y,m,n,w) = Z ∧ (m - x) + (n - y) < V
       // J ∧ vf < V
   }
 
     // J ∧ ¬B
-    // z + F(h,x,y,m,n,w) = F(h,0,0,m,n,w) ∧ x ≥ m ∨ y ≥ n
+    // z + F(h,x,y,m,n,w) = Z ∧ x ≥ m ∨ y ≥ n
     //   ( apply base case of F )
-    // z + 0 = F(h,0,0,m,n,w)
-    // z = F(h,0,0,m,n,w)
-  r := z;    
-    // r = F(h,0,0,m,n,w)
-    // Q: r = Z
+    // z + 0 = Z
+    // Q: z = Z
 }

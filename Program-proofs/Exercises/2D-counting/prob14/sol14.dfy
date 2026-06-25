@@ -30,11 +30,12 @@ decreases m - x + y
 }
     
 method problem14(h:(nat,nat) -> int, m:nat, n:nat)
-returns (r: int)
+returns (z: int)
 requires DescDesc(h)
-ensures r == F(h,0,n,0,m)
+ensures z == F(h,0,n,0,m)
 {
-  var x:nat, y:nat, z:int := 0, n, 0;
+  var x:nat, y:nat := 0, n;
+  z := 0;
 
   while x < m && y > 0
   invariant 0 <= x <= m && 0 <= y <= n
@@ -53,6 +54,4 @@ ensures r == F(h,0,n,0,m)
     }
 
   }
-
-  r := z;
 }

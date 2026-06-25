@@ -16,9 +16,9 @@ ghost predicate IncrDesc(f:(nat,nat) -> int)
 }
 
 method problem06(g:(nat,nat) -> int, n:nat, w:int) 
-returns (r: int)
+returns (z: int)
 requires IncrDesc(g)
-ensures r == ???
+ensures z == ???
 {
   /* 
     Given is a function g: ℕ × ℕ → ℤ that is ascending in 
@@ -35,6 +35,8 @@ ensures r == ???
       T
         {Q : Z = z}
       
+    Note that Z (uppercase) is a specification constant, not a program variable, 
+    whereas z (lowercase) is a program variable. 
     The time complexity of T should be in O(n).
   */
 }

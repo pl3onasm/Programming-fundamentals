@@ -26,11 +26,12 @@ decreases n - (x + y)
 }
 
 method problem06(g:(nat,nat) -> int, n:nat, w:int) 
-returns (r: int)
+returns (z: int)
 requires IncrDesc(g)
-ensures r == F(g,0,0,n,w)
+ensures z == F(g,0,0,n,w)
 {
-  var x, y, z := 0, 0, 0;
+  var x, y := 0, 0;
+  z := 0;
 
   while x + y < n
   invariant z + F(g,x,y,n,w) == F(g,0,0,n,w)
@@ -47,6 +48,4 @@ ensures r == F(g,0,0,n,w)
       y := y + 1;
     } 
   }
-    
-  r := z;
 }

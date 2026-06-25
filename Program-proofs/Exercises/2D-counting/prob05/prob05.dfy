@@ -16,9 +16,9 @@ ghost predicate AscAsc(f:(int,int) -> int)
 }
 
 method problem05(h:(int,int) -> int, n:nat, c:int) 
-returns (r: int)
+returns (z: int)
 requires AscAsc(h)
-ensures r == ???
+ensures z == ???
 {
   /* 
     Given is a function h: ℤ × ℤ → ℤ that is ascending in 
@@ -34,6 +34,8 @@ ensures r == ???
       T
         {Q : Z = z}
       
+    Note that Z (uppercase) is a specification constant, not a program variable, 
+    whereas z (lowercase) is a program variable.
     The time complexity of T should be in O(n).
   */
 }

@@ -74,17 +74,18 @@ decreases a.Length - x + b.Length - y
 }
     
 method problem11(a: array<int>, b: array<int>)
-returns (r: int)
+returns (z: int)
 requires Incr(a) && Incr(b)
-ensures r == F(a,b,0,0)
+ensures z == F(a,b,0,0)
 { 
   var m, n := a.Length, b.Length;
 
     // Initialization to establish J before the loop
     // P: F(a,b,0,0) = Z
     //   ( arithmetic )
-    // 0 + F(a,b,0,0) = F(a,b,0,0) 
-  var x, y, z := 0, 0, 0;
+    // 0 + F(a,b,0,0) = Z
+  var x, y := 0, 0;
+  z := 0;
     // J: z + F(a,b,x,y) = Z
 
   while x < m && y < n
@@ -133,6 +134,5 @@ ensures r == F(a,b,0,0)
     // z + F(a,b,x,y) = Z ∧ (x ≥ m ∨ y ≥ n)
     //   ( apply base case of F )
     // z + 0 = Z
-  r := z;
-    // Q: r = Z
+    // Q: z = Z
 }

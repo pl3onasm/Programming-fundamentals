@@ -16,9 +16,9 @@ ghost predicate IncrDecr(f:(nat,nat) -> int)
 }               
     
 method problem15(h:(nat,nat) -> int, m:nat, n:nat)
-returns (r: int)
+returns (z: int)
 requires IncrDecr(h)
-ensures r == ???
+ensures z == ???
 {
   /* 
     Given is a function h: ℕ × ℕ → ℤ that is increasing in its first

@@ -24,11 +24,12 @@ decreases n - x + y
 }
 
 method problem07(h:(nat,nat) -> int, n:nat) 
-returns (r: int)
+returns (z: int)
 requires AscAsc(h)
-ensures r == F(h,0,n,n)
+ensures z == F(h,0,n,n)
 {
-  var x, y, z := 0, n, 0;
+  var x, y := 0, n;
+  z := 0;
 
   while x < n && y > 0
   invariant z + F(h,x,y,n) == F(h,0,n,n)
@@ -49,6 +50,4 @@ ensures r == F(h,0,n,n)
       y := y - 1;
     }
   }
-
-  r := z;
 }

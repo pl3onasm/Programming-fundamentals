@@ -23,11 +23,12 @@ decreases m - x - 2 * y
 }
 
 method problem10(p:(int,int) -> bool, m:nat)
-returns (r: int)
+returns (z: int)
 requires prop(p)
-ensures r == F(p,0,0,m)
+ensures z == F(p,0,0,m)
 {
-  var x, y, z := 0, 0, 0;
+  var x, y := 0, 0;
+  z := 0;
 
   while x + 2 * y < m
   invariant z + F(p,x,y,m) == F(p,0,0,m)
@@ -44,6 +45,4 @@ ensures r == F(p,0,0,m)
       x := x + 1;
     }
   }
-
-  r := z;
 }

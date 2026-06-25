@@ -74,62 +74,60 @@ decreases n - (x + y)
 }
 
 method problem06(g:(nat,nat) -> int, n:nat, w:int) 
-returns (r: int)
+returns (z: int)
 requires IncrDesc(g)
-ensures r == F(g,0,0,n,w)
+ensures z == F(g,0,0,n,w)
 {
     // Initialization to establish J before the loop
     // P: F(g,0,0,n,w) = Z
     //   ( arithmetic )
-    // 0 + F(g,0,0,n,w) = F(g,0,0,n,w)
-  var x, y, z := 0, 0, 0;
-    // J: z + F(g,x,y,n,w) = F(g,0,0,n,w)
+    // 0 + F(g,0,0,n,w) = Z
+  var x, y := 0, 0;
+  z := 0;
+    // J: z + F(g,x,y,n,w) = Z
 
   while x + y < n
   invariant z + F(g,x,y,n,w) == F(g,0,0,n,w)
   decreases n - (x + y)
   {   
       // J ∧ B ∧ vf = V
-      // z + F(g,x,y,n,w) = F(g,0,0,n,w) ∧ x + y < n ∧ n - (x + y) = V
+      // z + F(g,x,y,n,w) = Z ∧ x + y < n ∧ n - (x + y) = V
       //   ( we want to apply the recursive definition of F, so we need 
       //     to distinguish the cases g(x,y) < w and g(x,y) ≥ w )
 
     if g(x, y) < w
     {
-        // z + F(g,x,y,n,w) = F(g,0,0,n,w) ∧ g(x,y) < w ∧ x + y < n ∧ n - (x + y) = V
+        // z + F(g,x,y,n,w) = Z ∧ g(x,y) < w ∧ x + y < n ∧ n - (x + y) = V
         //   ( apply definition of F )
-        // z + F(g,x+1,y,n,w) = F(g,0,0,n,w) ∧ n - (x + y) = V
+        // z + F(g,x+1,y,n,w) = Z ∧ n - (x + y) = V
         //   ( prepare incrementing x )
-        // z + F(g,x+1,y,n,w) = F(g,0,0,n,w) ∧ n - ((x + 1) + y) < V
+        // z + F(g,x+1,y,n,w) = Z ∧ n - ((x + 1) + y) < V
       x := x + 1;
-        // z + F(g,x,y,n,w) = F(g,0,0,n,w) ∧ n - (x + y) < V
+        // z + F(g,x,y,n,w) = Z ∧ n - (x + y) < V
     }
 
     else
     {
-        // z + F(g,x,y,n,w) = F(g,0,0,n,w) ∧ g(x,y) ≥ w ∧ x + y < n ∧ n - (x + y) = V
+        // z + F(g,x,y,n,w) = Z ∧ g(x,y) ≥ w ∧ x + y < n ∧ n - (x + y) = V
         //   ( apply definition of F )
-        // z + F(g,x,y+1,n,w) + ord(g(x,y) = w) = F(g,0,0,n,w) ∧ n - (x + y) = V
+        // z + F(g,x,y+1,n,w) + ord(g(x,y) = w) = Z ∧ n - (x + y) = V
       z := z + ord(g(x, y) == w);
-        // z + F(g,x,y+1,n,w) = F(g,0,0,n,w) ∧ n - (x + y) = V
+        // z + F(g,x,y+1,n,w) = Z ∧ n - (x + y) = V
         //   ( prepare incrementing y )
-        // z + F(g,x,y+1,n,w) = F(g,0,0,n,w) ∧ n - (x + (y + 1)) < V
+        // z + F(g,x,y+1,n,w) = Z ∧ n - (x + (y + 1)) < V
       y := y + 1;
-        // z + F(g,x,y,n,w) = F(g,0,0,n,w) ∧ n - (x + y) < V
+        // z + F(g,x,y,n,w) = Z ∧ n - (x + y) < V
     } 
 
       // Collect branches: 
-      // z + F(g,x,y,n,w) = F(g,0,0,n,w) ∧ n - (x + y) < V
+      // z + F(g,x,y,n,w) = Z ∧ n - (x + y) < V
       // J ∧ vf < V
       //   ( J is preserved and the variant function decreases )
   }
     
     // J ∧ ¬B
-    // z + F(g,x,y,n,w) = F(g,0,0,n,w) ∧ x + y ≥ n
+    // z + F(g,x,y,n,w) = Z ∧ x + y ≥ n
     //   ( apply definition of F; since x + y ≥ n, we are in the base case )
-    // z + 0 = F(g,0,0,n,w)
-    // z = F(g,0,0,n,w)
-  r := z;
-    // r = F(g,0,0,n,w)
-    // Q: r = Z
+    // z + 0 = Z
+    // Q: z = Z
 }

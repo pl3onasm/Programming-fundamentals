@@ -14,9 +14,9 @@ ghost predicate prop(p:(int,int) -> bool)
 }               
     
 method problem10(p:(int,int) -> bool, m:nat)
-returns (r: int)
+returns (z: int)
 requires prop(p)
-ensures r == ???
+ensures z == ???
 {
   /* 
     Given is a predicate p: ℤ × ℤ → B, which satisfies the following monotonicity rules:

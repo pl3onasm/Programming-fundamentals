@@ -16,10 +16,10 @@ ghost predicate AscAsc(f:(int,int) -> int)
 }          
     
 method problem12(h:(int,int) -> int, m:nat, n:nat)
-returns (r: int)
+returns (z: int)
 requires AscAsc(h)
 requires 0 < m && 0 < n
-ensures r == ???
+ensures z == ???
 {
   /* 
     Given is a function h: ℤ × ℤ → ℤ that is ascending in both arguments.

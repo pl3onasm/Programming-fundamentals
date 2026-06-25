@@ -22,11 +22,12 @@ requires DescAsc(g)
 }
 
 method problem02(g:(int,int) -> int, m:nat, n:nat) 
-returns (r: int)
+returns (z: int)
 requires DescAsc(g)
-ensures r == F(g, m ,n)
+ensures z == F(g, m ,n)
 {
-  var x, y, z := m, n, 0;
+  var x, y := m, n;
+  z := 0;
   
   while x > 0 && y > 0
   invariant z + F(g, x, y) == F(g, m, n)
@@ -43,6 +44,4 @@ ensures r == F(g, m ,n)
       y := y - 1;
     }
   }
-
-  r := z;
 }

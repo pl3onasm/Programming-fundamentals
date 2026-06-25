@@ -68,62 +68,60 @@ decreases y - x
 }
 
 method problem05(h:(int,int) -> int, n:nat, c:int) 
-returns (r: int)
+returns (z: int)
 requires AscAsc(h)
-ensures r == F(h, 0, n, c)
+ensures z == F(h, 0, n, c)
 {
     // Initialization to establish J before the loop
     // P: F(h,0,n,c) = Z
     //   ( arithmetic )
-    // 0 + F(h,x,y,c) = F(h,0,n,c)
-  var x:nat, y:nat, z:int := 0, n, 0;
-    // J: z + F(h,x,y,c) = F(h,0,n,c)
+    // 0 + F(h,0,n,c) = Z
+  var x:nat, y:nat := 0, n;
+  z := 0;
+    // J: z + F(h,x,y,c) = Z
 
   while x < y
   invariant z + F(h,x,y,c) == F(h,0,n,c)
   decreases y - x
   {   
       // J ∧ B ∧ vf = V
-      // z + F(h,x,y,c) = F(h,0,n,c) ∧ x < y ∧ (y - x) = V
+      // z + F(h,x,y,c) = Z ∧ x < y ∧ (y - x) = V
       //   ( we want to apply the recursive definition of F, so we need
       //     to distinguish the two cases h(x,y-1) ≤ c and h(x,y-1) > c )
 
     if h(x, y - 1) <= c
     {
-        // z + F(h,x,y,c) = F(h,0,n,c) ∧ h(x,y-1) ≤ c ∧ x < y ∧ (y - x) = V
+        // z + F(h,x,y,c) = Z ∧ h(x,y-1) ≤ c ∧ x < y ∧ (y - x) = V
         //   ( apply the def of F; x < y ensures we are in the recursive case )
-        // z + F(h,x+1,y,c) + (y - x) = F(h,0,n,c) ∧ (y - x) = V
+        // z + F(h,x+1,y,c) + (y - x) = Z ∧ (y - x) = V
       z := z + (y - x);
-        // z + F(h,x+1,y,c) = F(h,0,n,c) ∧ (y - x) = V
+        // z + F(h,x+1,y,c) = Z ∧ (y - x) = V
         //   ( prepare for incrementing x )
-        // z + F(h,x+1,y,c) = F(h,0,n,c) ∧ (y - (x + 1)) < V
+        // z + F(h,x+1,y,c) = Z ∧ (y - (x + 1)) < V
       x := x + 1;
-        // z + F(h,x,y,c) = F(h,0,n,c) ∧ (y - x) < V
+        // z + F(h,x,y,c) = Z ∧ (y - x) < V
     }
     
     else
     { 
-        // z + F(h,x,y,c) = F(h,0,n,c) ∧ h(x,y-1) > c ∧ x < y ∧ (y - x) = V
+        // z + F(h,x,y,c) = Z ∧ h(x,y-1) > c ∧ x < y ∧ (y - x) = V
         //   ( apply the def of F; x < y ensures we are in the recursive case )
-        // z + F(h,x,y-1,c) = F(h,0,n,c) ∧ (y - x) = V
+        // z + F(h,x,y-1,c) = Z ∧ (y - x) = V
         //   ( prepare for decrementing y )
-        // z + F(h,x,y-1,c) = F(h,0,n,c) ∧ ((y - 1) - x) < V
+        // z + F(h,x,y-1,c) = Z ∧ ((y - 1) - x) < V
       y := y - 1;
-        // z + F(h,x,y,c) = F(h,0,n,c) ∧ (y - x) < V
+        // z + F(h,x,y,c) = Z ∧ (y - x) < V
     }
     
       // Collect branches:
-      // z + F(h,x,y,c) = F(h,0,n,c) ∧ (y - x) < V
+      // z + F(h,x,y,c) = Z ∧ (y - x) < V
       // J ∧ vf < V
       //   ( J is preserved and the variant function vf has decreased )
   }
     
     // J ∧ ¬B
-    // z + F(h,x,y,c) = F(h,0,n,c) ∧ x ≥ y
+    // z + F(h,x,y,c) = Z ∧ x ≥ y
     //   ( apply the base case of F )
-    // z + 0 = F(h,0,n,c)
-    // z = F(h,0,n,c)
-  r := z;
-    // r = F(h,0,n,c)
-    // Q: r = Z
+    // z + 0 = Z
+    // Q: z = Z
 }

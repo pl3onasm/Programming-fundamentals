@@ -16,9 +16,9 @@ ghost predicate AscAsc(f:(nat,nat) -> int)
 }
 
 method problem07(h:(nat,nat) -> int, n:nat) 
-returns (r: int)
+returns (z: int)
 requires AscAsc(h)
-ensures r == ???
+ensures z == ???
 {
   /* 
     Given is a function h: ℕ × ℕ → ℤ that is ascending in 

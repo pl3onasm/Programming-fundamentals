@@ -72,64 +72,63 @@ decreases w - x + y
 } 
 
 method problem09(w:nat) 
-returns (r: nat)
-ensures r == F(0,w,w)
+returns (z: nat)
+ensures z == F(0,w,w)
 {
     // Initialization to establish J before the loop
     // P: F(0,w,w) = Z
     //   ( arithmetic )
-    // 0 + F(0,w,w) = F(0,w,w)
-  var x:nat, y:nat, z:nat := 0, w, 0;
-    // J: z + F(x,y,w) = F(0,w,w)
+    // 0 + F(0,w,w) = Z
+  var x:nat, y:nat := 0, w;
+  z := 0;
+    // J: z + F(x,y,w) = Z
 
   while x < w && y > 0
   invariant z + F(x,y,w) == F(0,w,w)
   decreases w - x + y
   {
       // J ∧ B ∧ vf = V
-      // z + F(x,y,w) = F(0,w,w) ∧ x < w ∧ y > 0 ∧ w - x + y = V
+      // z + F(x,y,w) = Z ∧ x < w ∧ y > 0 ∧ w - x + y = V
       //   ( we want to apply the recursive definition of F, so we need to 
       //     distinguish the cases (x+1)² + (y-1)² < w² and (x+1)² + (y-1)² ≥ w² )
 
     if (x + 1) * (x + 1) + (y - 1) * (y - 1) < w * w 
     {
-        // z + F(x,y,w) = F(0,w,w) ∧ x < w ∧ y > 0 ∧ (x+1)² + (y-1)² < w² 
+        // z + F(x,y,w) = Z ∧ x < w ∧ y > 0 ∧ (x+1)² + (y-1)² < w² 
         //   ∧ w - x + y = V
         //   ( apply recursive definition of F )
-        // z + F(x+1,y,w) + y = F(0,w,w) ∧ w - x + y = V
+        // z + F(x+1,y,w) + y = Z ∧ w - x + y = V
       z := z + y;
-        // z + F(x+1,y,w) = F(0,w,w) ∧ w - x + y = V
+        // z + F(x+1,y,w) = Z ∧ w - x + y = V
         //   ( prepare for incrementing x )
-        // z + F(x+1,y,w) = F(0,w,w) ∧ w - (x + 1) + y < V
+        // z + F(x+1,y,w) = Z ∧ w - (x + 1) + y < V
       x := x + 1;
-        // z + F(x,y,w) = F(0,w,w) ∧ w - x + y < V
+        // z + F(x,y,w) = Z ∧ w - x + y < V
     }
 
     else 
     {
-        // z + F(x,y,w) = F(0,w,w) ∧ x < w ∧ y > 0 ∧ (x+1)² + (y-1)² ≥ w²
+        // z + F(x,y,w) = Z ∧ x < w ∧ y > 0 ∧ (x+1)² + (y-1)² ≥ w²
         //   ∧ w - x + y = V
         //   ( apply recursive definition of F )
-        // z + F(x,y-1,w) = F(0,w,w) ∧ w - x + y = V
+        // z + F(x,y-1,w) = Z ∧ w - x + y = V
         //   ( prepare for decrementing y )
-        // z + F(x,y-1,w) = F(0,w,w) ∧ w - x + (y - 1) < V
+        // z + F(x,y-1,w) = Z ∧ w - x + (y - 1) < V
       y := y - 1;
-        // z + F(x,y,w) = F(0,w,w) ∧ w - x + y < V
+        // z + F(x,y,w) = Z ∧ w - x + y < V
     }
 
-    // Collect branches:
-    // z + F(x,y,w) = F(0,w,w) ∧ w - x + y < V
-    // J ∧ vf < V
-    //   ( invariant is preserved and the variant function decreases )
+      // Collect branches:
+      // z + F(x,y,w) = Z ∧ w - x + y < V
+      // J ∧ vf < V
+      //   ( invariant is preserved and the variant function decreases )
   }
     
     // J ∧ ¬B
-    // z + F(x,y,w) = F(0,w,w) ∧ (x ≥ w ∨ y = 0)
+    // z + F(x,y,w) = Z ∧ (x ≥ w ∨ y = 0)
     //   ( apply base case of F )
-    // z + 0 = F(0,w,w)
-  r := z;
-    // r = F(0,w,w)
-    // Q: r = Z
+    // z + 0 = Z
+    // Q: z = Z
 }
 
 /*

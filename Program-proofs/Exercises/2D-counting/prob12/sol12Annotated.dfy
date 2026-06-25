@@ -47,7 +47,7 @@ decreases m - x + y
     // to derive T.
     //
     // We define F as follows:
-    //   F(h,x,y,z,m) = Min{ {z} ∪ { |h(i,j)| | x ≤ i < m ∧ 0 ≤ j < y} }
+    //   F(h,x,y,z,m) = Min{ {z} ∪ { |h(i,j)| | i,j: x ≤ i < m ∧ 0 ≤ j < y} }
     //
     // In other words, F(h,x,y,z,m) is the best value already found, 
     // namely z, minimized with the absolute values in the remaining 
@@ -68,10 +68,10 @@ decreases m - x + y
     //
     // What happens if we increment x?
     //   F(h,x,y,z,m)
-    //     = Min{ {z} ∪ { |h(i,j)| | x ≤ i < m ∧ 0 ≤ j < y} }
+    //     = Min{ {z} ∪ { |h(i,j)| | i,j: x ≤ i < m ∧ 0 ≤ j < y} }
     //          ( split domain into i = x and x+1 ≤ i < m )
-    //     = Min{ {z} ∪ { |h(x,j)| | 0 ≤ j < y} 
-    //                ∪ { |h(i,j)| | x+1 ≤ i < m ∧ 0 ≤ j < y} }
+    //     = Min{ {z} ∪ { |h(x,j)| | j: 0 ≤ j < y} 
+    //                ∪ { |h(i,j)| | i,j: x+1 ≤ i < m ∧ 0 ≤ j < y} }
     //       ( Since h is ascending in its second argument, we have
     //         h(x,j) ≤ h(x,y-1) for all 0 ≤ j < y. If we assume
     //         h(x,y-1) < 0, then all these values are negative, and
@@ -79,16 +79,16 @@ decreases m - x + y
     //         the best value in column x is the corner (x,y-1) and
     //         we can update z with this value and discard the column. )
     //     = Min{ {mnm(z, abs(h(x,y-1))} 
-    //                ∪ { |h(i,j)| | x+1 ≤ i < m ∧ 0 ≤ j < y} }
+    //                ∪ { |h(i,j)| | i,j: x+1 ≤ i < m ∧ 0 ≤ j < y} }
     //        ( apply definition of F )
     //     = F(h, x+1, y, mnm(z, abs(h(x,y-1))), m)
     //
     // What happens if we decrement y?
     //   F(h,x,y,z,m)
-    //     = Min{ {z} ∪ { |h(i,j)| | x ≤ i < m ∧ 0 ≤ j < y} }
+    //     = Min{ {z} ∪ { |h(i,j)| | i,j: x ≤ i < m ∧ 0 ≤ j < y} }
     //          ( split domain into j = y-1 and 0 ≤ j < y-1 )
-    //     = Min{ {z} ∪ { |h(i,y-1)| | x ≤ i < m} 
-    //                ∪ { |h(i,j)| | x ≤ i < m ∧ 0 ≤ j < y-1} }
+    //     = Min{ {z} ∪ { |h(i,y-1)| | i: x ≤ i < m} 
+    //                ∪ { |h(i,j)| | i,j: x ≤ i < m ∧ 0 ≤ j < y-1} }
     //       ( Since h is ascending in its first argument, we have
     //         h(i,y-1) ≥ h(x,y-1) for all x ≤ i < m. If we assume
     //         h(x,y-1) ≥ 0, then all these values are non-negative, and
@@ -96,7 +96,7 @@ decreases m - x + y
     //         the best value in row y-1 is the corner (x,y-1) and
     //         we can update z with this value and discard the row. )
     //     = Min{ {mnm(z, abs(h(x,y-1))} 
-    //                ∪ { |h(i,j)| | x ≤ i < m ∧ 0 ≤ j < y-1} }
+    //                ∪ { |h(i,j)| | i,j: x ≤ i < m ∧ 0 ≤ j < y-1} }
     //        ( apply definition of F )
     //     = F(h, x, y-1, mnm(z, abs(h(x,y-1))), m)
 
@@ -107,14 +107,15 @@ decreases m - x + y
 }
 
 method problem12(h:(int,int) -> int, m:nat, n:nat)
-returns (r:int)
+returns (z:int)
 requires AscAsc(h)
 requires 0 < m && 0 < n
-ensures r == F(h,0,n,abs(h(0,0)),m)
+ensures z == F(h,0,n,abs(h(0,0)),m)
 {
     // Initialization to establish J before the loop.
     // P: F(h,0,n,abs(h(0,0)),m) = Z
-  var x:int, y:int, z:int := 0, n, abs(h(0,0));
+  var x:int, y:int := 0, n;
+  z := abs(h(0,0));
     // J: F(h,x,y,z,m) = Z
 
   while x < m && 0 < y
@@ -165,7 +166,5 @@ ensures r == F(h,0,n,abs(h(0,0)),m)
     //   ( De Morgan's law )
     // F(h,x,y,z,m) = Z ∧ (x ≥ m ∨ y ≤ 0)
     //   ( apply base case of F )
-    // z = Z
-  r := z;
-    // Q: r = Z
+    // Q: z = Z
 }

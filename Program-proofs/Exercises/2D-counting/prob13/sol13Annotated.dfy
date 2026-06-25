@@ -13,20 +13,20 @@
     the solution in line with the PC lecture notes.
 */
 
-ghost predicate pos(f: (nat) -> nat)
+ghost predicate Pos(f: (nat) -> nat)
 {
     // Expresses the property that f is a positive function, 
     // i.e. f(k) > 0 for all k in the domain of f.
   (forall k:: f(k) > 0)
 }
 
-function ord(b:bool): nat
+function Ord(b:bool): nat
 {
   if b then 1 else 0
 }
 
 ghost function F(f: (nat) -> nat, x: nat, y: nat, a: nat, n: nat): nat
-requires pos(f)
+requires Pos(f)
 requires 0 < a 
 decreases 2 * n - y - x
 {
@@ -82,7 +82,7 @@ decreases 2 * n - y - x
     //   = F(f,x,y+1,a,n)
   if y >= n || x >= n then 0
   else if S(f,x,y) >= a 
-       then F(f,x+1,y,a,n) + ord(S(f,x,y) == a)
+       then F(f,x+1,y,a,n) + Ord(S(f,x,y) == a)
        else F(f,x,y+1,a,n)
 }
 
@@ -102,7 +102,7 @@ decreases y - x
   if x >= y then 0 else f(x) + S(f,x+1,y)
 }
 
-lemma incrS(f: (nat) -> nat, x: nat, y: nat)
+lemma IncrS(f: (nat) -> nat, x: nat, y: nat)
 requires x <= y
 ensures S(f,x,y+1) == S(f,x,y) + f(y)
 decreases y - x
@@ -139,21 +139,22 @@ decreases y - x
     // the definition of S.
   if x < y 
   {
-    incrS(f,x+1,y);
+    IncrS(f,x+1,y);
   }
 }
 
 method problem13(f: (nat) -> nat, a: nat, n: nat)
-returns (r: nat)
+returns (z: nat)
 requires 0 < a && 0 < n
-requires pos(f)
-ensures r == F(f,0,0,a,n)
+requires Pos(f)
+ensures z == F(f,0,0,a,n)
 {
     // Initialization to establish J before the loop
     // P: F(f,0,0,a,n) = Z
     //   ( arithmetic )
     // 0 + F(f,0,0,a,n) = Z ∧ 0 = S(f,0,0)
-  var x, y, z, s := 0, 0, 0, 0;
+  var x, y, s := 0, 0, 0;
+  z := 0;
     // J: z + F(f,x,y,a,n) = Z ∧ s = S(f,x,y)
 
   while x < n && y < n
@@ -173,7 +174,7 @@ ensures r == F(f,0,0,a,n)
         //   ( apply definition of F )
         // z + F(f,x+1,y,a,n) + (S(f,x,y) = a ? 1 : 0) = Z ∧ s = S(f,x,y)
         //   ∧ 2 * n - x - y = V
-      z := z + ord(s == a);
+      z := z + Ord(s == a);
         // z + F(f,x+1,y,a,n) = Z ∧ s = S(f,x,y) ∧ 2 * n - x - y = V
         //   ( apply definition of S to update s; the recursive case of S is applicable
         //     since x < y, which follows from S(f,x,y) ≥ a > 0 )
@@ -192,10 +193,10 @@ ensures r == F(f,0,0,a,n)
         //   ∧ x < n ∧ y < n ∧ 2 * n - x - y = V
         //   ( apply definition of F )
         // z + F(f,x,y+1,a,n) = Z ∧ s = S(f,x,y) ∧ 2 * n - x - y = V
-        //   ( apply lemma incrS which states that S(f,x,y+1) = S(f,x,y) + f(y);
+        //   ( apply lemma IncrS which states that S(f,x,y+1) = S(f,x,y) + f(y);
         //     the lemma is required since the definition of S is not directly 
         //     applicable to the case where the second argument is incremented )
-      incrS(f,x,y);
+      IncrS(f,x,y);
         // z + F(f,x,y+1,a,n) = Z ∧ s + f(y) = S(f,x,y+1) ∧ 2 * n - x - y = V 
       s := s + f(y);
         // z + F(f,x,y+1,a,n) = Z ∧ s = S(f,x,y+1) ∧ 2 * n - x - y = V
@@ -216,6 +217,5 @@ ensures r == F(f,0,0,a,n)
     // z + F(f,x,y,a,n) = Z ∧ s = S(f,x,y) ∧ (x ≥ n ∨ y ≥ n) 
     //   ( apply base case of F )
     // z + 0 = Z ∧ s = S(f,x,y)
-  r := z;
-    // Q: r = Z
+    // Q: z = Z
 }

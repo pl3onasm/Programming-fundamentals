@@ -5,7 +5,7 @@
    This is exercise 9.15 from the PC reader
 */
 
-ghost predicate pos(f: (nat) -> nat)
+ghost predicate Pos(f: (nat) -> nat)
 {
   (forall k:: f(k) > 0)
 }
@@ -16,7 +16,7 @@ function ord(b:bool): nat
 }
 
 ghost function F(f: (nat) -> nat, x: nat, y: nat, a: nat, n: nat): nat
-requires pos(f)
+requires Pos(f)
 requires 0 < a 
 decreases 2 * n - y - x
 {
@@ -32,24 +32,25 @@ decreases y - x
   if x >= y then 0 else f(x) + S(f,x+1,y)
 }
 
-lemma incrS(f: (nat) -> nat, x: nat, y: nat)
+lemma IncrS(f: (nat) -> nat, x: nat, y: nat)
 requires x <= y
 ensures S(f,x,y+1) == S(f,x,y) + f(y)
 decreases y - x
 {
   if x < y 
   {
-    incrS(f,x+1,y);
+    IncrS(f,x+1,y);
   }
 }
 
 method problem13(f: (nat) -> nat, a: nat, n: nat)
-returns (r: nat)
+returns (z: nat)
 requires 0 < a && 0 < n
-requires pos(f)
-ensures r == F(f,0,0,a,n)
+requires Pos(f)
+ensures z == F(f,0,0,a,n)
 {
-  var x, y, z, s := 0, 0, 0, 0;
+  var x, y, s := 0, 0, 0;
+  z := 0;
 
   while x < n && y < n
   invariant 0 <= x <= y <= n
@@ -65,11 +66,9 @@ ensures r == F(f,0,0,a,n)
 
     else
     {
-      incrS(f,x,y);
+      IncrS(f,x,y);
       s := s + f(y);
       y := y + 1;
     }
   }
-  
-  r := z;
 }

@@ -22,16 +22,16 @@ ensures r == ???
     satisfies the following specification:
 
       const a,n : ℕ₊;
-      var   z   : ℕ;
+      var   r   : ℕ;
       
         {P : Z = #{ (i,j) | i,j: 0 ≤ i ≤ j < n ∧ a = ∑( f(k) | k: i ≤ k < j ) }}
       T
-        {Q : Z = z}
+        {Q : Z = r}
       
     In other words, the program should compute the total number of contiguous 
     subsequences taken from the sequence f(0), f(1), ..., f(n-2) that sum to a.
     Note that Z (uppercase) is a specification constant, not a program 
-    variable, whereas z (lowercase) is a program variable.
+    variable, whereas r (lowercase) is a program variable.
     The time complexity of T should be in O(n).
   */
 }

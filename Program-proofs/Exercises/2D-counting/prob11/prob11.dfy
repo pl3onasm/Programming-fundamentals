@@ -11,9 +11,9 @@ reads arr
 }               
     
 method problem11(a: array<int>, b: array<int>)
-returns (r: int)
+returns (z: int)
 requires Incr(a) && Incr(b)
-ensures r == ???
+ensures z == ???
 {
   /* 
     Given is the fact that both arrays a and b are increasingly sorted.

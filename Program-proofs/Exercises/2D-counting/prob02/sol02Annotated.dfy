@@ -66,64 +66,62 @@ requires DescAsc(g)
 }
 
 method problem02(g:(int,int) -> int, m:nat, n:nat) 
-returns (r: int)
+returns (z: int)
 requires DescAsc(g)
-ensures r == F(g, m ,n)
+ensures z == F(g, m ,n)
 {
     // Initialization to establish J before the loop
     // P: F(g,m,n) = Z
     //   ( arithmetic )
-    // 0 + F(g,m,n) = F(g,m,n)
-  var x, y, z := m, n, 0;
-    // J: z + F(g,x,y) = F(g,m,n)
+    // 0 + F(g,m,n) = Z
+  var x, y := m, n;
+  z := 0;
+    // J: z + F(g,x,y) = Z
 
   while x > 0 && y > 0
   invariant z + F(g, x, y) == F(g, m, n)
   decreases x + y
   {
       // J ∧ B ∧ vf = V
-      // z + F(g,x,y) = F(g,m,n) ∧ x > 0 ∧ y > 0 ∧ x + y = V
+      // z + F(g,x,y) = Z ∧ x > 0 ∧ y > 0 ∧ x + y = V
       //   ( we want to apply the recursive definition of F, so we need 
       //     to distinguish the cases g(x-1,y-1) ≤ 0 and g(x-1,y-1) > 0 )
 
     if g(x - 1, y - 1) <= 0
     {
-        // z + F(g,x,y) = F(g,m,n) ∧ g(x-1,y-1) ≤ 0 ∧ x > 0 ∧ y > 0 ∧ x + y = V
+        // z + F(g,x,y) = Z ∧ g(x-1,y-1) ≤ 0 ∧ x > 0 ∧ y > 0 ∧ x + y = V
         //   ( apply definition of F; 
         //     since x > 0 ∧ y > 0, we are not in the base case )
-        // z + F(g,x-1,y) + y = F(g,m,n) ∧ x + y = V
+        // z + F(g,x-1,y) + y = Z ∧ x + y = V
       z := z + y;
-        // z + F(g,x-1,y) = F(g,m,n) ∧ x + y = V
+        // z + F(g,x-1,y) = Z ∧ x + y = V
         //   ( prepare for decrementing x )
-        // z + F(g,x-1,y) = F(g,m,n) ∧ x - 1 + y < V
+        // z + F(g,x-1,y) = Z ∧ x - 1 + y < V
       x := x - 1;
-        // z + F(g,x,y) = F(g,m,n) ∧ x + y < V
+        // z + F(g,x,y) = Z ∧ x + y < V
     }
 
     else
     {
-        // z + F(g,x,y) = F(g,m,n) ∧ g(x-1,y-1) > 0 ∧ x > 0 ∧ y > 0 ∧ x + y = V
+        // z + F(g,x,y) = Z ∧ g(x-1,y-1) > 0 ∧ x > 0 ∧ y > 0 ∧ x + y = V
         //   ( apply definition of F; 
         //     since x > 0 ∧ y > 0, we are not in the base case )
-        // z + F(g,x,y-1) = F(g,m,n) ∧ x + y = V
+        // z + F(g,x,y-1) = Z ∧ x + y = V
         //   ( prepare for decrementing y )
-        // z + F(g,x,y-1) = F(g,m,n) ∧ x + y - 1 < V
+        // z + F(g,x,y-1) = Z ∧ x + y - 1 < V
       y := y - 1;
-        // z + F(g,x,y) = F(g,m,n) ∧ x + y < V
+        // z + F(g,x,y) = Z ∧ x + y < V
     }
 
       // Collect branches:
-      // z + F(g,x,y) = F(g,m,n) ∧ x + y < V
+      // z + F(g,x,y) = Z ∧ x + y < V
       // J ∧ vf < V
       //   ( J is preserved and vf has decreased )
   }
 
     // J ∧ ¬B
-    // z + F(g,x,y) = F(g,m,n) ∧ x ≤ 0 ∨ y ≤ 0
+    // z + F(g,x,y) = Z ∧ x ≤ 0 ∨ y ≤ 0
     //   ( apply base case of F )
-    // z + 0 = F(g,m,n)
-    // z = F(g,m,n)
-  r := z;
-    // r = F(g,m,n)
-    // Q: r = Z
+    // z + 0 = Z
+    // Q: z = Z
 }

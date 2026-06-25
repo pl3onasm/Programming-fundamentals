@@ -26,11 +26,12 @@ decreases (m - x) + y
 }
 
 method problem04(g:(int,int) -> int, m:nat, n:nat) 
-returns (r: int)
+returns (z: int)
 requires IncrIncr(g)
-ensures r == F(g, 0, n, m)
+ensures z == F(g, 0, n, m)
 {
-  var x, y, z := 0, n, 0;
+  var x, y := 0, n;
+  z := 0;
 
   while x < m && y > 0
   invariant z + F(g,x,y,m) == F(g,0,n,m)
@@ -47,7 +48,5 @@ ensures r == F(g, 0, n, m)
       y := y - 1;
     }
   }
-    
-  r := z;
 }
 

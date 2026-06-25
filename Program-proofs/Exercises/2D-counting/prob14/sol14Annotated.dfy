@@ -37,7 +37,7 @@ decreases m - x + y
 {
     // We want to find a recursive definition of F that we can use to derive T.
     // We define F as follows:
-    //   F(h,x,y,z,m) = Max{ {z} ∪ { (i+1)⋅(j+1) | x ≤ i < m ∧ 0 ≤ j < y ∧ h(i,j) > 0} }
+    //   F(h,x,y,z,m) = Max{ {z} ∪ { (i+1)⋅(j+1) | i,j: x ≤ i < m ∧ 0 ≤ j < y ∧ h(i,j) > 0} }
     //
     // In other words, F(h,x,y,z,m) is the best value already found, namely z, maximized 
     // with the values of (i+1)⋅(j+1) in the remaining rectangle for which h(i,j) > 0. 
@@ -57,29 +57,29 @@ decreases m - x + y
     //
     // What happens if we increment x?
     //   F(h,x,y,z,m)
-    //   = Max{ {z} ∪ { (i+1)⋅(j+1) | x ≤ i < m ∧ 0 ≤ j < y ∧ h(i,j) > 0} }
+    //   = Max{ {z} ∪ { (i+1)⋅(j+1) | i,j: x ≤ i < m ∧ 0 ≤ j < y ∧ h(i,j) > 0} }
     //        ( split domain into x + 1 ≤ i < m and i = x )
-    //   = Max{ {z} ∪ { (i+1)⋅(j+1) | x + 1 ≤ i < m ∧ 0 ≤ j < y ∧ h(i,j) > 0}
+    //   = Max{ {z} ∪ { (i+1)⋅(j+1) | i,j: x + 1 ≤ i < m ∧ 0 ≤ j < y ∧ h(i,j) > 0}
     //              ∪ { (x+1)⋅(j+1) | j: 0 ≤ j < y ∧ h(x,j) > 0} }
     //        ( h(x,j) is descending in j, so the value of h(x,y-1) is minimal; 
     //          if we assume h(x,y-1) > 0, then h(x,j) > 0 for all j < y. 
     //          The maximal product value is attained at the topmost point 
     //          (x,y-1), which has value (x+1)⋅y. We can update z to this value and
     //          discard the rest of the column, as it contains no larger product values )
-    //   = Max{ {mxm(z, (x+1)⋅y)} ∪ { (i+1)⋅(j+1) | x + 1 ≤ i < m ∧ 0 ≤ j < y ∧ h(i,j) > 0} }
+    //   = Max{ {mxm(z, (x+1)⋅y)} ∪ { (i+1)⋅(j+1) | i,j: x + 1 ≤ i < m ∧ 0 ≤ j < y ∧ h(i,j) > 0} }
     //        ( apply definition of F )
     //   = F(h,x+1,y,mxm(z, (x+1)⋅y),m)
     //        
     // What happens if we decrement y?
     //   F(h,x,y,z,m)
-    //   = Max{ {z} ∪ { (i+1)⋅(j+1) | x ≤ i < m ∧ 0 ≤ j < y ∧ h(i,j) > 0} }
+    //   = Max{ {z} ∪ { (i+1)⋅(j+1) | i,j: x ≤ i < m ∧ 0 ≤ j < y ∧ h(i,j) > 0} }
     //        ( split domain into 0 ≤ j < y - 1 and j = y - 1 )
-    //   = Max{ {z} ∪ { (i+1)⋅(j+1) | x ≤ i < m ∧ 0 ≤ j < y - 1 ∧ h(i,j) > 0}
+    //   = Max{ {z} ∪ { (i+1)⋅(j+1) | i,j: x ≤ i < m ∧ 0 ≤ j < y - 1 ∧ h(i,j) > 0}
     //              ∪ { (i+1)⋅y | i: x ≤ i < m ∧ h(i,y-1) > 0} }
     //        ( h(i,y-1) is descending in i, so the value of h(x,y-1) is maximal; 
     //          if we assume h(x,y-1) ≤ 0, then h(i,y-1) ≤ 0 for all i ≥ x, 
     //          so we can discard the whole row y-1, as it contains no matching points )
-    //   = Max{ {z} ∪ { (i+1)⋅(j+1) | x ≤ i < m ∧ 0 ≤ j < y - 1 ∧ h(i,j) > 0} } 
+    //   = Max{ {z} ∪ { (i+1)⋅(j+1) | i,j: x ≤ i < m ∧ 0 ≤ j < y - 1 ∧ h(i,j) > 0} } 
     //        ( apply definition of F )
     //   = F(h,x,y-1,z,m)
 
@@ -91,13 +91,14 @@ decreases m - x + y
 }
     
 method problem14(h:(nat,nat) -> int, m:nat, n:nat)
-returns (r: int)
+returns (z: int)
 requires DescDesc(h)
-ensures r == F(h,0,n,0,m)
+ensures z == F(h,0,n,0,m)
 {
     // Initialization to establish J before the loop
     // P: F(h,0,n,0,m) = Z
-  var x:nat, y:nat, z:int := 0, n, 0;
+  var x:nat, y:nat := 0, n;
+  z := 0;
     // J: F(h,x,y,z,m) = Z
 
   while x < m && y > 0
@@ -144,6 +145,5 @@ ensures r == F(h,0,n,0,m)
     // F(h,x,y,z,m) = Z ∧ (x ≥ m ∨ y ≤ 0)
     //   ( apply the base case of F )
     // z = Z
-  r := z;
-    // Q: r = Z
+    // Q: z = Z
 }

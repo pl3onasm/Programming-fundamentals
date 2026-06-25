@@ -38,7 +38,7 @@ decreases (p - x) + (p - y)
 {
     // We want to find a recursive definition of F that we can use to derive T.
     // We define F as follows:
-    //   F(h,x,y,p,w) = #{ (i,j) | x ≤ i < p ∧ y ≤ j < p ∧ i² + j² < p ∧ h(i,j) = w }
+    //   F(h,x,y,p,w) = #{ (i,j) | i,j: x ≤ i < p ∧ y ≤ j < p ∧ i² + j² < p ∧ h(i,j) = w }
     // That is, F(h,x,y,p,w) counts the number of points (i,j) that lie 
     // strictly inside the quarter disk of radius √p, and for which h(i,j) = w. 
     // When this function is initially called as F(h,0,0,p,w), the remaining
@@ -58,13 +58,13 @@ decreases (p - x) + (p - y)
     //
     // What happens if we increment x?
     //   F(h,x,y,p,w)
-    //   = #{ (i,j) | x ≤ i < p ∧ y ≤ j < p ∧ i² + j² < p ∧ h(i,j) = w }
+    //   = #{ (i,j) | i,j: x ≤ i < p ∧ y ≤ j < p ∧ i² + j² < p ∧ h(i,j) = w }
     //      ( split nonempty search domain into leftmost column and remaining area: 
     //        i = x and x + 1 ≤ i < p )
-    //   = #{ (i,j) | x+1 ≤ i < p ∧ y ≤ j < p ∧ i² + j² < p ∧ h(i,j) = w } 
-    //     + #{ (i,j) | i = x ∧ y ≤ j < p ∧ x² + j² < p ∧ h(x,j) = w } 
+    //   = #{ (i,j) | i,j: x+1 ≤ i < p ∧ y ≤ j < p ∧ i² + j² < p ∧ h(i,j) = w } 
+    //     + #{ (x,j) | j: y ≤ j < p ∧ x² + j² < p ∧ h(x,j) = w } 
     //      ( apply definition of F to the first term )
-    //   = F(h,x+1,y,p,w) + #{ (x,j) | y ≤ j < p ∧ x² + j² < p ∧ h(x,j) = w } 
+    //   = F(h,x+1,y,p,w) + #{ (x,j) | j: y ≤ j < p ∧ x² + j² < p ∧ h(x,j) = w } 
     //      ( h is decreasing in its second argument, so the value h(x,y) is
     //        maximal for all j ≥ y in the leftmost column. Hence, if we assume 
     //        h(x,y) < w, then h(x,j) < w for all j ≥ y, and we can discard the 
@@ -74,11 +74,11 @@ decreases (p - x) + (p - y)
     //
     // What happens if we increment y?
     //   F(h,x,y,p,w)
-    //   = #{ (i,j) | x ≤ i < p ∧ y ≤ j < p ∧ i² + j² < p ∧ h(i,j) = w }
+    //   = #{ (i,j) | i,j: x ≤ i < p ∧ y ≤ j < p ∧ i² + j² < p ∧ h(i,j) = w }
     //      ( split nonempty search domain into bottommost row and remaining area: 
     //        j = y and y + 1 ≤ j < p )
-    //   = #{ (i,j) | x ≤ i < p ∧ y+1 ≤ j < p ∧ i² + j² < p ∧ h(i,j) = w } 
-    //     + #{ (i,j) | x ≤ i < p ∧ j = y ∧ i² + y² < p ∧ h(i,y) = w }
+    //   = #{ (i,j) | i,j: x ≤ i < p ∧ y+1 ≤ j < p ∧ i² + j² < p ∧ h(i,j) = w } 
+    //     + #{ (i,j) | i: x ≤ i < p ∧ j = y ∧ i² + y² < p ∧ h(i,y) = w }
     //      ( apply definition of F to the first term )
     //   = F(h,x,y+1,p,w) + #{ (i,y) | x ≤ i < p ∧ i² + y² < p ∧ h(i,y) = w } 
     //      ( h is increasing in its first argument, so the value h(x,y) is minimal 

@@ -16,10 +16,11 @@ decreases w - x + y
 } 
 
 method problem09(w:nat) 
-returns (r: nat)
-ensures r == F(0,w,w)
+returns (z: nat)
+ensures z == F(0,w,w)
 {
-  var x:nat, y:nat, z:nat := 0, w, 0;
+  var x:nat, y:nat := 0, w;
+  z := 0;
 
   while x < w && y > 0
   invariant z + F(x,y,w) == F(0,w,w)
@@ -36,6 +37,4 @@ ensures r == F(0,w,w)
       y := y - 1;
     }
   }
-    
-  r := z;
 }

@@ -26,11 +26,12 @@ decreases (m - x) + (n - y)
 }
 
 method problem03(h:(int,int) -> int, m:nat, n:nat, w:int) 
-returns (r: int)
+returns (z: int)
 requires DecrAsc(h)
-ensures r == F(h, 0, 0, m, n, w)
+ensures z == F(h, 0, 0, m, n, w)
 {
-  var x, y, z := 0, 0, 0;
+  var x, y := 0, 0;
+  z := 0;
   
   while x < m && y < n
   invariant z + F(h, x, y, m, n, w) == F(h, 0, 0, m, n, w)
@@ -47,6 +48,4 @@ ensures r == F(h, 0, 0, m, n, w)
       y := y + 1;
     }
   }
-
-  r := z;    
 }

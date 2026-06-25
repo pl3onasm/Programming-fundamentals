@@ -16,9 +16,9 @@ ghost predicate AscAsc(f:(int,int) -> int)
 }
 
 method problem08(h:(int,int) -> int, m:nat, n:nat) 
-returns (r: int)
+returns (z: int)
 requires AscAsc(h)
-ensures r == ???
+ensures z == ???
 {
   /* 
     Given is a function h: ℤ × ℤ → ℤ that is ascending in 
@@ -28,7 +28,7 @@ ensures r == ???
     specification:
 
       const m, n : ℕ;
-      var   z : ℤ;
+      var   z    : ℤ;
       
         {P : Z = #{ i | i: 0 ≤ i < m ∧ (∃j: 0 ≤ j < n ∧ h(i,j) = 0) }}
       T

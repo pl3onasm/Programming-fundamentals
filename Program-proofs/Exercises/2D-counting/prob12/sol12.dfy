@@ -34,12 +34,13 @@ decreases m - x + y
 }
 
 method problem12(h:(int,int) -> int, m:nat, n:nat)
-returns (r:int)
+returns (z:int)
 requires AscAsc(h)
 requires 0 < m && 0 < n
-ensures r == F(h,0,n,abs(h(0,0)),m)
+ensures z == F(h,0,n,abs(h(0,0)),m)
 {
-  var x:int, y:int, z:int := 0, n, abs(h(0,0));
+  var x:int, y:int := 0, n;
+  z := abs(h(0,0));
 
   while x < m && 0 < y
   invariant 0 <= x <= m
@@ -59,6 +60,4 @@ ensures r == F(h,0,n,abs(h(0,0)),m)
       y := y - 1;
     }
   }
-
-  r := z;
 }

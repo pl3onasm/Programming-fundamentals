@@ -76,62 +76,61 @@ decreases m - x - 2 * y
 }
 
 method problem10(p:(int,int) -> bool, m:nat)
-returns (r: int)
+returns (z: int)
 requires prop(p)
-ensures r == F(p,0,0,m)
+ensures z == F(p,0,0,m)
 {
     // Initialization to establish J before the loop
     // P: F(p,0,0,m) = Z
     //    ( arithmetic )
-    // 0 + F(p,0,0,m) = F(p,0,0,m)
-  var x:int, y:int, z:int := 0, 0, 0;
-    // J: z + F(p,x,y,m) = F(p,0,0,m)
+    // 0 + F(p,0,0,m) = Z
+  var x:int, y:int := 0, 0;
+  z := 0;
+    // J: z + F(p,x,y,m) = Z
 
   while x + 2 * y < m
   invariant z + F(p,x,y,m) == F(p,0,0,m)
   decreases m - x - 2 * y
   {   
       // J ∧ B ∧ vf = V
-      // z + F(p,x,y,m) = F(p,0,0,m) ∧ x + 2 * y < m ∧ m - x - 2 * y = V
+      // z + F(p,x,y,m) = Z ∧ x + 2 * y < m ∧ m - x - 2 * y = V
       //   ( note that vf = V > 0 because of B: x + 2 * y < m;
       //     we now want to apply the recursive definition of F, 
       //     so we need to consider the cases for p(x,y) )
 
     if p(x,y) 
     {
-        // z + F(p,x,y,m) = F(p,0,0,m) ∧ x + 2 * y < m ∧ p(x,y) ∧ m - x - 2 * y = V
+        // z + F(p,x,y,m) = Z ∧ x + 2 * y < m ∧ p(x,y) ∧ m - x - 2 * y = V
         //   ( apply definition of F )
-        // z + F(p,x,y+1,m) + m - 2 * y - x = F(p,0,0,m) ∧ m - x - 2 * y = V
+        // z + F(p,x,y+1,m) + m - 2 * y - x = Z ∧ m - x - 2 * y = V
       z := z + m - 2 * y - x;
-        // z + F(p,x,y+1,m) = F(p,0,0,m) ∧ m - x - 2 * y = V
+        // z + F(p,x,y+1,m) = Z ∧ m - x - 2 * y = V
         //   ( prepare for incrementing y )
-        // z + F(p,x,y+1,m) = F(p,0,0,m) ∧ m - x - 2 * (y + 1) < V
+        // z + F(p,x,y+1,m) = Z ∧ m - x - 2 * (y + 1) < V
       y := y + 1;
-        // z + F(p,x,y,m) = F(p,0,0,m) ∧ m - x - 2 * y < V
+        // z + F(p,x,y,m) = Z ∧ m - x - 2 * y < V
     }
 
     else 
     {
-        // z + F(p,x,y,m) = F(p,0,0,m) ∧ x + 2 * y < m ∧ ¬p(x,y) ∧ m - x - 2 * y = V
+        // z + F(p,x,y,m) = Z ∧ x + 2 * y < m ∧ ¬p(x,y) ∧ m - x - 2 * y = V
         //   ( apply definition of F )
-        // z + F(p,x+1,y,m) = F(p,0,0,m) ∧ m - x - 2 * y = V
+        // z + F(p,x+1,y,m) = Z ∧ m - x - 2 * y = V
         //   ( prepare for incrementing x )
-        // z + F(p,x+1,y,m) = F(p,0,0,m) ∧ m - (x + 1) - 2 * y < V
+        // z + F(p,x+1,y,m) = Z ∧ m - (x + 1) - 2 * y < V
       x := x + 1;
-        // z + F(p,x,y,m) = F(p,0,0,m) ∧ m - x - 2 * y < V
+        // z + F(p,x,y,m) = Z ∧ m - x - 2 * y < V
     }
 
       // Collect branches:
-      // z + F(p,x,y,m) = F(p,0,0,m) ∧ m - x - 2 * y < V
+      // z + F(p,x,y,m) = Z ∧ m - x - 2 * y < V
       // J ∧ vf < V
       //   ( J is preserved, and the variant function decreases ) 
   }
 
     // J ∧ ¬B
-    // z + F(p,x,y,m) = F(p,0,0,m) ∧ ¬(x + 2 * y < m)
+    // z + F(p,x,y,m) = Z ∧ ¬(x + 2 * y < m)
     //   ( apply base case of F )
-    // z + 0 = F(p,0,0,m) 
-  r := z;
-    // r = F(p,0,0,m)
-    // Q: r = Z
+    // z + 0 = Z 
+    // Q: z = Z
 }

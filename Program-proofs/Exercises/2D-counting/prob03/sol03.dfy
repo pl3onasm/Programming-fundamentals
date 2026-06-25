@@ -25,11 +25,12 @@ requires DecrAsc(h)
 }
 
 method problem03(h:(int,int) -> int, m:nat, n:nat, w:int) 
-returns (r: int)
+returns (z: int)
 requires DecrAsc(h)
-ensures r == F(h, m ,n, w)
+ensures z == F(h, m ,n, w)
 {
-  var x, y, z := m, n, 0;
+  var x, y := m, n;
+  z := 0;
 
   while x > 0 && y > 0
   invariant z + F(h, x, y, w) == F(h, m, n, w)
@@ -46,6 +47,4 @@ ensures r == F(h, m ,n, w)
       y := y - 1;
     }
   }
-
-  r := z;
 }

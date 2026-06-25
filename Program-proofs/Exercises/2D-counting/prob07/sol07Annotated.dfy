@@ -76,80 +76,78 @@ decreases n - x + y
 }
 
 method problem07(h:(nat,nat) -> int, n:nat) 
-returns (r: int)
+returns (z: int)
 requires AscAsc(h)
-ensures r == F(h,0,n,n)
+ensures z == F(h,0,n,n)
 {
     // Initialization to establish J before the loop
     // P: F(h,0,n,n) = Z
     //   ( arithmetic )
-    // 0 + F(h,0,n,n) = F(h,0,n,n)
-  var x, y, z := 0, n, 0;
-    // J: z + F(h,x,y,n) = F(h,0,n,n)
+    // 0 + F(h,0,n,n) = Z
+  var x, y := 0, n;
+  z := 0;
+    // J: z + F(h,x,y,n) = Z
 
   while x < n && y > 0
   invariant z + F(h,x,y,n) == F(h,0,n,n)
   decreases n - x + y
   {   
       // J ∧ B ∧ vf = V
-      // z + F(h,x,y,n) = F(h,0,n,n) ∧ x < n ∧ y > 0 ∧ n - x + y = V
+      // z + F(h,x,y,n) = Z ∧ x < n ∧ y > 0 ∧ n - x + y = V
       //   ( we want to apply the recursive definition of F, so we need 
       //     to distinguish the cases h(x,y-1) ≤ 0 and h(x,y-1) > 0 )
 
     if h(x, y - 1) <= 0 
     {
-        // z + F(h,x,y,n) = F(h,0,n,n) ∧ h(x,y-1) ≤ 0 
+        // z + F(h,x,y,n) = Z ∧ h(x,y-1) ≤ 0 
         //   ∧ x < n ∧ y > 0 ∧ n - x + y = V
         //   ( apply definition of F )
-        // z + F(h,x+1,y,n) = F(h,0,n,n) ∧ n - x + y = V
+        // z + F(h,x+1,y,n) = Z ∧ n - x + y = V
         //   ( prepare incrementing x ) 
-        // z + F(h,x+1,y,n) = F(h,0,n,n) ∧ n - (x + 1) + y < V
+        // z + F(h,x+1,y,n) = Z ∧ n - (x + 1) + y < V
       x := x + 1;
-        // z + F(h,x,y,n) = F(h,0,n,n) ∧ n - x + y < V
+        // z + F(h,x,y,n) = Z ∧ n - x + y < V
     }
 
     else 
     {
       if x + y <= n
       {
-          // z + F(h,x,y,n) = F(h,0,n,n) ∧ h(x,y-1) > 0 ∧ x + y ≤ n   
+          // z + F(h,x,y,n) = Z ∧ h(x,y-1) > 0 ∧ x + y ≤ n   
           //   ∧ x < n ∧ y > 0 ∧ n - x + y = V
           //   ( apply definition of F )
-          // z + F(h,x,y-1,n) + n - x - y + 1 = F(h,0,n,n) ∧ n - x + y = V
+          // z + F(h,x,y-1,n) + n - x - y + 1 = Z ∧ n - x + y = V
         z := z + n - x - y + 1;
-          // z + F(h,x,y-1,n) = F(h,0,n,n) ∧ n - x + y = V
+          // z + F(h,x,y-1,n) = Z ∧ n - x + y = V
       }
 
       else 
       {
-        // z + F(h,x,y,n) = F(h,0,n,n) ∧ h(x,y-1) > 0 
+        // z + F(h,x,y,n) = Z ∧ h(x,y-1) > 0 
         //   ∧ x + y > n ∧ x < n ∧ y > 0 ∧ n - x + y = V
         //   ( apply definition of F )
-        // z + F(h,x,y-1,n) = F(h,0,n,n) ∧ n - x + y = V
+        // z + F(h,x,y-1,n) = Z ∧ n - x + y = V
       }
 
         // Collect branches:
-        // z + F(h,x,y-1,n) = F(h,0,n,n) ∧ n - x + y = V
+        // z + F(h,x,y-1,n) = Z ∧ n - x + y = V
         //   ( prepare decrementing y )
-        // z + F(h,x,y-1,n) = F(h,0,n,n) ∧ n - x + (y - 1) < V
+        // z + F(h,x,y-1,n) = Z ∧ n - x + (y - 1) < V
       y := y - 1;
-        // z + F(h,x,y,n) = F(h,0,n,n) ∧ n - x + y < V
+        // z + F(h,x,y,n) = Z ∧ n - x + y < V
     }
 
 
       // Collect branches: 
-      // z + F(h,x,y,n) = F(h,0,n,n) ∧ n - x + y < V
+      // z + F(h,x,y,n) = Z ∧ n - x + y < V
       // J ∧ vf < V
       //   ( J is preserved and the variant function decreases )
 
   }
 
     // J ∧ ¬B
-    // z + F(h,x,y,n) = F(h,0,n,n) ∧ (x ≥ n || y = 0)
+    // z + F(h,x,y,n) = Z ∧ (x ≥ n || y = 0)
     //   ( apply base case of F )
-    // z + 0 = F(h,0,n,n)
-    // z = F(h,0,n,n)
-  r := z;
-    // r = F(h,0,n,n)
-    // Q: r = Z
+    // z + 0 = Z
+    // Q: z = Z
 }

@@ -16,7 +16,7 @@ ghost predicate DescDesc(f:(nat,nat) -> int)
 }               
     
 method problem14(h:(nat,nat) -> int, m:nat, n:nat)
-returns (r: int)
+returns (z: int)
 requires DescDesc(h)
 {
   /* 
@@ -26,7 +26,7 @@ requires DescDesc(h)
     Derive a command sequence T that satisfies the following 
     specification:
 
-      var z : ℤ;
+      var r : ℤ;
       
         {P : Z = Max { (i+1)⋅(j+1) | i,j: 0 ≤ i < m ∧ 0 ≤ j < n ∧ h(i,j) > 0 }}
       T

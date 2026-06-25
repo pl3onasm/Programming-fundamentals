@@ -69,62 +69,60 @@ decreases (m - x) + y
 }
 
 method problem04(g:(int,int) -> int, m:nat, n:nat) 
-returns (r: int)
+returns (z: int)
 requires IncrIncr(g)
-ensures r == F(g, 0, n, m)
+ensures z == F(g, 0, n, m)
 {
     // Initialization to establish J before the loop
     // P: F(g,0,n,m) = Z
     //   ( arithmetic )
-    // 0 + F(g,x,y,m) = F(g,0,n,m)
-  var x, y, z := 0, n, 0;
-    // J: z + F(g,x,y,m) = F(g,0,n,m) 
+    // 0 + F(g,0,n,m) = Z
+  var x, y := 0, n;
+  z := 0;
+    // J: z + F(g,x,y,m) = Z 
 
   while x < m && y > 0
   invariant z + F(g,x,y,m) == F(g,0,n,m)
   decreases (m - x) + y
   {   
       // J ∧ B ∧ vf = V
-      // z + F(g,x,y,m) = F(g,0,n,m) ∧ x < m ∧ y > 0 ∧ (m - x) + y = V
+      // z + F(g,x,y,m) = Z ∧ x < m ∧ y > 0 ∧ (m - x) + y = V
       //   ( we want to apply the recursive definition of F, so we need
       //     to distinguish the cases g(x,y-1) < y-1 and g(x,y-1) ≥ y-1 )
 
     if g(x, y - 1) < y - 1
     {   
-        // z + F(g,x,y,m) = F(g,0,n,m) ∧ g(x,y-1) < y-1 ∧ x < m ∧ y > 0 ∧ (m - x) + y = V
+        // z + F(g,x,y,m) = Z ∧ g(x,y-1) < y-1 ∧ x < m ∧ y > 0 ∧ (m - x) + y = V
         //   ( apply definition of F; since x < m ∧ y > 0, we are in the recursive case )
-        // z + F(g,x+1,y,m) = F(g,0,n,m) ∧ (m - x) + y = V
+        // z + F(g,x+1,y,m) = Z ∧ (m - x) + y = V
         //   ( prepare for incrementing x )
-        // z + F(g,x+1,y,m) = F(g,0,n,m) ∧ (m - (x + 1)) + y < V
+        // z + F(g,x+1,y,m) = Z ∧ (m - (x + 1)) + y < V
       x := x + 1;
-        // z + F(g,x,y,m) = F(g,0,n,m) ∧ (m - x) + y < V
+        // z + F(g,x,y,m) = Z ∧ (m - x) + y < V
     }
 
     else
     { 
-        // z + F(g,x,y,m) = F(g,0,n,m) ∧ g(x,y-1) ≥ y-1 ∧ x < m ∧ y > 0 ∧ (m - x) + y = V
+        // z + F(g,x,y,m) = Z ∧ g(x,y-1) ≥ y-1 ∧ x < m ∧ y > 0 ∧ (m - x) + y = V
         //   ( apply definition of F; since x < m ∧ y > 0, we are in the recursive case )
-        // z + F(g,x,y-1,m) + ord(g(x,y-1) == y-1) = F(g,0,n,m) ∧ (m - x) + y = V
+        // z + F(g,x,y-1,m) + ord(g(x,y-1) == y-1) = Z ∧ (m - x) + y = V
       z := z + ord(g(x, y - 1) == y - 1);
-        // z + F(g,x,y-1,m) = F(g,0,n,m) ∧ (m - x) + y = V
+        // z + F(g,x,y-1,m) = Z ∧ (m - x) + y = V
         //   ( prepare for decrementing y )
-        // z + F(g,x,y-1,m) = F(g,0,n,m) ∧ (m - x) + (y - 1) < V
+        // z + F(g,x,y-1,m) = Z ∧ (m - x) + (y - 1) < V
       y := y - 1;
-        // z + F(g,x,y,m) = F(g,0,n,m) ∧ (m - x) + y < V
+        // z + F(g,x,y,m) = Z ∧ (m - x) + y < V
     }
 
       // Collect branches:
-      // z + F(g,x,y,m) = F(g,0,n,m) ∧ (m - x) + y < V
+      // z + F(g,x,y,m) = Z ∧ (m - x) + y < V
       // J ∧ vf < V
       //   ( J is preserved and the variant function vf has decreased )
   }
     
     // J ∧ ¬B
-    // z + F(g,x,y,m) = F(g,0,n,m) ∧ (x >= m ∨ y <= 0)
+    // z + F(g,x,y,m) = Z ∧ (x >= m ∨ y <= 0)
     //   ( since x ≥ m ∨ y ≤ 0, we are in the base case of F )
-    // z + 0 = F(g,0,n,m)
-    // z = F(g,0,n,m)
-  r := z;
-    // r = F(g,0,n,m)
-    // Q: r = Z
+    // z + 0 = Z
+    // Q: z = Z
 }
