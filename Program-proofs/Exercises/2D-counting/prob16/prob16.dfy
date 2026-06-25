@@ -4,21 +4,21 @@
    This is exercise 9.18 from the PC reader
 */
 
-ghost predicate AscAsc(f:(int,int) -> int) 
+ghost predicate AscAsc(f:(nat,nat) -> int) 
 {
     // Expresses the property that f is ascending in 
     // both its arguments, i.e.
-    // ∀ i,j,k ∈ ℤ:
+    // ∀ i,j,k ∈ ℕ:
     //   if i ≤ j then f(i,k) ≤ f(j,k)
     //   if j ≤ k then f(i,j) ≤ f(i,k)
   (forall i,j,k:: i <= j  ==>  f(i,k) <= f(j,k)) &&
   (forall i,j,k:: j <= k  ==>  f(i,j) <= f(i,k))
 }                
     
-method problem16(f:(nat,nat) -> int, m:nat, n:nat)
-returns (r: int)
+method problem16(f:(nat,nat) -> int, n:nat, w:int)
+returns (z: int)
 requires AscAsc(f)
-ensures r == ???
+ensures z == ???
 {
   /* 
     Given is a function f: ℕ × ℕ → ℤ that is ascending in both its arguments. 
@@ -26,10 +26,11 @@ ensures r == ???
     Derive a command sequence T that satisfies the following 
     specification:
       
-      const m, n, w: ℤ;
-      var   z      : ℤ;
+      const n : ℕ;
+      const w : ℤ;
+      var   z : ℤ;
       
-        {P : Z = #{ (i,j) | i,j: 0 ≤ i < n ∧ 0 ≤ j < n ∧ 2j ≤ i < n ∧ f(i,j) = w }}
+        {P : Z = #{ (i,j) | i,j: 0 ≤ j ∧ 2j ≤ i < n ∧ f(i,j) < w }}
       T
         {Q : Z = z}
       
