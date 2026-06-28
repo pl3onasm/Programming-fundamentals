@@ -19,7 +19,7 @@ requires prop(p)
 ensures z == ???
 {
   /* 
-    Given is a predicate p: ℤ × ℤ → B, which satisfies the following monotonicity rules:
+    Given is a predicate p: ℤ × ℤ → 𝔹, which satisfies the following monotonicity rules:
 
       p(i,j)   ⇒ p(i+1,j)
       p(i,j+1) ⇒ p(i,j)
