@@ -50,12 +50,12 @@ decreases x, Gap(h,x,y,c)
     //
     // That is, F(h,x,y,n,c) counts the number of points satisfying 
     // h(i,j) = c in the current semi-infinite strip with horizontal range 
-    // [0,x) and vertical range [y,∞). When this function is initially called 
-    // as F(h,n,0,n,c), it counts the number of points in the full rectangle
-    // marked by:  0 ≤ i < n   and   0 ≤ j
+    // [0,x) and vertical range [y,∞). When this function is initially 
+    // called as F(h,n,0,n,c), it counts the number of matching points in 
+    // the full semi-infinite strip given by: 0 ≤ i < n ∧ 0 ≤ j.
 
-    // Base case: if x = 0, then the rectangle is empty and there are no 
-    // points to count.
+    // Base case: if x = 0, then the semi-infinite strip is empty and there  
+    // are no points to count.
     //
     // Recursive case: in this case, we want to reduce the search space by
     //   - incrementing y (moving north)
@@ -70,7 +70,7 @@ decreases x, Gap(h,x,y,c)
     //      ( apply definition of F to the first subset )
     //   = F(h,x-1,y,n,c) + #{ (x-1,j) | y ≤ j ∧ h(x-1,j) = c }
     //      ( h is increasing in its second argument, so (x-1,y) is minimal 
-    //        in its column. If we assume h(x-1,y) ≥ c,then the only possible 
+    //        in its column. If we assume h(x-1,y) ≥ c, then the only possible 
     //        matching point in this column is (x-1,y) itself.
     //        So we count it if it matches, and otherwise we discard the 
     //        entire column, as h(x-1,j) > c for all j > y. )
@@ -120,8 +120,24 @@ ensures z == F(h,n,0,n,c)
     invariant z + F(h,x,y,n,c) == F(h,n,0,n,c)
     decreases x, Gap(h,x,y,c)
   /*
-    We choose as variant function: vf = (x, Gap(h,x,y,c))
-    The pair is ordered lexicographically. Thus it decreases as x
+    * From c < h(n,0), monotonicity in the first argument, and
+    monotonicity in the second argument, it follows that all matching
+    points must satisfy i < n. Indeed, if n ≤ i, then
+
+      c < h(n,0) ≤ h(i,0) ≤ h(i,j),
+
+    and so h(i,j) ≠ c. The search can thus use n as the initial right
+    boundary. This is reflected in the invariant x ≤ n.
+
+    * The second coordinate is unbounded, so the usual kind of single 
+    arithmetic variant is not sufficient here. Moving north increments y, 
+    and there is no fixed upper bound on y that the proof can count down from. 
+    Instead, termination is obtained from the strict increase of h in its 
+    second argument: while h(x-1,y) < c, moving north makes h(x-1,y) strictly 
+    larger and therefore decreases its remaining gap to c.
+
+    * We choose as variant function: vf = (x, Gap(h,x,y,c))
+    The pair is ordered lexicographically. Thus vf decreases as x
     decreases, or if x remains unchanged, as Gap(h,x,y,c) decreases.
     This matches the two possible moves of the search:
       - moving north keeps x fixed but decreases the gap to c;

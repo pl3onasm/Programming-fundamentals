@@ -39,11 +39,12 @@ ensures z == ???
     Note that Z (uppercase) is a specification constant, not a program variable, 
     whereas z (lowercase) is a program variable. Also note that the domain of i 
     and j is not explicitly bounded in the specification. From c < h(n,0) and 
-    monotonicity in the first argument, it follows that all matching points must 
+    monotonicity in both arguments, it follows that all matching points must 
     satisfy i < n. Thus the first coordinate is effectively bounded. The second 
     coordinate, however, remains unbounded in the specification. This is exactly 
     where the challenge of this exercise lies: the termination proof for T cannot 
-    rely on a fixed upper bound for j.
+    rely on a fixed upper bound for j, but has to use the strict increase of h 
+    in its second argument.
 
     The time complexity of T should be in O(n).
   */
