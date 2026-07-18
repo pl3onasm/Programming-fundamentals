@@ -1,24 +1,19 @@
-/* file: sol15.dfy
+/* file: sol15PCStyle.dfy
    author: David De Potter
    description: extra practice in Dafny, 2D-counting, 
    solution to prob15
    This is exercise 9.17 from the PC reader
+   NOTE: This solution follows the PC-style proof method described
+   in the general note on proof styles (see the README in the Exercises folder)
 */
 
-ghost predicate IncrDecr(f:(nat,nat) -> int)
-{
-  (forall i,j,k :: i < j ==> f(i,k) < f(j,k)) &&
-  (forall i,j,k :: j < k ==> f(i,j) > f(i,k))
-}
-
-function ord(b:bool): nat
-{
-  if b then 1 else 0
-}
+include "../../commonSupport.dfy"
+import opened CommonFunctions
+import opened MonotonicityProps
 
 ghost function F(h:(nat,nat) -> int, x:nat, y:nat,
                  p:nat, w:int): int
-requires IncrDecr(h)
+requires Ordered2DNat(h, Incr, Decr)
 requires x <= p
 requires y <= p
 decreases (p - x) + (p - y)
@@ -33,7 +28,7 @@ decreases (p - x) + (p - y)
 
 method problem15(h:(nat,nat) -> int, p:nat, w:int)
 returns (z:int)
-requires IncrDecr(h)
+requires Ordered2DNat(h, Incr, Decr)
 ensures z == F(h, 0, 0, p, w)
 {
   var x:nat, y:nat := 0, 0;

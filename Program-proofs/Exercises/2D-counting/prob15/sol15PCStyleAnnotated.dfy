@@ -1,37 +1,18 @@
-/* file: sol15Annotated.dfy
+/* file: sol15PCStyleAnnotated.dfy
    author: David De Potter
    description: extra practice in Dafny, 2D-counting,
    solution to prob15, with annotations
    This is exercise 9.17 from the PC reader
-
-   NOTE: The loop is machine-verified against the recursive
-   definition of F. The connection between F(h,0,0,p,w)
-   and the set-based specification from the problem statement is
-   manually derived and justified in the comments, but not
-   machine-verified. This avoids the additional technical machinery
-   needed for sets and cardinalities in Dafny, and keeps the solution
-   in line with the PC lecture notes.
+   NOTE: This solution follows the PC-style proof method described
+   in the general note on proof styles (see the README in the Exercises folder)
 */
 
-ghost predicate IncrDecr(f:(nat,nat) -> int)
-{
-    // Expresses the property that f is strictly increasing in its
-    // first argument and strictly decreasing in its second argument,
-    // i.e.
-    // ∀ i,j,k ∈ ℕ:
-    //   if i < j then f(i,k) < f(j,k)
-    //   if j < k then f(i,j) > f(i,k)
-  (forall i,j,k :: i < j ==> f(i,k) < f(j,k)) &&
-  (forall i,j,k :: j < k ==> f(i,j) > f(i,k))
-}
-
-function ord(b:bool): nat
-{
-  if b then 1 else 0
-}
+include "../../commonSupport.dfy"
+import opened CommonFunctions
+import opened MonotonicityProps
 
 ghost function F(h:(nat,nat) -> int, x:nat, y:nat, p:nat, w:int): int
-requires IncrDecr(h)
+requires Ordered2DNat(h, Incr, Decr)
 requires x <= p
 requires y <= p
 decreases (p - x) + (p - y)
@@ -39,18 +20,20 @@ decreases (p - x) + (p - y)
     // We want to find a recursive definition of F that we can use to derive T.
     // We define F as follows:
     //   F(h,x,y,p,w) = #{ (i,j) | i,j: x ≤ i < p ∧ y ≤ j < p ∧ i² + j² < p ∧ h(i,j) = w }
-    // That is, F(h,x,y,p,w) counts the number of points (i,j) that lie 
-    // strictly inside the quarter disk of radius √p, and for which h(i,j) = w. 
-    // When this function is initially called as F(h,0,0,p,w), the remaining
-    // search area is the full quarter disk.
     //
-    // Base case: if x = p or y = p or x² + y² ≥ p, then the remaining search area 
-    //            is empty, so F(h,x,y,p,w) = #∅ = 0.
-    // Note that we use p as a coarse upper bound for x and y rather than √p, 
-    // to avoid the need for square roots in the Dafny code. This does not change 
-    // the counted set, because every point satisfying i² + j² < p also satisfies 
-    // i < p and j < p. After an update, x or y may reach p, but then the loop stops 
-    // and F uses its base case.
+    // That is, F(h,x,y,p,w) counts the number of points (i,j) that lie in the 
+    // remaining rectangle [x,p) × [y,p), restricted to the quarter-disk domain 
+    // i² + j² < p, and that satisfy h(i,j) = w.     
+    // For the initial call F(h,0,0,p,w), the explicit coordinate bounds i < p and 
+    // j < p are redundant, since they are implied by i² + j² < p for natural i and j.
+    // Hence: F(h,0,0,p,w) = #{ (i,j) | i,j: i² + j² < p ∧ h(i,j) = w }, which is 
+    // precisely the specification constant Z in the problem statement. 
+
+    // Base case: if x = p or y = p, then the remaining rectangle is empty. 
+    // If x² + y² ≥ p, then its south-west corner lies outside the quarter disk. 
+    // Since every remaining point satisfies i ≥ x and j ≥ y, it follows that
+    // i² + j² ≥ x² + y² ≥ p, so the remaining search area contains no point 
+    // satisfying the quarter-disk constraint. Hence F(h,x,y,p,w) = #∅ = 0.
     //
     // Recursive case: here we want to shrink the remaining search area by 
     //   - either incrementing x (which removes the leftmost column)
@@ -65,7 +48,7 @@ decreases (p - x) + (p - y)
     //     + #{ (x,j) | j: y ≤ j < p ∧ x² + j² < p ∧ h(x,j) = w } 
     //      ( apply definition of F to the first term )
     //   = F(h,x+1,y,p,w) + #{ (x,j) | j: y ≤ j < p ∧ x² + j² < p ∧ h(x,j) = w } 
-    //      ( h is decreasing in its second argument, so the value h(x,y) is
+    //      ( h is strictly decreasing in its second argument, so the value h(x,y) is
     //        maximal for all j ≥ y in the leftmost column. Hence, if we assume 
     //        h(x,y) < w, then h(x,j) < w for all j ≥ y, and we can discard the 
     //        entire column as it does not contain any points satisfying h(i,j) = w. )
@@ -81,8 +64,8 @@ decreases (p - x) + (p - y)
     //     + #{ (i,j) | i: x ≤ i < p ∧ j = y ∧ i² + y² < p ∧ h(i,y) = w }
     //      ( apply definition of F to the first term )
     //   = F(h,x,y+1,p,w) + #{ (i,y) | x ≤ i < p ∧ i² + y² < p ∧ h(i,y) = w } 
-    //      ( h is increasing in its first argument, so the value h(x,y) is minimal 
-    //        for all i ≥ x in the bottommost row. Hence, if we assume h(x,y) ≥ w,
+    //      ( h is strictly increasing in its first argument, so the value h(x,y) is 
+    //        minimal for all i ≥ x in the bottommost row. So, if we assume h(x,y) ≥ w,
     //        then the only point in the row that can satisfy h(i,y) = w is (x,y):
     //        we add 1 to the count iff h(x,y) = w, and we can discard the rest of
     //        the row as it does not contain any other points satisfying h(i,j) = w. )
@@ -98,7 +81,7 @@ decreases (p - x) + (p - y)
 
 method problem15(h:(nat,nat) -> int, p:nat, w:int)
 returns (z:int)
-requires IncrDecr(h)
+requires Ordered2DNat(h, Incr, Decr)
 ensures z == F(h, 0, 0, p, w)
 {
     // Initialization to establish J before the loop
