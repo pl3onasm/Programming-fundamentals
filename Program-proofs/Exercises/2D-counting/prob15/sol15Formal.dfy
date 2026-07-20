@@ -4,7 +4,8 @@
     fully formal solution to prob15
     This is exercise 9.17 from the PC reader
     NOTE: This solution is machine verified end to end, as described
-    in the general note on proof styles (see the README in the Exercises folder)
+    in the general note on proof styles (see the README in the 
+    Exercises folder)
 */
 
 include "../../FormalSupport.dfy"
@@ -38,7 +39,8 @@ lemma EmptySet(h:(nat,nat) -> int, x:nat, y:nat, p:nat, w:int)
   forall i:nat, j:nat
     ensures (i,j) in MatchingSet(h,x,y,p,w) <==> false
   {
-    if (i,j) in MatchingSet(h,x,y,p,w) {
+    if (i,j) in MatchingSet(h,x,y,p,w) 
+    {
         // Membership gives x ≤ i and y ≤ j. Hence i² + j² is
         // at least x² + y², which is at least p (by the precondition),
         // contradicting membership in the disk.
@@ -50,7 +52,7 @@ lemma EmptySet(h:(nat,nat) -> int, x:nat, y:nat, p:nat, w:int)
 
 //========================================================================
 // If h(x,y) < w, strict decrease in the second argument implies that the 
-// entire leftmost column contains no matching point and can be discarded
+// entire leftmost column contains no matching points and can be discarded
 // from the total count.
 lemma DiscardColumn(h:(nat,nat) -> int, x:nat, y:nat, p:nat, w:int)
   requires Ordered2DNat(h, Incr, Decr)

@@ -1,32 +1,18 @@
-/* file: sol16Annotated.dfy
-   author: David De Potter
-   description: extra practice in Dafny, 2D-counting,
-   solution to prob16, with annotations
-   This is exercise 9.18 from the PC reader
-
-   NOTE: The loop is machine-verified against the recursive
-   definition of F. The connection between F(f,n,0,n,w)
-   and the set-based specification from the problem statement is
-   manually derived and justified in the comments, but not
-   machine-verified. This avoids the additional technical machinery
-   needed for sets and cardinalities in Dafny, and keeps the solution
-   in line with the PC lecture notes.
+/*  file: sol16PCStyleAnnotated.dfy
+    author: David De Potter
+    description: extra practice in Dafny, 2D-counting,
+    solution to prob16, with annotations
+    This is exercise 9.18 from the PC reader
+    NOTE: This solution follows the PC-style proof method described
+    in the general note on proof styles (see the README in the 
+    Exercises folder)
 */
 
-ghost predicate AscAsc(f:(nat,nat) -> int) 
-{
-    // Expresses the property that f is ascending in 
-    // both its arguments, i.e.
-    // ∀ i,j,k ∈ ℕ:
-    //   if i ≤ j then f(i,k) ≤ f(j,k)
-    //   if j ≤ k then f(i,j) ≤ f(i,k)
-  (forall i,j,k:: i <= j  ==>  f(i,k) <= f(j,k)) &&
-  (forall i,j,k:: j <= k  ==>  f(i,j) <= f(i,k))
-}                
+include "../../commonSupport.dfy"
+import opened MonotonicityProps             
 
-ghost function F(f:(nat,nat) -> int, x:nat, y:nat,
-                 n:nat, w:int): int
-requires AscAsc(f)
+ghost function F(f:(nat,nat) -> int, x:nat, y:nat, n:nat, w:int): int
+requires Ordered2DNat(f, Asc, Asc)
 requires x <= n
 requires y <= n
 decreases x + (n - y)
@@ -89,7 +75,7 @@ decreases x + (n - y)
 
 method problem16(f:(nat,nat) -> int, n:nat, w:int)
 returns (z: int)
-requires AscAsc(f)
+requires Ordered2DNat(f, Asc, Asc)
 ensures z == F(f, n, 0, n, w)
 {
     // Initialization to establish J before the loop
@@ -112,7 +98,8 @@ ensures z == F(f, n, 0, n, w)
 
     if f(x-1,y) >= w
     {
-        // z + F(f,x,y,n,w) = Z ∧ f(x-1,y) ≥ w ∧ x > 0 ∧ y < n ∧ 2y < x ∧ x + (n - y) = V
+        // z + F(f,x,y,n,w) = Z ∧ f(x-1,y) ≥ w ∧ x > 0 ∧ y < n 
+        //   ∧ 2y < x ∧ x + (n - y) = V
         //   ( apply recursive definition of F )
         // z + F(f,x-1,y,n,w) = Z ∧ x + (n - y) = V
         //   ( prepare for decrementing x )
@@ -123,7 +110,8 @@ ensures z == F(f, n, 0, n, w)
 
     else 
     {
-        // z + F(f,x,y,n,w) = Z ∧ f(x-1,y) < w ∧ x > 0 ∧ y < n ∧ 2y < x ∧ x + (n - y) = V
+        // z + F(f,x,y,n,w) = Z ∧ f(x-1,y) < w ∧ x > 0 ∧ y < n 
+        //   ∧ 2y < x ∧ x + (n - y) = V
         //   ( apply recursive definition of F )
         // z + F(f,x,y+1,n,w) + x - 2y = Z ∧ x + (n - y) = V
       z := z + x - 2 * y;

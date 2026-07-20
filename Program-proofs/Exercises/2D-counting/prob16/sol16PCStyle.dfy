@@ -1,19 +1,19 @@
-/* file: sol16.dfy
-   author: David De Potter
-   description: extra practice in Dafny, 2D-counting, 
-   solution to prob16
-   This is exercise 9.18 from the PC reader
+/*  file: sol16PCStyle.dfy
+    author: David De Potter
+    description: extra practice in Dafny, 2D-counting, 
+    solution to prob16
+    This is exercise 9.18 from the PC reader
+    NOTE: This solution follows the PC-style proof method described
+    in the general note on proof styles (see the README in the 
+    Exercises folder)
 */
 
-ghost predicate AscAsc(f:(nat,nat) -> int) 
-{
-  (forall i,j,k:: i <= j  ==>  f(i,k) <= f(j,k)) &&
-  (forall i,j,k:: j <= k  ==>  f(i,j) <= f(i,k))
-}                
+include "../../commonSupport.dfy"
+import opened MonotonicityProps             
 
 ghost function F(f:(nat,nat) -> int, x:nat, y:nat,
                  n:nat, w:int): int
-requires AscAsc(f)
+requires Ordered2DNat(f, Asc, Asc)
 requires x <= n
 requires y <= n
 decreases x + (n - y)
@@ -27,7 +27,7 @@ decreases x + (n - y)
 
 method problem16(f:(nat,nat) -> int, n:nat, w:int)
 returns (z: int)
-requires AscAsc(f)
+requires Ordered2DNat(f, Asc, Asc)
 ensures z == F(f, n, 0, n, w)
 {
   var x:nat, y:nat := n, 0;

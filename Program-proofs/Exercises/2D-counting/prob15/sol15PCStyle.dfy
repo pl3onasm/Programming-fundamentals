@@ -4,7 +4,8 @@
    solution to prob15
    This is exercise 9.17 from the PC reader
    NOTE: This solution follows the PC-style proof method described
-   in the general note on proof styles (see the README in the Exercises folder)
+   in the general note on proof styles (see the README in the 
+   Exercises folder)
 */
 
 include "../../commonSupport.dfy"
