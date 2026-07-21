@@ -1,7 +1,7 @@
-/* file: prob20.dfy
-   author: your name
-   description: extra practice in Dafny, 2D-counting, prob20  
-   This is exercise 9.22 from the PC reader
+/*  file: prob20.dfy
+    author: your name
+    description: extra practice in Dafny, 2D-counting, prob20  
+    This is exercise 9.22 from the PC reader
 */
 
 ghost predicate ConvexFirst(p:(int,int) -> bool)

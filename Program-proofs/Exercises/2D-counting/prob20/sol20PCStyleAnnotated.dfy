@@ -1,16 +1,11 @@
-/* file: sol20Annotated.dfy
-   author: David De Potter
-   description: extra practice in Dafny, 2D-counting,
-   solution to prob20, with annotations
-   This is exercise 9.22 from the PC reader
-
-   NOTE: The loop is machine-verified against the recursive
-   definition of F. The connection between F(p,0,n,m)
-   and the set-based specification from the problem statement is
-   manually derived and justified in the comments, but not
-   machine-verified. This avoids the additional technical machinery
-   needed for sets and cardinalities in Dafny, and keeps the solution
-   in line with the PC lecture notes.
+/*  file: sol20PCStyleAnnotated.dfy
+    author: David De Potter
+    description: extra practice in Dafny, 2D-counting,
+    solution to prob20, with annotations
+    This is exercise 9.22 from the PC reader
+    NOTE: This solution follows the PC-style proof method described
+    in the general note on proof styles (see the README in the 
+    Exercises folder)
 */
 
 ghost predicate ConvexFirst(p:(int,int) -> bool)
