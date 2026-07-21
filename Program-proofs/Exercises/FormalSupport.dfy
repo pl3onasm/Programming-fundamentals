@@ -57,7 +57,8 @@ module FormalSupport
     ensures a*c <= b*c
     decreases c
   {
-    if c > 0 {
+    if c > 0 
+    {
         // Apply the induction hypothesis to multiplication by c-1
       MulMonotone(a,b,c-1);
 
@@ -309,8 +310,8 @@ module ArrayAggregates
   // intermediate index mid into the products over [lo,mid) and [mid,hi)
   // NOTE: The lemma is proved by induction on hi-mid. The recursive call
   // explicitly supplies the induction hypothesis for the shorter range
-  // [lo,hi-1). Dafny then unfolds the relevant ArrayProduct definitions and
-  // completes the remaining arithmetic reasoning automatically.
+  // [lo,hi-1). Dafny then unfolds the relevant ArrayProduct definitions 
+  // and completes the remaining arithmetic reasoning automatically.
   lemma ArrayProductSplit(a:array<nat>, lo:nat, mid:nat, hi:nat)
     requires lo <= mid <= hi <= a.Length
     ensures    ArrayProduct(a,lo,hi)

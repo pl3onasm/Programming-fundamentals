@@ -16,7 +16,7 @@ import opened MonotonicityProps
 //========================================================================
 // Represents the matching points in the remaining triangular region
 // bounded by j = y, i = x, and 2j = i. For the initial call, the explicit 
-// bound j < n is redundant, since 2j <= i < n implies j < n; it is 
+// bound j < n is redundant, since 2j ≤ i < n implies j < n; it is 
 // included to make finiteness explicit to Dafny.
 ghost function MatchingSet(f:(nat,nat) -> int, x:nat, y:nat,
                            n:nat, w:int): set<(nat,nat)>
@@ -33,12 +33,12 @@ lemma EmptySet(f:(nat,nat) -> int, x:nat, y:nat, n:nat, w:int)
   ensures MatchingSet(f,x,y,n,w) == {}
 {
     // Under any of the three boundary conditions, no indices can
-    // satisfy y <= j < n and 2*j <= i < x
-  Set2DEquality(MatchingSet(f,x,y,n,w),{});
+    // satisfy y ≤ j < n and 2*j ≤ i < x
+  Set2DEquality(MatchingSet(f,x,y,n,w), {});
 }
 
 //========================================================================
-// If f(x-1,y) >= w, ascending order in the second argument implies that
+// If f(x-1,y) ≥ w, ascending order in the second argument implies that
 // the entire rightmost column contains no matching points and can be 
 // discarded from the total count.
 lemma DiscardColumn(f:(nat,nat) -> int, x:nat, y:nat, n:nat, w:int)
@@ -47,12 +47,10 @@ lemma DiscardColumn(f:(nat,nat) -> int, x:nat, y:nat, n:nat, w:int)
   requires f(x-1,y) >= w
   ensures MatchingSet(f,x,y,n,w) == MatchingSet(f,x-1,y,n,w)
 {
-    // For every j >= y, ascending order in the second argument gives
-    // f(x-1,j) >= f(x-1,y) >= w. Therefore, the rightmost column
-    // contains no matching point.
-  Set2DEquality(
-    MatchingSet(f,x,y,n,w),
-    MatchingSet(f,x-1,y,n,w));
+    // For every j ≥ y, ascending order in the second argument gives
+    // f(x-1,j) ≥ f(x-1,y) ≥ w. Therefore, the rightmost column
+    // contains no matching points
+  Set2DEquality(MatchingSet(f,x,y,n,w), MatchingSet(f,x-1,y,n,w));
 }
 
 //========================================================================
@@ -70,25 +68,19 @@ lemma AdvanceRow(f:(nat,nat) -> int, x:nat, y:nat, n:nat, w:int)
 
     // Split the remaining triangle into the bottom row and the
     // smaller triangle above it
-  Set2DEquality(
-    MatchingSet(f,x,y,n,w),
-    MatchingSet(f,x,y+1,n,w) + row);
+  Set2DEquality(MatchingSet(f,x,y,n,w), MatchingSet(f,x,y+1,n,w) + row);
 
-    // The smaller triangle contains only rows j >= y+1, whereas
+    // The smaller triangle contains only rows j ≥ y+1, whereas
     // every point in row has second coordinate y; hence the two 
     // sets are disjoint
-  Set2DEquality(
-    MatchingSet(f,x,y+1,n,w) * row,
-    {});
+  Set2DEquality(MatchingSet(f,x,y+1,n,w) * row, {});
 
     // The removed half-open row segment [2y,x) has x-2y points
   RowSegmentCardinality(2*y,x,y);
 
     // Since the two parts are disjoint, their cardinalities add up to
     // the cardinality of the original set
-  DisjointUnionCardinality(
-    MatchingSet(f,x,y+1,n,w),
-    row);
+  DisjointUnionCardinality(MatchingSet(f,x,y+1,n,w), row);
 }
 
 //========================================================================
@@ -109,13 +101,17 @@ ensures z == |MatchingSet(f,n,0,n,w)|
       // in the remaining triangular region. The sum of these two counts
       // is the total number of matching points in the initial triangular
       // region.
-    invariant z + |MatchingSet(f,x,y,n,w)| ==  |MatchingSet(f,n,0,n,w)|
+    invariant z + |MatchingSet(f,x,y,n,w)| == |MatchingSet(f,n,0,n,w)|
     decreases x + (n - y)
   {
-    if f(x-1,y) >= w {
+    if f(x-1,y) >= w 
+    {
       DiscardColumn(f,x,y,n,w);
       x := x - 1;
-    } else {
+    } 
+    
+    else 
+    {
       AdvanceRow(f,x,y,n,w);
       z := z + (x - 2*y);
       y := y + 1;
