@@ -4,7 +4,8 @@
     fully formal solution to prob19
     This is exercise 9.21 from the PC reader
     NOTE: This solution is machine verified end to end, as described
-    in the general note on proof styles (see the README in the Exercises folder)
+    in the general note on proof styles (see the README in the 
+    Exercises folder)
 */
 
 include "../../FormalSupport.dfy"
@@ -85,7 +86,8 @@ lemma MatchingUpperBound(h:(nat,nat) -> int, i:nat, j:nat, c:int)
     // Strict increase in the second argument gives h(i,0) + j <= h(i,j)
   SecondGrowth(h,i,j);
 
-  calc {
+  calc 
+  {
     h(0,0) + j;
     <= h(i,0) + j;      // see assertion above
     <= h(i,j);          // see SecondGrowth lemma

@@ -4,20 +4,13 @@
    This is exercise 9.16a from the PC reader
 */
 
-ghost predicate DescDesc(f:(nat,nat) -> int) 
-{
-    // Expresses the property that f is descending in 
-    // both its arguments, i.e.
-    // ∀ i,j,k ∈ ℕ:
-    //   if i ≤ j then f(i,k) ≥ f(j,k)
-    //   if j ≤ k then f(i,j) ≥ f(i,k)
-  (forall i,j,k:: i <= j  ==>  f(i,k) >= f(j,k)) &&
-  (forall i,j,k:: j <= k  ==>  f(i,j) >= f(i,k))
-}               
+include "../../commonSupport.dfy"
+import opened CommonFunctions
+import opened MonotonicityProps       
     
 method problem14(h:(nat,nat) -> int, m:nat, n:nat)
 returns (z: int)
-requires DescDesc(h)
+requires Ordered2DNat(h, Desc, Desc)
 {
   /* 
     Given is a function h: ℕ × ℕ → ℤ that is descending in

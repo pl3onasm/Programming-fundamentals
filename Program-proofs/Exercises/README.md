@@ -50,7 +50,7 @@ imperative implementation
 
 $\Large{\color{darkseagreen}\text{Formal Solutions}}$
 
-Files whose names contain `Formal` formalize the correctness argument end to end. These solutions formally represent the original mathematical specification using Dafny sets, sequences, cardinalities, recursively defined sums and products, or other suitable mathematical structures. Auxiliary lemmas then formally verify the mathematical transformations on which the algorithm relies. Thus, when recursive sums, products, or other intermediate specifications are introduced, their connection with the original mathematical specification is also checked by Dafny. The loop invariant may be stated directly in terms of the formalized specification, or it may be expressed in terms of an intermediate recursive specification, provided that the equivalence between the two is also machine-verified.
+Files whose names contain `Formal` formalize the correctness argument end to end. These solutions formally represent the original mathematical specification using Dafny sets, sequences, cardinalities, recursively defined sums and products, or other suitable mathematical structures. Auxiliary lemmas then machine-verify the mathematical transformations on which the algorithm relies. Thus, when recursive sums, products, or other intermediate specifications are introduced, their connection with the original mathematical specification is also checked by Dafny. The loop invariant may be stated directly in terms of the formalized specification, or it may be expressed in terms of an intermediate recursive specification, provided that the equivalence between the two is also machine-verified.
 
 The proof structure is therefore typically:
 

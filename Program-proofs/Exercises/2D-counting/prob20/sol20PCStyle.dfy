@@ -4,7 +4,8 @@
     solution to prob20
     This is exercise 9.22 from the PC reader
     NOTE: This solution follows the PC-style proof method described
-    in the general note on proof styles (see the README in the Exercises folder)
+    in the general note on proof styles (see the README in the 
+    Exercises folder)
 */
 
 ghost predicate ConvexFirst(p:(int,int) -> bool)
