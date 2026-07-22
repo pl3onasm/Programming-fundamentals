@@ -1,33 +1,17 @@
-/* file: sol19Annotated.dfy
-   author: David De Potter
-   description: extra practice in Dafny, 2D-counting,
-   solution to prob19, with annotations
-   This is exercise 9.21 from the PC reader
+/*  file: sol19Annotated.dfy
+    author: David De Potter
+    description: extra practice in Dafny, 2D-counting,
+    solution to prob19, with annotations
+    This is exercise 9.21 from the PC reader
 
-   NOTE: The loop is machine-verified against the recursive
-   definition of F. The connection between F(h,n,0,n,c)
-   and the set-based specification from the problem statement is
-   manually derived and justified in the comments, but not
-   machine-verified. This avoids the additional technical machinery
-   needed for sets and cardinalities in Dafny, and keeps the solution
-   in line with the PC lecture notes.
+    NOTE: This solution follows the PC-style proof method described
+    in the general note on proof styles (see the README in the
+    Exercises folder)
 */
 
-ghost predicate AscIncr(h:(nat,nat) -> int) 
-{
-    // Expresses the property that h is ascending in its first
-    // argument and strictly increasing in its second argument, i.e.
-    // ∀ i,j,k ∈ ℕ:
-    //   if i ≤ j then h(i,k) ≤ h(j,k)
-    //   if j < k then h(i,j) < h(i,k)
-  (forall i,j,k :: i <= j ==> h(i,k) <= h(j,k)) &&
-  (forall i,j,k :: j <  k ==> h(i,j) <  h(i,k))
-}
-
-function Ord(b:bool): nat
-{
-  if b then 1 else 0
-}
+include "../../commonSupport.dfy"
+import opened CommonFunctions
+import opened MonotonicityProps
 
 ghost function Gap(h:(nat,nat) -> int, x:nat, y:nat, c:int): nat
 {
@@ -40,7 +24,7 @@ ghost function Gap(h:(nat,nat) -> int, x:nat, y:nat, c:int): nat
 }
 
 ghost function F(h:(nat,nat) -> int, x:nat, y:nat, n:nat, c:int): nat
-requires AscIncr(h)
+requires Ordered2DNat(h, Asc, Incr)
 requires x <= n
 decreases x, Gap(h,x,y,c)
 {
@@ -70,11 +54,11 @@ decreases x, Gap(h,x,y,c)
     //      ( apply definition of F to the first subset )
     //   = F(h,x-1,y,n,c) + #{ (x-1,j) | y ≤ j ∧ h(x-1,j) = c }
     //      ( h is increasing in its second argument, so (x-1,y) is minimal 
-    //        in its column. If we assume h(x-1,y) ≥ c, then the only possible 
-    //        matching point in this column is (x-1,y) itself.
+    //        in its column. If we assume h(x-1,y) ≥ c, then the only  
+    //        possible matching point in this column is (x-1,y) itself.
     //        So we count it if it matches, and otherwise we discard the 
     //        entire column, as h(x-1,j) > c for all j > y. )
-    //   = F(h,x-1,y,n,c) + Ord(h(x-1,y) == c)
+    //   = F(h,x-1,y,n,c) + ord(h(x-1,y) == c)
 
     // What happens if we increment y?
     //   F(h,x,y,n,c)
@@ -88,8 +72,8 @@ decreases x, Gap(h,x,y,c)
     //   = #{ (i,y) | 0 ≤ i < x ∧ h(i,y) = c } + F(h,x,y+1,n,c)
     //      ( h is ascending in its first argument, so (x-1,y) is maximal 
     //        in its row. If we assume h(x-1,y) < c, then there can be no 
-    //        matching point in this row, as h(i,y) ≤ h(x-1,y) < c for all i < x. 
-    //        Hence we can discard the entire row and move north. )
+    //        matching point in this row, as h(i,y) ≤ h(x-1,y) < c for all  
+    //        i < x. Hence we can discard the entire row and move north. )
     //   = F(h,x,y+1,n,c)
 
   if x == 0 then
@@ -97,12 +81,12 @@ decreases x, Gap(h,x,y,c)
   else if h(x-1,y) < c then
     F(h,x,y+1,n,c)
   else 
-    Ord(h(x-1,y) == c) + F(h,x-1,y,n,c)
+    ord(h(x-1,y) == c) + F(h,x-1,y,n,c)
 }
 
 method problem19(h:(nat,nat) -> int, n:nat, c:int)
 returns (z:int)
-requires AscIncr(h)
+requires Ordered2DNat(h, Asc, Incr)
 requires c < h(n,0)
 ensures z == F(h,n,0,n,c)
 {
@@ -140,15 +124,15 @@ ensures z == F(h,n,0,n,c)
     The pair is ordered lexicographically. Thus vf decreases as x
     decreases, or if x remains unchanged, as Gap(h,x,y,c) decreases.
     This matches the two possible moves of the search:
-      - moving north keeps x fixed but decreases the gap to c;
-      - moving west decreases x directly.
+      - moving west decreases x directly
+      - moving north keeps x fixed but decreases the gap to c
   */
   {
       // J ∧ B ∧ vf = (X, G)
       // z + F(h,x,y,n,c) = Z ∧ x > 0 ∧ (x, Gap(h,x,y,c)) = (X, G)
       //   ( we want to apply the recursive definition of F to the current
-      //     rectangle, so we distinguish the two cases based on the value of 
-      //     h(x-1,y) relative to c )
+      //     rectangle, so we distinguish the two cases based on the value 
+      //     of h(x-1,y) relative to c )
 
     if h(x-1,y) < c 
     {
@@ -156,9 +140,10 @@ ensures z == F(h,n,0,n,c)
         //   ∧ (x, Gap(h,x,y,c)) = (X, G)
         //   ( apply definition of F )
         // z + F(h,x,y+1,n,c) = Z ∧ (x, Gap(h,x,y,c)) = (X, G)
-        //   ( prepare for incrementing y; because h is strictly increasing in
-        //     its second argument, h(x-1,y) < h(x-1,y+1). Since h(x-1,y) < c, 
-        //     the old gap is positive, while the new gap is either smaller or 0. )
+        //   ( prepare for incrementing y; because h is strictly increasing 
+        //     in its second argument, h(x-1,y) < h(x-1,y+1). Since 
+        //     h(x-1,y) < c, the old gap is positive, while the new gap 
+        //     is either smaller or 0. )
         // z + F(h,x,y+1,n,c) = Z ∧ (x, Gap(h,x,y+1,c)) < (X, G)
       y := y + 1;
         // z + F(h,x,y,n,c) = Z ∧ (x, Gap(h,x,y,c)) < (X, G)
@@ -169,8 +154,9 @@ ensures z == F(h,n,0,n,c)
         // z + F(h,x,y,n,c) = Z ∧ x > 0 ∧ h(x-1,y) ≥ c
         //   ∧ (x, Gap(h,x,y,c)) = (X, G)
         //   ( apply definition of F )
-        // z + Ord(h(x-1,y) == c) + F(h,x-1,y,n,c) = Z ∧ (x, Gap(h,x,y,c)) = (X, G)
-      z := z + Ord(h(x-1,y) == c);
+        // z + ord(h(x-1,y) == c) + F(h,x-1,y,n,c) = Z 
+        //   ∧ (x, Gap(h,x,y,c)) = (X, G)
+      z := z + ord(h(x-1,y) == c);
         // z + F(h,x-1,y,n,c) = Z ∧ (x, Gap(h,x,y,c)) = (X, G)
         //   ( prepare for decrementing x )
         // z + F(h,x-1,y,n,c) = Z ∧ (x-1, Gap(h,x-1,y,c)) < (X, G)

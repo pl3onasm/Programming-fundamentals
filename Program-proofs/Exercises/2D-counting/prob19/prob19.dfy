@@ -1,23 +1,17 @@
-/* file: prob19.dfy
-   author: your name
-   description: extra practice in Dafny, 2D-counting, prob19  
-   This is exercise 9.21 from the PC reader
+/*  file: prob19.dfy
+    author: your name
+    description: extra practice in Dafny, 2D-counting, prob19  
+    This is exercise 9.21 from the PC reader
 */
 
-ghost predicate AscIncr(f:(nat,nat) -> int) 
-{
-    // Expresses the property that f is ascending in its first argument
-    // and increasing in its second argument, i.e.
-    // ∀ i,j,k ∈ ℕ:
-    //   if i ≤ j then f(i,k) ≤ f(j,k)
-    //   if j < k then f(i,j) < f(i,k)
-  (forall i,j,k:: i <= j  ==>  f(i,k) <= f(j,k)) &&
-  (forall i,j,k:: j <  k  ==>  f(i,j) <  f(i,k))
-}                
+include "../../commonSupport.dfy"
+
+import opened CommonFunctions
+import opened MonotonicityProps            
     
 method problem19(h:(nat,nat) -> int, n:nat, c:int)
 returns (z:int)
-requires AscIncr(h)
+requires Ordered2DNat(h, Asc, Incr)
 requires c < h(n,0)
 ensures z == ???
 {
