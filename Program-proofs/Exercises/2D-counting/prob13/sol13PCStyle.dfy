@@ -1,22 +1,23 @@
-/* file: sol13.dfy
-   author: David De Potter
-   description: extra practice in Dafny, 2D-counting, 
-   solution to prob13
-   This is exercise 9.15 from the PC reader
+/*  file: sol13PCStyle.dfy
+    author: David De Potter
+    description: extra practice in Dafny, 2D-counting, 
+    solution to prob13
+    This is exercise 9.15 from the PC reader
+    NOTE: This solution follows the PC-style proof method described
+    in the general note on proof styles (see the README in the 
+    Exercises folder)
 */
 
-ghost predicate Pos(f: (nat) -> nat)
+include "../../commonSupport.dfy"
+import opened CommonFunctions
+
+ghost predicate posFunc(f: (nat) -> nat)
 {
   (forall k:: f(k) > 0)
 }
 
-function ord(b:bool): nat
-{
-  if b then 1 else 0
-}
-
 ghost function F(f: (nat) -> nat, x: nat, y: nat, a: nat, n: nat): nat
-requires Pos(f)
+requires posFunc(f)
 requires 0 < a 
 decreases 2 * n - y - x
 {
@@ -46,7 +47,7 @@ decreases y - x
 method problem13(f: (nat) -> nat, a: nat, n: nat)
 returns (z: nat)
 requires 0 < a && 0 < n
-requires Pos(f)
+requires posFunc(f)
 ensures z == F(f,0,0,a,n)
 {
   var x, y, s := 0, 0, 0;
