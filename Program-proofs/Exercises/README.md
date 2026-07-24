@@ -24,7 +24,7 @@ $\huge\color{cadetblue}{\text{Note on proof styles}}$
 
 <br/>
 
-For selected exercises, two different Dafny solutions are provided when the additional formalization is useful, instructive, or illustrates an interesting proof technique. PC-style solutions remain the default wherever applicable, because they closely reflect the method taught in the *Program Correctness* course. The two styles serve complementary purposes. The PC-style solutions emphasize how correct programs are derived, while the formal solutions show how the complete correctness argument can be expressed and checked in Dafny.
+For selected exercises, two different Dafny solutions are provided. These two styles serve complementary purposes. The PC-style solutions emphasize how correct programs are derived, while the formal solutions show how the complete correctness argument can be expressed and checked in Dafny.
 
 <br/>
 

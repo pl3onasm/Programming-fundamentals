@@ -30,10 +30,10 @@ ghost function IntervalSum(f:nat -> nat, i:nat, j:nat): nat
 }
 
 //========================================================================
-// Extends the right endpoint of the interval [x,y) by 1, and updates the 
-// interval sum accordingly by adding f(y) to the previous sum. The lemma 
-// is proved by induction on the length of the interval [x,y), which
-// is y-x. The recursive call supplies the induction hypothesis.
+// Extending the right endpoint of the interval [x,y) by 1 adds the value 
+// of f at the new endpoint to the interval sum. The lemma is proved by
+// induction on the length of the interval [x,y), which is y-x. The 
+// recursive call supplies the induction hypothesis.
 lemma ExtendRight(f:nat -> nat, x:nat, y:nat)
   requires x <= y
   ensures IntervalSum(f,x,y+1) == IntervalSum(f,x,y) + f(y)
@@ -43,13 +43,13 @@ lemma ExtendRight(f:nat -> nat, x:nat, y:nat)
   {
       // The recursive call yields the induction hypothesis stating that
       // the lemma holds for the smaller interval [x+1,y):
-      // IntervalSum(f,x+1,y+1) == IntervalSum(f,x+1,y) + f(y)
+      // IntervalSum(f,x+1,y+1) = IntervalSum(f,x+1,y) + f(y)
     ExtendRight(f,x+1,y);
   }
 
-    // Base case: if x == y, then [x,y) is empty and has sum 0,
+    // Base case: if x = y, then [x,y) is empty and has sum 0,
     // while [x,y+1) contains only f(y). Hence,
-    // IntervalSum(f,x,y+1) == 0 + f(y).
+    // IntervalSum(f,x,y+1) = 0 + f(y).
 }
 
 //========================================================================
@@ -74,7 +74,7 @@ lemma StrictlyExtendRight(f:nat -> nat, x:nat, y:nat, j:nat)
   }
   else
   {
-      // Since y < j and j <= y+1, we have j == y+1. Extending the
+      // Since y < j and j ≤ y+1, we have j = y+1. Extending the
       // interval by this one position adds the positive value f(y).
     ExtendRight(f,x,y);
   }
@@ -100,14 +100,14 @@ lemma DropLeft(f:nat -> nat, x:nat, i:nat, y:nat)
 // Represents all matching half-open intervals [i,j) in the remaining
 // search region. The parameters x and y are lower bounds:
 //
-//   x <= i   means that intervals starting before x have been processed
-//   y <= j   means that intervals ending before y have been processed
+//   x ≤ i   means that intervals starting before x have been processed
+//   y ≤ j   means that intervals ending before y have been processed
 //
 // MatchingSet(f,x,y,a,n) therefore does not represent only the current
 // window [x,y). It represents every remaining matching interval [i,j) 
-// with i >= x and j >= y. The program variable s separately stores the 
-// sum of the single current window [x,y). Thus, x and y have two related 
-// roles:
+// with i ≥ x and j ≥ y. The program variable s separately stores the 
+// sum of the single current window [x,y). Thus, x and y have two  
+// related roles:
 //
 //   [x,y)                    is the current window tracked by s
 //   MatchingSet(f,x,y,a,n)   contains all matching intervals in the
@@ -140,7 +140,7 @@ lemma EmptySet(f:nat -> nat, x:nat, y:nat, a:nat, n:nat)
 // interval that starts at x.
 // Increasing x to x+1 removes from MatchingSet every remaining interval
 // whose left endpoint is x. These intervals have the form [x,j), where
-// j >= y. The current interval [x,y) may match, but every interval with
+// j ≥ y. The current interval [x,y) may match, but every interval with
 // j > y has a strictly larger sum and therefore cannot match.
 lemma AdvanceLeft(f:nat -> nat, x:nat, y:nat, a:nat, n:nat)
   requires Positive(f)
@@ -150,7 +150,7 @@ lemma AdvanceLeft(f:nat -> nat, x:nat, y:nat, a:nat, n:nat)
           |MatchingSet(f,x+1,y,a,n)| + ord(IntervalSum(f,x,y) == a)
 {
     // Every endpoint strictly after y gives a strictly larger sum.
-    // Since IntervalSum(f,x,y) >= a, all such intervals have sum
+    // Since IntervalSum(f,x,y) ≥ a, all such intervals have sum
     // strictly greater than a and cannot be matching intervals.
   forall j:nat | y < j < n
     ensures IntervalSum(f,x,y) < IntervalSum(f,x,j)
@@ -185,10 +185,10 @@ lemma AdvanceLeft(f:nat -> nat, x:nat, y:nat, a:nat, n:nat)
 // match, because moving its left endpoint right can only decrease its 
 // sum.
 // MatchingSet(f,x,y,a,n) already contains candidate intervals with every
-// right endpoint j >= y, including j = y+1, y+2, and so on. Replacing y
+// right endpoint j ≥ y, including j = y+1, y+2, and so on. Replacing y
 // by y+1 does not add those later intervals. It only removes the layer
 // consisting of intervals whose right endpoint is exactly y:
-//   [i,y), where x <= i <= y
+//   [i,y), where x ≤ i ≤ y
 // The proof below shows that this removed layer contains no matching 
 // interval. Consequently, removing it leaves MatchingSet unchanged.
 lemma AdvanceRight(f:nat -> nat, x:nat, y:nat, a:nat, n:nat)
@@ -200,9 +200,9 @@ lemma AdvanceRight(f:nat -> nat, x:nat, y:nat, a:nat, n:nat)
     ensures IntervalSum(f,i,y) < a
   {
     // Every remaining interval ending at y is obtained by moving the
-    // left endpoint of [x,y) to some i >= x. Since f has non-negative
+    // left endpoint of [x,y) to some i ≥ x. Since f has non-negative
     // values, this can only decrease the sum:
-    //   IntervalSum(f,i,y) <= IntervalSum(f,x,y) <  a
+    //   IntervalSum(f,i,y) ≤ IntervalSum(f,x,y) <  a
     // Hence, no interval in the discarded endpoint layer j = y matches.
     DropLeft(f,x,i,y);
   }
@@ -224,7 +224,7 @@ ensures z == |MatchingSet(f,0,0,a,n)|
       // The variable s tracks only the current window [x,y)
     invariant s == IntervalSum(f,x,y)
       // MatchingSet is broader than the current window: it contains
-      // every remaining matching interval [i,j) with i >= x and j >= y.
+      // every remaining matching interval [i,j) with i ≥ x and j ≥ y.
       // The variable z stores the number of matching intervals already
       // removed from the search region. The sum of z and the cardinality
       // of MatchingSet is therefore the number of matching intervals in
@@ -236,7 +236,7 @@ ensures z == |MatchingSet(f,0,0,a,n)|
     {
         // The current window [x,y) has reached or exceeded the target.
         // AdvanceLeft proves that among all remaining intervals starting
-        // at x, only [x,y) can still match. It is counted when s == a,
+        // at x, only [x,y) can still match. It is counted when s = a,
         // after which every interval starting at x is removed from the
         // remaining search region by increasing x.
       AdvanceLeft(f,x,y,a,n);
@@ -251,7 +251,7 @@ ensures z == |MatchingSet(f,0,0,a,n)|
         // proves that no remaining interval ending exactly at y can
         // match. Increasing y therefore discards only an empty endpoint
         // layer from MatchingSet so that we have:
-        //   MatchingSet(f,x,y,a,n) == MatchingSet(f,x,y+1,a,n).
+        //   MatchingSet(f,x,y,a,n) = MatchingSet(f,x,y+1,a,n).
         // At the same time, the current window tracked by s is extended 
         // from [x,y) to [x,y+1). These are different operations:
         //   MatchingSet loses the ruled-out layer j = y,

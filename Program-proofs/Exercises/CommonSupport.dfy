@@ -113,9 +113,7 @@ module MonotonicityProps
   // describes the ordering in the second argument.
   // For example, Ordered2DNat(f,Incr,Desc) means that f is strictly
   // increasing in its first argument and non-increasing in its second.
-  ghost predicate Ordered2DNat(
-    f:(nat,nat) -> int, first:Order, second:Order
-  )
+  ghost predicate Ordered2DNat(f:(nat,nat)-> int, first:Order, second:Order)
   {
     (forall i,j,k ::
       IndexOrderNat(first,i,j) ==>
@@ -135,9 +133,7 @@ module MonotonicityProps
   // This predicate is the integer-indexed counterpart of Ordered2DNat.
   // For example, Ordered2DInt(f,Asc,Decr) means that f is non-decreasing
   // in its first argument and strictly decreasing in its second.
-  ghost predicate Ordered2DInt(
-    f:(int,int) -> int, first:Order, second:Order
-  )
+  ghost predicate Ordered2DInt(f:(int,int)-> int, first:Order, second:Order)
   {
     (forall i,j,k ::
       IndexOrderInt(first,i,j) ==>
@@ -156,16 +152,13 @@ module MonotonicityProps
   // arr[j] must satisfy the value comparison described by order.
   // For example, OrderedArraySegment(arr,lo,hi,Incr) states that
   // arr[i] < arr[j] whenever lo <= i < j < hi.
-  ghost predicate OrderedArraySegment(
-    arr:array<int>, lo:int, hi:int, order:Order
-  )
+  ghost predicate OrderedArraySegment(arr:array<int>, lo:int, hi:int, 
+                                      order:Order)
     requires 0 <= lo <= hi <= arr.Length
     reads arr
   {
-    forall i,j ::
-      lo <= i && IndexOrderInt(order,i,j) && j < hi
-      ==>
-      ValueOrder(order,arr[i],arr[j])
+    forall i,j :: lo <= i && IndexOrderInt(order,i,j) && j < hi
+                  ==> ValueOrder(order,arr[i],arr[j])
   }
 
   //========================================================================

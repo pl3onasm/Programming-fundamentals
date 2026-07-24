@@ -1,58 +1,33 @@
-/* file: sol12Annotated.dfy
-author: David De Potter
-description: extra practice in Dafny, 2D-counting,
-solution to prob12, with annotations
-This is exercise 9.14 from the PC reader
-
-NOTE: The loop is machine-verified against the recursive
-definition of F. The connection between F(h,0,n,abs(h(0,0)),m) and the
-set-based specification from the problem statement is manually
-derived and justified in the comments, but not machine-verified.
-This avoids the additional technical machinery that would be
-needed in Dafny to introduce the corresponding finite sets,
-reason about their minima, and prove the equivalence between the
-set-based specification and the recursive definition of F. It also
-keeps the solution in line with the PC lecture notes.
+/*  file: sol12PCStyleAnnotated.dfy
+    author: David De Potter
+    description: extra practice in Dafny, 2D-counting,
+    solution to prob12, with annotations
+    This is exercise 9.14 from the PC reader
+    NOTE: This solution follows the PC-style proof method described
+    in the general note on proof styles (see the README in the 
+    Exercises folder)
 */
 
-ghost predicate AscAsc(f:(int,int) -> int) 
-{
-    // Expresses the property that f is ascending in 
-    // both its arguments, i.e.
-    // ∀ i,j,k ∈ ℤ:
-    //   if i ≤ j then f(i,k) ≤ f(j,k)
-    //   if j ≤ k then f(i,j) ≤ f(i,k)
-  (forall i,j,k:: i <= j  ==>  f(i,k) <= f(j,k)) &&
-  (forall i,j,k:: j <= k  ==>  f(i,j) <= f(i,k))
-}
-
-function abs(x:int): int
-{
-  if x < 0 then -x else x
-}
-
-function mnm(x:int, y:int): int
-{
-  if x <= y then x else y
-}
+include "../../commonSupport.dfy"
+import opened CommonFunctions
+import opened MonotonicityProps
 
 ghost function F(h:(int,int) -> int, x:int, y:int, z:int, m:nat): int
-requires AscAsc(h)
+requires Ordered2DInt(h, Asc, Asc)
 requires 0 < m 
 requires 0 <= x <= m
 requires 0 <= y
 decreases m - x + y
 {
     // We want to find a recursive definition of F that we can use
-    // to derive T.
-    //
-    // We define F as follows:
-    //   F(h,x,y,z,m) = Min{ {z} ∪ { |h(i,j)| | i,j: x ≤ i < m ∧ 0 ≤ j < y} }
+    // to derive T. We define F as follows:
+    //   F(h,x,y,z,m) 
+    //     = Min{ {z} ∪ { |h(i,j)| | i,j: x ≤ i < m ∧ 0 ≤ j < y} }
     //
     // In other words, F(h,x,y,z,m) is the best value already found, 
     // namely z, minimized with the absolute values in the remaining 
-    // rectangle. When this rectangle is non-empty, it is marked by the
-    // north-west corner (x,y-1) and the south-east corner (m-1,0).
+    // rectangle. When this rectangle is non-empty, it is marked by 
+    // the north-west corner (x,y-1) and the south-east corner (m-1,0).
     //
     // In the initial call, we use z = abs(h(0,0)). It is guaranteed
     // that (0,0) is one of the points of the full rectangle, because
@@ -78,10 +53,10 @@ decreases m - x + y
     //         hence at least as far from 0 as h(x,y-1). Therefore
     //         the best value in column x is the corner (x,y-1) and
     //         we can update z with this value and discard the column. )
-    //     = Min{ {mnm(z, abs(h(x,y-1))} 
+    //     = Min{ {minimum(z, abs(h(x,y-1))} 
     //                ∪ { |h(i,j)| | i,j: x+1 ≤ i < m ∧ 0 ≤ j < y} }
     //        ( apply definition of F )
-    //     = F(h, x+1, y, mnm(z, abs(h(x,y-1))), m)
+    //     = F(h, x+1, y, minimum(z, abs(h(x,y-1))), m)
     //
     // What happens if we decrement y?
     //   F(h,x,y,z,m)
@@ -91,24 +66,24 @@ decreases m - x + y
     //                ∪ { |h(i,j)| | i,j: x ≤ i < m ∧ 0 ≤ j < y-1} }
     //       ( Since h is ascending in its first argument, we have
     //         h(i,y-1) ≥ h(x,y-1) for all x ≤ i < m. If we assume
-    //         h(x,y-1) ≥ 0, then all these values are non-negative, and
+    //         h(x,y-1) ≥ 0, then all these values are non-negative, 
     //         hence at least as far from 0 as h(x,y-1). Therefore
     //         the best value in row y-1 is the corner (x,y-1) and
     //         we can update z with this value and discard the row. )
-    //     = Min{ {mnm(z, abs(h(x,y-1))} 
+    //     = Min{ {minimum(z, abs(h(x,y-1))} 
     //                ∪ { |h(i,j)| | i,j: x ≤ i < m ∧ 0 ≤ j < y-1} }
     //        ( apply definition of F )
-    //     = F(h, x, y-1, mnm(z, abs(h(x,y-1))), m)
+    //     = F(h, x, y-1, minimum(z, abs(h(x,y-1))), m)
 
   if x >= m || y <= 0 then z
   else if h(x,y-1) < 0 
-       then F(h, x+1, y, mnm(z, abs(h(x,y-1))), m)
-       else F(h, x, y-1, mnm(z, abs(h(x,y-1))), m)
+       then F(h, x+1, y, minimum(z, abs(h(x,y-1))), m)
+       else F(h, x, y-1, minimum(z, abs(h(x,y-1))), m)
 }
 
 method problem12(h:(int,int) -> int, m:nat, n:nat)
 returns (z:int)
-requires AscAsc(h)
+requires Ordered2DInt(h, Asc, Asc)
 requires 0 < m && 0 < n
 ensures z == F(h,0,n,abs(h(0,0)),m)
 {
@@ -133,8 +108,8 @@ ensures z == F(h,0,n,abs(h(0,0)),m)
     {
         // F(h,x,y,z,m) = Z ∧ x < m ∧ 0 < y ∧ h(x,y-1) < 0 ∧ m - x + y = V
         //   ( apply recursive definition of F )
-        // F(h,x+1,y,mnm(z, abs(h(x,y-1))),m) = Z ∧ m - x + y = V
-      z := mnm(z, abs(h(x,y-1)));
+        // F(h,x+1,y,minimum(z, abs(h(x,y-1))),m) = Z ∧ m - x + y = V
+      z := minimum(z, abs(h(x,y-1)));
         // F(h,x+1,y,z,m) = Z ∧ m - x + y = V
         //   ( prepare for incrementing x )
         // F(h,x+1,y,z,m) = Z ∧ m - (x + 1) + y < V
@@ -146,8 +121,8 @@ ensures z == F(h,0,n,abs(h(0,0)),m)
     {
         // F(h,x,y,z,m) = Z ∧ x < m ∧ 0 < y ∧ h(x,y-1) ≥ 0 ∧ m - x + y = V
         //   ( apply recursive definition of F )
-        // F(h,x,y-1,mnm(z, abs(h(x,y-1))),m) = Z ∧ m - x + y = V
-      z := mnm(z, abs(h(x,y-1)));
+        // F(h,x,y-1,minimum(z, abs(h(x,y-1))),m) = Z ∧ m - x + y = V
+      z := minimum(z, abs(h(x,y-1)));
         // F(h,x,y-1,z,m) = Z ∧ m - x + y = V
         //   ( prepare for decrementing y )
         // F(h,x,y-1,z,m) = Z ∧ m - x + (y - 1) < V

@@ -1,23 +1,16 @@
-/* file: prob12.dfy
-   author: your name
-   description: extra practice in Dafny, 2D-counting, prob12
-   This is exercise 9.14 from the PC reader
+/*  file: prob12.dfy
+    author: your name
+    description: extra practice in Dafny, 2D-counting, prob12
+    This is exercise 9.14 from the PC reader
 */
 
-ghost predicate AscAsc(f:(int,int) -> int) 
-{
-    // Expresses the property that f is ascending in 
-    // both its arguments, i.e.
-    // ∀ i,j,k ∈ ℤ:
-    //   if i ≤ j then f(i,k) ≤ f(j,k)
-    //   if j ≤ k then f(i,j) ≤ f(i,k)
-  (forall i,j,k:: i <= j  ==>  f(i,k) <= f(j,k)) &&
-  (forall i,j,k:: j <= k  ==>  f(i,j) <= f(i,k))
-}          
+include "../../commonSupport.dfy"
+import opened CommonFunctions
+import opened MonotonicityProps       
     
 method problem12(h:(int,int) -> int, m:nat, n:nat)
 returns (z: int)
-requires AscAsc(h)
+requires Ordered2DInt(h, Asc, Asc)
 requires 0 < m && 0 < n
 ensures z == ???
 {

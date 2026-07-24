@@ -14,17 +14,14 @@ import opened MonotonicityProps
 
 //========================================================================
 // States that z is the maximum candidate product (i+1)*(j+1) over all
-// points in [0,m) × [0,n) for which h(i,j) > 0. The value z is either
-// the product of an actual positive point or the sentinel value 0 when
-// no such point exists.
+// points in [0,m) × [0,n) for which h(i,j) > 0. IsCandidate states that
+// z is either the sentinel value 0 or the product of an actual positive
+// point. With x = m and y = 0, the remaining rectangle is empty, so
+// BoundsDiscarded states that z is an upper bound on every positive
+// candidate product in the original rectangle.
 ghost predicate Maximum(h:(nat,nat) -> int, m:nat, n:nat, z:int)
 {
-  0 <= z && (z == 0 ||
-    exists i:nat, j:nat ::
-      i < m && j < n && h(i,j) > 0 &&
-      z == (i+1)*(j+1)) &&
-      (forall i:nat, j:nat :: i < m && j < n && h(i,j) > 0 
-                              ==> (i+1)*(j+1) <= z)
+  IsCandidate(h,m,n,z) && BoundsDiscarded(h,m,n,m,0,z)
 }
 
 //========================================================================
@@ -98,11 +95,11 @@ lemma DiscardRow(h:(nat,nat) -> int, m:nat, n:nat, x:nat, y:nat, z:int)
 //========================================================================
 // Once the remaining rectangle is empty, every point in the original
 // rectangle belongs to the discarded region. BoundsDiscarded therefore
-// shows that z dominates every positive candidate, while IsCandidate 
-// shows that z is either 0 or is attained by an actual positive point. 
-// Together, these properties establish Maximum(h,m,n,z). Dafny derives 
-// this implication directly from the predicate definitions and the
-// preconditions.
+// shows that z bounds every positive candidate product from above, while 
+// IsCandidate shows that z is either 0 or is attained by an actual 
+// positive point. Together, these properties establish Maximum(h,m,n,z),  
+// the postcondition of the main method. Dafny derives this implication 
+// directly from the predicate definitions and the preconditions.
 lemma Finish(h:(nat,nat) -> int, m:nat, n:nat, x:nat, y:nat, z:int)
   requires x <= m && y <= n
   requires x == m || y == 0
