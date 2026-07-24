@@ -1,24 +1,20 @@
-/* file: sol11.dfy
-   author: David De Potter
-   description: extra practice in Dafny, 2D-counting, 
-   solution to prob11, with annotations
-   This is exercise 9.13 from the PC reader on coincidence counting
+/*  file: sol11PCStyle.dfy
+    author: David De Potter
+    description: extra practice in Dafny, 2D-counting, 
+    solution to prob11, with annotations
+    This is exercise 9.13 from the PC reader on coincidence counting
+    NOTE: This solution follows the PC-style proof method described
+    in the general note on proof styles (see the README in the 
+    Exercises folder)
 */
 
-ghost predicate Incr(arr: array<int>)
-reads arr
-{
-  forall i,j:: 0 <= i < j < arr.Length ==> arr[i] < arr[j]
-}
-
-function ord(b:bool): int
-{
-  if b then 1 else 0
-}
+include "../../commonSupport.dfy"
+import opened CommonFunctions
+import opened MonotonicityProps
 
 ghost function F(a: array<int>, b: array<int>, x: int, y: int): int
 reads a, b
-requires Incr(a) && Incr(b)
+requires OrderedArray(a, Incr) && OrderedArray(b, Incr)
 requires 0 <= x <= a.Length && 0 <= y <= b.Length
 decreases a.Length - x + b.Length - y
 {
@@ -31,7 +27,7 @@ decreases a.Length - x + b.Length - y
     
 method problem11(a: array<int>, b: array<int>)
 returns (z: int)
-requires Incr(a) && Incr(b)
+requires OrderedArray(a, Incr) && OrderedArray(b, Incr)
 ensures z == F(a,b,0,0)
 { 
   var m, n := a.Length, b.Length;

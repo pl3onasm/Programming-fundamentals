@@ -1,24 +1,20 @@
-/* file: sol11Annotated.dfy
+/* file: sol11PCStyleAnnotated.dfy
    author: David De Potter
    description: extra practice in Dafny, 2D-counting, 
    solution to prob11, with annotations
    This is exercise 9.13 from the PC reader on coincidence counting
+   NOTE: This solution follows the PC-style proof method described
+   in the general note on proof styles (see the README in the 
+   Exercises folder)
 */
 
-ghost predicate Incr(arr: array<int>)
-reads arr
-{
-  forall i,j:: 0 <= i < j < arr.Length ==> arr[i] < arr[j]
-}
-
-function ord(b:bool): int
-{
-  if b then 1 else 0
-}
+include "../../commonSupport.dfy"
+import opened CommonFunctions
+import opened MonotonicityProps
 
 ghost function F(a: array<int>, b: array<int>, x: int, y: int): int
 reads a, b
-requires Incr(a) && Incr(b)
+requires OrderedArray(a, Incr) && OrderedArray(b, Incr)
 requires 0 <= x <= a.Length && 0 <= y <= b.Length
 decreases a.Length - x + b.Length - y
 {
@@ -26,20 +22,23 @@ decreases a.Length - x + b.Length - y
     // We define F as follows:
     //   F(a,b,x,y) = #{ (i,j) | i,j: x ≤ i < m ∧ y ≤ j < n ∧ a[i] = b[j] }
     //      where m = a.Length and n = b.Length
-    // That is, F(a,b,x,y) counts the number of points (i,j) in the rectangle defined by
-    // the inequalities x ≤ i < m and y ≤ j < n for which a[i] = b[j] holds. 
-    // In the initial call, we have F(a,b,0,0), which counts the number of matching
-    // points in the full rectangle marked by the lines i = 0, i = m, j = 0, and j = n.
+    // That is, F(a,b,x,y) counts the number of points (i,j) in the rectangle 
+    // defined by the inequalities x ≤ i < m and y ≤ j < n for which 
+    // a[i] = b[j] holds.
+    // In the initial call, we have F(a,b,0,0), which counts the number of 
+    // matching points in the full rectangle marked by the lines i = 0, i = m, 
+    // j = 0, and j = n.
     //
-    // Base case: if x ≥ m or y ≥ n, then the rectangle is empty, so F(a,b,x,y) = # ∅ = 0.
-    // Recursive case: if x < m and y < n, we want to shrink the rectangle by either
-    //                 - incrementing x (which removes the leftmost column) or
+    // Base case: if x ≥ m or y ≥ n, then the rectangle is empty, so 
+    //            F(a,b,x,y) = # ∅ = 0.
+    // Recursive case: if x < m and y < n, we want to shrink the rectangle by
+    //                 - incrementing x (which removes the leftmost column)
     //                 - incrementing y (which removes the bottommost row)
     //
     // What happens if we increment x?
     //   F(a,b,x,y)
     //   = #{ (i,j) | i,j: x ≤ i < m ∧ y ≤ j < n ∧ a[i] = b[j] }
-    //        ( split domain into x + 1 ≤ i and i = x )
+    //        ( split domain into x + 1 ≤ i and leftmost column i = x )
     //   = #{ (i,j) | i,j: x + 1 ≤ i < m ∧ y ≤ j < n ∧ a[i] = b[j] }
     //     + #{ (x,j) | j: y ≤ j < n ∧ a[x] = b[j] }
     //        ( apply definition of F to the first term )
@@ -54,7 +53,7 @@ decreases a.Length - x + b.Length - y
     // What happens if we increment y?
     //   F(a,b,x,y)
     //   = #{ (i,j) | i,j: x ≤ i < m ∧ y ≤ j < n ∧ a[i] = b[j] }
-    //      ( split domain into y + 1 ≤ j and j = y )
+    //      ( split domain into y + 1 ≤ j and bottommost row j = y )
     //   = #{ (i,j) | i,j: x ≤ i < m ∧ y + 1 ≤ j < n ∧ a[i] = b[j] }
     //     + #{ (i,y) | i: x ≤ i < m ∧ a[i] = b[y] }
     //        ( apply definition of F to the first term )
@@ -75,7 +74,7 @@ decreases a.Length - x + b.Length - y
     
 method problem11(a: array<int>, b: array<int>)
 returns (z: int)
-requires Incr(a) && Incr(b)
+requires OrderedArray(a, Incr) && OrderedArray(b, Incr)
 ensures z == F(a,b,0,0)
 { 
   var m, n := a.Length, b.Length;
@@ -100,7 +99,8 @@ ensures z == F(a,b,0,0)
 
     if a[x] < b[y]
     {
-        // z + F(a,b,x,y) = Z ∧ x < m ∧ y < n ∧ a[x] < b[y] ∧ m - x + n - y = V
+        // z + F(a,b,x,y) = Z ∧ x < m ∧ y < n ∧ a[x] < b[y] 
+        //   ∧ m - x + n - y = V
         //   ( apply definition of F )
         // z + F(a,b,x+1,y) = Z ∧ m - x + n - y = V
         //   ( prepare for incrementing x )
@@ -111,9 +111,11 @@ ensures z == F(a,b,0,0)
 
     else
     {
-        // z + F(a,b,x,y) = Z ∧ x < m ∧ y < n ∧ a[x] ≥ b[y] ∧ m - x + n - y = V
+        // z + F(a,b,x,y) = Z ∧ x < m ∧ y < n ∧ a[x] ≥ b[y] 
+        //   ∧ m - x + n - y = V
         //   ( apply definition of F )
-        // z + F(a,b,x,y+1) + (a[x] == b[y] ? 1 : 0) = Z ∧ m - x + n - y = V
+        // z + F(a,b,x,y+1) + (a[x] == b[y] ? 1 : 0) = Z 
+        //   ∧ m - x + n - y = V
       z := z + ord(a[x] == b[y]);
         // z + F(a,b,x,y+1) = Z ∧ m - x + n - y = V
         //   ( prepare for incrementing y )

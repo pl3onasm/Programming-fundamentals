@@ -4,15 +4,13 @@
    This is exercise 9.13 from the PC reader on coincidence counting
 */
 
-ghost predicate Incr(arr: array<int>)
-reads arr
-{
-  forall i,j:: 0 <= i < j < arr.Length ==> arr[i] < arr[j]
-}               
+include "../../commonSupport.dfy"
+import opened CommonFunctions
+import opened MonotonicityProps           
     
 method problem11(a: array<int>, b: array<int>)
 returns (z: int)
-requires Incr(a) && Incr(b)
+requires OrderedArray(a, Incr) && OrderedArray(b, Incr)
 ensures z == ???
 {
   /* 
