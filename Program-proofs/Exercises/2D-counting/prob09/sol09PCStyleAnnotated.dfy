@@ -1,16 +1,11 @@
-/* file: sol09Annotated.dfy
-   author: David De Potter
-   description: extra practice in Dafny, 2D counting, 
-   solution to prob09, with annotations
-   This is exercise 9.11 from the PC reader
-   NOTE: The loop is machine-verified against the recursive
-    definition of F. The connection between F(0,w,w) and the set-based
-    specification from the problem statement is manually derived and
-    justified in the comments, but not machine-verified. This avoids
-    the additional technical machinery that would be needed in Dafny
-    to formalize sets and cardinalities and to prove the equivalence
-    between the set-based specification and the recursive definition
-    of F. It also keeps the solution in line with the PC lecture notes.
+/*  file: sol09PCStyleAnnotated.dfy
+    author: David De Potter
+    description: extra practice in Dafny, 2D counting, 
+    solution to prob09, with annotations
+    This is exercise 9.11 from the PC reader
+    NOTE: This solution follows the PC-style proof method described
+    in the general note on proof styles (see the README in the 
+    Exercises folder)
 */
 
 ghost function F(x:nat, y:nat, w:nat): nat
@@ -18,18 +13,19 @@ decreases w - x + y
 {
     // We want to find a recursive definition of F that we can use to derive T.
     // We define F as:
-    //   F(x,y,w) = #{ (i,j) | i,j: x < i ≤  w ∧ 0 ≤ j < y ∧ i² + j² < w² }
+    //   F(x,y,w) = #{ (i,j) | i,j: x < i ≤ w ∧ 0 ≤ j < y ∧ i² + j² < w² }
     // This function counts the number of points in the rectangle marked by
     //  { (i,j) | x < i ≤ w ∧ 0 ≤ j < y } that lie below the circle defined 
-    //  by i² + j² = w². Given the domains of i and j, this comes down to counting
-    //  the points that lie within the quarter circle with radius w. 
-    // In the initial call F(0,w,w), we call this function on the full rectangle
-    //  { (i,j) | 0 < i ≤ w ∧ 0 ≤ j < w }
+    //  by i² + j² = w². Given the domains of i and j, this comes down to 
+    //  counting the points that lie within the quarter circle with radius w. 
+    // In the initial call F(0,w,w), we call this function on the full 
+    // rectangle given by { (i,j) | 0 < i ≤ w ∧ 0 ≤ j < w }
     // 
-    // Base case: x ≥ w or y = 0 then the rectangle is empty and F(x,y,w) = # ∅ = 0
-    // Recursive case: the expression i² + j² is increasing in both i and j, so  
-    //                 we can shrink the rectangle by either:
-    //                 - incrementing x (which removes the leftmost column) or 
+    // Base case: x ≥ w or y = 0 then the rectangle is empty and 
+    //            F(x,y,w) = # ∅ = 0
+    // Recursive case: the expression i² + j² is increasing in both i and j,   
+    //                 so we can shrink the rectangle by either:
+    //                 - incrementing x (which removes the leftmost column)  
     //                 - decrementing y (which removes the topmost row)
     //
     // What happens if we increment x?
@@ -42,8 +38,8 @@ decreases w - x + y
     //   = F(x+1,y,w) + #{ (x+1,j) | j: 0 ≤ j < y ∧ (x+1)² + j² < w² }
     //        ( (x+1)² + j² is increasing in j, so the value of (x+1)² + (y-1)² 
     //          is maximal; if we assume (x+1)² + (y-1)² < w², then 
-    //          (x+1)² + j² < w² for all j < y, and so we can add the whole column 
-    //          as it contains only matching points )
+    //          (x+1)² + j² < w² for all j < y, and so we can add the whole  
+    //          column as it contains only matching points )
     //   = F(x+1,y,w) + #{ (x+1,j) | j: 0 ≤ j < y }
     //        ( size of half-open interval is upper bound - lower bound )
     //   = F(x+1,y,w) + y
@@ -58,8 +54,8 @@ decreases w - x + y
     //   = F(x,y-1,w) + #{ (i,y-1) | i: x < i ≤ w ∧ i² + (y-1)² < w² }
     //        ( i² + (y-1)² is increasing in i, so the value of (x+1)² + (y-1)² 
     //          is minimal; if we assume (x+1)² + (y-1)² ≥ w², then 
-    //          i² + (y-1)² ≥ w² for all i > x, and so we can discard the whole row 
-    //          as it contains no matching points )
+    //          i² + (y-1)² ≥ w² for all i > x, and so we can discard the   
+    //          whole row as it contains no matching points )
     //   = F(x,y-1,w) + # ∅
     //        ( size of the empty set is 0 )
     //   = F(x,y-1,w) 
@@ -89,8 +85,9 @@ ensures z == F(0,w,w)
   {
       // J ∧ B ∧ vf = V
       // z + F(x,y,w) = Z ∧ x < w ∧ y > 0 ∧ w - x + y = V
-      //   ( we want to apply the recursive definition of F, so we need to 
-      //     distinguish the cases (x+1)² + (y-1)² < w² and (x+1)² + (y-1)² ≥ w² )
+      //   ( we want to apply the recursive definition of F, so we  
+      //     need to distinguish the cases (x+1)² + (y-1)² < w² and 
+      //     (x+1)² + (y-1)² ≥ w² )
 
     if (x + 1) * (x + 1) + (y - 1) * (y - 1) < w * w 
     {
@@ -141,8 +138,8 @@ ensures z == F(0,w,w)
   strictly inside the circle is 4 * z + 1, where the +1 accounts for 
   the origin.
   
-  Since the area of the circle is π * w², we can use the count of grid 
-  points to approximate π as follows, for w > 0:
+  Since the area of the circle is π * w², we can use the count of  
+  grid points to approximate π as follows, for w > 0:
 
     π ≈ (4 * z + 1) / w²
 

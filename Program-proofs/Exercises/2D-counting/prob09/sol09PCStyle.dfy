@@ -1,8 +1,11 @@
-/* file: sol09.dfy
-   author: David De Potter
-   description: extra practice in Dafny, 2D counting, 
-   solution to prob09
-   This is exercise 9.11 from the PC reader
+/*  file: sol09PCStyle.dfy
+    author: David De Potter
+    description: extra practice in Dafny, 2D counting, 
+    solution to prob09
+    This is exercise 9.11 from the PC reader
+    NOTE: This solution follows the PC-style proof method described
+    in the general note on proof styles (see the README in the 
+    Exercises folder)
 */
 
 ghost function F(x:nat, y:nat, w:nat): nat

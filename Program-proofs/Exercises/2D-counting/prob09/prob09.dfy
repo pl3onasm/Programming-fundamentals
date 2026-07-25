@@ -1,7 +1,7 @@
-/* file: prob09.dfy
-   author: your name
-   description: extra practice in Dafny, 2D-counting, prob09
-   This is exercise 9.11 from the PC reader
+/*  file: prob09.dfy
+    author: your name
+    description: extra practice in Dafny, 2D-counting, prob09
+    This is exercise 9.11 from the PC reader
 */
 
 method problem09(w:nat) 
@@ -19,11 +19,11 @@ ensures z == ??
       T
         {Q : Z = z}
     
-    Note that Z (uppercase) is a specification constant, not a program variable, 
-    whereas z (lowercase) is a program variable.
+    Note that Z (uppercase) is a specification constant, not a program 
+    variable, whereas z (lowercase) is a program variable.
     The time complexity of T should be in O(w).
-    Next, use the result to determine the number of grid points within a circle 
-    with radius w, and use this to approximate the value of π.
+    Next, use the result to determine the number of grid points within 
+    a circle with radius w, and use this to approximate the value of π.
   */
 
 }
