@@ -1,71 +1,71 @@
-/* file: sol10Annotated.dfy
-   author: David De Potter
-   description: extra practice in Dafny, 2D-counting, 
-   solution to prob10, with annotations
-   This is exercise 9.12 from the PC reader
-   NOTE: The loop is machine-verified against the recursive definition of F. 
-    The connection between F(p,0,0,m) and the set-based specification from the 
-    problem statement is manually derived and justified in the comments, but 
-    not machine-verified. This avoids the additional technical machinery that 
-    would be needed in Dafny to introduce the corresponding finite sets, 
-    reason about their cardinalities, and prove the equivalence of the 
-    set-based specification and the recursive definition of F. It also keeps 
-    the solution in line with the PC lecture notes.
+/*  file: sol10PCStyleAnnotated.dfy
+    author: David De Potter
+    description: extra practice in Dafny, 2D-counting, 
+    solution to prob10, with annotations
+    This is exercise 9.12 from the PC reader
+    NOTE: This solution follows the PC-style proof method described
+    in the general note on proof styles (see the README in the 
+    Exercises folder)
 */
 
-ghost predicate prop(p:(int,int) -> bool)
+ghost predicate Monotonic(p:(int,int) -> bool)
 {
-    // Expresses the monotonicity rules for p, as given in the problem statement.
-    // It states that truth of p propagates eastward and southward, and
-    // that falsehood of p propagates westward and northward.
+    // Expresses the monotonicity rules for p, as given in the problem 
+    // statement. It states that truth of p propagates eastward and 
+    // southward, and that falsehood propagates westward and northward.
   (forall i,j:: p(i,j)   ==> p(i+1,j)) &&
   (forall i,j:: p(i,j+1) ==> p(i,j))
 }
 
 ghost function F(p:(int,int) -> bool, x:int, y:int, m:nat): int
-requires prop(p)
+requires Monotonic(p)
 decreases m - x - 2 * y
 {
     // We want to find a recursive definition of F that we can use to derive T.
     // We define F as follows:
     //   F(p,x,y,m) = #{ (i,j) | i,j: x ≤ i ∧ y ≤ j ∧ i + 2 * j < m ∧ p(i,j) }
-    // In other words, F(p,x,y,m) counts the number of points (i,j) in the triangle
-    // defined by the inequalities x ≤ i ∧ y ≤ j ∧ i + 2 * j < m, for which p(i,j) holds.
-    // In the initial call, we have F(p,0,0,m), which counts the number of points (i,j) 
-    // in the full triangle marked by the lines x = 0, y = 0, and i + 2 * j = m.
+    // In other words, F(p,x,y,m) counts the number of points (i,j) in the  
+    // triangle defined by the inequalities x ≤ i ∧ y ≤ j ∧ i + 2 * j < m,  
+    // for which p(i,j) holds. In the initial call, we have F(p,0,0,m), which 
+    // counts the number of points (i,j) in the full triangle marked by the 
+    // lines x = 0, y = 0, and i + 2 * j = m.
     //
-    // Base case: if x + 2*y ≥ m, then the triangle is empty, so F(p,x,y,m) = # ∅ = 0.
-    // Recursive case: if x + 2*y < m, we want to shrink the triangle by either
-    //                 - incrementing x (which removes the leftmost column) or
-    //                 - incrementing y (which removes the bottommost row)
+    // Base case: if x + 2*y ≥ m, then the triangle is empty, so 
+    //            F(p,x,y,m) = # ∅ = 0.
+    // Recursive case: 
+    //            if x + 2*y < m, we want to shrink the triangle by either
+    //            - incrementing x (which removes the leftmost column)
+    //            - incrementing y (which removes the bottommost row)
     //
     // What happens if we increment x?
     //   F(p,x,y,m) 
     //   = #{ (i,j) | i,j: x ≤ i ∧ y ≤ j ∧ i + 2 * j < m ∧ p(i,j) }
-    //        ( split domain into x + 1 ≤ i and i = x )
+    //        ( split domain into x + 1 ≤ i and leftmost column i = x )
     //   = #{ (i,j) | i,j: x + 1 ≤ i ∧ y ≤ j ∧ i + 2 * j < m ∧ p(i,j) }
     //     + #{ (x,j) | j: y ≤ j ∧ x + 2 * j < m ∧ p(x,j) }
     //        ( apply definition of F to the first term )
     //   = F(p,x+1,y,m) + #{ (x,j) | j: y ≤ j ∧ x + 2 * j < m ∧ p(x,j) }
-    //        ( truth of p(x,j) is descending in j, meaning that falsehood of p
-    //          propagates northward. So if we assume p(x,y) is false, then p(x,j) 
-    //          is false for all j ≥ y, and so we can ignore the whole column )
+    //        ( truth of p(x,j) is descending in j, meaning that falsehood 
+    //          of p propagates northward. So if we assume p(x,y) is false, 
+    //          then p(x,j) is false for all j ≥ y, and so we can ignore 
+    //          the whole column )
     //   = F(p,x+1,y,m) + # ∅
     //   = F(p,x+1,y,m)
     //
     // What happens if we increment y?
     //   F(p,x,y,m)
     //   = #{ (i,j) | i,j: x ≤ i ∧ y ≤ j ∧ i + 2 * j < m ∧ p(i,j) }
-    //        ( split domain into y + 1 ≤ j and j = y )
+    //        ( split domain into y + 1 ≤ j and bottommost row j = y )
     //   = #{ (i,j) | i,j: x ≤ i ∧ y + 1 ≤ j ∧ i + 2 * j < m ∧ p(i,j) }
     //     + #{ (i,y) | i: x ≤ i ∧ i + 2 * y < m ∧ p(i,y) }
     //        ( apply definition of F to the first term )
     //   = F(p,x,y+1,m) + #{ (i,y) | i: x ≤ i ∧ i + 2 * y < m ∧ p(i,y) }
-    //        ( truth of p(i,y) is ascending in i, meaning that truth of p
-    //          propagates eastward. So if we assume p(x,y) is true,
-    //          then p(i,y) is true for all i ≥ x, and so we can add the whole row )
+    //        ( truth of p(i,y) is ascending in i, meaning that truth of
+    //          p propagates eastward. So if we assume p(x,y) is true,
+    //          then p(i,y) is true for all i ≥ x, and so we can add the 
+    //          whole row )
     //   = F(p,x,y+1,m) + #{ (i,y) | i: x ≤ i ∧ i + 2 * y < m }
-    //        ( size of half-open interval is upper bound - lower bound )
+    //        ( size of a half-open interval is upper bound - lower bound )
     //   = F(p,x,y+1,m) + (m - 2 * y) - x
 
   if x + 2 * y >= m 
@@ -77,7 +77,7 @@ decreases m - x - 2 * y
 
 method problem10(p:(int,int) -> bool, m:nat)
 returns (z: int)
-requires prop(p)
+requires Monotonic(p)
 ensures z == F(p,0,0,m)
 {
     // Initialization to establish J before the loop
@@ -100,7 +100,8 @@ ensures z == F(p,0,0,m)
 
     if p(x,y) 
     {
-        // z + F(p,x,y,m) = Z ∧ x + 2 * y < m ∧ p(x,y) ∧ m - x - 2 * y = V
+        // z + F(p,x,y,m) = Z ∧ x + 2 * y < m ∧ p(x,y) 
+        //   ∧ m - x - 2 * y = V
         //   ( apply definition of F )
         // z + F(p,x,y+1,m) + m - 2 * y - x = Z ∧ m - x - 2 * y = V
       z := z + m - 2 * y - x;
@@ -113,7 +114,8 @@ ensures z == F(p,0,0,m)
 
     else 
     {
-        // z + F(p,x,y,m) = Z ∧ x + 2 * y < m ∧ ¬p(x,y) ∧ m - x - 2 * y = V
+        // z + F(p,x,y,m) = Z ∧ x + 2 * y < m ∧ ¬p(x,y) 
+        //   ∧ m - x - 2 * y = V
         //   ( apply definition of F )
         // z + F(p,x+1,y,m) = Z ∧ m - x - 2 * y = V
         //   ( prepare for incrementing x )

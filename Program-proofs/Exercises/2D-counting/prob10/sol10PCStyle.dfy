@@ -1,18 +1,21 @@
-/* file: sol10.dfy
-   author: David De Potter
-   description: extra practice in Dafny, 2D-counting, 
-   solution to prob10
-   This is exercise 9.12 from the PC reader
+/*  file: sol10PCStyle.dfy
+    author: David De Potter
+    description: extra practice in Dafny, 2D-counting, 
+    solution to prob10
+    This is exercise 9.12 from the PC reader
+    NOTE: This solution follows the PC-style proof method described
+    in the general note on proof styles (see the README in the 
+    Exercises folder)
 */
 
-ghost predicate prop(p:(int,int) -> bool)
+ghost predicate monotonic(p:(int,int) -> bool)
 {
   (forall i,j:: p(i,j)   ==> p(i+1,j)) &&
   (forall i,j:: p(i,j+1) ==> p(i,j))
 }
 
 ghost function F(p:(int,int) -> bool, x:nat, y:nat, m:nat): int
-requires prop(p)
+requires monotonic(p)
 decreases m - x - 2 * y
 {
   if x + 2 * y >= m 
@@ -24,7 +27,7 @@ decreases m - x - 2 * y
 
 method problem10(p:(int,int) -> bool, m:nat)
 returns (z: int)
-requires prop(p)
+requires monotonic(p)
 ensures z == F(p,0,0,m)
 {
   var x, y := 0, 0;
