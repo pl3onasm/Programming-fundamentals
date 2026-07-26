@@ -19,15 +19,17 @@ decreases n - x + y
     // We define F as:
     //   F(h,x,y,n) 
     //     = #{ (i,j) | i,j: x ≤ i ∧ 0 ≤ j < y ∧ i + j < n ∧ h(i,j) > 0 }
-    // This function counts the number of points in the rectangle marked by
-    //  { (i,j) | x ≤ i < n ∧ 0 ≤ j < y } that lie below the diagonal  
-    //  i + j = n and satisfy h(i,j) > 0
-    // In the initial call F(h,0,n,n), we call this function on the full 
-    // rectangle given by { (i,j) | 0 ≤ i < n ∧ 0 ≤ j < n }
+    // This function counts the matching points in the remaining search
+    // region bounded by i = x, j = 0, j = y, and the diagonal i + j = n.
+    // In the general case, this region has the shape of a trapezium. However,
+    // when x + y = n, this trapezium degenerates into a triangle.
     //
-    // Base case: x ≥ n or y = 0 then the rectangle is empty and so 
-    //            F(h,x,y,n) = # ∅ = 0
-    // Recursive case: in this case we want to shrink the rectangle by either 
+    // The initial call F(h,0,n,n) covers the full triangular domain
+    // below the diagonal i + j = n.
+    //
+    // Base case: x ≥ n or y = 0 then the remaining search region is empty 
+    //            and so F(h,x,y,n) = # ∅ = 0
+    // Recursive case: here we shrink the remaining search region by either 
     //                 - incrementing x (which removes the leftmost column)
     //                 - decrementing y (which removes the topmost row)
     //
@@ -39,10 +41,12 @@ decreases n - x + y
     //     + #{ (x,j) | j: 0 ≤ j < y ∧ x + j < n ∧ h(x,j) > 0 }
     //        ( apply definition of F to the first term )
     //   = F(h,x+1,y,n) + #{ (x,j) | j: 0 ≤ j < y ∧ j < n - x ∧ h(x,j) > 0 }
-    //        ( h(x,j) is ascending in j, so the value of h(x,y-1) is maximal;
-    //          if we assume h(x,y-1) ≤ 0, then h(x,j) ≤ h(x,y-1) ≤ 0 for 
-    //          all j < y, so we can discard the whole column as it contains  
-    //          no matching points )
+    //        ( h(x,j) is ascending in j, so the value of h(x,y-1) is maximal
+    //          among the entries of the leftmost column below the current 
+    //          upper boundary. If we assume h(x,y-1) ≤ 0, then h(x,j) ≤ 0 for 
+    //          all j < y. Hence the part of the leftmost column that lies 
+    //          inside the remaining search region contains no matching point 
+    //          and can be removed )
     //   = F(h,x+1,y,n) + # ∅
     //        ( size of the empty set is 0 )
     //   = F(h,x+1,y,n)
@@ -57,11 +61,11 @@ decreases n - x + y
     //          i + y - 1 < n ≡ i + y ≤ n )
     //   = F(h,x,y-1,n) + #{ (i,y-1) | i: x ≤ i < n ∧ i + y ≤ n ∧ h(i,y-1) > 0 }
     //        ( h(i,y-1) is ascending in i, so the value of h(x,y-1) is minimal;
-    //          if we assume h(x,y-1) > 0, then h(i,y-1) > 0 for all i ≥ x, 
-    //          so all points in the row y - 1 that lie below the diagonal are 
-    //          matching points; in other words, if x + y ≤ n then the 
-    //          diagonal-clipped row segment contributes to the count,  
-    //          otherwise the segment is empty and contributes nothing )
+    //          if we assume h(x,y-1) > 0, then h(i,y-1) > 0 for all i ≥ x. 
+    //          Hence every point of the top row that lies inside the triangular 
+    //          domain is a matching point. When x + y ≤ n, this part of the row 
+    //          is the segment [x,n-y+1); when x + y > n, the top row lies 
+    //          entirely outside the domain and contributes nothing )
     //   = F(h,x,y-1,n) 
     //     + ( (x + y ≤ n) ? #{ (i,y-1) | i: x ≤ i < n ∧ i + y ≤ n } : # ∅ )
     //        ( the upper bound on the segment is given by i + y ≤ n 

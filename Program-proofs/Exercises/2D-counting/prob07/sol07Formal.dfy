@@ -14,8 +14,10 @@ import opened FormalSupport
 import opened MonotonicityProps
 
 //========================================================================
-// Represents the matching points in the remaining rectangle [x,n) × [0,y)
-// that also lie below the diagonal i + j = n and satisfy h(i,j) > 0
+// Represents the matching points in the remaining search region that
+// satisfy h(i,j) > 0. This region is bounded by i = x, j = y, and the 
+// diagonal i + j = n. In the general case it has the shape of a 
+// trapezium, but when x + y = n, it degenerates into a triangle.
 ghost function MatchingSet(h:(nat,nat) -> int, x:nat, y:nat, 
                            n:nat): set<(nat,nat)>
 {
@@ -24,8 +26,8 @@ ghost function MatchingSet(h:(nat,nat) -> int, x:nat, y:nat,
 }
 
 //========================================================================
-// If x ≥ n or y = 0, the remaining rectangle is empty and so the set of
-// remaining matching points is empty as well.
+// If x ≥ n or y = 0, the remaining search region is empty and so the set 
+// of remaining matching points is empty as well.
 lemma EmptySet(h:(nat,nat) -> int, x:nat, y:nat, n:nat)
   requires x >= n || y == 0
   ensures  MatchingSet(h,x,y,n) == {}
@@ -102,7 +104,7 @@ lemma DiscardRow(h:(nat,nat) -> int, x:nat, y:nat, n:nat)
 
 //========================================================================
 // Counts the matching points by repeatedly removing either the leftmost
-// column or the topmost row of the remaining rectangle.
+// column or the topmost row of the remaining search region.
 method problem07(h:(nat,nat) -> int, n:nat)
 returns  (z:int)
 requires Ordered2DNat(h, Asc, Asc)
@@ -116,8 +118,8 @@ ensures  z == |MatchingSet(h,0,n,n)|
       // The program variable z stores the number of matching points
       // already removed and counted, while MatchingSet(h,x,y,n)
       // contains the matching points that remain in the current search
-      // window. Their total equals the number of matching points in the
-      // original triangular domain i + j < n.
+      // window. Together, they account for all matching points in the 
+      // original full triangular domain i + j < n.
     invariant z + |MatchingSet(h,x,y,n)| == |MatchingSet(h,0,n,n)|
     decreases n - x + y
   {
@@ -142,8 +144,8 @@ ensures  z == |MatchingSet(h,0,n,n)|
     }
   }
 
-    // After the loop, either x ≥ n or y = 0. Thus, the remaining 
-    // rectangle has zero width or zero height, so MatchingSet is empty.
+    // After the loop, either x ≥ n or y = 0. Thus, the remaining search
+    // region has zero width or zero height, so MatchingSet is empty.
     // The cardinality invariant then implies that z is the complete
     // number of matching points in the original triangular domain.
   EmptySet(h,x,y,n);
