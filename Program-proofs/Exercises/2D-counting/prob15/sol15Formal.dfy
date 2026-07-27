@@ -15,8 +15,8 @@ import opened MonotonicityProps
 import opened CommonFunctions
 
 //========================================================================
-// Represents the set of matching points (i,j) in the remaining
-// rectangle [x,p) × [y,p), restricted to the quarter disk i² + j² < p.
+// Represents the set of matching points (i,j) in the remaining search
+// region inside the quarter disk i² + j² < p.
 // For the initial call, the explicit coordinate bounds i < p and j < p
 // are redundant, since they are implied by i² + j² < p. They are,
 // however, useful for making finiteness explicit when representing the
@@ -31,7 +31,9 @@ ghost function MatchingSet(h:(nat,nat) -> int, x:nat, y:nat, p:nat,
 
 //========================================================================
 // If a coordinate has reached p, or the south-west corner of the
-// remaining rectangle lies outside the disk, the remaining set is empty.
+// remaining search region lies on or outside the circular boundary
+// i² + j² = p, then the set of matching points in the remaining search 
+// region is empty.
 lemma EmptySet(h:(nat,nat) -> int, x:nat, y:nat, p:nat, w:int)
   requires x == p || y == p || x*x + y*y >= p
   ensures MatchingSet(h,x,y,p,w) == {}
@@ -51,9 +53,10 @@ lemma EmptySet(h:(nat,nat) -> int, x:nat, y:nat, p:nat, w:int)
 }
 
 //========================================================================
-// If h(x,y) < w, strict decrease in the second argument implies that the 
-// entire leftmost column contains no matching points and can be discarded
-// from the total count.
+// If h(x,y) < w, strict decrease in h's second argument implies that
+// the part of the leftmost remaining column lying inside the quarter
+// disk contains no matching point. Removing that column therefore
+// leaves the set of remaining matches unchanged.
 lemma DiscardColumn(h:(nat,nat) -> int, x:nat, y:nat, p:nat, w:int)
   requires Ordered2DNat(h, Incr, Decr)
   requires h(x,y) < w
@@ -64,10 +67,10 @@ lemma DiscardColumn(h:(nat,nat) -> int, x:nat, y:nat, p:nat, w:int)
 }
 
 //========================================================================
-// If h(x,y) ≥ w, strict increase in the first argument implies that (x,y) 
-// is the only possible matching point in the bottom row, and can be 
-// counted if h(x,y) == w, after which the entire bottom row can be 
-// discarded from the total count.
+// If h(x,y) ≥ w, strict increase in h's first argument implies that
+// (x,y) is the only possible matching point in the bottommost part of
+// the remaining quarter-disk region. It is counted when h(x,y) == w,
+// after which the rest of that row can be removed.
 lemma AdvanceRow(h:(nat,nat) -> int, x:nat, y:nat, p:nat, w:int)
   requires Ordered2DNat(h, Incr, Decr)
   requires x*x + y*y < p
@@ -76,14 +79,14 @@ lemma AdvanceRow(h:(nat,nat) -> int, x:nat, y:nat, p:nat, w:int)
           == |MatchingSet(h,x,y+1,p,w)| + ord(h(x,y) == w)
 {
     // Removing the possible matching corner leaves exactly the set
-    // obtained by advancing to the next row.
+    // obtained by advancing the lower boundary to the next row.
   Set2DEquality(MatchingSet(h,x,y,p,w) - {(x,y)},
                 MatchingSet(h,x,y+1,p,w));
 }
 
 //========================================================================
-// The main counting method, computed iteratively by removing either 
-// the leftmost column or the bottommost row.
+// Counts the matching points by repeatedly removing either the leftmost
+// column or the bottommost row of the remaining quarter-disk region.
 method problem15(h:(nat,nat) -> int, p:nat, w:int)
 returns (z:int)
 requires Ordered2DNat(h, Incr, Decr)
@@ -94,10 +97,10 @@ ensures z == |MatchingSet(h,0,0,p,w)|
 
   while x*x + y*y < p
     invariant x <= p && y <= p
-      // z holds the number of matching points already counted, while 
-      // MatchingSet(h,x,y,p,w) counts the matching points in the 
-      // remaining search region. The sum of these two counts is the
-      // total number of matching points in the initial search region.
+      // z stores the number of matching points already counted, while
+      // MatchingSet(h,x,y,p,w) contains the matching points that remain
+      // in the current quarter-disk search region. Together, these
+      // counts equal the number of matches in the initial quarter disk.
     invariant z + |MatchingSet(h,x,y,p,w)| 
               ==  |MatchingSet(h,0,0,p,w)|
     decreases (p - x) + (p - y)
@@ -116,8 +119,9 @@ ensures z == |MatchingSet(h,0,0,p,w)|
     }
   }
 
-    // The negated guard ensures that the remaining search region is 
-    // empty, so that no further matching points remain in the search 
-    // region and the total count is complete in z.
+    // The negated guard places the south-west corner on or outside the
+    // circular boundary, so the set of remaining matching points is 
+    // empty. The cardinality invariant then implies that the total count
+    // of matching points is complete in z.
   EmptySet(h,x,y,p,w);
 }

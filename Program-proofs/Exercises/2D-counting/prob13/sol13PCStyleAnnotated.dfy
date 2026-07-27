@@ -29,16 +29,29 @@ decreases 2 * n - y - x
     //   = #{ (i,j) | i,j: x ≤ i ≤ j < n ∧ y ≤ j ∧ a = ∑( f(k) | k: i ≤ k < j )}
     //   = #{ (i,j) | i,j: x ≤ i ≤ j < n ∧ y ≤ j ∧ a = S(f,i,j) }
     //
-    // In other words, F(f,x,y,a,n) counts the number of remaining half-open  
-    // intervals [i,j) for which the sum of the values of f on the interval 
-    // equals a. In the initial call F(f,0,0,a,n), this is the full search 
-    // region from the problem statement.
+    // In other words, F(f,x,y,a,n) counts the remaining half-open intervals 
+    // [i,j) whose sum equals a. The parameters x and y are lower bounds on 
+    // the left and right endpoints:
     //
-    // Base case: if y ≥ n or x ≥ n, then the remaining search area is empty, 
-    //   so F(f,x,y,a,n) = # ∅ = 0.
-    // Recursive case: here we want to shrink the remaining search area by 
-    //   - either incrementing x (which shrinks the search area from the left)
-    //   - or incrementing y (which shrinks the search area from the bottom)
+    //   x ≤ i    means that intervals starting before x have already
+    //            been processed
+    //   y ≤ j    means that intervals ending before y have already
+    //            been processed
+    //
+    // Since the loop maintains x ≤ y, the remaining interval domain is
+    // generally bounded by i = x, j = y, j = n, and the diagonal i = j.
+    // When x < y, this region has the shape of a trapezium. When x = y,
+    // the lower horizontal boundary collapses and the trapezium
+    // degenerates into a triangle.
+    // In the initial call F(f,0,0,a,n), the domain is the full triangle
+    // bounded by i = 0, j = n, and the diagonal i = j.
+    //
+    // Base case: if y ≥ n or x ≥ n, then the remaining search region is
+    //            empty, so F(f,x,y,a,n) = #∅ = 0.
+    //
+    // Recursive case: we shrink the remaining search region by
+    //   - incrementing x, which removes the leftmost part;
+    //   - incrementing y, which removes the bottommost part.
     //
     // What happens if we increment x?
     //   F(f,x,y,a,n)
@@ -48,14 +61,15 @@ decreases 2 * n - y - x
     //     + #{ (x,j) | j: x ≤ j < n ∧ y ≤ j ∧ a = S(f,x,j) }
     //        ( apply definition of F to the first term )
     //   = F(f,x+1,y,a,n) + #{ (x,j) | j: x ≤ j < n ∧ y ≤ j ∧ a = S(f,x,j) }
-    //        ( below we assume that S(f,x,y) ≥ a; since a > 0, the interval
-    //          [x,y) is non-empty, and hence x < y )
+    //        ( below we assume that S(f,x,y) ≥ a. Since a > 0, the interval
+    //          [x,y) has positive sum and is therefore non-empty, so x < y ) 
     //   = F(f,x+1,y,a,n) + #{ (x,j) | j: x < y ≤ j < n ∧ a = S(f,x,j) }
-    //        ( S(f,x,j) is increasing in j, so the value of S(f,x,y) is minimal;
-    //          if we assume S(f,x,y) ≥ a, then only the interval [x,y) can sum 
-    //          to a, since S(f,x,j) > S(f,x,y) ≥ a for all j > y. Hence, we can 
-    //          increment the count by 1 iff S(f,x,y) = a, or ignore all  
-    //          intervals starting at x if S(f,x,y) > a )
+    //        ( S(f,x,j) is strictly increasing in j because f is
+    //          positive. Among the remaining intervals starting at x,
+    //          [x,y) therefore has the smallest sum. If S(f,x,y) ≥ a,
+    //          then every interval [x,j) with j > y has sum strictly
+    //          greater than a. Hence [x,y) is the only possible match
+    //          starting at x: it contributes 1 exactly when S(f,x,y) = a )
     //   = F(f,x+1,y,a,n) + (S(f,x,y) = a ? 1 : 0)
     //
     // What happens if we increment y?
@@ -66,10 +80,11 @@ decreases 2 * n - y - x
     //     + #{ (i,y) | i: x ≤ i ≤ y < n ∧ a = S(f,i,y) }
     //        ( apply definition of F to the first term )
     //   = F(f,x,y+1,a,n) + #{ (i,y) | i: x ≤ i ≤ y < n ∧ a = S(f,i,y) }
-    //        ( S(f,i,y) is decreasing in i, so the value of S(f,x,y) is maximal;
-    //          if we assume S(f,x,y) < a, then S(f,i,y) ≤ S(f,x,y) < a for all
-    //          i with x ≤ i ≤ y, and hence we can ignore all intervals ending 
-    //          at y as they cannot sum to a )
+    //        ( S(f,i,y) is decreasing in i, so the value of S(f,x,y) is 
+    //          maximal; if we assume S(f,x,y) < a, then 
+    //          S(f,i,y) ≤ S(f,x,y) < a for all i with x ≤ i ≤ y, and so 
+    //          we can ignore all intervals ending at y as they cannot 
+    //          sum to a )
     //   = F(f,x,y+1,a,n) + # ∅
     //        ( size of the empty set is 0 )
     //   = F(f,x,y+1,a,n)
@@ -156,10 +171,11 @@ ensures z == F(f,0,0,a,n)
   decreases 2 * n - x - y
   {
       // J ∧ B ∧ vf = V
-      // z + F(f,x,y,a,n) = Z ∧ s = S(f,x,y) ∧ x < n ∧ y < n ∧ 2 * n - x - y = V
-      //   ( we want to apply the definition of F. Since we are not in the base 
-      //     case, we need to distinguish the recursive cases S(f,x,y) ≥ a 
-      //     and S(f,x,y) < a )
+      // z + F(f,x,y,a,n) = Z ∧ s = S(f,x,y) ∧ x < n ∧ y < n 
+      //   ∧ 2 * n - x - y = V
+      //   ( we want to apply the definition of F. Since we are not in   
+      //     the base case, we need to distinguish the recursive cases  
+      //     S(f,x,y) ≥ a and S(f,x,y) < a )
 
     if s >= a
     {

@@ -15,11 +15,10 @@ decreases w - x + y
     // We define F as:
     //   F(x,y,w) = #{ (i,j) | i,j: x < i ≤ w ∧ 0 ≤ j < y ∧ i² + j² < w² }
     // This function counts the number of points in the rectangle marked by
-    //  { (i,j) | x < i ≤ w ∧ 0 ≤ j < y } that lie below the circle defined 
-    //  by i² + j² = w². Given the domains of i and j, this comes down to 
-    //  counting the points that lie within the quarter circle with radius w. 
+    //  { (i,j) | x < i ≤ w ∧ 0 ≤ j < y } that lie strictly inside the disk  
+    //  defined by i² + j² < w². 
     // In the initial call F(0,w,w), we call this function on the full 
-    // rectangle given by { (i,j) | 0 < i ≤ w ∧ 0 ≤ j < w }
+    // square given by { (i,j) | 0 < i ≤ w ∧ 0 ≤ j < w }
     // 
     // Base case: x ≥ w or y = 0 then the rectangle is empty and 
     //            F(x,y,w) = # ∅ = 0
@@ -134,11 +133,11 @@ ensures z == F(0,w,w)
     { (i,j) | 0 < i ≤ w ∧ 0 ≤ j < w ∧ i² + j² < w² },
 
   the four rotations of this region cover all non-origin grid points
-  strictly inside the circle. Hence, the total number of grid points 
-  strictly inside the circle is 4 * z + 1, where the +1 accounts for 
+  strictly inside the disk. Hence, the total number of grid points 
+  strictly inside the disk is 4 * z + 1, where the +1 accounts for 
   the origin.
   
-  Since the area of the circle is π * w², we can use the count of  
+  Since the area of the disk is π * w², we can use the count of  
   grid points to approximate π as follows, for w > 0:
 
     π ≈ (4 * z + 1) / w²

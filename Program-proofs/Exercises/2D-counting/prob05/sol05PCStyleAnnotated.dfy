@@ -1,23 +1,18 @@
-/* file: sol05Annotated.dfy
-   author: David De Potter
-   description: extra practice in Dafny, 2D counting, 
-   solution to prob05, with annotations
-   This is exercise 9.6 from the PC reader
+/*  file: sol05PCStyleAnnotated.dfy
+    author: David De Potter
+    description: extra practice in Dafny, 2D counting, 
+    solution to prob05, with annotations
+    This is exercise 9.6 from the PC reader
+    NOTE: This solution follows the PC-style proof method described
+    in the general note on proof styles (see the README in the 
+    Exercises folder)
 */
 
-ghost predicate AscAsc(f:(int,int) -> int) 
-{
-    // Expresses the property that f is ascending 
-    // in both its arguments, i.e. 
-    // ∀ i,j,k ∈ ℤ:
-    //   if i ≤ j then f(i,k) ≤ f(j,k)
-    //   if j ≤ k then f(i,j) ≤ f(i,k)
-  (forall i,j,k:: i <= j  ==>  f(i,k) <= f(j,k)) &&
-  (forall i,j,k:: j <= k  ==>  f(i,j) <= f(i,k))
-}
+include "../../commonSupport.dfy"
+import opened MonotonicityProps
 
 ghost function F(h:(int,int) -> int, x:nat, y:nat, c:int): int
-requires AscAsc(h)
+requires Ordered2DInt(h, Asc, Asc)
 decreases y - x
 {   
     // We want to find a recursive definition of F that we can use to derive T.
@@ -42,8 +37,9 @@ decreases y - x
     //       ( apply definition of F to the first term )
     //   = F(h,x+1,y,c) + #{ (x,j) | j: x ≤ j < y ∧ h(x,j) ≤ c }
     //       ( h(x,j) is ascending in j, so the value of h(x,y-1) is maximal;
-    //         if we assume h(x,y-1) ≤ c, then h(x,j) ≤ c for all x ≤ j < y and
-    //         we can add the whole column to z as it has only matching points )
+    //         if we assume h(x,y-1) ≤ c, then h(x,j) ≤ c for all x ≤ j < y 
+    //         and we can add the whole column to z as it has only matching 
+    //         points )
     //   = F(h,x+1,y,c) + #{ (x,j) | j: x ≤ j < y }
     //       ( size of half-open interval [x,y) is y - x )
     //   = F(h,x+1,y,c) + (y - x)
@@ -56,9 +52,10 @@ decreases y - x
     //     + #{ (i,y-1) | i: x ≤ i ≤ y-1 ∧ h(i,y-1) ≤ c }
     //       ( apply definition of F to the first term )
     //   = F(h,x,y-1,c) + #{ (i,y-1) | i: x ≤ i ≤ y-1 ∧ h(i,y-1) ≤ c }
-    //       ( h(i,y-1) is ascending in i, so the value of h(x,y-1) is minimal; 
-    //         if we assume h(x,y-1) > c, then h(i,y-1) > c for all x ≤ i ≤ y-1 
-    //         and we can discard the whole row as it contains no matching points )
+    //       ( h(i,y-1) is ascending in i, so the value of h(x,y-1) is 
+    //         minimal; if we assume h(x,y-1) > c, then h(i,y-1) > c for 
+    //         all x ≤ i ≤ y-1 and we can discard the whole row as it 
+    //         contains no matching points )
     //   = F(h,x,y-1,c) + # ∅
     //       ( size of the empty set is 0 )
     //   = F(h,x,y-1,c)
@@ -69,7 +66,7 @@ decreases y - x
 
 method problem05(h:(int,int) -> int, n:nat, c:int) 
 returns (z: int)
-requires AscAsc(h)
+requires Ordered2DInt(h, Asc, Asc)
 ensures z == F(h, 0, n, c)
 {
     // Initialization to establish J before the loop

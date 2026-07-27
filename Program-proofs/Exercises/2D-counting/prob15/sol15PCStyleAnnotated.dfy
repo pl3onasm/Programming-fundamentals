@@ -19,56 +19,62 @@ decreases (p - x) + (p - y)
 {
     // We want to find a recursive definition of F that we can use to derive T.
     // We define F as follows:
-    //   F(h,x,y,p,w) = #{ (i,j) | i,j: x ≤ i < p ∧ y ≤ j < p ∧ i² + j² < p ∧ h(i,j) = w }
+    //   F(h,x,y,p,w) 
+    //   = #{ (i,j) | i,j: x ≤ i < p ∧ y ≤ j < p ∧ i² + j² < p ∧ h(i,j) = w }
     //
-    // That is, F(h,x,y,p,w) counts the number of points (i,j) that lie in the 
-    // remaining rectangle [x,p) × [y,p), restricted to the quarter-disk domain 
-    // i² + j² < p, and that satisfy h(i,j) = w.     
-    // For the initial call F(h,0,0,p,w), the explicit coordinate bounds i < p and 
-    // j < p are redundant, since they are implied by i² + j² < p for natural i and j.
-    // Hence: F(h,0,0,p,w) = #{ (i,j) | i,j: i² + j² < p ∧ h(i,j) = w }, which is 
-    // precisely the specification constant Z in the problem statement. 
+    // Thus, F(h,x,y,p,w) counts the matching points in the remaining search
+    // region bounded by i = x, j = y, and the circular arc i² + j² = p.
+    //
+    // Unlike in problem 9, the circular arc i² + j² = p bounds the search 
+    // domain. It is not the contour line being followed by the search. The 
+    // contour line is instead determined by h(i,j) = w. This is why the 
+    // search domain is a quarter disk in this problem, rather than a 
+    // rectangle as in problem 9. 
 
-    // Base case: if x = p or y = p, then the remaining rectangle is empty. 
-    // If x² + y² ≥ p, then its south-west corner lies outside the quarter disk. 
-    // Since every remaining point satisfies i ≥ x and j ≥ y, it follows that
-    // i² + j² ≥ x² + y² ≥ p, so the remaining search area contains no point 
-    // satisfying the quarter-disk constraint. Hence F(h,x,y,p,w) = #∅ = 0.
+    // Base case: if x = p or y = p, then no points remain to be counted.
+    // If x² + y² ≥ p, then the south-west corner lies on or outside the 
+    // quarter disk. Since every remaining point satisfies i ≥ x and j ≥ y, 
+    // it follows that i² + j² ≥ x² + y² ≥ p. Hence no remaining point
+    // lies strictly inside the quarter disk, and F(h,x,y,p,w) = #∅ = 0.
     //
-    // Recursive case: here we want to shrink the remaining search area by 
-    //   - either incrementing x (which removes the leftmost column)
-    //   - or incrementing y (which removes the bottommost row)
+    // Recursive case: we shrink the remaining quarter-disk region by
+    //   - incrementing x, which removes its leftmost column
+    //   - incrementing y, which removes its bottommost row
     //
     // What happens if we increment x?
     //   F(h,x,y,p,w)
     //   = #{ (i,j) | i,j: x ≤ i < p ∧ y ≤ j < p ∧ i² + j² < p ∧ h(i,j) = w }
-    //      ( split nonempty search domain into leftmost column and remaining area: 
-    //        i = x and x + 1 ≤ i < p )
+    //      ( split the nonempty quarter-disk search region into the part
+    //        of its leftmost column with i = x and the remaining region
+    //        with x + 1 ≤ i < p )
     //   = #{ (i,j) | i,j: x+1 ≤ i < p ∧ y ≤ j < p ∧ i² + j² < p ∧ h(i,j) = w } 
     //     + #{ (x,j) | j: y ≤ j < p ∧ x² + j² < p ∧ h(x,j) = w } 
     //      ( apply definition of F to the first term )
     //   = F(h,x+1,y,p,w) + #{ (x,j) | j: y ≤ j < p ∧ x² + j² < p ∧ h(x,j) = w } 
-    //      ( h is strictly decreasing in its second argument, so the value h(x,y) is
-    //        maximal for all j ≥ y in the leftmost column. Hence, if we assume 
-    //        h(x,y) < w, then h(x,j) < w for all j ≥ y, and we can discard the 
-    //        entire column as it does not contain any points satisfying h(i,j) = w. )
+    //      ( h is strictly decreasing in its second argument, so h(x,y)
+    //        is maximal among all remaining points of the leftmost column.
+    //        If h(x,y) < w, then h(x,j) < w for every j ≥ y. Hence the
+    //        part of this column lying inside the quarter disk contains
+    //        no matching point and can be removed )
     //   = F(h,x+1,y,p,w) + # ∅
     //   = F(h,x+1,y,p,w)
     //
     // What happens if we increment y?
     //   F(h,x,y,p,w)
     //   = #{ (i,j) | i,j: x ≤ i < p ∧ y ≤ j < p ∧ i² + j² < p ∧ h(i,j) = w }
-    //      ( split nonempty search domain into bottommost row and remaining area: 
-    //        j = y and y + 1 ≤ j < p )
+    //      ( split the nonempty quarter-disk search region into the part
+    //        of its bottommost row with j = y and the remaining region
+    //        with y + 1 ≤ j < p )
     //   = #{ (i,j) | i,j: x ≤ i < p ∧ y+1 ≤ j < p ∧ i² + j² < p ∧ h(i,j) = w } 
     //     + #{ (i,j) | i: x ≤ i < p ∧ j = y ∧ i² + y² < p ∧ h(i,y) = w }
     //      ( apply definition of F to the first term )
     //   = F(h,x,y+1,p,w) + #{ (i,y) | x ≤ i < p ∧ i² + y² < p ∧ h(i,y) = w } 
-    //      ( h is strictly increasing in its first argument, so the value h(x,y) is 
-    //        minimal for all i ≥ x in the bottommost row. So, if we assume h(x,y) ≥ w,
-    //        then the only point in the row that can satisfy h(i,y) = w is (x,y):
-    //        we add 1 to the count iff h(x,y) = w, and we can discard the rest of
-    //        the row as it does not contain any other points satisfying h(i,j) = w. )
+    //      ( h is strictly increasing in its first argument, so h(x,y)
+    //        is minimal among all remaining points of the bottommost row.
+    //        If h(x,y) ≥ w, then every point farther east has value
+    //        strictly greater than h(x,y). Therefore (x,y) is the only
+    //        possible match in that row. We add 1 exactly when h(x,y) = w, 
+    //        after which the rest of the row can be removed )
     //   = F(h,x,y+1,p,w) + ord(h(x,y) == w)
 
   if x == p || y == p || x * x + y * y >= p then
@@ -101,7 +107,7 @@ ensures z == F(h, 0, 0, p, w)
       // J ∧ B ∧ vf = V
       // z + F(h,x,y,p,w) = Z ∧ x*x + y*y < p ∧ (p - x) + (p - y) = V
       //   ( we want to apply the recursive definition of F to shrink the
-      //     remaining search area, so we need to check the value of h(x,y) )
+      //     remaining quarter-disk search region, so we inspect h(x,y) )
 
     if h(x,y) < w 
     {
@@ -135,8 +141,10 @@ ensures z == F(h, 0, 0, p, w)
 
     // J ∧ ¬B
     // z + F(h,x,y,p,w) = Z ∧ x*x + y*y ≥ p
-    //   ( apply the base case of F )
-    // z + 0 = Z 
+    //   ( the south-west corner lies on or outside the circular boundary,
+    //     so the remaining quarter-disk search region is empty; apply the
+    //     base case of F )
+    // z + 0 = Z
     // Q: z = Z
 }
 

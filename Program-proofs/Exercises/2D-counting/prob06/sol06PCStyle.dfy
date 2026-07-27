@@ -1,23 +1,19 @@
-/* file: sol06.dfy
-   author: David De Potter
-   description: extra practice in Dafny, 2D counting, 
-   solution to prob06
-   This is exercise 9.7 from the PC reader
+/*  file: sol06PCStyle.dfy
+    author: David De Potter
+    description: extra practice in Dafny, 2D counting, 
+    solution to prob06
+    This is exercise 9.7 from the PC reader
+    NOTE: This solution follows the PC-style proof method described
+    in the general note on proof styles (see the README in the 
+    Exercises folder)
 */
 
-ghost predicate IncrDesc(f:(nat,nat) -> int) 
-{
-  (forall i,j,k:: i <  j  ==>  f(i,k) <  f(j,k)) &&
-  (forall i,j,k:: j <= k  ==>  f(i,j) >= f(i,k))
-}
-
-function ord(b:bool): int
-{
-  if b then 1 else 0
-}
+include "../../commonSupport.dfy"
+import opened CommonFunctions
+import opened MonotonicityProps
 
 ghost function F(g:(nat,nat) -> int, x:nat, y:nat, n:nat, w:int): int
-requires IncrDesc(g)
+requires Ordered2DNat(g, Incr, Desc)
 decreases n - (x + y)
 {   
   if x + y >= n then 0
@@ -27,7 +23,7 @@ decreases n - (x + y)
 
 method problem06(g:(nat,nat) -> int, n:nat, w:int) 
 returns (z: int)
-requires IncrDesc(g)
+requires Ordered2DNat(g, Incr, Desc)
 ensures z == F(g,0,0,n,w)
 {
   var x, y := 0, 0;

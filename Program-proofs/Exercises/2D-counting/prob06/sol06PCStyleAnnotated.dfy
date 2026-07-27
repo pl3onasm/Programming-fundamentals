@@ -3,45 +3,39 @@
    description: extra practice in Dafny, 2D counting, 
    solution to prob06, with annotations
    This is exercise 9.7 from the PC reader
+   NOTE: This solution follows the PC-style proof method described
+   in the general note on proof styles (see the README in the 
+   Exercises folder)
 */
 
-ghost predicate IncrDesc(f:(nat,nat) -> int) 
-{
-    // Expresses the property that f is increasing in its first  
-    // argument and descending in its second argument, i.e. 
-    // ∀ i,j,k ∈ ℕ:
-    //   if i < j then f(i,k) < f(j,k)
-    //   if j ≤ k then f(i,j) ≥ f(i,k)
-  (forall i,j,k:: i <  j  ==>  f(i,k) <  f(j,k)) &&
-  (forall i,j,k:: j <= k  ==>  f(i,j) >= f(i,k))
-}
-
-function ord(b:bool): int
-{
-  if b then 1 else 0
-}
+include "../../commonSupport.dfy"
+import opened CommonFunctions
+import opened MonotonicityProps
 
 ghost function F(g:(nat,nat) -> int, x:nat, y:nat, n:nat, w:int): int
-requires IncrDesc(g)
+requires Ordered2DNat(g, Incr, Desc)
 decreases n - (x + y)
 {   
     // We want to find a recursive definition of F that we can use to derive T.
     // We define F as:
-    //   F(g,x,y,n,w) = #{ (i,j) | i,j: x ≤ i < n ∧ y ≤ j < n ∧ i + j < n ∧ g(i,j) = w }
+    //   F(g,x,y,n,w) 
+    //   = #{ (i,j) | i,j: x ≤ i < n ∧ y ≤ j < n ∧ i + j < n ∧ g(i,j) = w }
     // This function counts the number of points in the triangle marked by
     //  { (i,j) | x ≤ i < n ∧ y ≤ j < n ∧ i + j < n } that satisfy g(i,j) = w
     // In the initial call F(g,0,0,n,w), this is the full triangle
     //  { (i,j) | 0 ≤ i < n ∧ 0 ≤ j < n ∧ i + j < n }.
     //
-    // Base case: x + y ≥ n then the triangle is empty and F(g,x,y,n,w) = # ∅ = 0
+    // Base case: x + y ≥ n then the triangle is empty 
+    //            and F(g,x,y,n,w) = # ∅ = 0
     //
     // Recursive case: in this case we want to shrink the triangle by either 
-    //                 incrementing x (which removes the leftmost column) or 
-    //                 incrementing y (which removes the bottommost row)
+    //                 - incrementing x (which removes the leftmost column)  
+    //                 - incrementing y (which removes the bottommost row)
+    //
     // What happens if we increment x?
     //   F(g,x,y,n,w)
     //   = #{ (i,j) | i,j: x ≤ i < n ∧ y ≤ j < n ∧ i + j < n ∧ g(i,j) = w }
-    //        ( split domain into x + 1 ≤ i < n and i = x )
+    //        ( split domain into x + 1 ≤ i < n and the leftmost column i = x )
     //   = #{ (i,j) | i,j: x + 1 ≤ i < n ∧ y ≤ j < n ∧ i + j < n ∧ g(i,j) = w }
     //     + #{ (x,j) | j: y ≤ j < n ∧ x + j < n ∧ g(x,j) = w }
     //        ( apply definition of F to the first term )
@@ -57,15 +51,16 @@ decreases n - (x + y)
     // What happens if we increment y?
     //   F(g,x,y,n,w)
     //   = #{ (i,j) | i,j: x ≤ i < n ∧ y ≤ j < n ∧ i + j < n ∧ g(i,j) = w }
-    //        ( split domain into y + 1 ≤ j < n and j = y )
+    //        ( split domain into y + 1 ≤ j < n and the bottommost row j = y )
     //   = #{ (i,j) | i,j: x ≤ i < n ∧ y + 1 ≤ j < n ∧ i + j < n ∧ g(i,j) = w }
     //     + #{ (i,y) | i: x ≤ i < n ∧ i + y < n ∧ g(i,y) = w }
     //        ( apply definition of F to the first term )
     //   = F(g,x,y+1,n,w) + #{ (i,y) | i: x ≤ i < n ∧ i + y < n ∧ g(i,y) = w }
-    //        ( g(i,y) is strictly increasing in i, so the value of g(x,y) is minimal; 
-    //          if we assume g(x,y) ≥ w, then only the point (x,y) can contribute to 
-    //          the count. If g(x,y) = w, it contributes one; but if g(x,y) > w, 
-    //          then the whole row contains no matching points and we can discard it )
+    //        ( g(i,y) is strictly increasing in i, so the value of g(x,y) is 
+    //          minimal; if we assume g(x,y) ≥ w, then only the point (x,y) can 
+    //          contribute to the count. If g(x,y) = w, it contributes one; but 
+    //          if g(x,y) > w, then the whole row contains no matching points 
+    //          and can be discarded )
     //   = F(g,x,y+1,n,w) + ord(g(x,y) = w)
 
   if x + y >= n then 0
@@ -75,7 +70,7 @@ decreases n - (x + y)
 
 method problem06(g:(nat,nat) -> int, n:nat, w:int) 
 returns (z: int)
-requires IncrDesc(g)
+requires Ordered2DNat(g, Incr, Desc)
 ensures z == F(g,0,0,n,w)
 {
     // Initialization to establish J before the loop
@@ -127,7 +122,8 @@ ensures z == F(g,0,0,n,w)
     
     // J ∧ ¬B
     // z + F(g,x,y,n,w) = Z ∧ x + y ≥ n
-    //   ( apply definition of F; since x + y ≥ n, we are in the base case )
+    //   ( apply definition of F; 
+    //     since x + y ≥ n, we are in the base case )
     // z + 0 = Z
     // Q: z = Z
 }

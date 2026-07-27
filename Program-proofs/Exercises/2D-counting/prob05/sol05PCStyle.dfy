@@ -1,18 +1,18 @@
-/* file: sol05.dfy
-   author: David De Potter
-   description: extra practice in Dafny, 2D counting, 
-   solution to prob05
-   This is exercise 9.6 from the PC reader
+/*  file: sol05PCStyle.dfy
+    author: David De Potter
+    description: extra practice in Dafny, 2D counting, 
+    solution to prob05
+    This is exercise 9.6 from the PC reader
+    NOTE: This solution follows the PC-style proof method described
+    in the general note on proof styles (see the README in the 
+    Exercises folder)
 */
 
-ghost predicate AscAsc(f:(int,int) -> int) 
-{
-  (forall i,j,k:: i <= j  ==>  f(i,k) <= f(j,k)) &&
-  (forall i,j,k:: j <= k  ==>  f(i,j) <= f(i,k))
-}
+include "../../commonSupport.dfy"
+import opened MonotonicityProps
 
 ghost function F(h:(int,int) -> int, x:nat, y:nat, c:int): int
-requires AscAsc(h)
+requires Ordered2DInt(h, Asc, Asc)
 decreases y - x
 {   
   if x >= y then 0
@@ -22,7 +22,7 @@ decreases y - x
 
 method problem05(h:(int,int) -> int, n:nat, c:int) 
 returns (z: int)
-requires AscAsc(h)
+requires Ordered2DInt(h, Asc, Asc)
 ensures z == F(h, 0, n, c)
 {
   var x:nat, y:nat := 0, n;
