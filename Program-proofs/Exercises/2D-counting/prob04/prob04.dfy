@@ -1,23 +1,16 @@
-/* file: prob04.dfy
-   author: your name
-   description: extra practice in Dafny, 2D-counting, prob04
-   This is exercise 9.5 from the PC reader
+/*  file: prob04.dfy
+    author: your name
+    description: extra practice in Dafny, 2D-counting, prob04
+    This is exercise 9.5 from the PC reader
 */
 
-ghost predicate IncrIncr(f:(int,int) -> int) 
-{
-    // Expresses the property that f is strictly increasing 
-    // in both its arguments, i.e. 
-    // ∀ i,j,k ∈ ℤ:
-    //   if i < j then f(i,k) < f(j,k)
-    //   if j < k then f(i,j) < f(i,k)
-  (forall i,j,k:: i < j  ==>  f(i,k) < f(j,k)) &&
-  (forall i,j,k:: j < k  ==>  f(i,j) < f(i,k))
-}
+include "../../commonSupport.dfy"
+import opened MonotonicityProps
+import opened CommonFunctions
 
 method problem04(g:(int,int) -> int, m:nat, n:nat) 
 returns (z: int)
-requires IncrIncr(g)
+requires Ordered2DInt(g, Incr, Incr)
 ensures z == ???
 {
   /* 

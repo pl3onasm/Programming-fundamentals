@@ -1,28 +1,19 @@
-/* file: sol04Annotated.dfy
-   author: David De Potter
-   description: extra practice in Dafny, 2D counting, 
-   solution to prob04, with annotations
-   This is exercise 9.5 from the PC reader
+/*  file: sol04PCStyleAnnotated.dfy
+    author: David De Potter
+    description: extra practice in Dafny, 2D counting, 
+    solution to prob04, with annotations
+    This is exercise 9.5 from the PC reader
+    NOTE: This solution follows the PC-style proof method described
+    in the general note on proof styles (see the README in the 
+    Exercises folder)
 */
 
-ghost predicate IncrIncr(f:(int,int) -> int) 
-{
-    // Expresses the property that f is strictly increasing 
-    // in both its arguments, i.e. 
-    // ∀ i,j,k ∈ ℤ:
-    //   if i < j then f(i,k) < f(j,k)
-    //   if j < k then f(i,j) < f(i,k)
-  (forall i,j,k:: i < j  ==>  f(i,k) < f(j,k)) &&
-  (forall i,j,k:: j < k  ==>  f(i,j) < f(i,k))
-}
-
-function ord(b:bool): int
-{
-  if b then 1 else 0
-}
+include "../../commonSupport.dfy"
+import opened MonotonicityProps
+import opened CommonFunctions
 
 ghost function F(g:(int,int) -> int, x:nat, y:nat, m:nat): int
-requires IncrIncr(g)
+requires Ordered2DInt(g, Incr, Incr)
 decreases (m - x) + y
 {   
     // We want to find a recursive definition of F that we can use to derive T.
@@ -30,20 +21,23 @@ decreases (m - x) + y
     //   F(g,x,y,m) = #{ (i,j) | i,j: x ≤ i < m ∧ 0 ≤ j < y ∧ g(i,j) = j }
     // This function counts the number of points in the rectangle [x,m) × [0,y)
     // that satisfy g(i,j) = j. 
-    // Base case: x ≥ m or y ≤ 0, then the rectangle is empty and F(g,x,y,m) = # ∅ = 0.
+    //
+    // Base case: if x ≥ m or y ≤ 0, then the rectangle is empty 
+    //            and F(g,x,y,m) = # ∅ = 0.
     // Recursive case: in this case we want to shrink the rectangle by either 
-    //                 incrementing x or decrementing y
+    //                 - incrementing x (which removes the leftmost column)
+    //                 - decrementing y (which removes the topmost row)
     // 
     // What happens if we increment x?
     //   F(g,x,y,m) 
     //   = #{ (i,j) | i,j: x ≤ i < m ∧ 0 ≤ j < y ∧ g(i,j) = j }
-    //        ( split domain into x + 1 ≤ i < m and i = x )
+    //        ( split domain into x + 1 ≤ i < m and the leftmost column i = x )
     //   = #{ (i,j) | i,j: x + 1 ≤ i < m ∧ 0 ≤ j < y ∧ g(i,j) = j }
     //     + #{ (x,j) | j: 0 ≤ j < y ∧ g(x,j) = j }
     //       ( apply definition of F to the first term )
     //   = F(g,x+1,y,m) + #{ (x,j) | j: 0 ≤ j < y ∧ g(x,j) = j }
     //       ( g(x,j) is strictly increasing in j, so the value of
-    //         g(x,y-1) is maximal, so if we assume g(x,y-1) < y-1,
+    //         g(x,y-1) is maximal. If we assume g(x,y-1) < y-1,
     //         then g(x,j) < j for all 0 ≤ j < y and we can discard 
     //         the whole column x as it contains no matching points )
     //   = F(g,x+1,y,m) + # ∅
@@ -52,17 +46,18 @@ decreases (m - x) + y
     // What happens if we decrement y?
     //   F(g,x,y,m)
     //   = #{ (i,j) | i,j: x ≤ i < m ∧ 0 ≤ j < y ∧ g(i,j) = j }
-    //        ( split domain into 0 ≤ j < y-1 and j = y-1 )
+    //        ( split domain into 0 ≤ j < y-1 and the topmost row j = y-1 )
     //   = #{ (i,j) | i,j: x ≤ i < m ∧ 0 ≤ j < y-1 ∧ g(i,j) = j }
     //     + #{ (i,y-1) | i: x ≤ i < m ∧ g(i,y-1) = y-1 }
     //       ( apply definition of F to the first term )
     //   = F(g,x,y-1,m) + #{ (i,y-1) | i: x ≤ i < m ∧ g(i,y-1) = y-1 }
     //       ( g(i,y-1) is strictly increasing in i, so the value of 
-    //         g(x,y-1) is minimal; so if we assume g(x,y-1) ≥ y-1, 
-    //         then either g(x,y-1) = y-1 ( one matching point in row y-1 )
-    //         or g(i,y-1) > y-1 for all x ≤ i < m, and then we can discard 
-    //         the whole row y-1 )
+    //         g(x,y-1) is minimal. If we assume g(x,y-1) ≥ y-1, then
+    //         either g(x,y-1) = y-1 or g(i,y-1) > y-1 for all x ≤ i < m.
+    //         So we add one matching point to the overall count if
+    //         g(x,y-1) = y-1, after which we can discard the whole row y-1 )
     //   = F(g,x,y-1,m) + ord(g(x,y-1) == y-1)
+
   if x >= m || y <= 0 then 0
   else if g(x, y - 1) < y - 1 then F(g, x + 1, y, m)
   else F(g, x, y - 1, m) + ord(g(x, y - 1) == y - 1)
@@ -70,7 +65,7 @@ decreases (m - x) + y
 
 method problem04(g:(int,int) -> int, m:nat, n:nat) 
 returns (z: int)
-requires IncrIncr(g)
+requires Ordered2DInt(g, Incr, Incr)
 ensures z == F(g, 0, n, m)
 {
     // Initialization to establish J before the loop
@@ -92,8 +87,10 @@ ensures z == F(g, 0, n, m)
 
     if g(x, y - 1) < y - 1
     {   
-        // z + F(g,x,y,m) = Z ∧ g(x,y-1) < y-1 ∧ x < m ∧ y > 0 ∧ (m - x) + y = V
-        //   ( apply definition of F; since x < m ∧ y > 0, we are in the recursive case )
+        // z + F(g,x,y,m) = Z ∧ g(x,y-1) < y-1 ∧ x < m ∧ y > 0 
+        //   ∧ (m - x) + y = V
+        //   ( apply definition of F; since x < m ∧ y > 0, 
+        //     we are in the recursive case )
         // z + F(g,x+1,y,m) = Z ∧ (m - x) + y = V
         //   ( prepare for incrementing x )
         // z + F(g,x+1,y,m) = Z ∧ (m - (x + 1)) + y < V
@@ -103,9 +100,11 @@ ensures z == F(g, 0, n, m)
 
     else
     { 
-        // z + F(g,x,y,m) = Z ∧ g(x,y-1) ≥ y-1 ∧ x < m ∧ y > 0 ∧ (m - x) + y = V
-        //   ( apply definition of F; since x < m ∧ y > 0, we are in the recursive case )
-        // z + F(g,x,y-1,m) + ord(g(x,y-1) == y-1) = Z ∧ (m - x) + y = V
+        // z + F(g,x,y,m) = Z ∧ g(x,y-1) ≥ y-1 ∧ x < m ∧ y > 0 
+        //   ∧ (m - x) + y = V
+        //   ( apply definition of F; since x < m ∧ y > 0, 
+        //     we are in the recursive case )
+        // z + F(g,x,y-1,m) + ord(g(x,y-1) = y-1) = Z ∧ (m - x) + y = V
       z := z + ord(g(x, y - 1) == y - 1);
         // z + F(g,x,y-1,m) = Z ∧ (m - x) + y = V
         //   ( prepare for decrementing y )

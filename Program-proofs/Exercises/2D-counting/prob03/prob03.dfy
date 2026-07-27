@@ -4,25 +4,18 @@
    This is exercise 9.4 from the PC reader
 */
 
-ghost predicate DecrAsc(f:(int,int) -> int) 
-{
-    // Expresses the property that f is decreasing in its first 
-    // argument and ascending in its second argument, i.e. 
-    // ∀ i,j,k ∈ ℤ:
-    //   if i < j then f(i,k) > f(j,k)
-    //   if j ≤ k then f(i,j) ≤ f(i,k)
-  (forall i,j,k:: i <  j  ==>  f(i,k) >  f(j,k)) &&
-  (forall i,j,k:: j <= k  ==>  f(i,j) <= f(i,k))
-}
+include "../../commonSupport.dfy"
+import opened MonotonicityProps
+import opened CommonFunctions
 
 method problem03(h:(int,int) -> int, m:nat, n:nat, w:int) 
 returns (z: int)
-requires DecrAsc(h)
+requires Ordered2DInt(h, Decr, Asc)
 ensures z == ???
 {
   /* 
-    Given is a function h: ℤ × ℤ → ℤ that is strictly decreasing in its 
-    first argument and ascending in its second argument. 
+    Given is a function h: ℤ × ℤ → ℤ that is strictly decreasing in 
+    its first argument and ascending in its second argument. 
     
     Derive a command sequence T that satisfies the following 
     specification:
@@ -35,8 +28,8 @@ ensures z == ???
       T
         {Q: z = Z}
 
-    Note that Z (uppercase) is a specification constant, not a program variable, 
-    whereas z (lowercase) is a program variable. 
+    Note that Z (uppercase) is a specification constant, not a 
+    program variable, whereas z (lowercase) is a program variable. 
     The time complexity of T should be in O(m + n).
   */
 }

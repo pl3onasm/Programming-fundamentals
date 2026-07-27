@@ -1,23 +1,15 @@
-/* file: prob01.dfy
-   author: your name
-   description: extra practice in Dafny, 2D-counting, prob01
-   This is exercise 9.2 from the PC reader
+/*  file: prob01.dfy
+    author: your name
+    description: extra practice in Dafny, 2D-counting, prob01
+    This is exercise 9.2 from the PC reader
 */
 
-ghost predicate AscDesc(f:(nat,nat) -> int) 
-{
-    // Expresses the property that f is ascending in its first 
-    // argument and descending in its second argument, i.e. 
-    // ∀ i,j,k ∈ ℕ:
-    //   if i ≤ j then f(i,k) ≤ f(j,k)
-    //   if j ≤ k then f(i,j) ≥ f(i,k)
-  (forall i,j,k:: i <= j  ==>  f(i,k) <= f(j,k)) &&
-  (forall i,j,k:: j <= k  ==>  f(i,j) >= f(i,k))
-}
+include "../../commonSupport.dfy"
+import opened MonotonicityProps
 
 method problem01(h:(nat,nat) -> int, c: int, ghost X: nat, ghost Y: nat)
 returns (x: nat, y: nat)
-requires AscDesc(h) && h(X,Y) == c
+requires Ordered2DNat(h, Asc, Desc) && h(X,Y) == c
 ensures x <= X && y <= Y && h(x,y) == c 
 {
   /* 

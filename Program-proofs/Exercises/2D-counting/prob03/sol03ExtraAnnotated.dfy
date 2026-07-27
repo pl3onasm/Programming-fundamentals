@@ -1,75 +1,69 @@
-/* file: sol03ExtraAnnotated.dfy
-   author: David De Potter
-   description: extra practice in Dafny, 2D counting, 
-   alternative solution to prob03, with annotations
-   This is exercise 9.4 from the PC reader
+/*  file: sol03ExtraAnnotated.dfy
+    author: David De Potter
+    description: extra practice in Dafny, 2D counting, 
+    alternative solution to prob03, with annotations
+    This is exercise 9.4 from the PC reader
 
-   NOTE: here we take an alternative approach to the solution of prob03, 
-   by starting the search from the lower-left corner and shrinking the
-   rectangle in a north-eastern direction by either incrementing x or y.
-   This is just to show that there are multiple ways to solve the problem, 
-   and that the chosen approach affects the definitions and the proof. 
-   For example, for this alternative approach to work, we need to change 
-   the definition of F to include the bounds m and n, as well as the 
-   post condition of the method to reflect the new definition of F. 
-   Initialization is also different, since F has a different base case.
-   Other changes include the guard and the variant function.
+    NOTE: here we take an alternative approach to the solution of prob03, 
+    by starting the search from the lower-left corner and shrinking the
+    rectangle in a north-eastern direction by either incrementing x or y.
+    This is just to show that there are multiple ways to solve the problem, 
+    and that the chosen approach affects the definitions and the proof. 
+    For example, for this alternative approach to work, we need to change 
+    the definition of F to include the bounds m and n, as well as the 
+    post condition of the method to reflect the new definition of F. 
+    Initialization is also different, since F has a different base case.
+    Other changes include the guard and the variant function.
 */
 
-ghost predicate DecrAsc(f:(int,int) -> int) 
-{
-    // Expresses the property that f is decreasing in its first 
-    // argument and ascending in its second argument, i.e. 
-    // ∀ i,j,k ∈ ℤ:
-    //   if i < j then f(i,k) > f(j,k)
-    //   if j ≤ k then f(i,j) ≤ f(i,k)
-  (forall i,j,k:: i <  j  ==>  f(i,k) >  f(j,k)) &&
-  (forall i,j,k:: j <= k  ==>  f(i,j) <= f(i,k))
-}
-
-function ord(b:bool): int
-{
-  if b then 1 else 0
-}
+include "../../commonSupport.dfy"
+import opened CommonFunctions
+import opened MonotonicityProps
 
 ghost function F(h:(int,int) -> int, x:int, y:int, m:int, n:int, w:int): int
-requires DecrAsc(h)
+requires Ordered2DInt(h, Decr, Asc)
 decreases (m - x) + (n - y)
 {   
     // We want to find a recursive definition of F that we can use to derive T.
     // F is defined as:
-    //   F(h,x,y,m,n,w) = #{ (i,j) | i,j: x ≤ i < m ∧ y ≤ j < n ∧ h(i,j) = w }
-    // This function counts the number of points in the rectangle [x,m) × [y,n)
-    // that satisfy h(i,j) = w. 
+    //   F(h,x,y,m,n,w) 
+    //     = #{ (i,j) | i,j: x ≤ i < m ∧ y ≤ j < n ∧ h(i,j) = w }
+    // This function counts the number of points in the rectangle 
+    // [x,m) × [y,n) that satisfy h(i,j) = w. 
     // Base case: x ≥ m or y ≥ n, then the rectangle is empty 
     //            and F(h,x,y,m,n,w) = # ∅ = 0.
     // Recursive case: in this case we want to shrink the rectangle by either
-    //                 incrementing x or y. 
+    //                 - incrementing x (which removes the leftmost column)
+    //                 - incrementing y (which removes the bottommost row)
     //
     // What happens if we increment x? 
     // F(x,y)
     //   = #{ (i,j) | i,j: x ≤ i < m ∧ y ≤ j < n ∧ h(i,j) = w }
-    //      ( split domain into x + 1 ≤ i < m and i = x )
+    //      ( split domain into x + 1 ≤ i < m and the leftmost column i = x )
     //   = #{ (i,j) | i,j: x + 1 ≤ i < m ∧ y ≤ j < n ∧ h(i,j) = w }
     //     + #{ (x,j) | j: y ≤ j < n ∧ h(x,j) = w }
     //      ( apply definition of F to the first term )
     //   = F(h, x + 1,y,m,n,w) + #{ (x,j) | j: y ≤ j < n ∧ h(x,j) = w }
-    //      ( h(x, j) is ascending in j, so the value of h(x,y) is minimal,
-    //        so if h(x,y) > w, then h(x,j) > w for all y ≤ j < n )
+    //      ( h(x, j) is ascending in j, so the value of h(x,y) is 
+    //        minimal. If h(x,y) > w, then h(x,j) > w for all y ≤ j < n,
+    //        and we can discard the whole column x as it contains no
+    //        matching points )
     //   = F(h, x + 1,y,m,n,w) + # ∅ 
     //   = F(h, x + 1,y,m,n,w) 
     //
     // What happens if we increment y?
     // F(x,y)
     //   = #{ (i,j) | i,j: x ≤ i < m ∧ y ≤ j < n ∧ h(i,j) = w }
-    //      ( split domain into y + 1 ≤ j < n and j = y )
+    //      ( split domain into y + 1 ≤ j < n and the bottommost row j = y )
     //   = #{ (i,j) | i,j: x ≤ i < m ∧ y + 1 ≤ j < n ∧ h(i,j) = w }
     //     + #{ (i,y) | i: x ≤ i < m ∧ h(i,y) = w }
     //      ( apply definition of F to the first term )
     //   = F(h, x, y + 1,m,n,w) + #{ (i,y) | i: x ≤ i < m ∧ h(i,y) = w }
-    //      ( h(i,y) is strictly decreasing in i, so the value of h(x,y) is maximal, 
-    //        so if we assume h(x,y) ≤ w, then either h(x,y) = w 
-    //        or h(i,y) < w for all x ≤ i < m )
+    //      ( h(i,y) is strictly decreasing in i, so the value of h(x,y) 
+    //        is maximal, so if we assume h(x,y) ≤ w, then either 
+    //        h(x,y) = w or h(i,y) < w for all x ≤ i < m. So we add one
+    //        matching point to the overall count if h(x,y) = w, after 
+    //        which we can discard the whole row y )
     //   = F(h, x, y + 1,m,n,w) + ord(h(x,y) = w)
 
   if x >= m || y >= n then 0
@@ -79,7 +73,7 @@ decreases (m - x) + (n - y)
 
 method problem03(h:(int,int) -> int, m:nat, n:nat, w:int) 
 returns (z: int)
-requires DecrAsc(h)
+requires Ordered2DInt(h, Decr, Asc)
 ensures z == F(h, 0, 0, m, n, w)
 {
     // Initialization to establish J before the loop
@@ -101,8 +95,10 @@ ensures z == F(h, 0, 0, m, n, w)
 
     if h(x, y) > w
     {
-        // z + F(h,x,y,m,n,w) = Z ∧ h(x,y) > w ∧ x < m ∧ y < n ∧ (m - x) + (n - y) = V
-        //   ( apply definition of F; since x < m ∧ y < n, we are not in the base case )
+        // z + F(h,x,y,m,n,w) = Z ∧ h(x,y) > w ∧ x < m ∧ y < n 
+        //   ∧ (m - x) + (n - y) = V
+        //   ( apply definition of F; since x < m ∧ y < n, 
+        //     we are not in the base case )
         // z + F(h,x+1,y,m,n,w) = Z ∧ (m - x) + (n - y) = V
         //   ( prepare for incrementing x )
         // z + F(h,x+1,y,m,n,w) = Z ∧ (m - (x + 1)) + (n - y) < V
@@ -112,9 +108,12 @@ ensures z == F(h, 0, 0, m, n, w)
 
     else
     {
-        // z + F(h,x,y,m,n,w) = Z ∧ h(x,y) ≤ w ∧ x < m ∧ y < n ∧ (m - x) + (n - y) = V
-        //   ( apply definition of F; since x < m ∧ y < n, we are not in the base case )
-        // z + F(h,x,y+1,m,n,w) + ord(h(x,y) = w) = Z ∧ (m - x) + (n - y) = V
+        // z + F(h,x,y,m,n,w) = Z ∧ h(x,y) ≤ w ∧ x < m ∧ y < n 
+        //   ∧ (m - x) + (n - y) = V
+        //   ( apply definition of F; since x < m ∧ y < n, 
+        //     we are not in the base case )
+        // z + F(h,x,y+1,m,n,w) + ord(h(x,y) = w) = Z 
+        //   ∧ (m - x) + (n - y) = V
       z := z + ord(h(x, y) == w);
         // z + F(h,x,y+1,m,n,w) = Z ∧ (m - x) + (n - y) = V
         //   ( prepare for incrementing y )

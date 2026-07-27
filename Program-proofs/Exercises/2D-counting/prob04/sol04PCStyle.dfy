@@ -1,23 +1,19 @@
-/* file: sol04.dfy
-   author: David De Potter
-   description: extra practice in Dafny, 2D counting, 
-   solution to prob04
-   This is exercise 9.5 from the PC reader
+/*  file: sol04PCStyle.dfy
+    author: David De Potter
+    description: extra practice in Dafny, 2D counting, 
+    solution to prob04
+    This is exercise 9.5 from the PC reader
+    NOTE: This solution follows the PC-style proof method described
+    in the general note on proof styles (see the README in the 
+    Exercises folder)
 */
 
-ghost predicate IncrIncr(f:(int,int) -> int) 
-{
-  (forall i,j,k:: i < j  ==>  f(i,k) < f(j,k)) &&
-  (forall i,j,k:: j < k  ==>  f(i,j) < f(i,k))
-}
-
-function ord(b:bool): int
-{
-  if b then 1 else 0
-}
+include "../../commonSupport.dfy"
+import opened MonotonicityProps
+import opened CommonFunctions
 
 ghost function F(g:(int,int) -> int, x:nat, y:nat, m:nat): int
-requires IncrIncr(g)
+requires Ordered2DInt(g, Incr, Incr)
 decreases (m - x) + y
 {   
   if x >= m || y <= 0 then 0
@@ -27,7 +23,7 @@ decreases (m - x) + y
 
 method problem04(g:(int,int) -> int, m:nat, n:nat) 
 returns (z: int)
-requires IncrIncr(g)
+requires Ordered2DInt(g, Incr, Incr)
 ensures z == F(g, 0, n, m)
 {
   var x, y := 0, n;

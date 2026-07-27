@@ -1,24 +1,19 @@
-/* file: sol01Annotated.dfy
-   author: David De Potter
-   description: extra practice in Dafny, 2D counting, 
-   solution to prob01, with annotations
-   This is exercise 9.2 from the PC reader
+/*  file: sol01Annotated.dfy
+    author: David De Potter
+    description: extra practice in Dafny, 2D counting, 
+    solution to prob01, with annotations
+    This is exercise 9.2 from the PC reader
+    NOTE: This solution follows the PC-style proof method described
+    in the general note on proof styles (see the README in the 
+    Exercises folder)
 */
 
-ghost predicate AscDesc(f:(nat,nat) -> int) 
-{
-    // Expresses the property that f is ascending in its first 
-    // argument and descending in its second argument, i.e. 
-    // ∀ i,j,k ∈ ℕ:
-    //   if i ≤ j then f(i,k) ≤ f(j,k)
-    //   if j ≤ k then f(i,j) ≥ f(i,k)
-  (forall i,j,k:: i <= j  ==>  f(i,k) <= f(j,k)) &&
-  (forall i,j,k:: j <= k  ==>  f(i,j) >= f(i,k))
-}
+include "../../commonSupport.dfy"
+import opened MonotonicityProps
 
 method problem01(h:(nat,nat) -> int, c: int, ghost X: nat, ghost Y: nat)
 returns (x: nat, y: nat)
-requires AscDesc(h) && h(X,Y) == c
+requires Ordered2DNat(h, Asc, Desc) && h(X,Y) == c
 ensures x <= X && y <= Y && h(x,y) == c 
 {
     // Initialization to establish J before the loop

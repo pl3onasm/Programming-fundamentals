@@ -51,9 +51,7 @@ lemma CountColumn(h:(int,int) -> int, x:nat, y:nat, c:int)
     // The current matching set is the union of the matching set with
     // the leftmost column removed and that column segment, which 
     // contains only matching points.
-  Set2DEquality(
-    MatchingSet(h,x,y,c),
-    MatchingSet(h,x+1,y,c) + column);
+  Set2DEquality(MatchingSet(h,x,y,c), MatchingSet(h,x+1,y,c) + column);
 
     // The two parts are disjoint: the column segment has first 
     // coordinate x, whereas the smaller triangle contains only 

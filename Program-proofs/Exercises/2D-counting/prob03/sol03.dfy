@@ -1,23 +1,19 @@
-/* file: sol03.dfy
-   author: David De Potter
-   description: extra practice in Dafny, 2D counting, 
-   solution to prob03
-   This is exercise 9.4 from the PC reader
+/*  file: sol03.dfy
+    author: David De Potter
+    description: extra practice in Dafny, 2D counting, 
+    solution to prob03
+    This is exercise 9.4 from the PC reader
+    NOTE: This solution follows the PC-style proof method described
+    in the general note on proof styles (see the README in the 
+    Exercises folder)
 */
 
-ghost predicate DecrAsc(f:(int,int) -> int) 
-{
-  (forall i,j,k:: i <  j  ==>  f(i,k) >  f(j,k)) &&
-  (forall i,j,k:: j <= k  ==>  f(i,j) <= f(i,k))
-}
-
-function ord(b:bool): int
-{
-  if b then 1 else 0
-}
+include "../../commonSupport.dfy"
+import opened CommonFunctions
+import opened MonotonicityProps
 
 ghost function F(h:(int,int) -> int, x:int, y:int, w:int): int
-requires DecrAsc(h)
+requires Ordered2DInt(h, Decr, Asc)
 {  
   if x <= 0 || y <= 0 then 0
   else if h(x - 1, y - 1) < w then F(h, x - 1, y, w)
@@ -26,7 +22,7 @@ requires DecrAsc(h)
 
 method problem03(h:(int,int) -> int, m:nat, n:nat, w:int) 
 returns (z: int)
-requires DecrAsc(h)
+requires Ordered2DInt(h, Decr, Asc)
 ensures z == F(h, m ,n, w)
 {
   var x, y := m, n;

@@ -31,7 +31,8 @@ decreases y - x
     // What happens if we increment x?
     //   F(h,x,y,c)
     //   = #{ (i,j) | i,j: x ≤ i ≤ j < y ∧ h(i,j) ≤ c }
-    //        ( split domain into x + 1 ≤ i ≤ j < y and i = x )
+    //        ( split domain into x + 1 ≤ i ≤ j < y and the leftmost 
+    //          column i = x )
     //   = #{ (i,j) | i,j: x + 1 ≤ i ≤ j < y ∧ h(i,j) ≤ c }
     //     + #{ (x,j) | j: x ≤ j < y ∧ h(x,j) ≤ c }
     //       ( apply definition of F to the first term )
@@ -47,7 +48,8 @@ decreases y - x
     // What happens if we decrement y?
     //   F(h,x,y,c)
     //   = #{ (i,j) | i,j: x ≤ i ≤ j < y ∧ h(i,j) ≤ c }
-    //        ( split domain into x ≤ i ≤ j < y-1 and j = y-1 )
+    //        ( split domain into x ≤ i ≤ j < y-1 and the topmost 
+    //          row j = y-1 )
     //   = #{ (i,j) | i,j: x ≤ i ≤ j < y-1 ∧ h(i,j) ≤ c }
     //     + #{ (i,y-1) | i: x ≤ i ≤ y-1 ∧ h(i,y-1) ≤ c }
     //       ( apply definition of F to the first term )
