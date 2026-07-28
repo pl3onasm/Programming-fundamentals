@@ -1,23 +1,15 @@
-/* file: prob02.dfy
-   author: your name
-   description: extra practice in Dafny, 2D-counting, prob02
-   This is exercise 9.3 from the PC reader
+/*  file: prob02.dfy
+    author: your name
+    description: extra practice in Dafny, 2D-counting, prob02
+    This is exercise 9.3 from the PC reader
 */
 
-ghost predicate DescAsc(f:(int,int) -> int) 
-{
-    // Expresses the property that f is descending in its first 
-    // argument and ascending in its second argument, i.e. 
-    // ∀ i,j,k ∈ ℤ:
-    //   if i ≤ j then f(i,k) ≥ f(j,k)
-    //   if j ≤ k then f(i,j) ≤ f(i,k)
-  (forall i,j,k:: i <= j  ==>  f(i,k) >= f(j,k)) &&
-  (forall i,j,k:: j <= k  ==>  f(i,j) <= f(i,k))
-}
+include "../../commonSupport.dfy"
+import opened MonotonicityProps
 
 method problem02(g:(int,int) -> int, m:nat, n:nat) 
 returns (z: int)
-requires DescAsc(g)
+requires Ordered2DInt(g, Desc, Asc)
 ensures z == ???
 {
   /* 
@@ -34,8 +26,8 @@ ensures z == ???
       T
         {Q: z = Z}
     
-    Note that Z (uppercase) is a specification constant, not a program variable, 
-    whereas z (lowercase) is a program variable.
+    Note that Z (uppercase) is a specification constant, not a 
+    program variable, whereas z (lowercase) is a program variable.
     The time complexity of T should be in O(m + n).
   */
 }
