@@ -19,6 +19,7 @@ decreases x + (n - y)
     // We want to find a recursive definition of F that we can use to derive T.
     // We define F as:
     //   F(h,x,y,n) = #{ i | i: 0 ≤ i < x ∧ (∃j: y ≤ j < n ∧ h(i,j) = 0) }
+    //
     // This function counts the number of indices i with 0 ≤ i < x
     // for which there exists some j in the range y ≤ j < n such that 
     // h(i,j) = 0.

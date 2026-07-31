@@ -49,6 +49,9 @@ lemma DiscardColumn(h:(int,int) -> int, x:nat, y:nat, n:nat)
   ensures |MatchingSet(h,x,y,n)| ==
           |MatchingSet(h,x-1,y,n)| + ord(h(x-1,y) == 0)
 {
+    // After accounting for whether the rightmost column contains a zero,
+    // removing the column index x-1 from the current set of qualifying
+    // columns is equivalent to decrementing the upper column boundary.
   SetEquality(MatchingSet(h,x,y,n) - {x-1}, MatchingSet(h,x-1,y,n));
 }
 
@@ -63,6 +66,9 @@ lemma AdvanceRow(h:(int,int) -> int, x:nat, y:nat, n:nat)
   requires h(x-1,y) < 0
   ensures  MatchingSet(h,x,y,n) == MatchingSet(h,x,y+1,n)
 {
+    // Since the bottommost row contains no zero, incrementing the
+    // lower row boundary from y to y + 1 does not change the set of
+    // remaining column indices that still contain a matching point.
   SetEquality(MatchingSet(h,x,y,n), MatchingSet(h,x,y+1,n));
 }
 

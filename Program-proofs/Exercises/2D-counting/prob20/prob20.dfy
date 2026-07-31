@@ -34,8 +34,8 @@ requires MonoSecond(p)
 ensures z == ???
 {
   /* 
-    Given is a predicate p: ℤ × ℤ → 𝔹 for which we know that it is convex 
-    in its first argument and monotonic in its second argument.  
+    Given is a predicate p: ℤ × ℤ → 𝔹 for which we know that it is  
+    convex in its first argument and monotonic in its second argument.  
     
     Derive a command sequence T that satisfies the following 
     specification:
@@ -47,8 +47,8 @@ ensures z == ???
       T
         {Q : Z = z}
       
-    Note that Z (uppercase) is a specification constant, not a program variable, 
-    whereas z (lowercase) is a program variable.
+    Note that Z (uppercase) is a specification constant, not a 
+    program variable, whereas z (lowercase) is a program variable.
     The time complexity of T should be in O(m + n).
     
   */
