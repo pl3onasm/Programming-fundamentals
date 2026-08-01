@@ -214,10 +214,8 @@ module ArrayAggregates
     reads a
     decreases hi - lo
   {
-    if lo == hi then
-      0
-    else
-      ArraySum(a,lo,hi-1) + a[hi-1]
+    if lo == hi then 0
+                else ArraySum(a,lo,hi-1) + a[hi-1]
   }
 
   //========================================================================
@@ -288,10 +286,8 @@ module ArrayAggregates
     reads a
     decreases hi - lo
   {
-    if lo == hi then
-      1
-    else
-      ArrayProduct(a,lo,hi-1) * a[hi-1]
+    if lo == hi then 1
+                else ArrayProduct(a,lo,hi-1) * a[hi-1]
   }
 
   //========================================================================

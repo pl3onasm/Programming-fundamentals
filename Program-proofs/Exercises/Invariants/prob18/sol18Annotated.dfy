@@ -8,7 +8,8 @@ ghost function S(a: array<nat>, x: nat): int
 requires x <= a.Length
 reads a
 {
-    // We define S(a, x) = ∑(a[i] + a[j] | i,j: 0 ≤ i < j < x ∧ a[j] % 2 = 1)
+    // We define S(a, x) 
+    //           = ∑(a[i] + a[j] | i,j: 0 ≤ i < j < x ∧ a[j] % 2 = 1)
     // Base case: 
     //   S(a, 0) = ∑(a[i] + a[j] | i,j: 0 ≤ i < j < 0 ∧ a[j] % 2 = 1) 
     //           = ∑(∅) = 0
@@ -22,14 +23,22 @@ reads a
     //   = S(a, x - 1) 
     //     + ∑(a[i] + a[x - 1] | i: 0 ≤ i < x - 1 ∧ a[x - 1] % 2 = 1)
     //      ( take condition a[x - 1] % 2 = 1 out of sum )
-    //   = S(a, x - 1) + (a[x - 1] % 2 = 1 ? ∑(a[i] + a[x - 1] | i: 0 ≤ i < x - 1) : 0)
-    //      ( simplify by rewriting the condition as a multiplication by 0 or 1 )
-    //   = S(a, x - 1) + (a[x - 1] % 2) * ∑(a[i] + a[x - 1] | i: 0 ≤ i < x - 1)
+    //   = S(a, x - 1) + (a[x - 1] % 2 = 1  
+    //                    ? ∑(a[i] + a[x - 1] | i: 0 ≤ i < x - 1) 
+    //                    : 0)
+    //      ( simplify by rewriting the condition as a multiplication 
+    //        by 0 or 1 )
+    //   = S(a, x - 1) + (a[x - 1] % 2) * ∑(a[i] + a[x - 1] 
+    //                                      | i: 0 ≤ i < x - 1)
     //      ( factor out constant a[x - 1] from sum )
-    //   = S(a, x - 1) + (a[x - 1] % 2) * ((x - 1) * a[x - 1] + ∑(a[i] | i: 0 ≤ i < x - 1))
+    //   = S(a, x - 1) + (a[x - 1] % 2) * ((x - 1) * a[x - 1] 
+    //                                      + ∑(a[i] | i: 0 ≤ i < x - 1))
     //      ( apply definition of U )
-    //   = S(a, x - 1) + (a[x - 1] % 2) * ((x - 1) * a[x - 1] + U(a, x - 1))
-  if x == 0 then 0 else S(a, x - 1) + (a[x - 1] % 2) * ((x - 1) * a[x - 1] + U(a, x - 1))
+    //   = S(a, x - 1) 
+    //     + (a[x - 1] % 2) * ((x - 1) * a[x - 1] + U(a, x - 1))
+  if x == 0 
+  then 0 
+  else S(a, x - 1) + (a[x - 1] % 2) * ((x - 1) * a[x - 1] + U(a, x - 1))
 }
 
 ghost function U(a: array<nat>, x: nat): int
@@ -78,15 +87,17 @@ ensures r == S(a, a.Length)
     u := u + a[k];
       // 0 ≤ k < n ∧ S(a, k + 1) = s ∧ u = U(a, k + 1) ∧ n - k = V
       //   ( prepare for updating k to k + 1 )
-      // 0 ≤ k + 1 ≤ n ∧ S(a, k + 1) = s ∧ u = U(a, k + 1) ∧ n - (k + 1) < V
+      // 0 ≤ k + 1 ≤ n ∧ S(a, k + 1) = s ∧ u = U(a, k + 1) 
+      //   ∧ n - (k + 1) < V
     k := k + 1;
       // 0 ≤ k ≤ n ∧ S(a, k) = s ∧ u = U(a, k) ∧ n - k < V
-      //   J is preserved and the variant function vf has decreased
+      // J ∧ vf < V
+      //   ( J is preserved and the variant function vf has decreased )
   }
     
     // J ∧ ¬B
-    // 0 ≤ k ≤ n ∧ s = S(a, k) ∧ u = U(a, k) ∧ k >= n
-    //   ( k ≤ n ∧ k >= n implies k = n )
+    // 0 ≤ k ≤ n ∧ s = S(a, k) ∧ u = U(a, k) ∧ k ≥ n
+    //   ( k ≤ n ∧ k ≥ n implies k = n )
     // S(a, n) = s ∧ U(a, n) = u
   r := s;
     // r = S(a, n)

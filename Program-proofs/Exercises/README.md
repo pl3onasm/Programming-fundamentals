@@ -50,7 +50,7 @@ imperative implementation
 
 $\Large{\color{darkseagreen}\text{Formal Solutions}}$
 
-Files whose names contain `Formal` formalize the correctness argument end to end. These solutions formally represent the original mathematical specification using Dafny sets, sequences, cardinalities, recursively defined sums and products, or other suitable mathematical structures. Auxiliary lemmas then machine-verify the mathematical transformations on which the algorithm relies. Thus, when recursive sums, products, or other intermediate specifications are introduced, their connection with the original mathematical specification is also checked by Dafny. The loop invariant may be stated directly in terms of the formalized specification, or it may be expressed in terms of an intermediate recursive specification, provided that the equivalence between the two is also machine-verified.
+Files whose names contain `Formal` formalize the correctness argument end to end. These solutions represent the original mathematical specification in Dafny using sets, sequences, cardinalities, recursively defined sums and products, or other suitable mathematical structures. In many cases, the loop invariant is stated directly in terms of this formalized specification. In other cases, especially for sums and products, a recursive specification function is used as the Dafny representation of the original mathematical expression. In those cases, the recursive function itself is part of the formal Dafny specification, rather than only a manually derived intermediate object. Auxiliary lemmas then machine-verify the mathematical transformations on which the algorithm relies. The loop invariant may be stated directly in terms of the formalized specification, or it may be expressed in terms of a recursive specification that serves as the formal Dafny encoding of the mathematical quantity being computed.
 
 The proof structure is therefore typically:
 
@@ -60,7 +60,7 @@ original formalized specification
 imperative implementation
 ```
 
-Alternatively, an intermediate recursive specification may still be used, provided that its equivalence with the original specification is also machine-verified:
+Alternatively, when a separate intermediate recursive specification is introduced, its relation to the original formalized specification is also machine-verified:
 
 ```text
 original formalized specification

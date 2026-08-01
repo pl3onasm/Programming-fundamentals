@@ -9,8 +9,8 @@ requires x <= a.Length
 reads a
 {
   if x == 0 
-    then 0 
-    else S(a, x - 1) + (a[x - 1] % 2) * ((x - 1) * a[x - 1] + U(a, x - 1))
+  then 0 
+  else S(a, x - 1) + (a[x - 1] % 2) * ((x - 1) * a[x - 1] + U(a, x - 1))
 }
 
 ghost function U(a: array<nat>, x: nat): int
