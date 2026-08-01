@@ -1,7 +1,10 @@
-/* file: sol18.dfy
-   author: David De Potter
-   description: extra practice in Dafny, invariants, 
-   solution to prob18
+/*  file: sol18PCStyle.dfy
+    author: David De Potter
+    description: extra practice in Dafny, invariants, 
+    solution to prob18
+    NOTE: This solution follows the PC-style proof method described
+    in the general note on proof styles (see the README in the 
+    Exercises folder)
 */
 
 ghost function S(a: array<nat>, x: nat): int

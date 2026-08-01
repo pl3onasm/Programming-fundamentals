@@ -7,7 +7,7 @@
     have a primitive sigma operator, PairSum is used as a direct recursive
     formalization of the original nested-sum sigma expression over all
     pairs 0 ≤ i < j < n. The lemmas below formally justify the
-    constant-time update performed in each loop iteration, which yields
+    constant-time updates performed in each loop iteration, which yields
     a linear-time method overall.
 */
 

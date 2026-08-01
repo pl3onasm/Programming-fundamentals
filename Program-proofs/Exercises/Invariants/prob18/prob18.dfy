@@ -1,6 +1,6 @@
-/* file: prob18.dfy
-   author: your name
-   description: extra practice in Dafny, invariants, prob18
+/*  file: prob18.dfy
+    author: your name
+    description: extra practice in Dafny, invariants, prob18
 */
 
 method problem18(a: array<nat>) returns (r: int)
