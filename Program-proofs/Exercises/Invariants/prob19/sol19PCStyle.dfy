@@ -1,13 +1,14 @@
-/* file: sol19.dfy
-   author: David De Potter
-   description: extra practice in Dafny, invariants, 
-   solution to prob19
+/*  file: sol19PCStyle.dfy
+    author: David De Potter
+    description: extra practice in Dafny, invariants, 
+    solution to prob19
+    NOTE: This solution follows the PC-style proof method described
+    in the general note on proof styles (see the README in the 
+    Exercises folder)
 */
 
-function mxm(x: int, y: int): int
-{
-  if x >= y then x else y
-}
+include "../../CommonSupport.dfy"
+import opened CommonFunctions
 
 ghost function S(a: array<int>, x: nat): int
 requires 1 <= x <= a.Length
@@ -15,7 +16,7 @@ reads a
 {
   if x == 1 
   then 3 * a[0] 
-  else mxm(S(a, x - 1), a[x - 1] + U(a, x))
+  else maximum(S(a, x - 1), a[x - 1] + U(a, x))
 }
 
 ghost function U(a: array<int>, x: nat): int
@@ -24,7 +25,8 @@ reads a
 {
   if x == 1
   then 2 * a[0] 
-  else mxm(U(a, x - 1), a[x - 1] + mxm(Z(a, x - 1), a[x - 1]))
+  else maximum(U(a, x - 1), a[x - 1] 
+     + maximum(Z(a, x - 1), a[x - 1]))
 }
 
 ghost function Z(a: array<int>, x: nat): int
@@ -33,7 +35,7 @@ reads a
 {
   if x == 1 
   then a[0] 
-  else mxm(Z(a, x - 1), a[x - 1])
+  else maximum(Z(a, x - 1), a[x - 1])
 }
 
 method problem19(a: array<int>) returns (r: int)
@@ -48,9 +50,9 @@ ensures  r == S(a, a.Length)
   invariant s == S(a, k) && u == U(a, k) && z == Z(a, k)
   decreases n - k
   {
-    z := mxm(z, a[k]);
-    u := mxm(u, a[k] + z);
-    s := mxm(s, a[k] + u);
+    z := maximum(z, a[k]);
+    u := maximum(u, a[k] + z);
+    s := maximum(s, a[k] + u);
     k := k + 1;
   }
 
