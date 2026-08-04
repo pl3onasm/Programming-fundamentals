@@ -4,9 +4,11 @@
    This is exercise 9.13 from the PC reader on coincidence counting
 */
 
-include "../../commonSupport.dfy"
-import opened CommonFunctions
-import opened MonotonicityProps           
+include "../../Support/Monotonicity.dfy"
+include "../../Support/Math.dfy"
+
+import opened MonotonicityProps
+import opened MathSupport         
     
 method problem11(a: array<int>, b: array<int>)
 returns (z: int)

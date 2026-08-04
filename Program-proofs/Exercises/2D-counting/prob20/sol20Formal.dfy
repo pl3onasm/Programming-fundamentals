@@ -8,8 +8,9 @@
     Exercises folder)
 */
 
-include "../../FormalSupport.dfy"
-import opened FormalSupport
+include "../../Support/Sets.dfy"
+
+import opened SetSupport
 
 //========================================================================
 // Expresses that p is convex in its first argument: if p holds at both

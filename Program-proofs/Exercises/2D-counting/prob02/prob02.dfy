@@ -4,7 +4,7 @@
     This is exercise 9.3 from the PC reader
 */
 
-include "../../commonSupport.dfy"
+include "../../Support/Monotonicity.dfy"
 import opened MonotonicityProps
 
 method problem02(g:(int,int) -> int, m:nat, n:nat) 

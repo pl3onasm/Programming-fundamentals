@@ -8,9 +8,11 @@
     the Exercises folder)
 */
 
-include "../../FormalSupport.dfy"
-include "../../commonSupport.dfy"
-import opened FormalSupport
+include "../../Support/Sets.dfy"
+include "../../Support/Math.dfy"
+
+import opened MathSupport
+import opened SetSupport
 
 //========================================================================
 // Expresses the monotonicity rules for p. Truth propagates eastward

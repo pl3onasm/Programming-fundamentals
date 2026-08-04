@@ -4,10 +4,9 @@
    solution to prob22, with annotations
 */
 
-function mxm(x: int, y: int): int
-{
-  if x >= y then x else y
-}
+include "../../Support/Math.dfy"
+
+import opened MathSupport
 
 ghost function S(a: array<int>, x: nat): int
 requires 1 <= x <= a.Length
@@ -45,16 +44,16 @@ reads a
     // U(a, x)
     //   = Max(a[i] + a[j] | i,j: 0 ≤ i ≤ j < x)
     //     ( split domain into j < x - 1 and j = x - 1 )
-    //   = mxm(Max(a[i] + a[j] | i,j: 0 ≤ i ≤ j < x - 1), 
-    //         Max(a[i] + a[x - 1] | i: 0 ≤ i ≤ x - 1))
+    //   = maximum(Max(a[i] + a[j] | i,j: 0 ≤ i ≤ j < x - 1), 
+    //             Max(a[i] + a[x - 1] | i: 0 ≤ i ≤ x - 1))
     //     ( apply definition of U to first Max;
     //       factor out constant a[x - 1] from second Max )
-    //   = mxm(U(a, x - 1), a[x - 1] + Max(a[i] | i: 0 ≤ i ≤ x - 1))
+    //   = maximum(U(a, x - 1), a[x - 1] + Max(a[i] | i: 0 ≤ i ≤ x - 1))
     //     ( rewrite to comply with definition of Z; use half-open range )
-    //   = mxm(U(a, x - 1), a[x - 1] + Max(a[i] | i: 0 ≤ i < x))
+    //   = maximum(U(a, x - 1), a[x - 1] + Max(a[i] | i: 0 ≤ i < x))
     //     ( apply definition of Z )
-    //   = mxm(U(a, x - 1), a[x - 1] + Z(a, x))
-  if x == 1 then 2 * a[0] else mxm(U(a, x - 1), a[x - 1] + Z(a, x))
+    //   = maximum(U(a, x - 1), a[x - 1] + Z(a, x))
+  if x == 1 then 2 * a[0] else maximum(U(a, x - 1), a[x - 1] + Z(a, x))
 }
 
 ghost function Z(a: array<int>, x: nat): int
@@ -69,10 +68,10 @@ reads a
     // Z(a, x)
     //   = Max(a[i] | i: 0 ≤ i < x)
     //     ( split domain into i < x - 1 and i = x - 1 )
-    //   = mxm(Max(a[i] | i: 0 ≤ i < x - 1), a[x - 1])
+    //   = maximum(Max(a[i] | i: 0 ≤ i < x - 1), a[x - 1])
     //     ( apply definition of Z to first Max )
-    //   = mxm(Z(a, x - 1), a[x - 1])
-  if x == 1 then a[0] else mxm(Z(a, x - 1), a[x - 1])
+    //   = maximum(Z(a, x - 1), a[x - 1])
+  if x == 1 then a[0] else maximum(Z(a, x - 1), a[x - 1])
 }
 
 method problem22(a: array<int>) returns (r: int)
@@ -96,14 +95,14 @@ ensures  r == S(a, a.Length)
       // 1 ≤ k < n ∧ s = S(a, k) ∧ u = U(a, k) ∧ z = Z(a, k) ∧ n - k = V
       //   ( apply definition of Z to obtain Z(a, k + 1) )
       // 1 ≤ k < n ∧ s = S(a, k) ∧ u = U(a, k) 
-      //     ∧ mxm(z, a[k]) = Z(a, k + 1) ∧ n - k = V
-    z := mxm(z, a[k]);
+      //     ∧ maximum(z, a[k]) = Z(a, k + 1) ∧ n - k = V
+    z := maximum(z, a[k]);
       // 1 ≤ k < n ∧ s = S(a, k) ∧ u = U(a, k) 
       //     ∧ z = Z(a, k + 1) ∧ n - k = V
       //   ( apply definition of U to obtain U(a, k + 1) )
-      // 1 ≤ k < n ∧ s = S(a, k) ∧ mxm(u, a[k] + z) = U(a, k + 1) 
+      // 1 ≤ k < n ∧ s = S(a, k) ∧ maximum(u, a[k] + z) = U(a, k + 1) 
       //     ∧ z = Z(a, k + 1) ∧ n - k = V
-    u := mxm(u, a[k] + z);
+    u := maximum(u, a[k] + z);
       // 1 ≤ k < n ∧ s = S(a, k) ∧ u = U(a, k + 1) 
       //     ∧ z = Z(a, k + 1) ∧ n - k = V
       //   ( apply definition of S to obtain S(a, k + 1) )
@@ -118,6 +117,7 @@ ensures  r == S(a, a.Length)
     k := k + 1;
       // 1 ≤ k ≤ n ∧ s = S(a, k) 
       //     ∧ u = U(a, k) ∧ z = Z(a, k) ∧ n - k < V
+      // J ∧ vf < V
       //   ( J is preserved, and the variant function vf has decreased )
   }
 

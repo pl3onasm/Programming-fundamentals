@@ -1,16 +1,21 @@
-/* file: sol20Annotated.dfy
-   author: David De Potter
-   description: extra practice in Dafny, invariants, 
-   solution to prob20, with annotations
+/*  file: sol20PCStyleAnnotated.dfy
+    author: David De Potter
+    description: extra practice in Dafny, invariants, 
+    solution to prob20, with annotations
+    NOTE: This solution follows the PC-style proof method described
+    in the general note on proof styles (see the README in the 
+    Exercises folder)
 */
 
 ghost function P(a: array<int>, x: nat): int
 requires x <= a.Length
 reads a
 {
-    // We define P(a, x) = ∏( ∑(a[j] * a[h] | j,h: 0 ≤ j ≤ h < i) | i: 0 ≤ i < x)
-    // Base case  P(a, 0) = ∏( ∑(a[j] * a[h] | j,h: 0 ≤ j ≤ h < i) | i: 0 ≤ i < 0)
-    //                    = ∏(∅) = 1
+    // We define P(a, x) 
+    //           = ∏( ∑(a[j] * a[h] | j,h: 0 ≤ j ≤ h < i) | i: 0 ≤ i < x)
+    // Base case P(a, 0) 
+    //           = ∏( ∑(a[j] * a[h] | j,h: 0 ≤ j ≤ h < i) | i: 0 ≤ i < 0)
+    //           = ∏(∅) = 1
     // For x > 0:
     // P(a, x)
     //   = ∏( ∑(a[j] * a[h] | j,h: 0 ≤ j ≤ h < i) | i: 0 ≤ i < x)
@@ -27,7 +32,7 @@ ghost function S(a: array<int>, x: nat): int
 requires x <= a.Length
 reads a
 {
-    // We define S(a, x) = ∑(a[i] * a[j] | i,j: 0 ≤ i ≤ j < x)
+    // We define  S(a, x) = ∑(a[i] * a[j] | i,j: 0 ≤ i ≤ j < x)
     // Base case: S(a, 0) = ∑(a[i] * a[j] | i,j: 0 ≤ i ≤ j < 0) 
     //                    = ∑(∅) = 0
     // For x > 0:
@@ -41,7 +46,7 @@ reads a
     //   = S(a, x - 1) + a[x - 1] * ∑(a[i] | i: 0 ≤ i ≤ x - 1)
     //      ( rewrite to comply with definition of U; use half-open range )
     //   = S(a, x - 1) + a[x - 1] * ∑(a[i] | i: 0 ≤ i < x)
-    //     ( apply definition of U )
+    //      ( apply definition of U )
     //   = S(a, x - 1) + a[x - 1] * U(a, x)
   if x == 0 then 0 else S(a, x - 1) + a[x - 1] * U(a, x)
 }
@@ -80,22 +85,31 @@ ensures r == P(a, a.Length)
   {
       // J ∧ B ∧ vf = V
       // 0 ≤ k < n ∧ p = P(a, k) ∧ s = S(a, k) ∧ u = U(a, k) ∧ n - k = V
-      //   ( apply definition of P to obtain P(a, k + 1) in terms of p and s )
-      // 0 ≤ k < n ∧ p * s = P(a, k + 1) ∧ s = S(a, k) ∧ u = U(a, k) ∧ n - k = V
+      //   ( apply definition of P to obtain 
+      //     P(a, k + 1) in terms of p and s )
+      // 0 ≤ k < n ∧ p * s = P(a, k + 1) ∧ s = S(a, k) 
+      //     ∧ u = U(a, k) ∧ n - k = V
     p := p * s;
       // 0 ≤ k < n ∧ p = P(a, k + 1) ∧ s = S(a, k) ∧ u = U(a, k) ∧ n - k = V
-      //   ( apply definition of U to obtain U(a, k + 1) in terms of u and a[k] )
-      // 0 ≤ k < n ∧ p = P(a, k + 1) ∧ s = S(a, k) ∧ u + a[k] = U(a, k + 1) ∧ n - k = V
+      //   ( apply definition of U to obtain 
+      //     U(a, k + 1) in terms of u and a[k] )
+      // 0 ≤ k < n ∧ p = P(a, k + 1) ∧ s = S(a, k) 
+      //     ∧ u + a[k] = U(a, k + 1) ∧ n - k = V
     u := u + a[k];
-      // 0 ≤ k < n ∧ p = P(a, k + 1) ∧ s = S(a, k) ∧ u = U(a, k + 1) ∧ n - k = V
+      // 0 ≤ k < n ∧ p = P(a, k + 1) ∧ s = S(a, k) 
+      //     ∧ u = U(a, k + 1) ∧ n - k = V
       //   ( apply definition of S to obtain S(a, k + 1) in terms of s and u )
-      // 0 ≤ k < n ∧ p = P(a, k + 1) ∧ s + a[k] * u = S(a, k + 1) ∧ u = U(a, k + 1) ∧ n - k = V
+      // 0 ≤ k < n ∧ p = P(a, k + 1) ∧ s + a[k] * u = S(a, k + 1) 
+      //     ∧ u = U(a, k + 1) ∧ n - k = V
     s := s + a[k] * u;
-      // 0 ≤ k < n ∧ p = P(a, k + 1) ∧ s = S(a, k + 1) ∧ u = U(a, k + 1) ∧ n - k = V
+      // 0 ≤ k < n ∧ p = P(a, k + 1) ∧ s = S(a, k + 1) 
+      //     ∧ u = U(a, k + 1) ∧ n - k = V
       //   ( prepare for updating k to k + 1 )
-      // 0 ≤ k + 1 ≤ n ∧ p = P(a, k + 1) ∧ s = S(a, k + 1) ∧ u = U(a, k + 1) ∧ n - (k + 1) < V
+      // 0 ≤ k + 1 ≤ n ∧ p = P(a, k + 1) ∧ s = S(a, k + 1) 
+      //     ∧ u = U(a, k + 1) ∧ n - (k + 1) < V
     k := k + 1;
       // 0 ≤ k ≤ n ∧ p = P(a, k) ∧ s = S(a, k) ∧ u = U(a, k) ∧ n - k < V  
+      // J ∧ vf < V
       //   ( J is preserved, and the variant function vf has decreased )
   }
 

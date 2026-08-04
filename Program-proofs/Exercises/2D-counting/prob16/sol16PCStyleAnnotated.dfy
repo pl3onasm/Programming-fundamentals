@@ -8,7 +8,8 @@
     Exercises folder)
 */
 
-include "../../commonSupport.dfy"
+include "../../Support/Monotonicity.dfy"
+
 import opened MonotonicityProps             
 
 ghost function F(f:(nat,nat) -> int, x:nat, y:nat, n:nat, w:int): int

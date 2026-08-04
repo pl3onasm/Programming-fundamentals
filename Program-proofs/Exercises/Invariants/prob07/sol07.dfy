@@ -8,10 +8,10 @@
 ghost function f(n:nat):nat
 {
   if n < 2 
-    then n
-    else if n % 2 == 0 
-          then f(n / 2)
-          else f(n / 2) + f(n / 2 + 1)
+  then n
+  else if n % 2 == 0 
+       then f(n / 2)
+       else f(n / 2) + f(n / 2 + 1)
 }
 
 method problem07(n:nat) returns (r:nat)

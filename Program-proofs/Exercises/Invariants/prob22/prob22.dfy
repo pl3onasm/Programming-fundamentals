@@ -3,6 +3,10 @@
    description: extra practice in Dafny, invariants, prob22
 */
 
+include "../../Support/Math.dfy"
+
+import opened MathSupport
+
 method problem22(a: array<int>) returns (r: int)
 requires ??
 ensures  ??

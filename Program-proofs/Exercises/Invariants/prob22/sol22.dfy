@@ -4,10 +4,9 @@
    solution to prob22
 */
 
-function mxm(x: int, y: int): int
-{
-  if x >= y then x else y
-}
+include "../../Support/Math.dfy"
+
+import opened MathSupport
 
 ghost function S(a: array<int>, x: nat): int
 requires 1 <= x <= a.Length
@@ -24,7 +23,7 @@ reads a
 {
   if x == 1 
   then 2 * a[0] 
-  else mxm(U(a, x - 1), a[x - 1] + Z(a, x))
+  else  maximum(U(a, x - 1), a[x - 1] + Z(a, x))
 }
 
 ghost function Z(a: array<int>, x: nat): int
@@ -33,7 +32,7 @@ reads a
 {    
   if x == 1 
   then a[0] 
-  else mxm(Z(a, x - 1), a[x - 1])
+  else maximum(Z(a, x - 1), a[x - 1])
 }
 
 method problem22(a: array<int>) returns (r: int)
@@ -48,8 +47,8 @@ ensures  r == S(a, a.Length)
   invariant s == S(a, k) && u == U(a, k) && z == Z(a, k)
   decreases n - k
   {
-    z := mxm(z, a[k]);
-    u := mxm(u, a[k] + z);
+    z := maximum(z, a[k]);
+    u := maximum(u, a[k] + z);
     s := s + u;
     k := k + 1;
   }

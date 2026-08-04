@@ -8,10 +8,13 @@
     Exercises folder)
 */
 
-include "../../FormalSupport.dfy"
-include "../../commonSupport.dfy"
-import opened FormalSupport
-import opened CommonFunctions
+include "../../Support/Monotonicity.dfy"
+include "../../Support/Math.dfy"
+include "../../Support/Sets.dfy"
+
+import opened MonotonicityProps
+import opened MathSupport
+import opened SetSupport
 
 //========================================================================
 // Expresses the property that f is a positive function, 

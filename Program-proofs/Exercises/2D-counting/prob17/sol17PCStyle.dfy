@@ -8,10 +8,11 @@
     Exercises folder)
 */
 
-include "../../commonSupport.dfy"
+include "../../Support/Monotonicity.dfy"
+include "../../Support/Math.dfy"
 
-import opened CommonFunctions
 import opened MonotonicityProps
+import opened MathSupport 
 
 ghost function F(h:(nat,nat) -> int, x:nat, y:nat, z:int, m:nat, 
                  w:int): int

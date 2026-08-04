@@ -16,11 +16,11 @@
     obtained from the suffix maximum over [i,a.Length).
 */
 
-include "../../CommonSupport.dfy"
-include "../../FormalSupport.dfy"
+include "../../Support/ArrayExtrema.dfy"
+include "../../Support/Math.dfy"
 
-import opened CommonFunctions
 import opened ArrayExtrema
+import opened MathSupport
 
 //========================================================================
 // Computes the maximum value of a[i] + a[j] + a[h] over all triples

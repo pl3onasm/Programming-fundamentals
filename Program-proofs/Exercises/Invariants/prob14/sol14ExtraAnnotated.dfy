@@ -17,9 +17,11 @@ requires k <= a.Length
 decreases a.Length - k
 reads a, b
 {
-    // We define S(a, b, k) = ∑(a[i] * b[j] | i,j: k ≤ i < j < n ∧ a[i] ≤ b[i])
-    // Base case: S(a, b, n) = ∑(a[i] * b[j] | i,j: n ≤ i < j < n ∧ a[i] ≤ b[i])
-    //                       = ∑(∅) = 0
+    // We define 
+    //   S(a, b, k) = ∑(a[i] * b[j] | i,j: k ≤ i < j < n ∧ a[i] ≤ b[i])
+    // Base case: 
+    //   S(a, b, n) = ∑(a[i] * b[j] | i,j: n ≤ i < j < n ∧ a[i] ≤ b[i])
+    //              = ∑(∅) = 0
   if k == a.Length then 0 
     // For k < n:
     // S(a, b, k)
@@ -29,22 +31,22 @@ reads a, b
     //     + ∑(a[k] * b[j] | j: k < j < n ∧ a[k] ≤ b[k])
     //      ( rewrite first sum to comply with def of S 
     //        and factor out constant a[k] in second sum )
-    //   = ∑(a[i] * b[j] | i,j: k + 1 ≤ i < j < n ∧ a[i] ≤ b[i])
-    //     + a[k] * ∑(b[j] | j: k + 1 ≤ j < n ∧ a[k] ≤ b[k]) 
+    //   = ∑(a[i] * b[j] | i,j: k+1 ≤ i < j < n ∧ a[i] ≤ b[i])
+    //     + a[k] * ∑(b[j] | j: k+1 ≤ j < n ∧ a[k] ≤ b[k]) 
     //      ( apply definition of S to first sum )
-    //   = S(a, b, k + 1) + a[k] * ∑(b[j] | j: k + 1 ≤ j < n ∧ a[k] ≤ b[k])
+    //   = S(a, b, k+1) + a[k] * ∑(b[j] | j: k+1 ≤ j < n ∧ a[k] ≤ b[k])
     //      ( distinguish cases a[k] ≤ b[k] and a[k] > b[k] )
   else if a[k] > b[k] 
-      //   = S(a, b, k + 1) + a[k] * ∑(b[j] | j: k + 1 ≤ j < n ∧ a[k] ≤ b[k])
-      //      ( the condition a[k] > b[k] implies that the second sum is empty )
-      //   = S(a, b, k + 1) + a[k] * ∑(∅)
-      //   = S(a, b, k + 1) + 0
-    then S(a, b, k + 1) 
+      //   = S(a, b, k+1) + a[k] * ∑(b[j] | j: k+1 ≤ j < n ∧ a[k] ≤ b[k])
+      //      ( a[k] > b[k] implies that the second sum is empty )
+      //   = S(a, b, k+1) + a[k] * ∑(∅)
+      //   = S(a, b, k+1) + 0
+    then S(a, b, k+1) 
       //      ( in this branch, we have a[k] ≤ b[k] )
-      //   = S(a, b, k + 1) + a[k] * ∑(b[j] | j: k + 1 ≤ j < n)
+      //   = S(a, b, k+1) + a[k] * ∑(b[j] | j: k+1 ≤ j < n)
       //      ( apply definition of U )
-      //   = S(a, b, k + 1) + a[k] * U(b, k + 1)
-    else S(a, b, k + 1) + a[k] * U(b, k + 1)
+      //   = S(a, b, k+1) + a[k] * U(b, k+1)
+    else S(a, b, k+1) + a[k] * U(b, k+1)
 }
 
 ghost function U(b: array<nat>, k: nat): int
@@ -59,10 +61,10 @@ reads b
     //   = ∑(b[i] | i: k ≤ i < n)
     //      ( split domain into k < i and i = k )
     //   = ∑(b[i] | i: k < i < n ) + ∑(b[i] | i: i = k)
-    //   = ∑(b[i] | i: k + 1 ≤ i < n) + b[k]
+    //   = ∑(b[i] | i: k+1 ≤ i < n) + b[k]
     //      ( definition of U )
-    //   = U(b, k + 1) + b[k]
-  if k == b.Length then 0 else b[k] + U(b, k + 1)
+    //   = U(b, k+1) + b[k]
+  if k == b.Length then 0 else b[k] + U(b, k+1)
 }
 
 method problem14(a: array<nat>, b: array<nat>) returns (r: int)
@@ -84,19 +86,20 @@ ensures r == S(a, b, 0)
   {
       // J ∧ B ∧ vf = V
       // 0 < k ≤ n ∧ s = S(a, b, k) ∧ u = U(b, k) ∧ k = V > 0
-      //   ( k > 0, so k - 1 is a valid index; apply definition of S )
-      // 0 < k ≤ n ∧ s + (a[k - 1] ≤ b[k - 1] ? a[k - 1] * u : 0) = S(a, b, k - 1) 
+      //   ( k > 0, so k-1 is a valid index; apply definition of S )
+      // 0 < k ≤ n ∧ s + (a[k-1] ≤ b[k-1] ? a[k-1] * u : 0) = S(a, b, k-1) 
       //   ∧ u = U(b, k) ∧ k = V > 0
-    s := s + (if a[k - 1] <= b[k - 1] then a[k - 1] * u else 0);
-      // 0 < k ≤ n ∧ s = S(a, b, k - 1) ∧ u = U(b, k) ∧ k = V > 0
+    s := s + (if a[k-1] <= b[k-1] then a[k-1] * u else 0);
+      // 0 < k ≤ n ∧ s = S(a, b, k-1) ∧ u = U(b, k) ∧ k = V > 0
       //   ( apply definition of U )
-      // 0 < k ≤ n ∧ s = S(a, b, k - 1) ∧ u + b[k - 1] = U(b, k - 1) ∧ k = V > 0
-    u := u + b[k - 1];
-      // 0 < k ≤ n ∧ s = S(a, b, k - 1) ∧ u = U(b, k - 1) ∧ k = V > 0  
+      // 0 < k ≤ n ∧ s = S(a, b, k-1) ∧ u + b[k-1] = U(b, k-1) ∧ k = V > 0
+    u := u + b[k-1];
+      // 0 < k ≤ n ∧ s = S(a, b, k-1) ∧ u = U(b, k-1) ∧ k = V > 0
       //   ( prepare for updating k to k - 1 )
-      // 0 ≤ k - 1 < n ∧ s = S(a, b, k - 1) ∧ u = U(b, k - 1) ∧ k - 1 < V
+      // 0 ≤ k-1 < n ∧ s = S(a, b, k-1) ∧ u = U(b, k-1) ∧ k-1 < V
     k := k - 1;
       // 0 ≤ k ≤ n ∧ s = S(a, b, k) ∧ u = U(b, k) ∧ k < V
+      // J ∧ vf < V
       //   ( J is preserved, and the variant function vf has decreased )
   }
 

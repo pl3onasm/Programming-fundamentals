@@ -5,25 +5,24 @@
    This is exercise 7.10b from the PC reader
 */
 
-function max(x: int, y: int): int
-{
-  if x >= y then x else y
-}
+include "../../Support/Math.dfy"
+
+import opened MathSupport
 
 ghost function Max(a: array<int>, k: nat := a.Length): int
 requires 0 < k <= a.Length
 reads a
 {
-    // We define Max(a, k) = Max(a[i] | i: 0 ≤ i < k}
+    // We define  Max(a, k) = Max(a[i] | i: 0 ≤ i < k )
     // Base case: Max(a, 1) = Max(a[i] | i: 0 ≤ i < 1) = a[0]
     // For k > 1:
     // Max(a, k)
     //  = Max(a[i] | i: 0 ≤ i < k)
     //     ( split domain into 0 ≤ i < k - 1 and i = k - 1 )
-    //  = max{Max(a[i] | i: 0 ≤ i < k - 1), a[k - 1]}
+    //  = maximum{Max(a[i] | i: 0 ≤ i < k - 1), a[k - 1]}
     //     ( definition of Max )
     //  = max{Max(a, k - 1), a[k - 1]}
-  if k == 1 then a[0] else max(Max(a, k - 1), a[k - 1])
+  if k == 1 then a[0] else maximum(Max(a, k - 1), a[k - 1])
 }
 
 method problem08(a: array<int>) returns (r:int)
@@ -45,16 +44,17 @@ ensures r == Max(a)
   {
       // J ∧ B ∧ vf = V
       // 1 ≤ k < n ∧ r = Max(a, k) ∧ n - k = V > 0
-      //   ( use definition of Max(a, k + 1) = max{Max(a, k), a[k]};
+      //   ( use definition of Max(a, k + 1) = maximum(Max(a, k), a[k]);
       //     substitute Max(a, k) for r )
-      // 1 ≤ k < n ∧ max{r, a[k]} = Max(a, k + 1) ∧ n - k = V > 0
-    r := max(r, a[k]);
+      // 1 ≤ k < n ∧ maximum(r, a[k]) = Max(a, k + 1) ∧ n - k = V > 0
+    r := maximum(r, a[k]);
       // 1 ≤ k < n ∧ r = Max(a, k + 1) ∧ n - k = V > 0
       //   ( prepare for updating k to k + 1 )
       // 1 ≤ k + 1 ≤ n ∧ r = Max(a, k + 1) ∧ n - (k + 1) < V
     k := k + 1;
       // 1 ≤ k ≤ n ∧ r = Max(a, k) ∧ n - k < V
-      //   J is preserved and vf has decreased
+      // J ∧ vf < V
+      //   ( J is preserved and vf has decreased )
   }
 
     // J ∧ ¬B

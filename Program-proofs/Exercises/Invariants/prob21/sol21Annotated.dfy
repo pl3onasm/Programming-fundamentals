@@ -99,17 +99,20 @@ ensures r == S(a, 0)
       // 0 < k ≤ n ∧ s = S(a, k) ∧ u + a[k - 1] * z = U(a, k - 1) 
       //   ∧ z = Z(a, k - 1) ∧ k = V
     u := u + a[k - 1] * z;
-      // 0 < k ≤ n ∧ s = S(a, k) ∧ u = U(a, k - 1) ∧ z = Z(a, k - 1) ∧ k = V
+      // 0 < k ≤ n ∧ s = S(a, k) ∧ u = U(a, k - 1) 
+      //     ∧ z = Z(a, k - 1) ∧ k = V
       //   ( apply definition of S )
       // 0 < k ≤ n ∧ s + u = S(a, k - 1) ∧ u = U(a, k - 1) 
       //   ∧ z = Z(a, k - 1) ∧ k = V
     s := s + u;
-      // 0 < k ≤ n ∧ s = S(a, k - 1) ∧ u = U(a, k - 1) ∧ z = Z(a, k - 1) ∧ k = V
+      // 0 < k ≤ n ∧ s = S(a, k - 1) ∧ u = U(a, k - 1) 
+      //     ∧ z = Z(a, k - 1) ∧ k = V
       //   ( prepare for updating k to k - 1 )
       // 0 ≤ k - 1 < n ∧ s = S(a, k - 1) ∧ u = U(a, k - 1) 
       //   ∧ z = Z(a, k - 1) ∧ k - 1 < V
     k := k - 1;
       // 0 ≤ k < n ∧ s = S(a, k) ∧ u = U(a, k) ∧ z = Z(a, k) ∧ k < V
+      // J ∧ vf < V
       //   ( J is preserved, and the variant function vf has decreased )
   }
 

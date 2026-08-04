@@ -5,16 +5,15 @@
    This is exercise 7.10b from the PC reader
 */
 
-function max(x: int, y: int): int
-{
-  if x >= y then x else y
-}
+include "../../Support/Math.dfy"
+
+import opened MathSupport
 
 ghost function Max(a: array<int>, k: nat := a.Length): int
 requires 0 < k <= a.Length
 reads a
 {
-  if k == 1 then a[0] else max(Max(a, k - 1), a[k - 1])
+  if k == 1 then a[0] else maximum(Max(a, k - 1), a[k - 1])
 }
 
 method problem08(a: array<int>) returns (r:int)
@@ -28,7 +27,7 @@ ensures r == Max(a)
   invariant 1 <= k <= n && r == Max(a, k)
   decreases n - k   
   {
-    r := max(r, a[k]);
+    r := maximum(r, a[k]);
     k := k + 1;
   }
 }

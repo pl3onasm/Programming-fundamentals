@@ -47,7 +47,8 @@ ensures p == Prod(a)
       // 0 ≤ k + 1 ≤ n ∧ x = Prod(a, k + 1) ∧ n - (k + 1) < V
     k := k + 1;
       // 0 ≤ k ≤ n ∧ x = Prod(a, k) ∧ n - k < V
-      //   J is preserved and vf has decreased
+      // J ∧ vf < V
+      //   ( J is preserved and vf has decreased )
   }
 
     // J ∧ ¬B

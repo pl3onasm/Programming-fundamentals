@@ -8,11 +8,13 @@
     Exercises folder)
 */
 
-include "../../FormalSupport.dfy"
-include "../../commonSupport.dfy"
-import opened FormalSupport
+include "../../Support/Monotonicity.dfy"
+include "../../Support/Math.dfy"
+include "../../Support/Sets.dfy"
+
 import opened MonotonicityProps
-import opened CommonFunctions
+import opened MathSupport
+import opened SetSupport
 
 //========================================================================
 // Defines a finite strict upper bound on the second coordinate of every

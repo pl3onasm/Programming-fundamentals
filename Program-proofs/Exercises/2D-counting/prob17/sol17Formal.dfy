@@ -8,9 +8,11 @@
     Exercises folder)
 */
 
-include "../../commonSupport.dfy"
-import opened CommonFunctions
+include "../../Support/Monotonicity.dfy"
+include "../../Support/Math.dfy"
+
 import opened MonotonicityProps
+import opened MathSupport 
 
 //========================================================================
 // States that z is the minimum value i+j among the matching points in the

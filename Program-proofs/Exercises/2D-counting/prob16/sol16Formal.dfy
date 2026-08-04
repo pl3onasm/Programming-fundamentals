@@ -8,10 +8,11 @@
     Exercises folder)
 */
 
-include "../../FormalSupport.dfy"
-include "../../commonSupport.dfy"
-import opened FormalSupport
-import opened MonotonicityProps
+include "../../Support/Monotonicity.dfy"
+include "../../Support/Sets.dfy"
+
+import opened MonotonicityProps 
+import opened SetSupport 
 
 //========================================================================
 // Represents the matching points in the remaining triangular region

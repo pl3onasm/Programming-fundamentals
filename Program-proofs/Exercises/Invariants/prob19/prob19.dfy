@@ -3,8 +3,9 @@
    description: extra practice in Dafny, invariants, prob19
 */
 
-include "../../CommonSupport.dfy"
-import opened CommonFunctions
+include "../../Support/Math.dfy"
+
+import opened MathSupport
 
 method problem19(a: array<int>) returns (r: int)
 requires ??

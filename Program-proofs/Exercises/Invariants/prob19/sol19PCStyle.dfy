@@ -7,8 +7,9 @@
     Exercises folder)
 */
 
-include "../../CommonSupport.dfy"
-import opened CommonFunctions
+include "../../Support/Math.dfy"
+
+import opened MathSupport
 
 ghost function S(a: array<int>, x: nat): int
 requires 1 <= x <= a.Length

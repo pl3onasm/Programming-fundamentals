@@ -4,7 +4,8 @@
     This is exercise 9.8 from the PC reader
 */
 
-include "../../commonSupport.dfy"
+include "../../Support/Monotonicity.dfy"
+
 import opened MonotonicityProps
 
 method problem07(h:(nat,nat) -> int, n:nat) 

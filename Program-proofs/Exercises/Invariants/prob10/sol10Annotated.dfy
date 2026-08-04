@@ -10,7 +10,7 @@ requires a.Length == b.Length
 requires k <= a.Length
 reads a, b
 {
-    // We define dotProd(a, b, k) = ∑(a[i] * b[i] | i: 0 ≤ i < k)
+    // We define  dotProd(a, b, k) = ∑(a[i] * b[i] | i: 0 ≤ i < k)
     // Base case: dotProd(a, b, 0) = ∑(a[i] * b[i] | i: 0 ≤ i < 0) = ∑(∅) = 0
     // For k > 0:
     // dotProd(a, b, k)
@@ -41,7 +41,7 @@ ensures  r == dotProd(a, b)
   {
       // J ∧ B ∧ vf = V
       // 0 ≤ k < n ∧ x = dotProd(a, b, k) ∧ n - k = V 
-      //   ( use definition of dotProd(a, b, k + 1) = dotProd(a, b, k) + a[k] * b[k];
+      //   ( use def of dotProd(a, b, k+1) = dotProd(a, b, k) + a[k] * b[k];
       //     substitute dotProd(a, b, k) for x )
       // 0 ≤ k < n ∧ x + a[k] * b[k] = dotProd(a, b, k + 1) ∧ n - k = V 
     x := x + a[k] * b[k];
@@ -50,7 +50,8 @@ ensures  r == dotProd(a, b)
       // 0 ≤ k + 1 ≤ n ∧ x = dotProd(a, b, k + 1) ∧ n - (k + 1) < V
     k := k + 1;
       // 0 ≤ k ≤ n ∧ x = dotProd(a, b, k) ∧ n - k < V
-      //   J is preserved and vf has decreased
+      // J ∧ vf < V
+      //   ( J is preserved and vf has decreased )
   }
 
     // J ∧ ¬B

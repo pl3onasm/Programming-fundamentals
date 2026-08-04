@@ -37,7 +37,8 @@ ensures x == factorial(n)
       // 0 ≤ k - 1 ≤ n ∧ x * factorial(k - 1) = factorial(n) ∧ k - 1 < V
     k := k - 1;
       // 0 ≤ k ≤ n ∧ x * factorial(k) = factorial(n) ∧ k < V
-      //   J is preserved, and the variant function has decreased.
+      // J ∧ vf < V
+      //   ( J is preserved, and the variant function has decreased. )
   }
 
     // J ∧ ¬B

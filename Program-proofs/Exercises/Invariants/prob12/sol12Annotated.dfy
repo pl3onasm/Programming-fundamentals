@@ -10,14 +10,15 @@ requires k <= a.Length
 reads a
 {
     // We define B(a, k) = ∑(a[i] * a[j] | i,j: 0 ≤ i < j < k) 
-    // That is, B(a, k) sums the products of all pairs of the first k elements.
+    // So, B(a, k) sums the products of all pairs of the first k elements.
     // Base case: B(a, 0) = ∑(a[i] * a[j] | i,j: 0 ≤ i < j < 0) 
     //                    = ∑(a[i] * a[j] | i, j ∈ ∅) = 0
     // For k > 0:
     // B(a, k)
     //   = ∑(a[i] * a[j] | i,j: 0 ≤ i < j < k) 
     //      ( split domain into 0 ≤ i < j < k - 1 and j = k - 1 )
-    //   = ∑(a[i] * a[j] | i,j: 0 ≤ i < j < k - 1) + ∑(a[i] * a[j] | i: 0 ≤ i < k - 1 ∧ j = k - 1)  
+    //   = ∑(a[i] * a[j] | i,j: 0 ≤ i < j < k - 1) 
+    //     + ∑(a[i] * a[j] | i: 0 ≤ i < k - 1 ∧ j = k - 1)
     //      ( definition of B )
     //   = B(a, k - 1) + ∑(a[i] * a[k - 1] | i: 0 ≤ i < k - 1)
     //      ( factor out constant a[k - 1] from the second sum )
@@ -75,7 +76,8 @@ ensures  r == B(a)
       // 0 ≤ k + 1 ≤ n ∧ b = B(a, k + 1) ∧ c = C(a, k + 1) ∧ n - (k + 1) < V
     k := k + 1;
       // 0 ≤ k ≤ n ∧ b = B(a, k) ∧ c = C(a, k) ∧ n - k < V
-      //   J is preserved and vf has decreased
+      // J ∧ vf < V
+      //   ( J is preserved and vf has decreased )
   }
 
     // J ∧ ¬B

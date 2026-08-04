@@ -4,15 +4,9 @@
    solution to prob17
 */
 
-function mxm(x: int, y: int): int
-{
-  if x >= y then x else y
-}
+include "../../Support/Math.dfy"
 
-function mnm(x: int, y: int): int
-{
-  if x <= y then x else y
-}
+import opened MathSupport
 
 ghost function S(a: array<int>, x: nat): int
 requires 1 <= x <= a.Length
@@ -20,7 +14,7 @@ reads a
 {
   if x == 1 
     then 2 * a[0] 
-    else mxm(S(a, x - 1), U(a, x))
+    else maximum(S(a, x - 1), U(a, x))
 }
 
 ghost function U(a: array<int>, x: nat): int
@@ -29,7 +23,7 @@ reads a
 {
   if x == 1 
     then 2 * a[0] 
-    else mnm(U(a, x - 1), a[x - 1] + Z(a, x))
+    else minimum(U(a, x - 1), a[x - 1] + Z(a, x))
 }
 
 ghost function Z(a: array<int>, x: nat): int
@@ -38,7 +32,7 @@ reads a
 {
   if x == 1 
     then a[0] 
-    else mnm(Z(a, x - 1), a[x - 1])
+    else minimum(Z(a, x - 1), a[x - 1])
 } 
 
 method problem17(a: array<int>) returns (r: int)                                                        
@@ -53,9 +47,9 @@ ensures  r == S(a, a.Length)
   invariant s == S(a, k) && u == U(a, k) && z == Z(a, k)
   decreases n - k
   {
-    z := mnm(z, a[k]);
-    u := mnm(u, a[k] + z);
-    s := mxm(s, u);
+    z := minimum(z, a[k]);
+    u := minimum(u, a[k] + z);
+    s := maximum(s, u);
     k := k + 1;
   }
 

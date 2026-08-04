@@ -5,16 +5,15 @@
    This is exercise 7.13 from the PC reader
 */
 
-function Ord(b: bool): int
-{
-  if b then 1 else 0
-}
+include "../../Support/Math.dfy"
+
+import opened MathSupport
 
 ghost function Cnt7(a: array<int>, k: nat := a.Length): int
 requires k <= a.Length
 reads a
 {   
-  if k == 0 then 0 else Cnt7(a, k - 1) + Ord(a[k - 1] == 7)
+  if k == 0 then 0 else Cnt7(a, k - 1) + ord(a[k - 1] == 7)
 }
 
 method problem11(a: array<int>) returns (r: int)
@@ -27,7 +26,7 @@ ensures  r == Cnt7(a)
   invariant 0 <= k <= n && x == Cnt7(a, k)
   decreases n - k
   {
-    x := x + Ord(a[k] == 7);
+    x := x + ord(a[k] == 7);
     k := k + 1;
   }
 

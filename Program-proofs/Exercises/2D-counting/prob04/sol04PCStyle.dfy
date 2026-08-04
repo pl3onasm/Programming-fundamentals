@@ -8,9 +8,11 @@
     Exercises folder)
 */
 
-include "../../commonSupport.dfy"
+include "../../Support/Monotonicity.dfy"
+include "../../Support/Math.dfy"
+
 import opened MonotonicityProps
-import opened CommonFunctions
+import opened MathSupport
 
 ghost function F(g:(int,int) -> int, x:nat, y:nat, m:nat): int
 requires Ordered2DInt(g, Incr, Incr)

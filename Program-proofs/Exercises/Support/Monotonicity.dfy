@@ -1,42 +1,9 @@
-/* file: CommonSupport.dfy
+/* file: Monotonicity.dfy
    author: David De Potter
-   description: common definitions for PC-style and formal proofs
+   description: reusable predicates for expressing monotonicity and
+   ordering properties of arrays, one-dimensional functions, and
+   two-dimensional functions
 */
-
-module CommonFunctions 
-{
-  //========================================================================
-  // Returns the smaller of the two integer values x and y.
-  function minimum(x:int, y:int): int
-  {
-    if x <= y then x else y
-  }
-
-  //========================================================================
-  // Returns the larger of the two integer values x and y.
-  function maximum(x:int, y:int): int
-  {
-    if x >= y then x else y
-  }
-
-  //========================================================================
-  // Returns the absolute value of x: x itself when x is non-negative,
-  // and its additive inverse -x when x is negative.
-  function abs(x:int): int
-  {
-    if x >= 0 then x else -x
-  }
-
-  //========================================================================
-  // Converts a Boolean value into a natural number. It returns 1 when b
-  // is true and 0 when b is false. This is useful for expressing whether
-  // a condition contributes one item to a count.
-  function ord(b:bool): nat
-  {
-    if b then 1 else 0
-  }
-}
-
 
 module MonotonicityProps
 {

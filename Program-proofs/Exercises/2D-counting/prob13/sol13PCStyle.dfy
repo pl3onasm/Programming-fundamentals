@@ -8,8 +8,9 @@
     Exercises folder)
 */
 
-include "../../commonSupport.dfy"
-import opened CommonFunctions
+include "../../Support/Math.dfy"
+
+import opened MathSupport
 
 ghost predicate posFunc(f: (nat) -> nat)
 {

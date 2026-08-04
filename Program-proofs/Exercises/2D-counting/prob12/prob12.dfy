@@ -4,9 +4,11 @@
     This is exercise 9.14 from the PC reader
 */
 
-include "../../commonSupport.dfy"
-import opened CommonFunctions
-import opened MonotonicityProps       
+include "../../Support/Monotonicity.dfy"
+include "../../Support/Math.dfy"
+
+import opened MonotonicityProps
+import opened MathSupport      
     
 method problem12(h:(int,int) -> int, m:nat, n:nat)
 returns (z: int)

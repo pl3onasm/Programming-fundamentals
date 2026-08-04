@@ -25,7 +25,8 @@ ensures y >= 0 && y * y <= x < (y + 1) * (y + 1)
       // y + 1 > 0 ∧ (y + 1) * (y + 1) ≤ x ∧ x - (y + 1) < V
     y := y + 1;
       // y ≥ 0 ∧ y * y ≤ x ∧ x - y < V
-      //   J is preserved, and the variant function has decreased.
+      // J ∧ vf < V
+      //   ( J is preserved and vf has decreased )
   }
 
     // J ∧ ¬B
@@ -34,7 +35,8 @@ ensures y >= 0 && y * y <= x < (y + 1) * (y + 1)
 }
 
 /*
-   This is in fact a simple linear search for the integer square root of x,
-   in which we start with y = 0 and keep incrementing y until 
-   (y + 1) * (y + 1) is no longer ≤ x. Therefore, this method is in O(√x).
+   This is in fact a simple linear search for the integer square 
+   root of x, in which we start with y = 0 and keep incrementing y 
+   until (y + 1) * (y + 1) is no longer ≤ x. Therefore, this 
+   method is in O(√x).
 */

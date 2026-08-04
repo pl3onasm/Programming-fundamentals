@@ -8,8 +8,11 @@
     Exercises folder)
 */
 
-include "../../FormalSupport.dfy"
-import opened FormalSupport
+include "../../Support/Sets.dfy"
+include "../../Support/Math.dfy"
+
+import opened MathSupport
+import opened SetSupport
 
 //========================================================================
 // Represents the points strictly inside the half-open quarter disk that 

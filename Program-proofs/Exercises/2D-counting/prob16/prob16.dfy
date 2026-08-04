@@ -4,9 +4,10 @@
     This is exercise 9.18 from the PC reader
 */
 
-include "../../commonSupport.dfy"
-import opened MonotonicityProps              
-    
+include "../../Support/Monotonicity.dfy"
+
+import opened MonotonicityProps
+
 method problem16(f:(nat,nat) -> int, n:nat, w:int)
 returns (z: int)
 requires Ordered2DNat(f, Asc, Asc)

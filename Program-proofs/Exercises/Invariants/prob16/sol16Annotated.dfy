@@ -8,19 +8,27 @@ ghost function S(a: array<nat>, x: nat): int
 requires x <= a.Length
 reads a
 {
-    // We define S(a, x) = ∑( ∑(a[i] | i: 0 ≤ i ≤ k) * ∑(a[i] * a[j] | i,j: 0 ≤ i ≤ j < k) | k: 0 ≤ k < x )
-    // Base case: S(a, 0) = ∑( ∑(a[i] | i: 0 ≤ i ≤ k) * ∑(a[i] * a[j] | i,j: 0 ≤ i ≤ j < k) | k: 0 ≤ k < 0 )
-    //                    = ∑(∅) = 0
+    // We define 
+    //   S(a, x) = ∑( ∑(a[i] | i: 0 ≤ i ≤ k) 
+    //                * ∑(a[i] * a[j] | i,j: 0 ≤ i ≤ j < k) | k: 0 ≤ k < x )
+    // Base case: 
+    //   S(a, 0) = ∑( ∑(a[i] | i: 0 ≤ i ≤ k) 
+    //                * ∑(a[i] * a[j] | i,j: 0 ≤ i ≤ j < k) | k: 0 ≤ k < 0 )
+    //           = ∑(∅) = 0
     // For x > 0:
     // S(a, x)
-    //   = ∑( ∑(a[i] | i: 0 ≤ i ≤ k) * ∑(a[i] * a[j] | i,j: 0 ≤ i ≤ j < k) | k: 0 ≤ k < x )
+    //   = ∑( ∑(a[i] | i: 0 ≤ i ≤ k) 
+    //        * ∑(a[i] * a[j] | i,j: 0 ≤ i ≤ j < k) | k: 0 ≤ k < x )
     //      ( split domain into k < x - 1 and k = x - 1 )
-    //   = ∑( ∑(a[i] | i: 0 ≤ i ≤ k) * ∑(a[i] * a[j] | i,j: 0 ≤ i ≤ j < k) | k: 0 ≤ k < x - 1 )
+    //   = ∑( ∑(a[i] | i: 0 ≤ i ≤ k) 
+    //        * ∑(a[i] * a[j] | i,j: 0 ≤ i ≤ j < k) | k: 0 ≤ k < x - 1 )
     //     + ∑(a[i] | i: 0 ≤ i ≤ x - 1) * ∑(a[i] * a[j] | i,j: 0 ≤ i ≤ j < x - 1)
     //      ( apply definition of S to first sum )
-    //   = S(a, x - 1) + ∑(a[i] | i: 0 ≤ i ≤ x - 1) * ∑(a[i] * a[j] | i,j: 0 ≤ i ≤ j < x - 1)
-    //      ( rewrite to comply with definition of U; use half-open range )
-    //   = S(a, x - 1) + ∑(a[i] | i: 0 ≤ i < x) * ∑(a[i] * a[j] | i,j: 0 ≤ i ≤ j < x - 1)
+    //   = S(a, x - 1) + ∑(a[i] | i: 0 ≤ i ≤ x - 1) 
+    //                   * ∑(a[i] * a[j] | i,j: 0 ≤ i ≤ j < x - 1)
+    //      ( rewrite to comply with def of U; use half-open range )
+    //   = S(a, x - 1) + ∑(a[i] | i: 0 ≤ i < x) 
+    //                   * ∑(a[i] * a[j] | i,j: 0 ≤ i ≤ j < x - 1)
     //      ( apply definition of Z to first sum )
     //   = S(a, x - 1) + Z(a, x) * ∑(a[i] * a[j] | i,j: 0 ≤ i ≤ j < x - 1)
     //      ( apply definition of U to last sum )
@@ -39,11 +47,12 @@ reads a
     // U(a, x)
     //   = ∑(a[i] * a[j] | i,j: 0 ≤ i ≤ j < x)
     //      ( split domain into j < x - 1 and j = x - 1 )
-    //   = ∑(a[i] * a[j] | i,j: 0 ≤ i ≤ j < x - 1) + ∑(a[i] * a[x - 1] | i: 0 ≤ i ≤ x - 1)
+    //   = ∑(a[i] * a[j] | i,j: 0 ≤ i ≤ j < x - 1) 
+    //     + ∑(a[i] * a[x - 1] | i: 0 ≤ i ≤ x - 1)
     //      ( apply definition of U to first sum; 
     //        factor out constant a[x - 1] from second sum )
     //   = U(a, x - 1) + a[x - 1] * ∑(a[i] | i: 0 ≤ i ≤ x - 1)
-    //      ( rewrite to comply with definition of Z; use half-open range )
+    //      ( rewrite to comply with def of Z; use half-open range )
     //   = U(a, x - 1) + a[x - 1] * ∑(a[i] | i: 0 ≤ i < x)
     //      ( apply definition of Z )
     //   = U(a, x - 1) + a[x - 1] * Z(a, x)
@@ -87,24 +96,31 @@ ensures r == S(a, a.Length)
       // 0 ≤ k < n ∧ s = S(a, k) ∧ u = U(a, k) ∧ z = Z(a, k) ∧ n - k = V 
       //   ( use definition of Z(a, k + 1) = Z(a, k) + a[k]; 
       //     substitute Z(a, k) for z )
-      // 0 ≤ k < n ∧ s = S(a, k) ∧ u = U(a, k) ∧ z + a[k] = Z(a, k + 1) ∧ n - k = V
+      // 0 ≤ k < n ∧ s = S(a, k) ∧ u = U(a, k) 
+      //   ∧ z + a[k] = Z(a, k + 1) ∧ n - k = V
     z := z + a[k];
       // 0 ≤ k < n ∧ s = S(a, k) ∧ u = U(a, k) ∧ z = Z(a, k + 1) ∧ n - k = V
       //   ( use definition of S(a, k + 1) = S(a, k) + Z(a, k + 1) * U(a, k);
       //     substitute S(a, k) for s, Z(a, k + 1) for z, and U(a, k) for u )
-      // 0 ≤ k < n ∧ s + z * u = S(a, k + 1) ∧ u = U(a, k) ∧ z = Z(a, k + 1) ∧ n - k = V
+      // 0 ≤ k < n ∧ s + z * u = S(a, k + 1) ∧ u = U(a, k) 
+      //   ∧ z = Z(a, k + 1) ∧ n - k = V
     s := s + z * u;
-      // 0 ≤ k < n ∧ s = S(a, k + 1) ∧ u = U(a, k) ∧ z = Z(a, k + 1) ∧ n - k = V
+      // 0 ≤ k < n ∧ s = S(a, k + 1) ∧ u = U(a, k) 
+      //   ∧ z = Z(a, k + 1) ∧ n - k = V
       //   ( use definition of U(a, k + 1) = U(a, k) + a[k] * Z(a, k + 1); 
       //     substitute U(a, k) for u and Z(a, k + 1) for z )
-      // 0 ≤ k < n ∧ s = S(a, k + 1) ∧ u + a[k] * z = U(a, k + 1) ∧ z = Z(a, k + 1) ∧ n - k = V
+      // 0 ≤ k < n ∧ s = S(a, k + 1) ∧ u + a[k] * z = U(a, k + 1) 
+      //   ∧ z = Z(a, k + 1) ∧ n - k = V
     u := u + a[k] * z;
-      // 0 ≤ k < n ∧ s = S(a, k + 1) ∧ u = U(a, k + 1) ∧ z = Z(a, k + 1) ∧ n - k = V
+      // 0 ≤ k < n ∧ s = S(a, k + 1) ∧ u = U(a, k + 1) 
+      //     ∧ z = Z(a, k + 1) ∧ n - k = V
       //   ( prepare for updating k to k + 1 )
-      // 0 ≤ k + 1 ≤ n ∧ s = S(a, k + 1) ∧ u = U(a, k + 1) ∧ z = Z(a, k + 1) ∧ n - (k + 1) < V
+      // 0 ≤ k + 1 ≤ n ∧ s = S(a, k + 1) ∧ u = U(a, k + 1) 
+      //   ∧ z = Z(a, k + 1) ∧ n - (k + 1) < V
     k := k + 1;
       // 0 ≤ k ≤ n ∧ s = S(a, k) ∧ u = U(a, k) ∧ z = Z(a, k) ∧ n - k < V
-      //   J is preserved and the variant function vf has decreased
+      // J ∧ vf < V
+      //   ( J is preserved and the variant function vf has decreased )
   }
 
     // J ∧ ¬B

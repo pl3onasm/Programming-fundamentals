@@ -11,8 +11,9 @@
     a linear-time method overall.
 */
 
-include "../../FormalSupport.dfy"
-import opened ArrayAggregates
+include "../../Support/ArrayAggregates.dfy"
+
+import opened NatArrayAggregates
 
 //========================================================================
 // Computes the sum of an inner sum where the second index is fixed at j 

@@ -16,7 +16,8 @@ ensures  ??
         
         {P: true}
       T
-        {Q: r = ∑( ∑(a[i] | i: 0 ≤ i ≤ k) * ∑(a[i] * a[j] | i,j: 0 ≤ i ≤ j < k) | k: 0 ≤ k < n )}
+        {Q: r = ∑( ∑(a[i] | i: 0 ≤ i ≤ k) 
+                   * ∑(a[i] * a[j] | i,j: 0 ≤ i ≤ j < k) | k: 0 ≤ k < n )}
 
     The time complexity of T should be linear in n.
   */

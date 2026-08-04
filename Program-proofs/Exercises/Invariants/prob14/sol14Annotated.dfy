@@ -87,7 +87,8 @@ ensures r == S(a, b, a.Length)
       // 0 ≤ k + 1 ≤ n ∧ S(a, b, k + 1) = s ∧ U(a, b, k + 1) = u ∧ n - (k + 1) < V
     k := k + 1;
       // 0 ≤ k ≤ n ∧ S(a, b, k) = s ∧ U(a, b, k) = u ∧ n - k < V 
-      //   J is preserved and the variant function vf has decreased
+      // J ∧ vf < V
+      //   ( J is preserved and vf has decreased )
   }
 
     // J ∧ ¬B

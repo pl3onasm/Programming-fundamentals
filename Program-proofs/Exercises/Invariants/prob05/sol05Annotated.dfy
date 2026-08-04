@@ -32,7 +32,8 @@ ensures  x == q * y + r && 0 <= r < y
       // x = (q + 1) * y + r ∧ 0 ≤ r < V
     q := q + 1;
       // x = q * y + r ∧ 0 ≤ r < V
-      //   J is preserved, and the variant function has decreased.
+      // J ∧ vf < V
+      //   ( J is preserved, and the variant function has decreased. )
   }
 
     // J ∧ ¬B
@@ -43,6 +44,6 @@ ensures  x == q * y + r && 0 <= r < y
 /*
    This method implements division by repeated subtraction. 
    As long as r is greater than or equal to y, we keep subtracting 
-   y from r and incrementing q by 1. This method is in O(x / y), which 
-   becomes O(x) in the worst case when y = 1.
+   y from r and incrementing q by 1. This method is in O(x / y),  
+   which becomes O(x) in the worst case when y = 1.
 */

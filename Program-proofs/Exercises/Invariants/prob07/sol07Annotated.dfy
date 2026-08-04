@@ -8,10 +8,10 @@
 ghost function f(n:nat):nat
 {
   if n < 2 
-    then n
-    else if n % 2 == 0 
-          then f(n / 2)
-          else f(n / 2) + f(n / 2 + 1)
+  then n
+  else if n % 2 == 0 
+       then f(n / 2)
+       else f(n / 2) + f(n / 2 + 1)
 }
 
 method problem07(n:nat) returns (r:nat)
@@ -33,35 +33,37 @@ ensures r == f(n)
 
     if k % 2 == 0
     {   
-        //   ( apply the definition of f for even k; observe that k + 1 is odd so that
-        //     f(k + 1) = f((k + 1) / 2) + f((k + 1) / 2 + 1) = f(k / 2) + f(k / 2 + 1) 
-        //     since k is even and integer division gives (k + 1) / 2 = k / 2 )
-        // x * f(k / 2) + y * [f(k / 2) + f(k / 2 + 1)] = f(n) ∧ k ≤ n ∧ k = V > 0
+        //   ( apply def of f for even k; observe that k + 1 is odd so that
+        //     f(k+1) = f((k+1)/2) + f((k+1)/2 + 1) = f(k/2) + f(k/2 + 1) 
+        //     since k is even and integer division gives (k+1)/2 = k/2 )
+        // x * f(k/2) + y * [f(k/2) + f(k/2 + 1)] = f(n) ∧ k ≤ n ∧ k = V > 0
         //   ( prepare for updating x to x + y )
-        // (x + y) * f(k / 2) + y * f(k / 2 + 1) = f(n) ∧ k ≤ n ∧ k = V > 0
+        // (x + y) * f(k/2) + y * f(k/2 + 1) = f(n) ∧ k ≤ n ∧ k = V > 0
       x := x + y;
-        // x * f(k / 2) + y * f(k / 2 + 1) = f(n) ∧ k ≤ n ∧ k = V > 0
+        // x * f(k/2) + y * f(k/2 + 1) = f(n) ∧ k ≤ n ∧ k = V > 0
     }
 
     else
     {
-        //  ( apply the definition of f for odd k; observe that k + 1 is even so that
-        //    f(k + 1) = f((k + 1) / 2) = f(k / 2 + 1) 
-        //    since k is odd and integer division gives (k + 1) / 2 = k / 2 + 1 )
-        // x * [f(k / 2) + f(k / 2 + 1)] + y * f(k / 2 + 1) = f(n) ∧ k ≤ n ∧ k = V > 0
-        //  ( prepare for updating y to x + y )
-        // x * f(k / 2) + (x + y) * f(k / 2 + 1) = f(n) ∧ k ≤ n ∧ k = V > 0
+        //   ( apply def of f for odd k; observe that k + 1 is even 
+        //     so that f(k+1) = f((k+1) / 2) = f(k/2 + 1), since k is odd 
+        //     and integer division yields (k+1)/2 = k/2 + 1 )
+        // x * [f(k/2) + f(k/2 + 1)] + y * f(k/2 + 1) = f(n) 
+        //   ∧ k ≤ n ∧ k = V > 0
+        //   ( prepare for updating y to x + y )
+        // x * f(k/2) + (x + y) * f(k/2 + 1) = f(n) ∧ k ≤ n ∧ k = V > 0
       y := x + y;
-        // x * f(k / 2) + y * f(k / 2 + 1) = f(n) ∧ k ≤ n ∧ k = V > 0
+        // x * f(k/2) + y * f(k/2 + 1) = f(n) ∧ k ≤ n ∧ k = V > 0
     }
 
       // collect branches:
-      // x * f(k / 2) + y * f(k / 2 + 1) = f(n) ∧ k ≤ n ∧ k = V > 0
-      //   ( prepare for updating k to k / 2 )
-      // x * f(k / 2) + y * f(k / 2 + 1) = f(n) ∧ k / 2 ≤ n ∧ k / 2 < V
+      // x * f(k/2) + y * f(k/2 + 1) = f(n) ∧ k ≤ n ∧ k = V > 0
+      //   ( prepare for updating k to k/2 )
+      // x * f(k/2) + y * f(k/2 + 1) = f(n) ∧ k/2 ≤ n ∧ k/2 < V
     k := k / 2;
-      // x * f(k) + y * f(k + 1) = f(n) ∧ k ≤ n ∧ k < V
-      //   J is preserved, and the variant function has decreased.
+      // x * f(k) + y * f(k+1) = f(n) ∧ k ≤ n ∧ k < V
+      // J ∧ vf < V
+      //   ( J is preserved, and the variant function has decreased )
   }
 
     // J ∧ ¬B

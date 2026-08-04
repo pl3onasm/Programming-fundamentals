@@ -16,11 +16,11 @@
     value, and triple value in the current prefix.
 */
 
-include "../../FormalSupport.dfy"
-include "../../CommonSupport.dfy"
+include "../../Support/ArrayExtrema.dfy"
+include "../../Support/Math.dfy"
 
-import opened CommonFunctions
 import opened ArrayExtrema
+import opened MathSupport
 
 //========================================================================
 // Computes the maximum value of a[i] + a[j] over all pairs i,j satisfying

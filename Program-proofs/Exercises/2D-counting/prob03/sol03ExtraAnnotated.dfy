@@ -16,9 +16,11 @@
     Other changes include the guard and the variant function.
 */
 
-include "../../commonSupport.dfy"
-import opened CommonFunctions
+include "../../Support/Monotonicity.dfy"
+include "../../Support/Math.dfy"
+
 import opened MonotonicityProps
+import opened MathSupport
 
 ghost function F(h:(int,int) -> int, x:int, y:int, m:int, n:int, w:int): int
 requires Ordered2DInt(h, Decr, Asc)

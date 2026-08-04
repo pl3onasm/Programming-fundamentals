@@ -5,10 +5,9 @@
    This is exercise 7.13 from the PC reader
 */
 
-function Ord(b: bool): int
-{
-  if b then 1 else 0
-}
+include "../../Support/Math.dfy"
+
+import opened MathSupport
 
 ghost function Cnt7(a: array<int>, k: nat := a.Length): int
 requires k <= a.Length
@@ -24,7 +23,7 @@ reads a
     //   = #{ i | i: 0 ≤ i < k-1 ∧ a[i] = 7 } + #{ i | i = k - 1 ∧ a[i] = 7 }
     //      ( definition of Cnt7 and Ord )
     //   = Cnt7(a, k-1) + Ord(a[k-1] = 7)
-  if k == 0 then 0 else Cnt7(a, k - 1) + Ord(a[k - 1] == 7)
+  if k == 0 then 0 else Cnt7(a, k - 1) + ord(a[k - 1] == 7)
 }
 
 method problem11(a: array<int>) returns (r: int)
@@ -45,16 +44,17 @@ ensures  r == Cnt7(a)
   {
       // J ∧ B ∧ vf = V
       // 0 ≤ k < n ∧ x = Cnt7(a, k) ∧ n - k = V 
-      //   ( use definition of Cnt7(a, k + 1) = Cnt7(a, k) + Ord(a[k] = 7);
+      //   ( use definition of Cnt7(a, k + 1) = Cnt7(a, k) + ord(a[k] = 7);
       //     substitute Cnt7(a, k) for x )
-      // 0 ≤ k < n ∧ x + Ord(a[k] = 7) = Cnt7(a, k + 1) ∧ n - k = V
-    x := x + Ord(a[k] == 7);
+      // 0 ≤ k < n ∧ x + ord(a[k] = 7) = Cnt7(a, k + 1) ∧ n - k = V
+    x := x + ord(a[k] == 7);
       // 0 ≤ k < n ∧ x = Cnt7(a, k + 1) ∧ n - k = V 
       //   ( prepare for updating k to k + 1 )
       // 0 ≤ k + 1 ≤ n ∧ x = Cnt7(a, k + 1) ∧ n - (k + 1) < V
     k := k + 1;
       // 0 ≤ k ≤ n ∧ x = Cnt7(a, k) ∧ n - k < V
-      //   J is preserved and vf has decreased
+      // J ∧ vf < V
+      //   ( J is preserved and vf has decreased )
   }
 
     // J ∧ ¬B

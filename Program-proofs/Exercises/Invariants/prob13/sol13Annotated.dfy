@@ -10,8 +10,9 @@ requires k <= a.Length
 decreases a.Length - k
 reads a
 {
-    // We define S(a, x, k) = ∑(a[i] * x^{i-k} | i: k ≤ i < n)
-    // Base case: S(a, x, n) = ∑(a[i] * x^{i-n} | i: n ≤ i < n) = ∑(∅) = 0
+    // We define  S(a, x, k) = ∑(a[i] * x^{i-k} | i: k ≤ i < n)
+    // Base case: S(a, x, n) = ∑(a[i] * x^{i-n} | i: n ≤ i < n) 
+    //                       = ∑(∅) = 0
     // For k < n:
     // S(a, x, k)
     //   = ∑(a[i] * x^{i-k} | i: k ≤ i < n)
@@ -44,7 +45,7 @@ ensures  r == S(a, x, 0)
   {
       // J ∧ B ∧ vf = V
       // 0 < k ≤ n ∧ s = S(a, x, k) ∧ k = V
-      //   ( use definition of S(a, x, k - 1) = a[k - 1] + x * S(a, x, k);
+      //   ( use def of S(a, x, k - 1) = a[k - 1] + x * S(a, x, k);
       //     substitute S(a, x, k) for s )
       // 0 < k ≤ n ∧ a[k - 1] + x * s = S(a, x, k - 1) ∧ k = V
     s := a[k - 1] + x * s;
@@ -53,7 +54,8 @@ ensures  r == S(a, x, 0)
       // 0 ≤ k - 1 < n ∧ s = S(a, x, k - 1) ∧ k - 1 < V
     k := k - 1;
       // 0 ≤ k < n ∧ s = S(a, x, k) ∧ k < V
-      //   J is preserved and vf has decreased
+      // J ∧ vf < V
+      //   ( J is preserved and vf has decreased )
   }
 
     // J ∧ ¬B
