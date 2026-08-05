@@ -7,13 +7,9 @@
     not have a primitive maximum operator over quantified domains,
     TripleMax is used as a recursive Dafny formalization of the maximum
     value of a[i] + a[j] + a[h] over all triples i,j,h satisfying
-    0 ≤ i ≤ j < n ∧ i ≤ h < n. The lemmas below formally justify the
-    constant-time updates performed in each loop iteration, which
+    0 ≤ i ≤ j < n ∧ i ≤ h < n. The recursive definitions below justify
+    the constant-time updates performed in each loop iteration, which
     yields a linear-time method overall.
-
-    This prefix version mirrors the PC-style derivation. It scans the
-    array from left to right and maintains the best single value, pair
-    value, and triple value in the current prefix.
 */
 
 include "../../Support/ArrayExtrema.dfy"
@@ -51,30 +47,6 @@ ghost function TripleMax(a:array<int>, k:nat): int
 }
 
 //========================================================================
-// Extending the prefix [0,k) to [0,k+1) adds the new index k. A new best
-// pair either was already present in [0,k), or has second index k. In the
-// latter case, its value is a[i] + a[k], and the best first index i is
-// obtained from PrefixMax(a,k+1).
-lemma PairMaxStep(a:array<int>, k:nat)
-  requires 0 < k < a.Length
-  ensures PairMax(a,k+1) 
-       == maximum(PairMax(a,k), a[k] + PrefixMax(a,k+1))
-{
-}
-
-//========================================================================
-// Extending the prefix [0,k) to [0,k+1) adds the new index k. A new best
-// triple either was already present in [0,k), or has middle index k. In
-// the latter case, its value is a[i] + a[k] + a[h], and the best choices
-// for i and h are captured together by PairMax(a,k+1).
-lemma TripleMaxStep(a:array<int>, k:nat)
-  requires 0 < k < a.Length
-  ensures TripleMax(a,k+1) 
-       == maximum(TripleMax(a,k), a[k] + PairMax(a,k+1))
-{
-}
-
-//========================================================================
 // Computes the maximum value of a[i] + a[j] + a[h] over all triples i,j,h
 // satisfying 0 ≤ i ≤ j < a.Length ∧ i ≤ h < a.Length
 method problem19(a:array<int>)
@@ -99,23 +71,19 @@ ensures r == TripleMax(a,a.Length)
     decreases a.Length - k
   {
       // Extend the prefix maximum to the larger prefix [0,k+1). The new
-      // maximum is either the old prefix maximum or the new value a[k].
+      // maximum is either the old prefix maximum or the new value a[k]
     PrefixMaxStep(a,k);
     z := maximum(z, a[k]);
 
-      // Extend the pair maximum to the larger prefix [0,k+1). The new
-      // maximum is either the old pair maximum, or the best pair whose
-      // second index is k.
-    PairMaxStep(a,k);
+      // Unfold PairMax at k+1: the new maximum is either the old pair
+      // maximum, or the best pair whose second index is k
     u := maximum(u, a[k] + z);
 
-      // Extend the triple maximum to the larger prefix [0,k+1). The new
-      // maximum is either the old triple maximum, or the best triple
-      // whose middle index is k.
-    TripleMaxStep(a,k);
+      // Unfold TripleMax at k+1: the new maximum is either the old triple
+      // maximum, or the best triple whose middle index is k
     s := maximum(s, a[k] + u);
 
-      // Increase the prefix length by one.
+      // Increase the prefix length by one
     k := k + 1;
   }
 

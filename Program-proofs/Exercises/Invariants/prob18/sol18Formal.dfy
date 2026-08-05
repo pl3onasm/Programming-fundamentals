@@ -6,9 +6,9 @@
     recursive specification PairSum(a,a.Length). Since Dafny does not
     have a primitive sigma operator, PairSum is used as a direct recursive
     formalization of the original nested-sum sigma expression over all
-    pairs 0 ≤ i < j < n. The lemmas below formally justify the
-    constant-time updates performed in each loop iteration, which yields
-    a linear-time method overall.
+    pairs 0 ≤ i < j < n. The recursive definitions and InnerSumFormula
+    below justify the constant-time updates performed in each loop
+    iteration, which yields a linear-time method overall.
 */
 
 include "../../Support/ArrayAggregates.dfy"
@@ -61,23 +61,6 @@ lemma InnerSumFormula(a:array<nat>, j:nat, k:nat)
 }
 
 //========================================================================
-// Extending the outer sum from k to k+1 adds exactly the contribution
-// with second index j = k. InnerSumFormula rewrites that contribution
-// into the form used by the loop update.
-lemma PairSumStep(a:array<nat>, k:nat)
-  requires k < a.Length
-  ensures PairSum(a,k+1) 
-       == PairSum(a,k) + (a[k] % 2) * (k * a[k] + PrefixSum(a,k))
-{
-    // Unfolding PairSum at k+1 adds the contribution with second
-    // index j = k. The inner contribution is InnerSum(a,k,k).
-  InnerSumFormula(a,k,k);
-
-    // InnerSumFormula rewrites that inner contribution as
-    // PrefixSum(a,k) + k * a[k], which is exactly the loop update.
-}
-
-//========================================================================
 // Computes the nested sum in linear time by maintaining the prefix sum
 // needed for the contribution of each new second index.
 method problem18(a:array<nat>)
@@ -93,25 +76,26 @@ ensures r == PairSum(a,a.Length)
     invariant s == PairSum(a,k)
     invariant u == PrefixSum(a,k)
     decreases a.Length - k
-  {
-      // PairSumStep rewrites PairSum(a,k+1) in terms of PairSum(a,k)
-      // and the contribution of the new second index j = k
-    PairSumStep(a,k);
+{
+      // Unfold PairSum at k+1: the new contribution has second index
+      // j = k. InnerSumFormula rewrites its inner sum into the form used
+      // by the loop update
+    InnerSumFormula(a,k,k);
 
-      // PrefixSumStep rewrites PrefixSum(a,k+1) in terms of
-      // PrefixSum(a,k) and the new final element a[k]
+      // Extend the prefix sum to the larger prefix [0,k+1). The new
+      // prefix sum is the old one plus the new value a[k]
     PrefixSumStep(a,k);
 
       // Add the contribution of all pairs (i,k) with i < k. If a[k] is
       // even, a[k] % 2 is 0 and the contribution vanishes. If a[k] is
       // odd, a[k] % 2 is 1 and the contribution is
-      // PrefixSum(a,k) + k * a[k]
+      // PrefixSum(a,k) + k * a[k].
     s := s + (a[k] % 2) * (k * a[k] + u);
 
-      // Extend the maintained prefix sum with the new element a[k]
+      // Extend the maintained prefix sum with the new value a[k]
     u := u + a[k];
 
-      // Move to the next second index
+      // Increase the second-index bound by one
     k := k + 1;
   }
 
