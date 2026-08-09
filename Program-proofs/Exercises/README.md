@@ -13,8 +13,8 @@ This folder contains some extra exercises on program verification in Dafny. The 
 | 7 | [Invariants](Invariants) |
 | 8 | [Searching and sorting](Searching-sorting) |
 | 9 | [Two-dimensional counting](2D-counting) |
-| - | [Mathematical induction](Math-Induction) |
-| - | [Structural induction](Struct-Induction) |
+| - | [Mathematical induction](Math-induction) |
+| - | [Structural induction](Struct-induction) |
 
 <br/>
 

@@ -1,26 +1,24 @@
-/*  file: prob08.dfy
+/*  file: prob09.dfy
     author: your name
     description: extra practice in Dafny, mathematical induction, 
-    prob08
+    prob09
 */
 
 //========================================================================
-// Proves by induction on n that 3 divides n³ - n, for every positive
-// integer n.
-lemma {:induction false} DivisibleByThree(n:nat)
-  requires n > 0
-  ensures  exists k:int :: n*n*n - n == 3*k
+// Proves by induction on n that 2 divides n² - n.
+lemma {:induction false} DivisibleByTwo(n:nat)
+  ensures exists k:int :: n*n - n == 2*k
   decreases n
 {
   /*
     Prove this lemma by mathematical induction on n.
 
-      Base case, Q(1):
-        Show that 3 divides 1³ - 1
+      Base case, Q(0):
+        Show that 2 divides 0² - 0
 
       Induction step, Q(n-1) ⇒ Q(n):
-        Assume 3 divides (n-1)³ - (n-1), and prove that
-        3 divides n³ - n
+        Assume 2 divides (n-1)² - (n-1), and prove that
+        2 divides n² - n
 
     Hint:
       The induction hypothesis gives an existential statement. To use its

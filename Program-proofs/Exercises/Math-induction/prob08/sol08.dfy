@@ -8,7 +8,7 @@
 // Proves by induction on n that 3 divides n³ - n, for every positive
 // integer n.
 lemma {:induction false} DivisibleByThree(n:nat)
-  requires 1 <= n
+  requires n > 0
   ensures  exists k:int :: n*n*n - n == 3*k
   decreases n
 {
@@ -51,6 +51,13 @@ lemma {:induction false} DivisibleByThree(n:nat)
       == 3*k + 3*n*(n-1);
         // Factor out 3
       == 3 * (k + n*(n-1));
+    }
+    
+      // The calculation shows that k + n*(n-1) is a witness for Q(n)
+    assert exists q:int :: n*n*n - n == 3*q by 
+    {
+      var q0:int := k + n*(n-1);
+      assert n*n*n - n == 3*q0;
     }
   }
 }
