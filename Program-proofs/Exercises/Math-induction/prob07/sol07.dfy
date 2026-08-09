@@ -26,9 +26,23 @@ lemma {:induction false} SumBound(n:nat)
   decreases n
 {
   if n == 0
-    {
+  {
       // Base case: Q(0) is true
-    assert 8 * Sum(0) < (2*0 + 1) * (2*0 + 1);
+    assert 8 * Sum(0) < (2*0 + 1) * (2*0 + 1) by
+    {
+      calc
+      {
+        8 * Sum(0);
+          // Unfold Sum(0)
+        == 8 * 0;
+          // Arithmetic
+        == 0;
+          // Arithmetic
+        < 1;
+          // Arithmetic
+        == (2*0 + 1) * (2*0 + 1);
+      }
+    }
   }
   
   else

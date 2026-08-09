@@ -33,9 +33,23 @@ lemma {:induction false} SumPowersFormula(n:nat)
   decreases n
 {
   if n == 0
-    {
+  {
       // Base case: Q(0) is true
-    assert SumPowers(0) == Pow2(0+1) - 1;
+    assert SumPowers(0) == Pow2(0+1) - 1 by
+    {
+      calc
+      {
+        SumPowers(0);
+          // Unfold SumPowers(0)
+        == 1;
+          // Arithmetic
+        == 2 - 1;
+          // Fold Pow2(1)
+        == Pow2(1) - 1;
+          // Arithmetic
+        == Pow2(0+1) - 1;
+      }
+    }
   }
   
   else

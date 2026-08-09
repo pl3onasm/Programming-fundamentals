@@ -24,9 +24,19 @@ lemma {:induction false} SumOddFormula(n:nat)
   decreases n
 {
   if n == 0
-    {
+  {
       // Base case: Q(0) is true
-    assert SumOdd(0) == 0*0;
+    assert SumOdd(0) == 0*0 by
+    {
+      calc
+      {
+        SumOdd(0);
+          // Unfold SumOdd(0)
+        == 0;
+          // Arithmetic
+        == 0*0;
+      }
+    }
   }
 
   else

@@ -15,9 +15,23 @@ lemma {:induction false} ThreeConsecutiveDivisibleBySix(n:nat)
 {
   if n == 0
   {
-      // Base case: Q(0) is true
-      // We have 0 * 1 * 2 = 0 = 6 * 0.
-    assert n * (n+1) * (n+2) == 6*0;
+      // Base case: Q(0) is true. The value 0 is a witness 
+      // because 0 * 1 * 2 = 0 = 6 * 0
+    assert exists k:int :: n * (n+1) * (n+2) == 6*k by
+    {
+      var k0:int := 0;
+
+      calc
+      {
+        n * (n+1) * (n+2);
+          // Since n = 0
+        == 0 * 1 * 2;
+          // Arithmetic
+        == 0;
+          // Arithmetic
+        == 6*k0;
+      }
+    }
   }
 
   else

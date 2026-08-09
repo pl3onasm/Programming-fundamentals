@@ -18,14 +18,28 @@ ghost function SumOddSquares(n:nat): nat
 // Proves the following formula for the sum of the squares of the first n
 // odd integers by induction on n:
 //   ∑((2*i - 1)² | i: 1 ≤ i ≤ n) = n(2n-1)(2n+1)/3
+// To avoid reasoning about integer division, the lemma proves the
+// equivalent division-free form:  3 * SumOddSquares(n) = n(2n-1)(2n+1)
 lemma {:induction false} SumOddSquaresFormula(n:nat)
   ensures 3 * SumOddSquares(n) == n * (2*n - 1) * (2*n + 1)
   decreases n
 {
   if n == 0
-    {
+  {
       // Base case: Q(0) is true
-    assert 3 * SumOddSquares(0) == 0 * (2*0 - 1) * (2*0 + 1);
+    assert 3 * SumOddSquares(0) == 0 * (2*0 - 1) * (2*0 + 1) by
+    {
+      calc
+      {
+        3 * SumOddSquares(0);
+          // Unfold SumOddSquares(0)
+        == 3 * 0;
+          // Arithmetic
+        == 0;
+          // First factor is 0, so the whole product is 0
+        == 0 * (2*0 - 1) * (2*0 + 1);
+      }
+    }
   }
 
   else

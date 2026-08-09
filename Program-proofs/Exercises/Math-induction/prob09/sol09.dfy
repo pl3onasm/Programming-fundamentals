@@ -11,9 +11,23 @@ lemma {:induction false} DivisibleByTwo(n:nat)
 {
   if n == 0
   {
-      // Base case: Q(0) is true
-      // We have 0² - 0 = 0 = 2 * 0.
-    assert n*n - n == 2*0;
+      // Base case: Q(0) is true.
+      // The value 0 is a witness because 0² - 0 = 0 = 2 * 0
+    assert exists k:int :: n*n - n == 2*k by
+    {
+      var k0:int := 0;
+      
+      calc
+      {
+        n*n - n;
+          // Since n = 0
+        == 0*0 - 0;
+          // Arithmetic
+        == 0;
+          // Arithmetic
+        == 2*k0;
+      }
+    }
   }
 
   else

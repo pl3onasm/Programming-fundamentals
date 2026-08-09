@@ -32,7 +32,25 @@ lemma {:induction false} PowersInequality(n:nat)
   if n == 2
   {
       // Base case: Q(2) is true
-    assert 1 + Pow2(2) < Pow3(2);
+    assert 1 + Pow2(2) < Pow3(2) by
+    {
+      calc
+      {
+        1 + Pow2(2);
+          // Unfold Pow2(2)
+        == 1 + 2 * Pow2(1);
+          // Unfold Pow2(1)
+        == 1 + 2 * (2 * Pow2(0));
+          // Unfold Pow2(0)
+        == 1 + 2 * (2 * 1);
+          // Arithmetic
+        == 5;
+          // Arithmetic
+        < 9;
+          // Fold Pow3(2)
+        == Pow3(2);
+      }
+    }
   }
 
   else
@@ -55,7 +73,7 @@ lemma {:induction false} PowersInequality(n:nat)
       == 2 * (1 + Pow2(n-1));
         // Apply the induction hypothesis
       < 2 * Pow3(n-1);
-        // Natural number arithmetic
+        // Since Pow3(n-1) > 0
       < 3 * Pow3(n-1);
         // Rewrite 3 * Pow3(n-1) as Pow3(n)
       == Pow3(n);

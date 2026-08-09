@@ -24,9 +24,21 @@ lemma {:induction false} SumSquaresFormula(n:nat)
   decreases n
 {
   if n == 0 
-    {
+  {
       // Base case: Q(0) is true
-    assert 6 * SumSquares(0) == 0 * (0 + 1) * (2*0 + 1);
+    assert 6 * SumSquares(0) == 0 * (0 + 1) * (2*0 + 1) by
+    {
+      calc
+      {
+        6 * SumSquares(0);
+          // Unfold SumSquares(0)
+        == 6 * 0;
+          // Arithmetic
+        == 0;
+          // Arithmetic
+        == 0 * (0 + 1) * (2*0 + 1);
+      }
+    }
   }
 
   else

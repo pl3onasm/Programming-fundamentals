@@ -24,9 +24,10 @@ ghost function GeometricSum(a:int, r:int, n:nat): int
 }
 
 //========================================================================
-// To avoid reasoning about integer division, the lemma proves the
-// equivalent division-free form of the geometric sum formula:
+// Proves the following division-free geometric-sum identity:
 //   (1-r) * GeometricSum(a,r,n) = a * (1-r^n)
+// This identity holds for every integer r. When r ≠ 1, it is the
+// division-free form of the usual finite geometric-sum formula.
 lemma {:induction false} GeometricSumFormula(a:int, r:int, n:nat)
   ensures (1-r) * GeometricSum(a,r,n) == a * (1-Pow(r,n))
   decreases n
@@ -34,7 +35,23 @@ lemma {:induction false} GeometricSumFormula(a:int, r:int, n:nat)
   if n == 0
   {
       // Base case: Q(0) is true
-    assert (1-r) * GeometricSum(a,r,0) == a * (1-Pow(r,0));
+    assert (1-r) * GeometricSum(a,r,0) == a * (1-Pow(r,0)) by
+    {
+      calc
+      {
+        (1-r) * GeometricSum(a,r,0);
+          // Unfold GeometricSum(a,r,0)
+        == (1-r) * 0;
+          // Arithmetic
+        == 0;
+          // Arithmetic
+        == a * 0;
+          // Arithmetic
+        == a * (1-1);
+          // Fold Pow(r,0)
+        == a * (1-Pow(r,0));
+      }
+    }
   }
 
   else
@@ -43,7 +60,9 @@ lemma {:induction false} GeometricSumFormula(a:int, r:int, n:nat)
       // Assume Q(n-1) is true:
       //   (1-r) * GeometricSum(a,r,n-1) = a * (1-r^(n-1))
     GeometricSumFormula(a,r,n-1);
-
+      
+      // Abbreviate Pow(r,n-1) as p 
+      // to simplify the calculation below
     var p := Pow(r,n-1);
 
       // Induction step
