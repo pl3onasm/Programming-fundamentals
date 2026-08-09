@@ -20,9 +20,6 @@ ghost function Fib(n:nat): nat
 //========================================================================
 // Proves the three-step Fibonacci identity:
 //   Fib(n+3) = 2*Fib(n+1) + Fib(n)
-//
-// This identity is used in the main proof to move from Fib(3(n-1)) to
-// Fib(3n).
 lemma FibStep3(n:nat)
   ensures Fib(n+3) == 2*Fib(n+1) + Fib(n)
 {
