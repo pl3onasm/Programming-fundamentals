@@ -25,7 +25,6 @@ lemma {:induction false} ReverseConcat(xs:seq<int>, ys:seq<int>)
 
       // Prove Q([]) is true:
       //   Reverse([] + ys) = Reverse(ys) + Reverse([])
-
     assert Reverse(xs + ys) == Reverse(ys) + Reverse(xs) by
     {
       calc
