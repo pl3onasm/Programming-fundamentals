@@ -66,8 +66,8 @@ module BinaryTrees
     decreases tree
   {
     match tree
-    case Empty         => []
-    case Node(l, x, r) => Inorder(l) + [x] + Inorder(r)
+    case  Empty         => []
+    case  Node(l, x, r) => Inorder(l) + [x] + Inorder(r)
   }
 
   //======================================================================
@@ -90,7 +90,7 @@ module BinaryTrees
   // Returns the postorder traversal of a binary tree. The left and right
   // subtrees are traversed first, after which the root is visited:
   //   Postorder(Empty)                = []
-  //   Postorder(Node(left,x,right))   = Postorder(left) 
+  //   Postorder(Node(left, x, right)) = Postorder(left) 
   //                                     + Postorder(right) + [x]
   // The result is an immutable sequence containing the values in the
   // order in which they were visited during the traversal.

@@ -10,8 +10,6 @@ module PeanoNumbers
   // Represents natural numbers inductively in Peano form. A Peano number  
   // is either Zero, or the successor of another Peano number. For 
   // example, the Peano number representing 3 is Succ(Succ(Succ(Zero))).
-  //   Zero     represents 0
-  //   Succ(p)  represents the successor of p
   datatype Peano  = Zero
                   | Succ(prev:Peano)
 
@@ -19,28 +17,28 @@ module PeanoNumbers
   // Defines addition of two Peano numbers by recursion on the first
   // argument: its outer layer is peeled off until the base case is 
   // reached where the second argument is returned as is.
-  //   Add(Zero,q)    = q
-  //   Add(Succ(p),q) = Succ(Add(p,q))
+  //   Add(Zero, q)    = q
+  //   Add(Succ(p), q) = Succ(Add(p, q))
   function Add(p:Peano, q:Peano): Peano
     decreases p
   {
     match p
     case  Zero       => q
-    case  Succ(prev) => Succ(Add(prev,q))
+    case  Succ(prev) => Succ(Add(prev, q))
   }
 
   //======================================================================
   // Defines multiplication of two Peano numbers by repeated addition of 
   // the second argument. The outer layer of the first argument is peeled
   // off until the base case is reached where Zero is returned.
-  //   Multiply(Zero,q)    = Zero
-  //   Multiply(Succ(p),q) = Add(q,Multiply(p,q))
+  //   Multiply(Zero, q)    = Zero
+  //   Multiply(Succ(p), q) = Add(q, Multiply(p, q))
   function Multiply(p:Peano, q:Peano): Peano
     decreases p
   {
     match p
     case  Zero       => Zero
-    case  Succ(prev) => Add(q,Multiply(prev,q))
+    case  Succ(prev) => Add(q, Multiply(prev, q))
   }
 
   //======================================================================
