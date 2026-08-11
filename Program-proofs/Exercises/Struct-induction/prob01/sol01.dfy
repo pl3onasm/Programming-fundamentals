@@ -6,9 +6,6 @@
 
 //========================================================================
 // Recursively adds a to every element of the integer sequence xs.
-// The empty sequence remains empty. For a nonempty sequence, a is added
-// to the first element, after which the function continues recursively
-// with the tail.
 // The expression [a + xs[0]] is a singleton sequence, and + denotes
 // Dafny's built-in sequence concatenation. For a nonempty sequence xs, 
 // the slice xs[1..] denotes its tail: the sequence obtained by removing 
@@ -31,15 +28,12 @@ lemma {:induction false} AddToEachComposition(a:int, b:int, xs:seq<int>)
   if |xs| == 0
   {
       // Base case: Q([]) is true
-      // A sequence of length 0 is the empty sequence.
-    assert xs == [];
-
     assert AddToEach(a, AddToEach(b, xs)) == AddToEach(a+b, xs) by
     {
       calc
       {
         AddToEach(a, AddToEach(b, xs));
-          // Replace xs by []
+          // A sequence of length 0 is the empty sequence
         == AddToEach(a, AddToEach(b, []));
           // Unfold the inner application
         == AddToEach(a, []);
