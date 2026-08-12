@@ -46,5 +46,9 @@ lemma {:induction false} SequenceSumConcat(xs:seq<int>, ys:seq<int>)
       - The tail of xs + ys is the tail of xs concatenated 
         with ys:
           (xs + ys)[1..] = xs[1..] + ys
+
+    If you need to use any of these properties, you can simply 
+    assert them in your proof.
+    
   */
 }

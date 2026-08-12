@@ -30,6 +30,8 @@ lemma {:induction false} MulDistributesOverAdd(p:Peano, q:Peano, r:Peano)
           = Add(Mul(Succ(prev), r), Mul(q, r))
 
     Use AddAssociative from the solution to problem10 to regroup 
-    the three additions in the inductive case.
+    the three additions in the inductive case. It is included at
+    the top of this file.
+    
   */
 }

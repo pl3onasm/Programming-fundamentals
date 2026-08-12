@@ -30,5 +30,6 @@ lemma {:induction false} LengthAppend<T>(xs:List<T>, ys:List<T>)
     Otherwise, xs has the form Cons(xs.head, xs.tail), where xs.tail is
     the structurally smaller list to which the induction hypothesis
     applies.
+    
   */
 }

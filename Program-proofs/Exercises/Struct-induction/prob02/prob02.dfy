@@ -57,5 +57,8 @@ lemma {:induction false} AddToEachConcat(a:int, xs:seq<int>, ys:seq<int>)
           (xs + ys)[1..] = xs[1..] + ys
       - Sequence concatenation is associative:
           (xs + ys) + zs = xs + (ys + zs)
+          
+    If you need to use any of these properties, you can simply 
+    assert them in your proof.
   */
 }

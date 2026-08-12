@@ -26,6 +26,7 @@ lemma {:induction false} AddCommutative(p:Peano, q:Peano)
     
     Use AddRightIdentity from the solution to problem08 in the base
     case, and AddSuccessorRight from the solution to problem09 in the
-    inductive case. Both lemmas are included above.
+    inductive case. Both lemmas are included at the top of this file.
+    
   */
 }
