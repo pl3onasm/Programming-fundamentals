@@ -31,14 +31,14 @@ module PeanoNumbers
   // Defines multiplication of two Peano numbers by repeated addition of 
   // the second argument. The outer layer of the first argument is peeled
   // off until the base case is reached where Zero is returned.
-  //   Multiply(Zero, q)    = Zero
-  //   Multiply(Succ(p), q) = Add(q, Multiply(p, q))
-  function Multiply(p:Peano, q:Peano): Peano
+  //   Mul(Zero, q)    = Zero
+  //   Mul(Succ(p), q) = Add(q, Mul(p, q))
+  function Mul(p:Peano, q:Peano): Peano
     decreases p
   {
     match p
     case  Zero       => Zero
-    case  Succ(prev) => Add(q, Multiply(prev, q))
+    case  Succ(prev) => Add(q, Mul(prev, q))
   }
 
   //======================================================================
