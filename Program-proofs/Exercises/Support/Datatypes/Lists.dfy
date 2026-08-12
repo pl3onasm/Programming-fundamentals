@@ -4,8 +4,12 @@
       operations
 */
 
+include "../Math.dfy"
+
 module Lists
 {
+  import opened MathSupport
+
   //======================================================================
   // Represents a generic linked list. A list is either empty, represented
   // by the constructor Nil, or consists of a head element x and a tail
@@ -57,15 +61,17 @@ module Lists
 
   //======================================================================
   // Applies a function f to every element of a list while preserving its
-  // structure:
+  // structure. The output type (U) of f is allowed to differ from the 
+  // input type (T) of f, so that the output list may contain elements of  
+  // a different type than the input list.
   //   Map(f, Nil)          = Nil
   //   Map(f, Cons(x, xs))  = Cons(f(x), Map(f, xs))
   function Map<T,U>(f:T -> U, xs:List<T>): List<U>
     decreases xs
   {
     match xs
-    case  Nil          => Nil
-    case  Cons(x,tail) => Cons(f(x), Map(f,tail))
+    case  Nil           => Nil
+    case  Cons(x, tail) => Cons(f(x), Map(f, tail))
   }
 
   //======================================================================
@@ -74,13 +80,12 @@ module Lists
   // equality comparison, i.e. an == operator is defined for values of
   // type T.
   //   Count(x, Nil)          = 0
-  //   Count(x, Cons(y, ys))  = (if x = y then 1 else 0) + Count(x, ys)
+  //   Count(x, Cons(y, ys))  = ord(x = y) + Count(x, ys)
   function Count<T(==)>(x:T, xs:List<T>): nat
     decreases xs
   {
     match xs
-    case  Nil          => 0
-    case  Cons(y,tail) =>
-      (if x == y then 1 else 0) + Count(x,tail)
+    case  Nil           => 0
+    case  Cons(y, tail) => ord(x == y) + Count(x, tail)
   }
 }
