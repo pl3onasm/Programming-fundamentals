@@ -54,4 +54,33 @@ module Lists
     case  Nil           => Nil
     case  Cons(x, tail) => Append(Reverse(tail), Cons(x, Nil))
   }
+
+  //======================================================================
+  // Applies a function f to every element of a list while preserving its
+  // structure:
+  //   Map(f, Nil)          = Nil
+  //   Map(f, Cons(x, xs))  = Cons(f(x), Map(f, xs))
+  function Map<T,U>(f:T -> U, xs:List<T>): List<U>
+    decreases xs
+  {
+    match xs
+    case  Nil          => Nil
+    case  Cons(x,tail) => Cons(f(x), Map(f,tail))
+  }
+
+  //======================================================================
+  // Counts how many times a given value occurs in a list. The type
+  // characteristic T(==) indicates that the type T is required to support
+  // equality comparison, i.e. an == operator is defined for values of
+  // type T.
+  //   Count(x, Nil)          = 0
+  //   Count(x, Cons(y, ys))  = (if x = y then 1 else 0) + Count(x, ys)
+  function Count<T(==)>(x:T, xs:List<T>): nat
+    decreases xs
+  {
+    match xs
+    case  Nil          => 0
+    case  Cons(y,tail) =>
+      (if x == y then 1 else 0) + Count(x,tail)
+  }
 }

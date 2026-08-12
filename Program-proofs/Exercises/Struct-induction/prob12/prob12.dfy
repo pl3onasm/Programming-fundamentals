@@ -21,13 +21,13 @@ lemma {:induction false} MulDistributesOverAdd(p:Peano, q:Peano, r:Peano)
           Mul(Add(Zero, q), r)
           = Add(Mul(Zero, r), Mul(q, r))
 
-      Inductive case, Q(previous) ⇒ Q(Succ(previous)):
+      Inductive case, Q(prev) ⇒ Q(Succ(prev)):
         Assume that
-          Mul(Add(previous, q), r)
-          = Add(Mul(previous, r), Mul(q, r))
+          Mul(Add(prev, q), r)
+          = Add(Mul(prev, r), Mul(q, r))
         and prove that
-          Mul(Add(Succ(previous), q), r)
-          = Add(Mul(Succ(previous), r), Mul(q, r))
+          Mul(Add(Succ(prev), q), r)
+          = Add(Mul(Succ(prev), r), Mul(q, r))
 
     Use AddAssociative from the solution to problem10 to regroup 
     the three additions in the inductive case.
