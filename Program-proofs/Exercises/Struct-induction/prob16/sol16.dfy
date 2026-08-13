@@ -3,6 +3,7 @@
     description: proof by structural induction that reversing two
       appended lists reverses their order
 */
+
 include "../../Support/Datatypes/Lists.dfy"
 import opened Lists
 

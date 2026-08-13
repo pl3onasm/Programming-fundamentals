@@ -25,8 +25,5 @@ lemma {:induction false} LengthMap<T, U>(f:T -> U, xs:List<T>)
         and prove that
           Length(Map(f, Cons(x, tail))) = Length(Cons(x, tail))
     
-    In the inductive case, mapping changes the head value from x to f(x),
-    but it does not change the number of list constructors.
-    
   */
 }

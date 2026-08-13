@@ -21,14 +21,14 @@ lemma {:induction false} MapAppend<T, U>(f:T -> U, xs:List<T>, ys:List<T>)
       Base case, Q(Nil):
         Show that
           Map(f, Append(Nil, ys))
-            = Append(Map(f, Nil), Map(f, ys))
+          = Append(Map(f, Nil), Map(f, ys))
    
       Inductive case, Q(tail) ⇒ Q(Cons(x, tail)):
         Assume that
           Map(f, Append(tail, ys))
-            = Append(Map(f, tail), Map(f, ys))
+          = Append(Map(f, tail), Map(f, ys))
         and prove that
           Map(f, Append(Cons(x, tail), ys))
-            = Append(Map(f, Cons(x, tail)), Map(f, ys))
+          = Append(Map(f, Cons(x, tail)), Map(f, ys))
   */
 }
