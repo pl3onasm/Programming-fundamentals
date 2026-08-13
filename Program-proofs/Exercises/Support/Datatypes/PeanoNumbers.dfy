@@ -42,7 +42,7 @@ module PeanoNumbers
   }
 
   //======================================================================
-  // Converts a Peano number to the corresponding Dafny natural number:
+  // Converts a Peano number to the corresponding natural number:
   //   PeanoToNat(Zero)    = 0
   //   PeanoToNat(Succ(p)) = PeanoToNat(p) + 1
   function PeanoToNat(p:Peano): nat
@@ -54,7 +54,7 @@ module PeanoNumbers
   }
 
   //======================================================================
-  // Converts a Dafny natural number to the corresponding Peano number:
+  // Converts a natural number to the corresponding Peano number:
   //   PeanoFromNat(0) = Zero
   //   PeanoFromNat(n) = Succ(PeanoFromNat(n-1)), for n > 0
   function PeanoFromNat(n:nat): Peano

@@ -36,6 +36,18 @@ module MathSupport {
   {
     if b then 1 else 0
   }
+
+  //========================================================================
+  // Composes two total functions:  Compose(f, g)(x) = f(g(x))
+  // The result is an anonymous function that first applies g to its input
+  // and then applies f to the output of g. The input type A, the
+  // intermediate type B, and the output type C can, but need not, be the
+  // same. The expression x => f(g(x)) is a lambda expression defining
+  // this anonymous function.
+  function Compose<A, B, C>(f:B -> C, g:A -> B): A -> C
+  {
+    x => f(g(x))
+  }
   
   //========================================================================
   // Proves that multiplication by the same natural number preserves an
@@ -86,4 +98,5 @@ module MathSupport {
       <= b*b;
     }
   }
+
 }
