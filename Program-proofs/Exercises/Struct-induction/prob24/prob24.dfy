@@ -31,17 +31,14 @@ lemma {:induction false} SetPartitionCardinality<T>(
     Prove this lemma by induction on the finite set A.
 
       Base case, Q({}):
-        Show that  |{} ∩ B| + |{} \ B| = |{}|
+        Show that       |{} ∩ B| + |{} \ B| = |{}|
 
       Inductive case, Q(R) ⇒ Q(R ∪ {x}):
-        Choose an arbitrary element x ∈ A and let
-          R = A - {x}.
+        Choose an arbitrary element x ∈ A and let R = A - {x}
 
-        Assume that
-          |R ∩ B| + |R \ B| = |R|
+        Assume that     |R ∩ B| + |R \ B| = |R|
 
-        and prove that
-          |A ∩ B| + |A \ B| = |A|
+        and prove that  |A ∩ B| + |A \ B| = |A|
 
     Distinguish whether x ∈ B. If it is, inserting x enlarges the
     intersection by one. Otherwise, it enlarges the difference by one.
