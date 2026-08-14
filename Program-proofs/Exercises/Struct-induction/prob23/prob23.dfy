@@ -33,8 +33,7 @@ lemma {:induction false} InorderMirror(tree:BinTree<int>)
             = Reverse(Inorder(Node(left, x, right)))
 
     The sequence function Reverse and the lemma ReverseConcat are
-    imported from the solution to problem05. In the inductive case, use
-    ReverseConcat to reverse the concatenation
-    Inorder(left) + [x] + Inorder(right)
+    imported from the solution to problem05. In the inductive case, 
+    use ReverseConcat twice in reverse direction.
   */
 }
