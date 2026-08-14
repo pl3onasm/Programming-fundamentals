@@ -11,8 +11,8 @@
     must first be traversed to reach the end of the list before the head
     element can be added. For a list of length n, these traversals have
     lengths 0, 1, ..., n-1. The sum of these traversal lengths is 
-    therefore proportional to n², resulting in a quadratic-time 
-    implementation of Reverse.
+    0 + 1 + ... + (n-1) = n(n-1)/2, which is Θ(n²). The original Reverse 
+    function therefore has quadratic time complexity.
     The more efficient implementation, called FastReverse, uses an
     initially empty accumulator list to collect the partial result. Each
     recursive step removes one element from the front of the input list
