@@ -24,9 +24,10 @@ ghost function Cartesian<A, B>(S:set<A>, T:set<B>): set<(A, B)>
 ghost function Row<A, B>(x:A, T:set<B>): set<(A, B)>
 {
     // Image is defined in prob25/sol25.dfy
-    // Here the function y ↦ (x, y) is applied to every element of T,
-    // producing a set of pairs whose first component is x and whose
-    // second component is an element of T
+    // The expression (y:B) => (x, y) is a lambda expression defining
+    // the anonymous function y ↦ (x, y). Applying this function to
+    // every element of T produces a set of pairs whose first component
+    // is x and whose second component is an element of T.
   Image((y:B) => (x, y), T)
 }
 
