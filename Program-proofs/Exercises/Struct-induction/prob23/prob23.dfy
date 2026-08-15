@@ -20,17 +20,16 @@ lemma {:induction false} InorderMirror(tree:BinTree<int>)
   /*
     Prove this lemma by structural induction on tree.
 
-      Base case, Q(Empty):
-        Show that
-          Inorder(Mirror(Empty)) = Reverse(Inorder(Empty))
+    Base case, Q(Empty):
+      Show that     Inorder(Mirror(Empty)) = Reverse(Inorder(Empty))
 
-      Inductive case, Q(left) ∧ Q(right) ⇒ Q(Node(left, x, right)):
-        Assume that
-          Inorder(Mirror(left))  = Reverse(Inorder(left))
-          Inorder(Mirror(right)) = Reverse(Inorder(right))
-        and prove that
-          Inorder(Mirror(Node(left, x, right)))
-            = Reverse(Inorder(Node(left, x, right)))
+    Inductive case, Q(left) ∧ Q(right) ⇒ Q(Node(left, x, right)):
+
+      Assume that   Inorder(Mirror(left))  = Reverse(Inorder(left))
+                    Inorder(Mirror(right)) = Reverse(Inorder(right))
+                    
+      prove that    Inorder(Mirror(Node(left, x, right)))
+                    = Reverse(Inorder(Node(left, x, right)))
 
     The sequence function Reverse and the lemma ReverseConcat are
     imported from the solution to problem05. In the inductive case, 

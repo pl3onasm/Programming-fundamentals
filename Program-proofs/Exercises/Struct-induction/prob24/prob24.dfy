@@ -22,8 +22,7 @@ import opened SetSupport
 // into two disjoint sets with cardinalities that sum to the cardinality 
 // of A:   |A ∩ B| + |A \ B| = |A|
 // In Dafny, * denotes set intersection and - denotes set difference.
-lemma {:induction false} SetPartitionCardinality<T>(
-  A:set<T>, B:set<T>)
+lemma {:induction false} SetPartitionCardinality<T>(A:set<T>, B:set<T>)
   ensures   |A * B| + |A - B| == |A|
   decreases |A|
 {
