@@ -4,14 +4,14 @@
     prob24
 
     NOTE:
-    Although Dafny can prove the lemmas in this file automatically, the 
-    purpose of this exercise is to practice writing an explicit 
+    Although Dafny can prove both lemmas in this file automatically, the
+    purpose of the first lemma is to practice writing an explicit
     finite-set induction proof. Its proof should therefore distinguish
-    the base case and inductive case, and explicitly invoke the induction 
-    hypothesis by applying the lemma recursively to the strictly smaller 
-    set R = A - {x}, obtained by removing an arbitrary element x from A. 
-    The second lemma should then be derived as a direct corollary of 
-    the first.
+    the base and inductive cases and explicitly invoke the induction
+    hypothesis by applying the lemma recursively to the strictly smaller
+    set R = A - {x}, obtained by removing an arbitrary element x from A.
+    The second lemma should then be derived as a direct corollary of the
+    first.
 */
 
 include "../../Support/Sets.dfy"

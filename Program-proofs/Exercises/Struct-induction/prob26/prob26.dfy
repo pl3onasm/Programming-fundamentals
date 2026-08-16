@@ -10,9 +10,9 @@ import opened SetSupport
 //========================================================================
 // Defines the Cartesian product of the finite sets S and T:
 //   Cartesian(S, T) = {(x, y) | x ∈ S ∧ y ∈ T}
-// The Cartesian product of two finite sets is the set of all ordered 
-// pairs whose first component is an element of S and whose second
-// component is an element of T.
+// The Cartesian product of two finite sets S and T is the set of all  
+// ordered pairs whose first component is an element of S and whose 
+// second component is an element of T.
 ghost function Cartesian<A, B>(S:set<A>, T:set<B>): set<(A, B)>
 {
   set x:A, y:B | x in S && y in T :: (x, y)
