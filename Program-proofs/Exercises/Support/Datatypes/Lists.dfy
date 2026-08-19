@@ -88,4 +88,20 @@ module Lists
     case  Nil           => 0
     case  Cons(y, tail) => ord(x == y) + Count(x, tail)
   }
+
+  //======================================================================
+  // Retains exactly those elements of a list that satisfy predicate p,
+  // while preserving their original order:
+  //   Filter(p, Nil)          = Nil
+  //   Filter(p, Cons(x, xs))  = Cons(x, Filter(p, xs)), if p(x)
+  //                             Filter(p, xs), otherwise
+  function Filter<T>(p:T -> bool, xs:List<T>): List<T>
+    decreases xs
+  {
+    match xs
+    case  Nil           => Nil
+    case  Cons(x, tail) => if p(x) then Cons(x, Filter(p, tail))
+                                   else Filter(p, tail)
+  }
+
 }
