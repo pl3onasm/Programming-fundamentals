@@ -4,40 +4,41 @@
     prob19
 */
 
-include "../../Support/Datatypes/BinaryTrees.dfy"
-import opened BinaryTrees
+include "../../Support/Datatypes/Lists.dfy"
+import opened Lists
 
 //========================================================================
-// Proves that the length of the inorder traversal of a binary tree equals
-// the number of nodes in the tree:  |Inorder(tree)| = Size(tree)
-lemma {:induction false} InorderLength<T>(tree:BinTree<T>)
-  ensures |Inorder(tree)| == Size(tree)
-  decreases tree
+// Proves that mapping f over a list and then filtering the resulting
+// values with p is equivalent to first retaining exactly those original
+// values x for which p(f(x)) holds, and then mapping f over them:
+//
+//   Filter(p, Map(f, xs)) = Map(f, Filter(x => p(f(x)), xs))
+//
+// The lambda expression (x:A) => p(f(x)) defines a predicate on the
+// original element type A. It holds for an element x exactly when its
+// mapped value f(x) satisfies the predicate p on the element type B.
+lemma {:induction false} MapFilter<A,B>(f:A -> B, p:B -> bool, xs:List<A>)
+  ensures Filter(p, Map(f, xs)) == Map(f, Filter((x:A) => p(f(x)), xs))
+  decreases xs
 {
   /*
-    Prove this lemma by structural induction on tree.
+    Prove this lemma by structural induction on xs.
 
-      Base case, Q(Empty):
-        Show that  |Inorder(Empty)| = Size(Empty)
+    Base case, Q(Nil):
 
-      Inductive case, Q(left) ∧ Q(right) ⇒ Q(Node(left, x, right)):
-        Assume that
-          |Inorder(left) | = Size(left)
-          |Inorder(right)| = Size(right)
+      Show that     Filter(p, Map(f, Nil))
+                    = Map(f, Filter(x => p(f(x)), Nil))
 
-        and prove that
-          |Inorder(Node(left, x, right))|
-          = Size(Node(left, x, right))
+    Inductive case, Q(tail) ⇒ Q(Cons(x, tail)):
+    
+      Assume that   Filter(p, Map(f, tail))
+                    = Map(f, Filter(x => p(f(x)), tail))
 
-    Distinguish between the base case and the inductive case by testing
-    whether tree is Empty or not. In the inductive case, the induction 
-    hypothesis applies to both structurally smaller subtrees, left and 
-    right, and is used to prove the equality for the larger tree, which
-    wraps the two subtrees in a new root node, Node(left, x, right).
-    You may want to use the following property of the length of a 
-    concatenation of sequences:
-          |s1 + s2| = |s1| + |s2|
-    Dafny knows about this property, so you can use it without having 
-    to prove it.
+      Prove that    Filter(p, Map(f, Cons(x, tail)))
+                    = Map(f, Filter(x => p(f(x)), Cons(x, tail)))
+
+    In the inductive case, distinguish whether p(f(x)) holds. If it
+    does, both sides retain the mapped head f(x). Otherwise, both 
+    sides discard it.
   */
 }

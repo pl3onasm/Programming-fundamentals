@@ -18,12 +18,14 @@ lemma {:induction false} AddSuccessorRight(p:Peano, q:Peano)
     Prove this lemma by structural induction on p.
 
       Base case, Q(Zero):
-        Show that  Add(Zero, Succ(q)) = Succ(Add(Zero, q))
+      
+        Show that     Add(Zero, Succ(q)) = Succ(Add(Zero, q))
 
       Inductive case, Q(prev) ⇒ Q(Succ(prev)):
+
         Assume that   Add(prev, Succ(q)) = Succ(Add(prev, q))
-        and prove that
-          Add(Succ(prev), Succ(q)) = Succ(Add(Succ(prev), q))
+
+        Prove that    Add(Succ(prev), Succ(q)) = Succ(Add(Succ(prev), q))
 
     The induction is performed on p because the function Add recurses 
     on its first argument, even though the property we want to prove

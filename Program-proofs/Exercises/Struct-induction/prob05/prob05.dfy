@@ -20,16 +20,19 @@ lemma {:induction false} ReverseConcat(xs:seq<int>, ys:seq<int>)
     Prove this lemma by structural induction on xs.
 
       Base case, Q([]):
-        Show that  Reverse([] + ys)
-                   = Reverse(ys) + Reverse([])
+      
+        Show that     Reverse([] + ys)
+                      = Reverse(ys) + Reverse([])
 
       Inductive case, Q(xs[1..]) ⇒ Q(xs):
-        Assume that  Reverse(xs[1..] + ys)
-                     = Reverse(ys) + Reverse(xs[1..])
+      
+        Assume that   Reverse(xs[1..] + ys)
+                      = Reverse(ys) + Reverse(xs[1..])
 
         and prove, for nonempty xs, that
-          Reverse(xs + ys)
-          = Reverse(ys) + Reverse(xs)
+
+                      Reverse(xs + ys)
+                      = Reverse(ys) + Reverse(xs)
 
     You may find the following properties useful:
       - The empty sequence is a left and right identity for  

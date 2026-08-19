@@ -72,15 +72,20 @@ lemma {:induction false} ReverseAccProp<T>(xs:List<T>, acc:List<T>)
     cases xs = Nil and xs = Cons(x, tail).
 
       Base case, Q(Nil):
-        Show that ReverseAcc(Nil, acc) = Append(Reverse(Nil), acc)
+
+        Show that   ReverseAcc(Nil, acc) = Append(Reverse(Nil), acc)
 
       Inductive case, Q(tail) ⇒ Q(Cons(x, tail)):
+
         Assume that the property holds for tail:
-          ReverseAcc(tail, Cons(x, acc))
-          = Append(Reverse(tail), Cons(x, acc))
+
+                    ReverseAcc(tail, Cons(x, acc))
+                    = Append(Reverse(tail), Cons(x, acc))
+          
         Then prove that it holds for Cons(x, tail):
-          ReverseAcc(Cons(x, tail), acc)
-          = Append(Reverse(Cons(x, tail)), acc)
+        
+                    ReverseAcc(Cons(x, tail), acc)
+                    = Append(Reverse(Cons(x, tail)), acc)
 
     Use AppendAssociative that was given in the solution to problem16.
   */

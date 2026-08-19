@@ -39,17 +39,17 @@ lemma {:induction false} ReverseAppend<T>(xs:List<T>, ys:List<T>)
     Prove this lemma by structural induction on xs.
 
       Base case, Q(Nil):
-        Show that
-          Reverse(Append(Nil, ys))
-          = Append(Reverse(ys), Reverse(Nil))
+      
+        Show that     Reverse(Append(Nil, ys))
+                      = Append(Reverse(ys), Reverse(Nil))
 
       Inductive case, Q(tail) ⇒ Q(Cons(x, tail)):
-        Assume that
-          Reverse(Append(tail, ys))
-          = Append(Reverse(ys), Reverse(tail))
-        and prove that
-          Reverse(Append(Cons(x, tail), ys))
-          = Append(Reverse(ys), Reverse(Cons(x, tail)))
+
+        Assume that   Reverse(Append(tail, ys))
+                      = Append(Reverse(ys), Reverse(tail))
+
+        Prove that    Reverse(Append(Cons(x, tail), ys))
+                      = Append(Reverse(ys), Reverse(Cons(x, tail)))
 
     Use the right-identity property in the base case and associativity 
     in the inductive case.

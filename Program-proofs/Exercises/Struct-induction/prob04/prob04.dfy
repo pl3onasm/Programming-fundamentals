@@ -29,16 +29,19 @@ lemma {:induction false} ReversePreservesSum(xs:seq<int>)
     Prove this lemma by structural induction on xs.
 
       Base case, Q([]):
-        Show that  SequenceSum([])
-                   = SequenceSum(Reverse([]))
+      
+        Show that     SequenceSum([])
+                      = SequenceSum(Reverse([]))
 
       Inductive case, Q(xs[1..]) ⇒ Q(xs):
-        Assume that  SequenceSum(xs[1..])
-                     = SequenceSum(Reverse(xs[1..]))
+
+        Assume that   SequenceSum(xs[1..])
+                      = SequenceSum(Reverse(xs[1..]))
 
         and prove, for nonempty xs, that
-          SequenceSum(xs)
-          = SequenceSum(Reverse(xs))
+
+                      SequenceSum(xs)
+                      = SequenceSum(Reverse(xs))
 
     Use SequenceSumConcat from the solution to problem03. 
     It is included at the top of this file.

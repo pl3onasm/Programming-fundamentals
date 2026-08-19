@@ -17,17 +17,17 @@ lemma {:induction false} MulDistributesOverAdd(p:Peano, q:Peano, r:Peano)
     Prove this lemma by structural induction on p.
 
       Base case, Q(Zero):
-        Show that
-          Mul(Add(Zero, q), r)
-          = Add(Mul(Zero, r), Mul(q, r))
+      
+        Show that     Mul(Add(Zero, q), r)
+                      = Add(Mul(Zero, r), Mul(q, r))
 
       Inductive case, Q(prev) ⇒ Q(Succ(prev)):
-        Assume that
-          Mul(Add(prev, q), r)
-          = Add(Mul(prev, r), Mul(q, r))
-        and prove that
-          Mul(Add(Succ(prev), q), r)
-          = Add(Mul(Succ(prev), r), Mul(q, r))
+
+        Assume that   Mul(Add(prev, q), r)
+                      = Add(Mul(prev, r), Mul(q, r))
+
+        Prove that    Mul(Add(Succ(prev), q), r)
+                      = Add(Mul(Succ(prev), r), Mul(q, r))
 
     Use AddAssociative from the solution to problem10 to regroup 
     the three additions in the inductive case. It is included at

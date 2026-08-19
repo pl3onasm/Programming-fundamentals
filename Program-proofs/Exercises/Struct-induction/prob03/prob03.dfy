@@ -25,16 +25,19 @@ lemma {:induction false} SequenceSumConcat(xs:seq<int>, ys:seq<int>)
     Prove this lemma by structural induction on xs.
 
       Base case, Q([]):
-        Show that  SequenceSum([] + ys)
-                   = SequenceSum([]) + SequenceSum(ys)
+      
+        Show that     SequenceSum([] + ys)
+                      = SequenceSum([]) + SequenceSum(ys)
 
       Inductive case, Q(xs[1..]) ⇒ Q(xs):
-        Assume that  SequenceSum(xs[1..] + ys)
-                     = SequenceSum(xs[1..]) + SequenceSum(ys)
+      
+        Assume that   SequenceSum(xs[1..] + ys)
+                      = SequenceSum(xs[1..]) + SequenceSum(ys)
 
         and prove, for nonempty xs, that
-          SequenceSum(xs + ys)
-          = SequenceSum(xs) + SequenceSum(ys)
+
+                      SequenceSum(xs + ys)
+                      = SequenceSum(xs) + SequenceSum(ys)
 
     You may find the following properties useful:
       - The empty sequence is a left identity for sequence 

@@ -18,12 +18,14 @@ lemma {:induction false} AddRightIdentity(p:Peano)
     Prove this lemma by structural induction on p.
       
       Base case, Q(Zero):
-        Show that  Add(Zero, Zero) = Zero
+      
+        Show that     Add(Zero, Zero) = Zero
 
       Inductive case, Q(prev) ⇒ Q(Succ(prev)):
-        Assume that  Add(prev, Zero) = prev
-        and prove that
-          Add(Succ(prev), Zero) = Succ(prev)
+
+        Assume that   Add(prev, Zero) = prev
+
+        Prove that    Add(Succ(prev), Zero) = Succ(prev)
 
     Recall that Add recurses on its first argument. Although the left
     identity Add(Zero, p) = p follows directly from its definition, 

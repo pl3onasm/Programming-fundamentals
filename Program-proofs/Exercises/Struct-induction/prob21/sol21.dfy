@@ -1,39 +1,40 @@
 /*  file: sol21.dfy
     author: David De Potter
-    description: proof by structural induction that mirroring a binary
-      tree twice returns the original tree
+    description: proof by structural induction that the length of an
+      inorder traversal equals the size of the tree
 */
 
 include "../../Support/Datatypes/BinaryTrees.dfy"
 import opened BinaryTrees
 
 //========================================================================
-// Proves by structural induction on tree that mirroring it twice returns
-// the original tree:  Mirror(Mirror(tree)) = tree
-lemma {:induction false} MirrorTwice<T>(tree:BinTree<T>)
-  ensures Mirror(Mirror(tree)) == tree
+// Proves by structural induction on tree that the length of its inorder
+// traversal equals its number of nodes:  |Inorder(tree)| = Size(tree)
+lemma {:induction false} InorderLength<T>(tree:BinTree<T>)
+  ensures |Inorder(tree)| == Size(tree)
   decreases tree
 {
   if tree == Empty
   {
       // Base case: Q(Empty) is true
-    assert Mirror(Mirror(tree)) == tree by
+    assert |Inorder(tree)| == Size(tree) by
     {
       calc
       {
-        Mirror(Mirror(tree));
+        |Inorder(tree)|;
           // Replace tree by Empty
-        == Mirror(Mirror<T>(Empty));
-          // Unfold the inner application of Mirror
-        == Mirror<T>(Empty);
-          // Unfold the outer application of Mirror
-        == Empty;
+        == |Inorder<T>(Empty)|;
+          // Unfold Inorder(Empty); the length
+          // of the empty sequence is 0
+        == 0;
+          // Fold Size(Empty)
+        == Size<T>(Empty);
           // Replace Empty by tree
-        == tree;
+        == Size(tree);
       }
     }
   }
-  
+
   else
   {
       // Since tree ≠ Empty, it has the form 
@@ -46,26 +47,30 @@ lemma {:induction false} MirrorTwice<T>(tree:BinTree<T>)
 
       // Induction hypotheses
       // Assume Q(left) and Q(right) are true:
-      //   Mirror(Mirror(left))  = left
-      //   Mirror(Mirror(right)) = right
-    MirrorTwice(left);
-    MirrorTwice(right);
+      //   |Inorder(left) | = Size(left)
+      //   |Inorder(right)| = Size(right)
+    InorderLength(left);
+    InorderLength(right);
 
       // Inductive case
       // Prove Q(Node(left, x, right)) is true
     calc
     {
-      Mirror(Mirror(tree));
+      |Inorder(tree)|;
         // Replace tree by Node(left, x, right)
-      == Mirror(Mirror(Node(left, x, right)));
-        // Unfold the inner application of Mirror
-      == Mirror(Node(Mirror(right), x, Mirror(left)));
-        // Unfold the outer application of Mirror
-      == Node(Mirror(Mirror(left)), x, Mirror(Mirror(right)));
+      == |Inorder(Node(left, x, right))|;
+        // Unfold Inorder
+      == |Inorder(left) + [x] + Inorder(right)|;
+        // The length of a concatenation is the sum of its lengths
+      == |Inorder(left)| + 1 + |Inorder(right)|;
         // Apply both induction hypotheses
-      == Node(left, x, right);
+      == Size(left) + 1 + Size(right);
+        // Addition is commutative
+      == 1 + Size(left) + Size(right);
+        // Fold Size
+      == Size(Node(left, x, right));
         // Replace Node(left, x, right) by tree
-      == tree;
+      == Size(tree);
     }
   }
 }

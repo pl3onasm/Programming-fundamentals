@@ -18,13 +18,15 @@ lemma {:induction false} LengthAppend<T>(xs:List<T>, ys:List<T>)
     Prove this lemma by structural induction on xs.
 
       Base case, Q(Nil):
-        Show that  Length(Append(Nil, ys)) = Length(Nil) + Length(ys)
+      
+        Show that     Length(Append(Nil, ys)) = Length(Nil) + Length(ys)
         
       Inductive case, Q(tail) ⇒ Q(Cons(x, tail)):
-        Assume that  Length(Append(tail, ys)) = Length(tail) + Length(ys)
-        and prove that
-          Length(Append(Cons(x, tail), ys))
-          = Length(Cons(x, tail)) + Length(ys)
+        
+        Assume that   Length(Append(tail, ys)) = Length(tail) + Length(ys)
+        
+        Prove that    Length(Append(Cons(x, tail), ys))
+                      = Length(Cons(x, tail)) + Length(ys)
     
     Distinguish the two structural cases by testing whether xs = Nil.
     Otherwise, xs has the form Cons(xs.head, xs.tail), where xs.tail is

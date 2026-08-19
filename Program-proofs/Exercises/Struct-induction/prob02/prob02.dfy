@@ -25,21 +25,19 @@ lemma {:induction false} AddToEachConcat(a:int, xs:seq<int>, ys:seq<int>)
     Prove this lemma by structural induction on xs.
 
       Base case, Q([]):
-        Show that
-
-          AddToEach(a, [] + ys)
-          = AddToEach(a, []) + AddToEach(a, ys)
+      
+        Show that       AddToEach(a, [] + ys)
+                        = AddToEach(a, []) + AddToEach(a, ys)
 
       Inductive case, Q(xs[1..]) ⇒ Q(xs):
-        Assume that
 
-          AddToEach(a, xs[1..] + ys)
-          = AddToEach(a, xs[1..]) + AddToEach(a, ys)
+        Assume that     AddToEach(a, xs[1..] + ys)
+                        = AddToEach(a, xs[1..]) + AddToEach(a, ys)
 
         and prove, for nonempty xs, that
 
-          AddToEach(a, xs + ys)
-          = AddToEach(a, xs) + AddToEach(a, ys)
+                        AddToEach(a, xs + ys)
+                        = AddToEach(a, xs) + AddToEach(a, ys)
 
     In the inductive case, xs[1..] is structurally smaller than xs
     because |xs[1..]| = |xs| - 1. Call AddToEachConcat recursively

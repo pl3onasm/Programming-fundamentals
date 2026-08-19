@@ -1,7 +1,9 @@
 /*  file: sol22.dfy
     author: David De Potter
-    description: proof by structural induction that mapping composed
-      functions over a binary tree is equivalent to successive mappings
+    description: Proof by structural induction that the height of a
+      binary tree is bounded by its size.
+      In fact, equality holds for a degenerate tree in which every node 
+      has at most one nonempty subtree.
 */
 
 include "../../Support/Datatypes/BinaryTrees.dfy"
@@ -11,32 +13,30 @@ import opened BinaryTrees
 import opened MathSupport
 
 //========================================================================
-// Proves by structural induction on tree that mapping g and then f is
-// equivalent to mapping their composition once:
-//   MapTree(f, MapTree(g, tree)) = MapTree(Compose(f, g), tree)
-lemma {:induction false} 
-MapTreeComposition<A, B, C>(f:B -> C, g:A -> B, tree:BinTree<A>)
-  ensures MapTree(f, MapTree(g, tree)) == MapTree(Compose(f, g), tree)
+// Proves by structural induction on tree that its height is at most its
+// number of nodes:  Height(tree) ≤ Size(tree)
+lemma {:induction false} HeightBoundedBySize<T>(tree:BinTree<T>)
+  ensures Height(tree) <= Size(tree)
   decreases tree
 {
   if tree == Empty
   {
       // Base case: Q(Empty) is true
-    assert MapTree(f, MapTree(g, tree)) == MapTree(Compose(f, g), tree) by
+    assert Height(tree) <= Size(tree) by
     {
       calc
       {
-        MapTree(f, MapTree(g, tree));
+        Height(tree);
           // Replace tree by Empty
-        == MapTree(f, MapTree(g, Empty));
-          // Unfold the inner application of MapTree
-        == MapTree(f, Empty);
-          // Unfold the outer application of MapTree
-        == Empty;
-          // Fold MapTree(Compose(f, g), Empty)
-        == MapTree(Compose(f, g), Empty);
+        == Height<T>(Empty);
+          // Unfold Height(Empty)
+        == 0;
+          // Arithmetic
+        <= 0;
+          // Fold Size(Empty)
+        == Size<T>(Empty);
           // Replace Empty by tree
-        == MapTree(Compose(f, g), tree);
+        == Size(tree);
       }
     }
   }
@@ -50,33 +50,58 @@ MapTreeComposition<A, B, C>(f:B -> C, g:A -> B, tree:BinTree<A>)
     var left  := tree.left;
     var x     := tree.value;
     var right := tree.right;
-    
+
       // Induction hypotheses
       // Assume Q(left) and Q(right) are true:
-      //   MapTree(f, MapTree(g, left))  = MapTree(Compose(f, g), left)
-      //   MapTree(f, MapTree(g, right)) = MapTree(Compose(f, g), right)
-    MapTreeComposition(f, g, left);
-    MapTreeComposition(f, g, right);
+      //   Height(left)  ≤ Size(left)
+      //   Height(right) ≤ Size(right)
+    HeightBoundedBySize(left);
+    HeightBoundedBySize(right);
+
+      // The maximum of the two subtree heights is bounded 
+      // by the sum of the sizes of both subtrees.
+    if Height(left) >= Height(right)
+    {
+      calc
+      {
+        maximum(Height(left), Height(right));
+          // Unfold maximum using Height(left) ≥ Height(right)
+        == Height(left);
+          // Apply the induction hypothesis for left
+        <= Size(left);
+          // Add the size of the right subtree
+        <= Size(left) + Size(right);
+      }
+    }
+    else
+    {
+      calc
+      {
+        maximum(Height(left), Height(right));
+          // Unfold maximum using Height(left) < Height(right)
+        == Height(right);
+          // Apply the induction hypothesis for right
+        <= Size(right);
+          // Add the size of the left subtree
+        <= Size(left) + Size(right);
+      }
+    }
 
       // Inductive case
       // Prove Q(Node(left, x, right)) is true
     calc
     {
-      MapTree(f, MapTree(g, tree));
+      Height(tree);
         // Replace tree by Node(left, x, right)
-      == MapTree(f, MapTree(g, Node(left, x, right)));
-        // Unfold the inner application of MapTree
-      == MapTree(f, Node(MapTree(g, left), g(x), MapTree(g, right)));
-        // Unfold the outer application of MapTree
-      == Node(MapTree(f, MapTree(g, left)),
-              f(g(x)), MapTree(f, MapTree(g, right)));
-        // Apply both induction hypotheses and the definition of Compose
-      == Node(MapTree(Compose(f, g), left),
-              Compose(f, g)(x), MapTree(Compose(f, g), right));
-        // Fold MapTree(Compose(f, g), Node(left, x, right))
-      == MapTree(Compose(f, g), Node(left, x, right));
+      == Height(Node(left, x, right));
+        // Unfold Height
+      == 1 + maximum(Height(left), Height(right));
+        // Apply the bound established above
+      <= 1 + Size(left) + Size(right);
+        // Fold Size
+      == Size(Node(left, x, right));
         // Replace Node(left, x, right) by tree
-      == MapTree(Compose(f, g), tree);
+      == Size(tree);
     }
   }
 }

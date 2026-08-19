@@ -1,128 +1,82 @@
 /*  file: sol24.dfy
     author: David De Potter
-    description: proof by finite-set induction of the cardinality of a
-      partition formed by intersection and difference
+    description: proof by structural induction that mapping composed
+      functions over a binary tree is equivalent to successive mappings
 */
 
-include "../../Support/Sets.dfy"
-import opened SetSupport
+include "../../Support/Datatypes/BinaryTrees.dfy"
+include "../../Support/Math.dfy"
+
+import opened BinaryTrees
+import opened MathSupport
 
 //========================================================================
-// Proves that intersecting A with B and removing B from A partitions A 
-// into two disjoint sets with cardinalities that sum to the cardinality 
-// of A:   |A ∩ B| + |A \ B| = |A|
-lemma {:induction false} SetPartitionCardinality<T>(A:set<T>, B:set<T>)
-  ensures   |A * B| + |A - B| == |A|
-  decreases |A|
+// Proves by structural induction on tree that mapping g and then f is
+// equivalent to mapping their composition once:
+//   MapTree(f, MapTree(g, tree)) = MapTree(Compose(f, g), tree)
+lemma {:induction false} 
+MapTreeComposition<A, B, C>(f:B -> C, g:A -> B, tree:BinTree<A>)
+  ensures MapTree(f, MapTree(g, tree)) == MapTree(Compose(f, g), tree)
+  decreases tree
 {
-  if A == {}
+  if tree == Empty
   {
-    assert |A * B| + |A - B| == |A| by
+      // Base case: Q(Empty) is true
+    assert MapTree(f, MapTree(g, tree)) == MapTree(Compose(f, g), tree) by
     {
       calc
       {
-        |A * B| + |A - B|;
-          // Replace A by the empty set
-        == |{} * B| + |{} - B|;
-          // The intersection of the empty set with any set is empty
-        == 0 + |{} - B|;
-          // The difference of the empty set with any set is empty
-        == 0 + 0;
-          // Arithmetic
-        == 0;
-          // The set A is empty, so its cardinality is 0
-        == |A|;
+        MapTree(f, MapTree(g, tree));
+          // Replace tree by Empty
+        == MapTree(f, MapTree(g, Empty));
+          // Unfold the inner application of MapTree
+        == MapTree(f, Empty);
+          // Unfold the outer application of MapTree
+        == Empty;
+          // Fold MapTree(Compose(f, g), Empty)
+        == MapTree(Compose(f, g), Empty);
+          // Replace Empty by tree
+        == MapTree(Compose(f, g), tree);
       }
     }
   }
 
   else
   {
-      // Choose an arbitrary element x of the nonempty set A. Removing x
-      // gives the strictly smaller set R used for the induction step.
-    var x:T :| x in A;
-    var R := A - {x};
+      // Since tree ≠ Empty, it has the form 
+      // Node(tree.left, tree.value, tree.right)
+      // Let left and right denote its two structurally smaller 
+      // subtrees, and let x denote its root value.
+    var left  := tree.left;
+    var x     := tree.value;
+    var right := tree.right;
+    
+      // Induction hypotheses
+      // Assume Q(left) and Q(right) are true:
+      //   MapTree(f, MapTree(g, left))  = MapTree(Compose(f, g), left)
+      //   MapTree(f, MapTree(g, right)) = MapTree(Compose(f, g), right)
+    MapTreeComposition(f, g, left);
+    MapTreeComposition(f, g, right);
 
-      // Induction hypothesis
-      // Assume Q(R) is true:
-      //   |R ∩ B| + |R \ B| = |R|
-    SetPartitionCardinality(R, B);
-
-    if x in B
+      // Inductive case
+      // Prove Q(Node(left, x, right)) is true
+    calc
     {
-        // Since x ∈ B, inserting x into R enlarges the intersection
-        // by one and leaves the difference unchanged.
-      SetEquality(A * B, (R * B) + {x});
-      SetEquality(A - B, R - B);
-      InsertCardinality(R * B, x);
-
-      calc
-      {
-        |A * B| + |A - B|;
-          // Rewrite the two parts using the set equalities above
-        == |(R * B) + {x}| + |R - B|;
-          // Inserting x enlarges the intersection by one
-        == (|R * B| + 1) + |R - B|;
-          // Regroup the terms to apply the induction hypothesis
-        == (|R * B| + |R - B|) + 1;
-          // Apply the induction hypothesis
-        == |R| + 1;
-          // The singleton {x} enlarges R by one since x ∉ R
-        == |R + {x}|;
-          // Inserting x into R reconstructs A
-        == |A|;
-      }
+      MapTree(f, MapTree(g, tree));
+        // Replace tree by Node(left, x, right)
+      == MapTree(f, MapTree(g, Node(left, x, right)));
+        // Unfold the inner application of MapTree
+      == MapTree(f, Node(MapTree(g, left), g(x), MapTree(g, right)));
+        // Unfold the outer application of MapTree
+      == Node(MapTree(f, MapTree(g, left)),
+              f(g(x)), MapTree(f, MapTree(g, right)));
+        // Apply both induction hypotheses and the definition of Compose
+      == Node(MapTree(Compose(f, g), left),
+              Compose(f, g)(x), MapTree(Compose(f, g), right));
+        // Fold MapTree(Compose(f, g), Node(left, x, right))
+      == MapTree(Compose(f, g), Node(left, x, right));
+        // Replace Node(left, x, right) by tree
+      == MapTree(Compose(f, g), tree);
     }
-
-    else
-    {
-        // Since x ∉ B, inserting x into R leaves the intersection
-        // unchanged and enlarges the difference by one.
-      SetEquality(A * B, R * B);
-      SetEquality(A - B, (R - B) + {x});
-      InsertCardinality(R - B, x);
-
-      calc
-      {
-        |A * B| + |A - B|;
-          // Rewrite the two parts using the set equalities above
-        == |R * B| + |(R - B) + {x}|;
-          // Inserting x enlarges the difference by one
-        == |R * B| + (|R - B| + 1);
-          // Regroup the terms to apply the induction hypothesis
-        == (|R * B| + |R - B|) + 1;
-          // Apply the induction hypothesis
-        == |R| + 1;
-          // The singleton {x} enlarges R by one since x ∉ R
-        == |R + {x}|;
-          // Inserting x into R reconstructs A
-        == |A|;
-      }
-    }
-  }
-}
-
-//========================================================================
-// Derives the cardinality of the difference when B is a subset of A:
-//   |A \ B| = |A| - |B|
-lemma DifferenceCardinality<T>(A:set<T>, B:set<T>)
-  requires B <= A
-  ensures  |A - B| == |A| - |B|
-{
-    // Since B ⊆ A, intersecting A with B gives B itself.
-  SetEquality(A * B, B);
-
-    // Partition A into the elements inside and outside B.
-  SetPartitionCardinality(A, B);
-
-  calc
-  {
-    |A - B|;
-      // Introduce |B| and subtract it again
-    == (|B| + |A - B|) - |B|;
-      // Since B ⊆ A, the intersection A ∩ B equals B
-    == (|A * B| + |A - B|) - |B|;
-      // Apply the lemma proved above: |A ∩ B| + |A \ B| = |A|
-    == |A| - |B|;
   }
 }

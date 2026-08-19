@@ -1,111 +1,128 @@
 /*  file: sol26.dfy
     author: David De Potter
     description: proof by finite-set induction of the cardinality of a
-      Cartesian product of two finite sets
+      partition formed by intersection and difference
 */
 
-include "../prob25/sol25.dfy"
+include "../../Support/Sets.dfy"
 import opened SetSupport
 
 //========================================================================
-// Defines the Cartesian product of the finite sets S and T:
-//   Cartesian(S, T) = {(x, y) | x ∈ S ∧ y ∈ T}
-// The Cartesian product of two finite sets S and T is the set of all  
-// ordered pairs whose first component is an element of S and whose 
-// second component is an element of T.
-ghost function Cartesian<A, B>(S:set<A>, T:set<B>): set<(A, B)>
+// Proves that intersecting A with B and removing B from A partitions A 
+// into two disjoint sets with cardinalities that sum to the cardinality 
+// of A:   |A ∩ B| + |A \ B| = |A|
+lemma {:induction false} SetPartitionCardinality<T>(A:set<T>, B:set<T>)
+  ensures   |A * B| + |A - B| == |A|
+  decreases |A|
 {
-  set x:A, y:B | x in S && y in T :: (x, y)
-}
-
-//========================================================================
-// Defines the row of pairs obtained by fixing the first component x:
-//   Row(x, T) = {(x, y) | y ∈ T}
-ghost function Row<A, B>(x:A, T:set<B>): set<(A, B)>
-{
-    // Image is defined in prob25/sol25.dfy
-    // The expression (y:B) => (x, y) is a lambda expression defining
-    // the anonymous function y ↦ (x, y). Applying this function to
-    // every element of T produces a set of pairs whose first component
-    // is x and whose second component is an element of T.
-  Image((y:B) => (x, y), T)
-}
-
-//========================================================================
-// Proves that a row contains exactly one pair for every element of T:
-//   |Row(x, T)| = |T|
-lemma RowCardinality<A, B>(x:A, T:set<B>)
-  ensures |Row(x, T)| == |T|
-{
-    // The function y ↦ (x, y) is injective because equality of two
-    // resulting pairs implies equality of their second components.
-  assert forall y, z ::
-    y in T && z in T && (x, y) == (x, z) ==> y == z;
-
-    // Apply the lemma proved in problem25 to the function y ↦ (x, y)
-  InjectImageCardinality((y:B) => (x, y), T);
-}
-
-//========================================================================
-// Proves by induction on S that the cardinality of its Cartesian product
-// with T is the product of their cardinalities:
-//   |Cartesian(S, T)| = |S| * |T|
-lemma {:induction false} CartesianCardinality<A, B>(S:set<A>, T:set<B>)
-  ensures   |Cartesian(S, T)| == |S| * |T|
-  decreases |S|
-{
-  if S == {}
+  if A == {}
   {
-      // Base case: Q({}) is true
-    calc
+    assert |A * B| + |A - B| == |A| by
     {
-      |Cartesian(S, T)|;
-        // The Cartesian product with an empty first set is empty
-      == 0;
-        // Arithmetic
-      == 0 * |T|;
-        // The set S is empty, so its cardinality is 0
-      == |S| * |T|;
+      calc
+      {
+        |A * B| + |A - B|;
+          // Replace A by the empty set
+        == |{} * B| + |{} - B|;
+          // The intersection of the empty set with any set is empty
+        == 0 + |{} - B|;
+          // The difference of the empty set with any set is empty
+        == 0 + 0;
+          // Arithmetic
+        == 0;
+          // The set A is empty, so its cardinality is 0
+        == |A|;
+      }
     }
   }
 
   else
   {
-      // Choose an arbitrary element x of the nonempty set S. Removing x
+      // Choose an arbitrary element x of the nonempty set A. Removing x
       // gives the strictly smaller set R used for the induction step.
-    var x:A :| x in S;
-    var R := S - {x};
+    var x:T :| x in A;
+    var R := A - {x};
 
       // Induction hypothesis
       // Assume Q(R) is true:
-      //   |Cartesian(R, T)| = |R| * |T|
-    CartesianCardinality(R, T);
+      //   |R ∩ B| + |R \ B| = |R|
+    SetPartitionCardinality(R, B);
 
-      // The Cartesian product over S consists of the product over R
-      // together with the new row whose first component is x
-    SetEquality(Cartesian(S, T), Cartesian(R, T) + Row(x, T));
-
-      // Since x ∉ R, the new row is disjoint from the Cartesian
-      // product over R
-    DisjointUnionCardinality(Cartesian(R, T), Row(x, T));
-
-      // The new row's cardinality equals the cardinality of T
-    RowCardinality(x, T);
-
-    calc
+    if x in B
     {
-      |Cartesian(S, T)|;
-        // Split the product into the old product and the new row
-      == |Cartesian(R, T) + Row(x, T)|;
-        // The two parts are disjoint, so the cardinality of 
-        // their union is the sum of their cardinalities
-      == |Cartesian(R, T)| + |Row(x, T)|;
-        // Apply the induction hypothesis and RowCardinality
-      == |R| * |T| + |T|;
-        // Factor out |T|
-      == (|R| + 1) * |T|;
-        // Since R = S - {x} and x ∈ S, we have |R| + 1 = |S|
-      == |S| * |T|;
+        // Since x ∈ B, inserting x into R enlarges the intersection
+        // by one and leaves the difference unchanged.
+      SetEquality(A * B, (R * B) + {x});
+      SetEquality(A - B, R - B);
+      InsertCardinality(R * B, x);
+
+      calc
+      {
+        |A * B| + |A - B|;
+          // Rewrite the two parts using the set equalities above
+        == |(R * B) + {x}| + |R - B|;
+          // Inserting x enlarges the intersection by one
+        == (|R * B| + 1) + |R - B|;
+          // Regroup the terms to apply the induction hypothesis
+        == (|R * B| + |R - B|) + 1;
+          // Apply the induction hypothesis
+        == |R| + 1;
+          // The singleton {x} enlarges R by one since x ∉ R
+        == |R + {x}|;
+          // Inserting x into R reconstructs A
+        == |A|;
+      }
     }
+
+    else
+    {
+        // Since x ∉ B, inserting x into R leaves the intersection
+        // unchanged and enlarges the difference by one.
+      SetEquality(A * B, R * B);
+      SetEquality(A - B, (R - B) + {x});
+      InsertCardinality(R - B, x);
+
+      calc
+      {
+        |A * B| + |A - B|;
+          // Rewrite the two parts using the set equalities above
+        == |R * B| + |(R - B) + {x}|;
+          // Inserting x enlarges the difference by one
+        == |R * B| + (|R - B| + 1);
+          // Regroup the terms to apply the induction hypothesis
+        == (|R * B| + |R - B|) + 1;
+          // Apply the induction hypothesis
+        == |R| + 1;
+          // The singleton {x} enlarges R by one since x ∉ R
+        == |R + {x}|;
+          // Inserting x into R reconstructs A
+        == |A|;
+      }
+    }
+  }
+}
+
+//========================================================================
+// Derives the cardinality of the difference when B is a subset of A:
+//   |A \ B| = |A| - |B|
+lemma DifferenceCardinality<T>(A:set<T>, B:set<T>)
+  requires B <= A
+  ensures  |A - B| == |A| - |B|
+{
+    // Since B ⊆ A, intersecting A with B gives B itself.
+  SetEquality(A * B, B);
+
+    // Partition A into the elements inside and outside B.
+  SetPartitionCardinality(A, B);
+
+  calc
+  {
+    |A - B|;
+      // Introduce |B| and subtract it again
+    == (|B| + |A - B|) - |B|;
+      // Since B ⊆ A, the intersection A ∩ B equals B
+    == (|A * B| + |A - B|) - |B|;
+      // Apply the lemma proved above: |A ∩ B| + |A \ B| = |A|
+    == |A| - |B|;
   }
 }

@@ -1,107 +1,116 @@
 /*  file: sol20.dfy
     author: David De Potter
-    description: Proof by structural induction that the height of a
-      binary tree is bounded by its size.
-      In fact, equality holds for a degenerate tree in which every node 
-      has at most one nonempty subtree.
+    description: proof by structural induction that filtering twice is 
+    equivalent to filtering once with the conjunction of the two 
+    predicates
 */
 
-include "../../Support/Datatypes/BinaryTrees.dfy"
-include "../../Support/Math.dfy"
-
-import opened BinaryTrees
-import opened MathSupport
+include "../../Support/Datatypes/Lists.dfy"
+import opened Lists
 
 //========================================================================
-// Proves by structural induction on tree that its height is at most its
-// number of nodes:  Height(tree) ≤ Size(tree)
-lemma {:induction false} HeightBoundedBySize<T>(tree:BinTree<T>)
-  ensures Height(tree) <= Size(tree)
-  decreases tree
+// Proves by structural induction on xs that filtering first with q and
+// then with p is equivalent to filtering once with their conjunction:
+//   Filter(p, Filter(q, xs)) = Filter(x => q(x) && p(x), xs)
+lemma {:induction false} FilterComposition<T>(p:T -> bool, q:T -> bool, 
+                                              xs:List<T>)
+  ensures Filter(p, Filter(q, xs)) == Filter((x:T) => q(x) && p(x), xs)
+  decreases xs
 {
-  if tree == Empty
+  if xs == Nil
   {
-      // Base case: Q(Empty) is true
-    assert Height(tree) <= Size(tree) by
+      // Base case: Q(Nil) is true
+    assert Filter(p, Filter(q, xs))
+        == Filter((x:T) => q(x) && p(x), xs) by
     {
       calc
       {
-        Height(tree);
-          // Replace tree by Empty
-        == Height<T>(Empty);
-          // Unfold Height(Empty)
-        == 0;
-          // Arithmetic
-        <= 0;
-          // Fold Size(Empty)
-        == Size<T>(Empty);
-          // Replace Empty by tree
-        == Size(tree);
+        Filter(p, Filter(q, xs));
+          // Replace xs by Nil
+        == Filter(p, Filter(q, Nil));
+          // Unfold the inner Filter
+        == Filter(p, Nil);
+          // Unfold the outer Filter
+        == Nil;
+          // Fold Filter(x => q(x) && p(x), Nil)
+        == Filter((x:T) => q(x) && p(x), Nil);
+          // Replace Nil by xs
+        == Filter((x:T) => q(x) && p(x), xs);
       }
     }
   }
 
   else
   {
-      // Since tree ≠ Empty, it has the form 
-      // Node(tree.left, tree.value, tree.right)
-      // Let left and right denote its two structurally smaller 
-      // subtrees, and let x denote its root value.
-    var left  := tree.left;
-    var x     := tree.value;
-    var right := tree.right;
+      // Since xs ≠ Nil, it has the form Cons(xs.head, xs.tail).
+      // Let x and tail denote its head and structurally smaller tail.
+    var x    := xs.head;
+    var tail := xs.tail;
 
-      // Induction hypotheses
-      // Assume Q(left) and Q(right) are true:
-      //   Height(left)  ≤ Size(left)
-      //   Height(right) ≤ Size(right)
-    HeightBoundedBySize(left);
-    HeightBoundedBySize(right);
+      // Induction hypothesis
+      // Assume Q(tail) is true:
+      //   Filter(p, Filter(q, tail)) = Filter(x => q(x) && p(x), tail)
+    FilterComposition(p, q, tail);
 
-      // The maximum of the two subtree heights is bounded 
-      // by the sum of the sizes of both subtrees.
-    if Height(left) >= Height(right)
+    if q(x)
     {
-      calc
+      if p(x)
       {
-        maximum(Height(left), Height(right));
-          // Unfold maximum using Height(left) ≥ Height(right)
-        == Height(left);
-          // Apply the induction hypothesis for left
-        <= Size(left);
-          // Add the size of the right subtree
-        <= Size(left) + Size(right);
+        calc
+        {
+          Filter(p, Filter(q, xs));
+            // Replace xs by Cons(x, tail)
+          == Filter(p, Filter(q, Cons(x, tail)));
+            // Since q(x) holds, the inner Filter retains x
+          == Filter(p, Cons(x, Filter(q, tail)));
+            // Since p(x) also holds, the outer Filter retains x
+          == Cons(x, Filter(p, Filter(q, tail)));
+            // Apply the induction hypothesis
+          == Cons(x, Filter((y:T) => q(y) && p(y), tail));
+            // Fold the combined Filter
+          == Filter((y:T) => q(y) && p(y), Cons(x, tail));
+            // Replace Cons(x, tail) by xs
+          == Filter((y:T) => q(y) && p(y), xs);
+        }
+      }
+
+      else
+      {
+        calc
+        {
+          Filter(p, Filter(q, xs));
+            // Replace xs by Cons(x, tail)
+          == Filter(p, Filter(q, Cons(x, tail)));
+            // Since q(x) holds, the inner Filter retains x
+          == Filter(p, Cons(x, Filter(q, tail)));
+            // Since p(x) does not hold, the outer Filter discards x
+          == Filter(p, Filter(q, tail));
+            // Apply the induction hypothesis
+          == Filter((y:T) => q(y) && p(y), tail);
+            // Fold the combined Filter
+          == Filter((y:T) => q(y) && p(y), Cons(x, tail));
+            // Replace Cons(x, tail) by xs
+          == Filter((y:T) => q(y) && p(y), xs);
+        }
       }
     }
+
     else
     {
       calc
       {
-        maximum(Height(left), Height(right));
-          // Unfold maximum using Height(left) < Height(right)
-        == Height(right);
-          // Apply the induction hypothesis for right
-        <= Size(right);
-          // Add the size of the left subtree
-        <= Size(left) + Size(right);
+        Filter(p, Filter(q, xs));
+          // Replace xs by Cons(x, tail)
+        == Filter(p, Filter(q, Cons(x, tail)));
+          // Since q(x) does not hold, the inner Filter discards x
+        == Filter(p, Filter(q, tail));
+          // Apply the induction hypothesis
+        == Filter((y:T) => q(y) && p(y), tail);
+          // Fold the combined Filter
+        == Filter((y:T) => q(y) && p(y), Cons(x, tail));
+          // Replace Cons(x, tail) by xs
+        == Filter((y:T) => q(y) && p(y), xs);
       }
-    }
-
-      // Inductive case
-      // Prove Q(Node(left, x, right)) is true
-    calc
-    {
-      Height(tree);
-        // Replace tree by Node(left, x, right)
-      == Height(Node(left, x, right));
-        // Unfold Height
-      == 1 + maximum(Height(left), Height(right));
-        // Apply the bound established above
-      <= 1 + Size(left) + Size(right);
-        // Fold Size
-      == Size(Node(left, x, right));
-        // Replace Node(left, x, right) by tree
-      == Size(tree);
     }
   }
 }

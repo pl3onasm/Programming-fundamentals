@@ -29,16 +29,19 @@ lemma {:induction false} AddToEachComposition(a:int, b:int, xs:seq<int>)
     Prove this lemma by structural induction on xs.
 
       Base case, Q([]):
-        Show that  AddToEach(a, AddToEach(b, []))
-                   = AddToEach(a+b, [])
+      
+        Show that       AddToEach(a, AddToEach(b, []))
+                        = AddToEach(a+b, [])
 
       Inductive case, Q(xs[1..]) ⇒ Q(xs):
-        Assume that  AddToEach(a, AddToEach(b, xs[1..]))
-                     = AddToEach(a+b, xs[1..])
+
+        Assume that     AddToEach(a, AddToEach(b, xs[1..]))
+                        = AddToEach(a+b, xs[1..])
 
         Then prove, for nonempty xs, that
-          AddToEach(a, AddToEach(b, xs))
-          = AddToEach(a+b, xs)
+              
+                        AddToEach(a, AddToEach(b, xs))
+                        = AddToEach(a+b, xs)
 
     Distinguish the two structural cases using |xs| = 0 and |xs| > 0.
 

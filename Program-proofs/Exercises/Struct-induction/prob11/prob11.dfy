@@ -17,12 +17,14 @@ lemma {:induction false} AddCommutative(p:Peano, q:Peano)
     Prove this lemma by structural induction on p.
 
       Base case, Q(Zero):
-        Show that  Add(Zero,q) = Add(q,Zero)
+      
+        Show that     Add(Zero,q) = Add(q,Zero)
     
       Inductive case, Q(prev) ⇒ Q(Succ(prev)):
-        Assume that  Add(prev, q) = Add(q, prev)
-        and prove that
-          Add(Succ(prev), q) = Add(q, Succ(prev))
+
+        Assume that   Add(prev, q) = Add(q, prev)
+      
+        Prove that    Add(Succ(prev), q) = Add(q, Succ(prev))
     
     Use AddRightIdentity from the solution to problem08 in the base
     case, and AddSuccessorRight from the solution to problem09 in the

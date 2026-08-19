@@ -1,180 +1,71 @@
 /*  file: sol28.dfy
     author: David De Potter
-    description: proof by finite-set induction that a finite set with n
-      elements has 2^n subsets
+    description: proof by finite-set induction of the cardinality of a
+      Cartesian product of two finite sets
 */
 
-include "../prob25/sol25.dfy"
+include "../prob27/sol27.dfy"
 import opened SetSupport
 
 //========================================================================
-// Recursively defines 2^n.
-function Pow2(n:nat): nat
-  decreases n
+// Defines the Cartesian product of the finite sets S and T:
+//   Cartesian(S, T) = {(x, y) | x ∈ S ∧ y ∈ T}
+// The Cartesian product of two finite sets S and T is the set of all  
+// ordered pairs whose first component is an element of S and whose 
+// second component is an element of T.
+ghost function Cartesian<A, B>(S:set<A>, T:set<B>): set<(A, B)>
 {
-  if n == 0 then 1 else 2 * Pow2(n-1)
+  set x:A, y:B | x in S && y in T :: (x, y)
 }
 
 //========================================================================
-// Defines the power set of S, i.e. the set containing all subsets of S:
-//   PowerSet(S) = {Z | Z ⊆ S}
-ghost function PowerSet<T>(S:set<T>): set<set<T>>
+// Defines the row of pairs obtained by fixing the first component x:
+//   Row(x, T) = {(x, y) | y ∈ T}
+ghost function Row<A, B>(x:A, T:set<B>): set<(A, B)>
 {
-  set Z:set<T> | Z <= S :: Z
+    // Image is defined in prob25/sol25.dfy
+    // The expression (y:B) => (x, y) is a lambda expression defining
+    // the anonymous function y ↦ (x, y). Applying this function to
+    // every element of T produces a set of pairs whose first component
+    // is x and whose second component is an element of T.
+  Image((y:B) => (x, y), T)
 }
 
 //========================================================================
-// Adds x to every set in the finite family Sets:
-//   AddToEach(x, Sets) = {Z ∪ {x} | Z ∈ Sets}
-ghost function AddToEach<T>(x:T, Sets:set<set<T>>): set<set<T>>
+// Proves that a row contains exactly one pair for every element of T:
+//   |Row(x, T)| = |T|
+lemma RowCardinality<A, B>(x:A, T:set<B>)
+  ensures |Row(x, T)| == |T|
 {
-  Image((Z:set<T>) => Z + {x}, Sets)
+    // The function y ↦ (x, y) is injective because equality of two
+    // resulting pairs implies equality of their second components.
+  assert forall y, z ::
+    y in T && z in T && (x, y) == (x, z) ==> y == z;
+
+    // Apply the lemma proved in problem25 to the function y ↦ (x, y)
+  InjectImageCardinality((y:B) => (x, y), T);
 }
 
 //========================================================================
-// Splits the power set of R ∪ {x} into the subsets that exclude x
-// and those that include x, and proves that these families are disjoint.
-lemma PowerSetStep<T>(R:set<T>, x:T)
-  requires x !in R
-  ensures PowerSet(R + {x}) == PowerSet(R) + AddToEach(x, PowerSet(R))
-  ensures PowerSet(R) * AddToEach(x, PowerSet(R)) == {}
-{
-    // First we prove that the two families together 
-    // contain exactly all subsets of R ∪ {x}
-  forall Z:set<T> ensures 
-         Z in PowerSet(R + {x}) 
-    <==> Z in (PowerSet(R) + AddToEach(x, PowerSet(R)))
-  {
-      // Proving the implication from left to right
-      //    Z ∈ PowerSet(R ∪ {x}) 
-      // ⇒ Z ∈ (PowerSet(R) ∪ AddToEach(x, PowerSet(R)))
-    if Z in PowerSet(R + {x})
-    {
-      if x in Z
-      {
-          // Removing x from Z leaves a subset of R. Adding x 
-          // back therefore places Z in the second family.
-        var withoutX := Z - {x};
-        assert withoutX <= R;
-        assert withoutX in PowerSet(R);
-        SetEquality(Z, withoutX + {x});
-        assert Z in AddToEach(x, PowerSet(R));
-      }
-
-      else
-      {
-          // A subset that excludes x is already a subset of R.
-          // Therefore, Z belongs to the first family.
-        assert Z <= R;
-        assert Z in PowerSet(R);
-      }
-    } 
-
-      // Proving the implication from right to left
-      //    Z ∈ (PowerSet(R) ∪ AddToEach(x, PowerSet(R))) 
-      // ⇒ Z ∈ PowerSet(R ∪ {x})
-    if Z in PowerSet(R) + AddToEach(x, PowerSet(R))
-    {
-      if Z in PowerSet(R)
-      {
-          // Every subset of R is also a subset of R ∪ {x}
-        assert Z <= R + {x};
-      }
-
-      else
-      {
-          // Membership in the second family gives an original 
-          // subset of R to which x was added.
-        assert Z in AddToEach(x, PowerSet(R));
-        var orig:set<T> :| orig in PowerSet(R) && Z == orig + {x};
-        assert Z <= R + {x};
-      }
-    }
-  }
-
-    // Next we prove that the two families are disjoint. 
-    // We prove this by contradiction: if a set Z belongs to both 
-    // families, then it must both include and exclude x, which is false.
-  forall Z:set<T> ensures 
-         Z in PowerSet(R) * AddToEach(x, PowerSet(R)) 
-    <==> Z in {}
-  {
-    if Z in PowerSet(R) * AddToEach(x, PowerSet(R))
-    {
-      assert Z in PowerSet(R);
-      assert Z in AddToEach(x, PowerSet(R));
-      assert x in Z;
-      assert x !in Z;
-    }
-  }
-}
-
-//========================================================================
-// Proves that adding x to every subset of R preserves the number of
-// sets in the family.
-lemma AddedSubsetsCardinality<T>(R:set<T>, x:T)
-  requires x !in R
-  ensures |AddToEach(x, PowerSet(R))| == |PowerSet(R)|
-{
-    // The function Z ↦ Z ∪ {x} is injective on PowerSet(R). Since x is
-    // absent from R, it is also absent from all its subsets.
-  assert forall V:set<T>, Z:set<T> ::
-    (V in PowerSet(R) && Z in PowerSet(R) && V + {x} == Z + {x}) 
-    ==> V == Z;
-
-    // Apply the lemma proved in problem25 to the function Z ↦ Z ∪ {x}
-    // expressed using the lambda expression (Z:set<T>) => Z + {x}
-    // The lemma proves that the cardinality of the image of an injective
-    // function is equal to the cardinality of its domain.
-  InjectImageCardinality((Z:set<T>) => Z + {x}, PowerSet(R));
-}
-
-//========================================================================
-// Proves by induction on S that a finite set with n elements has 2^n
-// different subsets:  |PowerSet(S)| = 2^|S|
-lemma {:induction false} PowerSetCardinality<T>(S:set<T>)
-  ensures   |PowerSet(S)| == Pow2(|S|)
+// Proves by induction on S that the cardinality of its Cartesian product
+// with T is the product of their cardinalities:
+//   |Cartesian(S, T)| = |S| * |T|
+lemma {:induction false} CartesianCardinality<A, B>(S:set<A>, T:set<B>)
+  ensures   |Cartesian(S, T)| == |S| * |T|
   decreases |S|
 {
   if S == {}
   {
-      // The power set of the empty set is the singleton family {{}},
-      // whose only element is the empty set.
-    var empty:set<T> := {};
-
-      // Proves the precondition of SetEquality
-    forall Z:set<T> ensures Z in PowerSet(S) <==> Z in {empty}
-    {    
-        // Implication from left to right
-        // Z ∈ PowerSet(S) ⇒ Z ∈ {{}}
-      if Z in PowerSet(S)
-      {
-        SetEquality(Z, empty);
-      }
-
-        // Implication from right to left
-        // Z ∈ {{}} ⇒ Z ∈ PowerSet(S)
-      if Z in {empty}
-      {
-        assert Z == empty;
-        assert Z <= S;
-      }
-    }
-
-      // Proves the postcondition of SetEquality: PowerSet(S) = {{}}
-    SetEquality(PowerSet(S), {empty});
-      
-      // Base case: Q({}) is true.
+      // Base case: Q({}) is true
     calc
     {
-      |PowerSet(S)|;
-        // The power set contains only the empty set, 
-        // so its cardinality is 1
-      == 1;
-        // Fold Pow2(0)
-      == Pow2(0);
+      |Cartesian(S, T)|;
+        // The Cartesian product with an empty first set is empty
+      == 0;
+        // Arithmetic
+      == 0 * |T|;
         // The set S is empty, so its cardinality is 0
-      == Pow2(|S|);
+      == |S| * |T|;
     }
   }
 
@@ -182,49 +73,39 @@ lemma {:induction false} PowerSetCardinality<T>(S:set<T>)
   {
       // Choose an arbitrary element x of the nonempty set S. Removing x
       // gives the strictly smaller set R used for the induction step.
-    var x:T :| x in S;
-    var R   := S - {x};
-
-    SetEquality(S, R + {x});
+    var x:A :| x in S;
+    var R := S - {x};
 
       // Induction hypothesis
-      // Assume Q(R) is true:  |PowerSet(R)| = 2^|R|
-    PowerSetCardinality(R);
+      // Assume Q(R) is true:
+      //   |Cartesian(R, T)| = |R| * |T|
+    CartesianCardinality(R, T);
 
-      // PowerSetStep partitions PowerSet(S) into two families:
-      // those that exclude x and those that include x. The first 
-      // family is PowerSet(R), while the second is obtained by 
-      // adding x to every subset of R. 
-    PowerSetStep(R, x);
+      // The Cartesian product over S consists of the product over R
+      // together with the new row whose first component is x
+    SetEquality(Cartesian(S, T), Cartesian(R, T) + Row(x, T));
 
-      // The cardinality of the disjoint union is the sum of the
-      // cardinalities of the two families.
-    DisjointUnionCardinality(PowerSet(R), AddToEach(x, PowerSet(R)));
+      // Since x ∉ R, the new row is disjoint from the Cartesian
+      // product over R
+    DisjointUnionCardinality(Cartesian(R, T), Row(x, T));
 
-      // Adding x to every subset of R preserves the number of subsets,
-      // so both families have the same cardinality.
-    AddedSubsetsCardinality(R, x);
+      // The new row's cardinality equals the cardinality of T
+    RowCardinality(x, T);
 
     calc
     {
-      |PowerSet(S)|;
-        // Reconstruct S as R ∪ {x}
-      == |PowerSet(R + {x})|;
-        // Apply PowerSetStep: partition the power set into two families
-      == |PowerSet(R) + AddToEach(x, PowerSet(R))|;
-        // The two families are disjoint, so the cardinality of 
+      |Cartesian(S, T)|;
+        // Split the product into the old product and the new row
+      == |Cartesian(R, T) + Row(x, T)|;
+        // The two parts are disjoint, so the cardinality of 
         // their union is the sum of their cardinalities
-      == |PowerSet(R)| + |AddToEach(x, PowerSet(R))|;
-        // Both families have the same cardinality
-      == |PowerSet(R)| + |PowerSet(R)|;
-        // Combine the two equal terms
-      == 2 * |PowerSet(R)|;
-        // Apply the induction hypothesis
-      == 2 * Pow2(|R|);
-        // Fold the recursive definition of Pow2
-      == Pow2(|R| + 1);
-        // Since S = R ∪ {x} and x ∉ R, we have |R| + 1 = |S|
-      == Pow2(|S|);
+      == |Cartesian(R, T)| + |Row(x, T)|;
+        // Apply the induction hypothesis and RowCardinality
+      == |R| * |T| + |T|;
+        // Factor out |T|
+      == (|R| + 1) * |T|;
+        // Since R = S - {x} and x ∈ S, we have |R| + 1 = |S|
+      == |S| * |T|;
     }
   }
 }

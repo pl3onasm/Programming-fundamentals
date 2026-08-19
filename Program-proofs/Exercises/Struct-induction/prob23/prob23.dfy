@@ -5,34 +5,30 @@
 */
 
 include "../../Support/Datatypes/BinaryTrees.dfy"
-include "../prob05/sol05.dfy"
-
 import opened BinaryTrees
 
 //========================================================================
-// Proves that the inorder traversal of a mirrored binary tree is the
-// reverse of the inorder traversal of the original tree:
-//   Inorder(Mirror(tree)) = Reverse(Inorder(tree))
-lemma {:induction false} InorderMirror(tree:BinTree<int>)
-  ensures Inorder(Mirror(tree)) == Reverse(Inorder(tree))
+// Proves that mirroring a binary tree twice returns the original tree:
+//   Mirror(Mirror(tree)) = tree
+lemma {:induction false} MirrorTwice<T>(tree:BinTree<T>)
+  ensures Mirror(Mirror(tree)) == tree
   decreases tree
 {
   /*
     Prove this lemma by structural induction on tree.
 
-    Base case, Q(Empty):
-      Show that     Inorder(Mirror(Empty)) = Reverse(Inorder(Empty))
+      Base case, Q(Empty):
+        Show that     Mirror(Mirror(Empty)) = Empty
 
-    Inductive case, Q(left) ∧ Q(right) ⇒ Q(Node(left, x, right)):
+      Inductive case, Q(left) ∧ Q(right) ⇒ Q(Node(left, x, right)):
 
-      Assume that   Inorder(Mirror(left))  = Reverse(Inorder(left))
-                    Inorder(Mirror(right)) = Reverse(Inorder(right))
-                    
-      prove that    Inorder(Mirror(Node(left, x, right)))
-                    = Reverse(Inorder(Node(left, x, right)))
+        Assume that   Mirror(Mirror(left))  = left
+                      Mirror(Mirror(right)) = right
 
-    The sequence function Reverse and the lemma ReverseConcat are
-    imported from the solution to problem05. In the inductive case, 
-    use ReverseConcat twice in reverse direction.
+        Prove that    Mirror(Mirror(Node(left, x, right)))
+                      = Node(left, x, right)
+
+    In the inductive case, apply the lemma recursively to both
+    structurally smaller subtrees.
   */
 }

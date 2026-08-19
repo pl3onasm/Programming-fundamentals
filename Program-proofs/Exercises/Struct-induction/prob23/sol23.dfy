@@ -1,46 +1,39 @@
 /*  file: sol23.dfy
     author: David De Potter
     description: proof by structural induction that mirroring a binary
-      tree reverses its inorder traversal
+      tree twice returns the original tree
 */
 
 include "../../Support/Datatypes/BinaryTrees.dfy"
-include "../prob05/sol05.dfy"
-
 import opened BinaryTrees
 
 //========================================================================
-// Proves by structural induction on tree that its mirrored inorder
-// traversal is the reverse of its original inorder traversal:
-//   Inorder(Mirror(tree)) = Reverse(Inorder(tree))
-lemma {:induction false} InorderMirror(tree:BinTree<int>)
-  ensures Inorder(Mirror(tree)) == Reverse(Inorder(tree))
+// Proves by structural induction on tree that mirroring it twice returns
+// the original tree:  Mirror(Mirror(tree)) = tree
+lemma {:induction false} MirrorTwice<T>(tree:BinTree<T>)
+  ensures Mirror(Mirror(tree)) == tree
   decreases tree
 {
   if tree == Empty
   {
       // Base case: Q(Empty) is true
-    assert Inorder(Mirror(tree)) == Reverse(Inorder(tree)) by
+    assert Mirror(Mirror(tree)) == tree by
     {
       calc
       {
-        Inorder(Mirror(tree));
+        Mirror(Mirror(tree));
           // Replace tree by Empty
-        == Inorder(Mirror<int>(Empty));
-          // Unfold Mirror(Empty)
-        == Inorder<int>(Empty);
-          // Unfold Inorder(Empty)
-        == [];
-          // Fold Reverse([])
-        == Reverse([]);
-          // Fold Inorder(Empty)
-        == Reverse(Inorder<int>(Empty));
+        == Mirror(Mirror<T>(Empty));
+          // Unfold the inner application of Mirror
+        == Mirror<T>(Empty);
+          // Unfold the outer application of Mirror
+        == Empty;
           // Replace Empty by tree
-        == Reverse(Inorder(tree));
+        == tree;
       }
     }
   }
-
+  
   else
   {
       // Since tree ≠ Empty, it has the form 
@@ -53,44 +46,26 @@ lemma {:induction false} InorderMirror(tree:BinTree<int>)
 
       // Induction hypotheses
       // Assume Q(left) and Q(right) are true:
-      //   Inorder(Mirror(left))  = Reverse(Inorder(left))
-      //   Inorder(Mirror(right)) = Reverse(Inorder(right))
-    InorderMirror(left);
-    InorderMirror(right);
-
-      // Reversing a concatenation reverses the order of its parts.
-      // The first call isolates the right traversal, while the second
-      // separates the left traversal from the singleton root sequence.
-    ReverseConcat(Inorder(left) + [x], Inorder(right));
-    ReverseConcat(Inorder(left), [x]);
+      //   Mirror(Mirror(left))  = left
+      //   Mirror(Mirror(right)) = right
+    MirrorTwice(left);
+    MirrorTwice(right);
 
       // Inductive case
       // Prove Q(Node(left, x, right)) is true
     calc
     {
-      Inorder(Mirror(tree));
+      Mirror(Mirror(tree));
         // Replace tree by Node(left, x, right)
-      == Inorder(Mirror(Node(left, x, right)));
-        // Unfold Mirror
-      == Inorder(Node(Mirror(right), x, Mirror(left)));
-        // Unfold Inorder
-      == Inorder(Mirror(right)) + [x] + Inorder(Mirror(left));
+      == Mirror(Mirror(Node(left, x, right)));
+        // Unfold the inner application of Mirror
+      == Mirror(Node(Mirror(right), x, Mirror(left)));
+        // Unfold the outer application of Mirror
+      == Node(Mirror(Mirror(left)), x, Mirror(Mirror(right)));
         // Apply both induction hypotheses
-      == Reverse(Inorder(right)) + [x] + Reverse(Inorder(left));
-        // Replace [x] by Reverse([x])
-      == Reverse(Inorder(right)) + Reverse([x]) + Reverse(Inorder(left));
-        // Sequence concatenation is associative, so we can regroup 
-        // the three parts
-      == Reverse(Inorder(right))
-           + (Reverse([x]) + Reverse(Inorder(left)));
-        // Apply ReverseConcat in reverse
-      == Reverse(Inorder(right)) + Reverse(Inorder(left) + [x]);
-        // Apply ReverseConcat in reverse again
-      == Reverse((Inorder(left) + [x]) + Inorder(right));
-        // Fold Inorder(Node(left, x, right))
-      == Reverse(Inorder(Node(left, x, right)));
+      == Node(left, x, right);
         // Replace Node(left, x, right) by tree
-      == Reverse(Inorder(tree));
+      == tree;
     }
   }
 }

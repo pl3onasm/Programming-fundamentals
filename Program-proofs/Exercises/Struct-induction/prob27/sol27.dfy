@@ -1,122 +1,183 @@
 /*  file: sol27.dfy
     author: David De Potter
-    description: proof by finite-set induction of the inclusion-exclusion
-      principle for two sets
+    description: proofs by finite-set induction of cardinality properties
+      of the image of a set
 */
 
 include "../../Support/Sets.dfy"
 import opened SetSupport
 
 //========================================================================
-// Proves by induction on A the subtraction-free form of the
-// inclusion-exclusion principle:
-//   |A ∪ B| + |A ∩ B| = |A| + |B|
-lemma {:induction false} InclusionExclusion<T>(A:set<T>, B:set<T>)
-  ensures   |A + B| + |A * B| == |A| + |B|
-  decreases |A|
+// Defines the image of a finite set s under a function f:
+//   Image(f, S) = {f(x) | x ∈ S}
+// Different elements of S may have the same image under f, but sets do
+// not retain duplicate values. Therefore, the image of a finite set  
+// may have fewer elements than the original set.
+ghost function Image<A, B>(f:A -> B, S:set<A>): set<B>
 {
-  if A == {}
+  set x | x in S :: f(x)
+}
+
+//========================================================================
+// Proves by induction on S that taking its image cannot increase its
+// cardinality:  |Image(f, S)| ≤ |S|
+lemma {:induction false} ImageCardinalityBound<A, B>(f:A -> B, S:set<A>)
+  ensures   |Image(f, S)| <= |S|
+  decreases |S|
+{
+  if S == {}
   {
       // Base case: Q({}) is true
-    assert |A + B| + |A * B| == |A| + |B| by
+    assert |Image(f, S)| <= |S| by
     {
       calc
       {
-        |A + B| + |A * B|;
-          // Replace A by the empty set
-        == |{} + B| + |{} * B|;
-          // Union with the empty set gives B
-          // Intersection with the empty set gives {}
-        == |B| + 0;
+        |Image(f, S)|;
+          // Rewrite S as the empty set
+        == |Image(f, {})|;
+          // The image of the empty set is empty, and
+          // the cardinality of the empty set is 0
+        == 0;
+          // The set S is empty, so its cardinality is 0
+        == |S|;
           // Arithmetic
-        == 0 + |B|;
-          // The set A is empty, so its cardinality is 0
-        == |A| + |B|;
+        <= |S|;
       }
     }
   }
 
   else
   {
-      // Choose an arbitrary element x of the nonempty set A. Removing x
+      // Choose an arbitrary element x of the nonempty set S. Removing x
       // gives the strictly smaller set R used for the induction step.
-    var x:T :| x in A;
-    var R   := A - {x};
+    var x:A :| x in S;
+    var R := S - {x};
+
+      // The image of S consists of the image of R 
+      // together with the possibly new value f(x)
+    SetEquality(Image(f, S), Image(f, R) + {f(x)});
 
       // Induction hypothesis
-      // Assume Q(R) is true: |R ∪ B| + |R ∩ B| = |R| + |B|
-    InclusionExclusion(R, B);
+      // Assume Q(R) is true:  |Image(f, R)| ≤ |R|
+    ImageCardinalityBound(f, R);
 
-    if x in B
+    if f(x) in Image(f, R)
     {
-        // Since x already belongs to B, inserting it into R does not
-        // enlarge the union, but it enlarges the intersection by one
-      SetEquality(A + B, R + B);
-      SetEquality(A * B, (R * B) + {x});
+        // If f(x) is already present, inserting x 
+        // does not enlarge the image at all.
+      assert Image(f, R) + {f(x)} == Image(f, R);
 
       calc
       {
-        |A + B| + |A * B|;
-          // Rewrite the union and intersection
-          // according to the above set equalities
-        == |R + B| + |(R * B) + {x}|;
-          // Inserting x enlarges the intersection R ∩ B by one
-        == |R + B| + (|R * B| + 1);
-          // Regroup the terms
-        == (|R + B| + |R * B|) + 1;
+        |Image(f, S)|;
+          // Rewrite the image of S
+        == |Image(f, R) + {f(x)}|;
+          // f(x) is already present, so 
+          // inserting it does not enlarge the image
+        == |Image(f, R)|;
           // Apply the induction hypothesis
-        == (|R| + |B|) + 1;
-          // Regroup the terms
-        == (|R| + 1) + |B|;
-          // Since R = A - {x} and x ∈ A, we have |R| + 1 = |A|
-        == |A| + |B|;
+        <= |R|;
+          // Inserting x enlarges R by one
+        <= |R| + 1;
+          // The reconstructed set is S
+        == |S|;
       }
     }
 
     else
     {
-        // Since x does not belong to B, inserting it into R enlarges
-        // the union by one, but leaves the intersection unchanged
-      SetEquality(A + B, (R + B) + {x});
-      SetEquality(A * B, R * B);
+        // If f(x) is new, it enlarges the 
+        // image by exactly one.
+      InsertCardinality(Image(f, R), f(x));
 
       calc
       {
-        |A + B| + |A * B|;
-          // Rewrite the union and intersection
-          // according to the above set equalities
-        == |(R + B) + {x}| + |R * B|;
-          // Inserting x enlarges the union R ∪ B by one
-        == (|R + B| + 1) + |R * B|;
-          // Regroup the terms
-        == (|R + B| + |R * B|) + 1;
+        |Image(f, S)|;
+          // Rewrite the image of S
+        == |Image(f, R) + {f(x)}|;
+          // f(x) is new, so inserting it 
+          // enlarges the image by one
+        == |Image(f, R)| + 1;
           // Apply the induction hypothesis
-        == (|R| + |B|) + 1;
-          // Regroup the terms
-        == (|R| + 1) + |B|;
-          // Since R = A - {x} and x ∈ A, we have |R| + 1 = |A|
-        == |A| + |B|;
+        <= |R| + 1;
+          // Since R = S - {x} and x ∈ S, we have |R| + 1 = |S|
+        == |S|;
       }
     }
   }
 }
 
 //========================================================================
-// Derives the standard form of the inclusion-exclusion principle:
-//   |A ∪ B| = |A| + |B| - |A ∩ B|
-lemma InclusionExclusionStandard<T>(A:set<T>, B:set<T>)
-  ensures |A + B| == |A| + |B| - |A * B|
+// Proves that the image of a finite set has the same cardinality as the
+// original set when f is injective on S, i.e. when different elements
+// of S have different images under f. The precondition expresses this
+// using the equivalent contrapositive formulation: if two elements of S
+// have the same image, then they must be equal. This formulation is more
+// convenient for the finite-set induction proof.
+lemma {:induction false} InjectImageCardinality<A, B>(f:A -> B, S:set<A>)
+  requires forall x, y :: x in S && y in S && f(x) == f(y) ==> x == y
+  ensures   |Image(f, S)| == |S|
+  decreases |S|
 {
-    // Obtain the subtraction-free equality
-  InclusionExclusion(A, B);
-
-    // Rearrange the equality to obtain the standard form
-  calc
+  if S == {}
   {
-    |A + B|;
-      // Add and subtract |A ∩ B| 
-    == (|A + B| + |A * B|) - |A * B|;
-      // Apply InclusionExclusion 
-    == (|A| + |B|) - |A * B|;
+      // Base case: Q({}) is true
+    assert |Image(f, S)| == |S| by
+    {
+      calc
+      {
+        |Image(f, S)|;
+          // Rewrite S as the empty set
+        == |Image(f, {})|;
+          // The image of the empty set is empty, and
+          // the cardinality of the empty set is 0
+        == 0;
+          // The set S is empty, so its cardinality is 0
+        == |S|;
+      }
+    }
+  }
+
+  else
+  {
+      // Choose an arbitrary element x of the nonempty set S. Removing x
+      // gives the strictly smaller set R used for the induction step.
+    var x:A :| x in S;
+    var R := S - {x};
+
+      // Induction hypothesis
+      // Assume Q(R) is true:  |Image(f, R)| = |R|
+    InjectImageCardinality(f, R);
+
+      // Injectivity ensures that f(x) cannot already occur in the image
+      // of R. Otherwise some y ∈ R would satisfy f(y) = f(x),
+      // forcing y = x even though x ∉ R.
+    assert f(x) !in Image(f, R) by
+    {
+      if f(x) in Image(f, R)
+      {
+        var y:A :| y in R && f(y) == f(x);
+        assert y == x;
+        assert false;
+      }
+    }
+
+      // Inserting x adds the genuinely new value f(x) to the image.
+    SetEquality(Image(f, S), Image(f, R) + {f(x)});
+    InsertCardinality(Image(f, R), f(x));
+
+    calc
+    {
+      |Image(f, S)|;
+        // Rewrite the image of S
+      == |Image(f, R) + {f(x)}|;
+        // f(x) is new, so inserting it 
+        // enlarges the image by one
+      == |Image(f, R)| + 1;
+        // Apply the induction hypothesis
+      == |R| + 1;
+        // The reconstructed set is S
+      == |S|;
+    }
   }
 }

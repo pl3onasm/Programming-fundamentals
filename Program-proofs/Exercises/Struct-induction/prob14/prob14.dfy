@@ -18,12 +18,15 @@ lemma {:induction false} LengthMap<T, U>(f:T -> U, xs:List<T>)
     Prove this lemma by structural induction on xs.
 
       Base case, Q(Nil):
-        Show that  Length(Map(f, Nil)) = Length(Nil)
+      
+        Show that     Length(Map(f, Nil)) = Length(Nil)
     
       Inductive case, Q(tail) ⇒ Q(Cons(x, tail)):
-        Assume that  Length(Map(f, tail)) = Length(tail)
-        and prove that
-          Length(Map(f, Cons(x, tail))) = Length(Cons(x, tail))
+
+        Assume that   Length(Map(f, tail)) = Length(tail)
+
+        Prove that    Length(Map(f, Cons(x, tail))) 
+                      = Length(Cons(x, tail))
     
   */
 }

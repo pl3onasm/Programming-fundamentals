@@ -32,12 +32,15 @@ lemma {:induction false} CountReverse<T>(z:T, xs:List<T>)
     Prove this lemma by structural induction on xs.
 
       Base case, Q(Nil):
-        Show that  Count(z, Reverse(Nil)) = Count(z, Nil)
+      
+        Show that     Count(z, Reverse(Nil)) = Count(z, Nil)
 
       Inductive case, Q(tail) ⇒ Q(Cons(x, tail)):
-        Assume that  Count(z, Reverse(tail)) = Count(z, tail)
-        and prove that
-          Count(z, Reverse(Cons(x, tail))) = Count(z, Cons(x, tail))
+        
+        Assume that   Count(z, Reverse(tail)) = Count(z, tail)
+        
+        Prove that    Count(z, Reverse(Cons(x, tail))) 
+                      = Count(z, Cons(x, tail))
     
     In the inductive case, apply CountAppend to the definition of 
     Reverse(Cons(x, tail)).

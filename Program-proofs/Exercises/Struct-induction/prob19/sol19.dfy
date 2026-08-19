@@ -1,76 +1,100 @@
 /*  file: sol19.dfy
     author: David De Potter
-    description: proof by structural induction that the length of an
-      inorder traversal equals the size of the tree
+    description: proof by structural induction that filtering after 
+    mapping is equivalent to first filtering the original values 
+    according to whether their mapped values satisfy p, and then 
+    mapping them
 */
 
-include "../../Support/Datatypes/BinaryTrees.dfy"
-import opened BinaryTrees
+include "../../Support/Datatypes/Lists.dfy"
+import opened Lists
 
 //========================================================================
-// Proves by structural induction on tree that the length of its inorder
-// traversal equals its number of nodes:  |Inorder(tree)| = Size(tree)
-lemma {:induction false} InorderLength<T>(tree:BinTree<T>)
-  ensures |Inorder(tree)| == Size(tree)
-  decreases tree
+// Proves that mapping f over a list and then filtering the resulting
+// values with p is equivalent to first retaining exactly those original
+// values x for which p(f(x)) holds, and then mapping f over them:
+//   Filter(p, Map(f, xs)) = Map(f, Filter(x => p(f(x)), xs))
+lemma {:induction false} MapFilter<A,B>(f:A -> B, p:B -> bool, xs:List<A>)
+  ensures Filter(p, Map(f, xs)) == Map(f, Filter((x:A) => p(f(x)), xs))
+  decreases xs
 {
-  if tree == Empty
+  if xs == Nil
   {
-      // Base case: Q(Empty) is true
-    assert |Inorder(tree)| == Size(tree) by
+      // Base case: Q(Nil) is true
+    assert Filter(p, Map(f, xs))
+        == Map(f, Filter((x:A) => p(f(x)), xs)) by
     {
       calc
       {
-        |Inorder(tree)|;
-          // Replace tree by Empty
-        == |Inorder<T>(Empty)|;
-          // Unfold Inorder(Empty); the length
-          // of the empty sequence is 0
-        == 0;
-          // Fold Size(Empty)
-        == Size<T>(Empty);
-          // Replace Empty by tree
-        == Size(tree);
+        Filter(p, Map(f, xs));
+          // Replace xs by Nil
+        == Filter(p, Map(f, Nil));
+          // Unfold Map
+        == Filter(p, Nil);
+          // Unfold Filter
+        == Nil;
+          // Fold Map
+        == Map(f, Nil);
+          // Fold Filter
+        == Map(f, Filter((x:A) => p(f(x)), Nil));
+          // Replace Nil by xs
+        == Map(f, Filter((x:A) => p(f(x)), xs));
       }
     }
   }
 
   else
   {
-      // Since tree ≠ Empty, it has the form 
-      // Node(tree.left, tree.value, tree.right)
-      // Let left and right denote its two structurally smaller 
-      // subtrees, and let x denote its root value.
-    var left  := tree.left;
-    var x     := tree.value;
-    var right := tree.right;
+      // Since xs ≠ Nil, it has the form Cons(xs.head, xs.tail).
+      // Let x and tail denote its head and structurally smaller tail.
+    var x    := xs.head;
+    var tail := xs.tail;
 
-      // Induction hypotheses
-      // Assume Q(left) and Q(right) are true:
-      //   |Inorder(left) | = Size(left)
-      //   |Inorder(right)| = Size(right)
-    InorderLength(left);
-    InorderLength(right);
+      // Induction hypothesis
+      // Assume Q(tail) is true:
+      //   Filter(p, Map(f, tail)) = Map(f, Filter(x => p(f(x)), tail))
+    MapFilter(f, p, tail);
 
-      // Inductive case
-      // Prove Q(Node(left, x, right)) is true
-    calc
+    if p(f(x))
     {
-      |Inorder(tree)|;
-        // Replace tree by Node(left, x, right)
-      == |Inorder(Node(left, x, right))|;
-        // Unfold Inorder
-      == |Inorder(left) + [x] + Inorder(right)|;
-        // The length of a concatenation is the sum of its lengths
-      == |Inorder(left)| + 1 + |Inorder(right)|;
-        // Apply both induction hypotheses
-      == Size(left) + 1 + Size(right);
-        // Addition is commutative
-      == 1 + Size(left) + Size(right);
-        // Fold Size
-      == Size(Node(left, x, right));
-        // Replace Node(left, x, right) by tree
-      == Size(tree);
+      calc
+      {
+        Filter(p, Map(f, xs));
+          // Replace xs by Cons(x, tail)
+        == Filter(p, Map(f, Cons(x, tail)));
+          // Unfold Map
+        == Filter(p, Cons(f(x), Map(f, tail)));
+          // Since p(f(x)) holds, Filter retains f(x)
+        == Cons(f(x), Filter(p, Map(f, tail)));
+          // Apply the induction hypothesis
+        == Cons(f(x), Map(f, Filter((y:A) => p(f(y)), tail)));
+          // Fold Map
+        == Map(f, Cons(x, Filter((y:A) => p(f(y)), tail)));
+          // Since p(f(x)) holds, fold Filter on Cons(x, tail)
+        == Map(f, Filter((y:A) => p(f(y)), Cons(x, tail)));
+          // Replace Cons(x, tail) by xs
+        == Map(f, Filter((y:A) => p(f(y)), xs));
+      }
+    }
+
+    else
+    {
+      calc
+      {
+        Filter(p, Map(f, xs));
+          // Replace xs by Cons(x, tail)
+        == Filter(p, Map(f, Cons(x, tail)));
+          // Unfold Map
+        == Filter(p, Cons(f(x), Map(f, tail)));
+          // Since p(f(x)) does not hold, Filter discards f(x)
+        == Filter(p, Map(f, tail));
+          // Apply the induction hypothesis
+        == Map(f, Filter((y:A) => p(f(y)), tail));
+          // Since p(f(x)) does not hold, fold Filter on Cons(x, tail)
+        == Map(f, Filter((y:A) => p(f(y)), Cons(x, tail)));
+          // Replace Cons(x, tail) by xs
+        == Map(f, Filter((y:A) => p(f(y)), xs));
+      }
     }
   }
 }

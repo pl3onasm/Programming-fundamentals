@@ -2,61 +2,71 @@
     author: your name
     description: extra practice in Dafny, structural induction,
     prob27
-
-    NOTE:
-    Although Dafny can prove both lemmas in this file automatically, the
-    purpose of the first lemma is to practice writing an explicit
-    finite-set induction proof. Its proof should therefore distinguish
-    the base and inductive cases and explicitly invoke the induction
-    hypothesis by applying the lemma recursively to the strictly smaller
-    set R = A - {x}, obtained by removing an arbitrary element x from A.
-    The second lemma should then be derived as a direct corollary of the
-    first.
-    We prove the subtraction-free form first because set cardinalities are
-    natural numbers, and subtraction on natural numbers is truncated at 0.
-    A direct induction proof of the standard form would therefore require
-    additional work to justify the subtraction steps. In the subtraction-
-    free form, each inductive case simply increases both sides by one.
 */
 
 include "../../Support/Sets.dfy"
 import opened SetSupport
 
 //========================================================================
-// Proves the inclusion-exclusion principle for two finite sets in its
-// subtraction-free form:
-//   |A ∪ B| + |A ∩ B| = |A| + |B|
-// In Dafny, + denotes union and * denotes intersection.
-lemma {:induction false} InclusionExclusion<T>(A:set<T>, B:set<T>)
-  ensures   |A + B| + |A * B| == |A| + |B|
-  decreases |A|
+// Defines the image of a finite set s under a function f:
+//   Image(f, S) = {f(x) | x ∈ S}
+// Different elements of S may have the same image under f, but sets do
+// do not retain duplicate values. Therefore, the image of a finite set  
+// may have fewer elements than the original set S.
+ghost function Image<A, B>(f:A -> B, S:set<A>): set<B>
+{
+  set x | x in S :: f(x)
+}
+
+//========================================================================
+// Proves that taking the image of a finite set cannot increase its
+// cardinality:  |Image(f, S)| ≤ |S|
+lemma {:induction false} ImageCardinalityBound<A, B>(f:A -> B, S:set<A>)
+  ensures   |Image(f, S)| <= |S|
+  decreases |S|
 {
   /*
-    Prove this lemma by induction on the finite set A.
+    Prove this lemma by induction on the finite set S.
 
       Base case, Q({}):
-        Show that       |{} ∪ B| + |{} ∩ B| = |{}| + |B|
+        Show that       |Image(f, {})| ≤ |{}|
 
       Inductive case, Q(R) ⇒ Q(R ∪ {x}):
-        Choose an arbitrary element x ∈ A and let R = A - {x}
+        Choose an arbitrary element x ∈ S and let R = S - {x}
 
-        Assume that     |R ∪ B| + |R ∩ B| = |R| + |B|
+        Assume that     |Image(f, R)| ≤ |R|
+        and prove that  |Image(f, R ∪ {x})| ≤ |R ∪ {x}|
 
-        and prove that  |A ∪ B| + |A ∩ B| = |A| + |B|.
-
-    Distinguish whether x ∈ B. If it is, the intersection grows by
-    one while the union remains unchanged. Otherwise, the union grows 
-    by one while the intersection remains unchanged.
+    The value f(x) may already belong to Image(f, R). Therefore,
+    inserting x into S adds at most one new value to its image.
   */
 }
 
 //========================================================================
-// Derives the standard form of the inclusion-exclusion principle:
-//   |A ∪ B| = |A| + |B| - |A ∩ B|
-lemma InclusionExclusionStandard<T>(A:set<T>, B:set<T>)
-  ensures |A + B| == |A| + |B| - |A * B|
+// Proves that the image of a finite set has the same cardinality as the
+// original set when f is injective on S, i.e. when different elements
+// of S have different images under f. The precondition expresses this
+// using the equivalent contrapositive formulation: if two elements of S
+// have the same image, then they must be equal. This formulation is more
+// convenient for the finite-set induction proof.
+lemma {:induction false} InjectImageCardinality<A, B>(f:A -> B, S:set<A>)
+  requires forall x, y :: x in S && y in S && f(x) == f(y) ==> x == y
+  ensures   |Image(f, S)| == |S|
+  decreases |S|
 {
   /*
-    Apply InclusionExclusion and rearrange the resulting equality.
+    Prove this lemma by induction on the finite set S.
+
+      Base case, Q({}):
+        Show that       |Image(f, {})| = |{}|
+
+      Inductive case, Q(R) ⇒ Q(R ∪ {x}):
+        Choose an arbitrary element x ∈ S and let R = S - {x}
+
+        Assume that     |Image(f, R)| = |R|
+        and prove that  |Image(f, R ∪ {x})| = |R ∪ {x}|
+
+    Since f is injective on S, the new value f(x) cannot already belong
+    to Image(f, R). It therefore enlarges the image by exactly one.
   */
 }

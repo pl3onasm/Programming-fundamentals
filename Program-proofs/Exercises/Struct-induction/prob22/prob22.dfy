@@ -11,31 +11,30 @@ import opened BinaryTrees
 import opened MathSupport
 
 //========================================================================
-// Proves that mapping g and then f over a binary tree is equivalent to
-// mapping their composition once:
-//   MapTree(f, MapTree(g, tree)) = MapTree(Compose(f, g), tree)
-lemma {:induction false} MapTreeComposition<A, B, C>(
-  f:B -> C, g:A -> B, tree:BinTree<A>)
-  ensures MapTree(f, MapTree(g, tree))
-       == MapTree(Compose(f, g), tree)
+// Proves that the height of a binary tree is at most its size:
+//   Height(tree) ≤ Size(tree)
+lemma {:induction false} HeightBoundedBySize<T>(tree:BinTree<T>)
+  ensures Height(tree) <= Size(tree)
   decreases tree
 {
   /*
     Prove this lemma by structural induction on tree.
 
       Base case, Q(Empty):
-        Show that
-          MapTree(f, MapTree(g, Empty)) = MapTree(Compose(f, g), Empty)
+        Show that     Height(Empty) ≤ Size(Empty)
 
       Inductive case, Q(left) ∧ Q(right) ⇒ Q(Node(left, x, right)):
-        Assume that
-          MapTree(f, MapTree(g, left))  = MapTree(Compose(f, g), left)
-          MapTree(f, MapTree(g, right)) = MapTree(Compose(f, g), right)
-        and prove that
-          MapTree(f, MapTree(g, Node(left, x, right)))
-          = MapTree(Compose(f, g), Node(left, x, right))
 
-    Recall that Compose(f, g)(x) = f(g(x)). In the inductive case,
-    apply the lemma recursively to both structurally smaller subtrees.
+        Assume that   Height(left)  ≤ Size(left)
+                      Height(right) ≤ Size(right)
+                      
+        Prove that    Height(Node(left, x, right))
+                      ≤ Size(Node(left, x, right))
+
+    In the inductive case, the induction hypotheses apply to the two
+    structurally smaller subtrees, left and right. Use the definition 
+    of maximum to bound the maximum of their heights by the sum of 
+    their sizes.
+    
   */
 }
