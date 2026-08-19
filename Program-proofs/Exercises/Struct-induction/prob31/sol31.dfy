@@ -11,7 +11,7 @@ import opened ExpressionTrees
 // Proves by structural induction on expr that it contains exactly one
 // more constant leaf than operator nodes:
 //   ConstCount(expr) = OpCount(expr) + 1
-lemma {:induction false} ConstantOpCount(expr:Expr)
+lemma {:induction false} ConstOpCount(expr:Expr)
   ensures ConstCount(expr) == OpCount(expr) + 1
   decreases expr
 {
@@ -40,8 +40,8 @@ lemma {:induction false} ConstantOpCount(expr:Expr)
       //   Assume Q(left) and Q(right) are true:
       //   ConstCount(left)  = OpCount(left) + 1
       //   ConstCount(right) = OpCount(right) + 1
-    ConstantOpCount(left);
-    ConstantOpCount(right);
+    ConstOpCount(left);
+    ConstOpCount(right);
 
       // Prove Q(Add(left, right)) is true
     calc
@@ -67,8 +67,8 @@ lemma {:induction false} ConstantOpCount(expr:Expr)
       //   Assume Q(left) and Q(right) are true:
       //   ConstCount(left)  = OpCount(left) + 1
       //   ConstCount(right) = OpCount(right) + 1
-    ConstantOpCount(left);
-    ConstantOpCount(right);
+    ConstOpCount(left);
+    ConstOpCount(right);
 
       // Prove Q(Mul(left, right)) is true
     calc

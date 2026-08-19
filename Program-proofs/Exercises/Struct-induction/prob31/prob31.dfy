@@ -9,10 +9,9 @@ import opened ExpressionTrees
 
 //========================================================================
 // Proves that an arithmetic expression tree contains exactly one more
-// constant leaf than operator nodes:
-//   ConstantCount(expr) = OperatorCount(expr) + 1
-lemma {:induction false} ConstantOperatorCount(expr:Expr)
-  ensures ConstantCount(expr) == OperatorCount(expr) + 1
+// constant leaf than operator nodes: ConstCount(expr) = OpCount(expr) + 1
+lemma {:induction false} ConstOpCount(expr:Expr)
+  ensures ConstCount(expr) == OpCount(expr) + 1
   decreases expr
 {
   /*
@@ -20,10 +19,10 @@ lemma {:induction false} ConstantOperatorCount(expr:Expr)
 
       Base case, Q(Const(value)):
 
-        Show that   ConstantCount(Const(value))
-                    = OperatorCount(Const(value)) + 1
+        Show that   ConstCount(Const(value))
+                    = OpCount(Const(value)) + 1
 
-      First inductive case, (left) ∧ Q(right) ⇒ Q(Add(left, right)):
+      First inductive case, Q(left) ∧ Q(right) ⇒ Q(Add(left, right)):
 
         Assume that each operand has one more constant than operators,
         and prove the same property for their addition.
