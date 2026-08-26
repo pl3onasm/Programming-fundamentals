@@ -78,21 +78,6 @@ module ExpressionTrees
   }
 
   //======================================================================
-  // Simplifies all constant additions in an expression tree. Both 
-  // operands are simplified before SimplifyAdd determines whether their 
-  // addition can be folded. Multiplication nodes are left in place 
-  // without folding.
-  function SimplifyAdds(expr:Expr): Expr
-    decreases expr
-  {
-    match expr
-    case  Const(value)     => Const(value)
-    case  Add(left, right) => SimplifyAdd(SimplifyAdds(left), 
-                                          SimplifyAdds(right))
-    case  Mul(left, right) => Mul(SimplifyAdds(left), SimplifyAdds(right))
-  }
-
-  //======================================================================
   // Replaces a multiplication by its constant result when both operands
   // are constants. Otherwise, it leaves the multiplication in place.
   function SimplifyMul(left:Expr, right:Expr): Expr
@@ -104,25 +89,10 @@ module ExpressionTrees
       Mul(left, right)
   }
 
-  //======================================================================
-  // Simplifies all constant multiplications in an expression tree. Both
-  // operands are simplified before SimplifyMul determines whether their
-  // multiplication can be folded. Addition nodes are left in place 
-  // without folding.
-  function SimplifyMuls(expr:Expr): Expr
-    decreases expr
-  {
-    match expr
-    case  Const(value)     => Const(value)
-    case  Add(left, right) => Add(SimplifyMuls(left), SimplifyMuls(right))
-    case  Mul(left, right) => SimplifyMul(SimplifyMuls(left), 
-                                          SimplifyMuls(right))
-  }
-
-  //======================================================================
-  // Simplifies all constant additions and multiplications in an 
-  // expression tree. Both operands are simplified before the 
-  // corresponding operation is considered for constant folding.
+  //========================================================================
+  // Simplifies all constant additions and multiplications in an expression
+  // tree. Both operands are simplified before a constant operation is
+  // evaluated and replaced by a single Const node.
   function Simplify(expr:Expr): Expr
     decreases expr
   {

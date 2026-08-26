@@ -38,7 +38,7 @@
     |A ⋃ B| = |A| + |B| - |A ⋂ B|
     where |A| denotes the cardinality of A, i.e. the number of
     elements in A. For a formal proof of the inclusion-exclusion 
-    principle, see problem 27 in the Program-proofs Exercises
+    principle, see problem 29 in the Program-proofs Exercises
     folder on structural induction.
 
     Note on integer sizes:

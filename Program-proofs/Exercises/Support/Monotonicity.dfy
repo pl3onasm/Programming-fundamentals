@@ -10,11 +10,11 @@ module MonotonicityProps
   //========================================================================
   // Describes four possible ordering properties using four constructors:
   //   Asc  : ascending, or non-decreasing
-  //           x <= y implies f(x) <= f(y)
+  //           x ≤ y implies f(x) ≤ f(y)
   //   Incr : strictly increasing
   //           x < y implies f(x) < f(y)
   //   Desc : descending, or non-increasing
-  //           x <= y implies f(x) >= f(y)
+  //           x ≤ y implies f(x) ≥ f(y)
   //   Decr : strictly decreasing
   //           x < y implies f(x) > f(y)
   datatype Order = | Asc
@@ -55,9 +55,9 @@ module MonotonicityProps
   //========================================================================
   // Determines how two integer values x and y must be related for the 
   // selected ordering property:
-  //   Asc  requires x <= y
+  //   Asc  requires x ≤ y
   //   Incr requires x <  y
-  //   Desc requires x >= y
+  //   Desc requires x ≥ y
   //   Decr requires x >  y
   // Together, IndexOrderNat or IndexOrderInt and ValueOrder express the
   // complete direction and strictness of an ordering property.
@@ -118,7 +118,7 @@ module MonotonicityProps
   // appropriate index comparison, the corresponding values arr[i] and 
   // arr[j] must satisfy the value comparison described by order.
   // For example, OrderedArraySegment(arr,lo,hi,Incr) states that
-  // arr[i] < arr[j] whenever lo <= i < j < hi.
+  // arr[i] < arr[j] whenever lo ≤ i < j < hi.
   ghost predicate OrderedArraySegment(arr:array<int>, lo:int, hi:int, 
                                       order:Order)
     requires 0 <= lo <= hi <= arr.Length

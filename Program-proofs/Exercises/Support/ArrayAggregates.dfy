@@ -52,8 +52,8 @@ module IntArrayAggregates
         // corresponding ranges ending at hi-1 by the same element a[hi-1]
     }
 
-      // If mid == hi, the right subrange [mid,hi) is empty, and the
-      // required equality follows directly from ArraySum(a,mid,hi) == 0
+      // If mid = hi, the right subrange [mid,hi) is empty, and the
+      // required equality follows directly from ArraySum(a,mid,hi) = 0
   }
 
   //========================================================================
@@ -125,8 +125,8 @@ module IntArrayAggregates
         // corresponding ranges ending at hi-1 by the same element a[hi-1]
     }
 
-      // If mid == hi, the right subrange [mid,hi) is empty, and the
-      // required equality follows directly from ArrayProduct(a,mid,hi) == 1
+      // If mid = hi, the right subrange [mid,hi) is empty, and the
+      // required equality follows directly from ArrayProduct(a,mid,hi) = 1
   }
 }
 
@@ -178,8 +178,8 @@ module NatArrayAggregates
         // corresponding ranges ending at hi-1 by the same element a[hi-1]
     }
 
-      // If mid == hi, the right subrange [mid,hi) is empty, and the
-      // required equality follows directly from ArraySum(a,mid,hi) == 0
+      // If mid = hi, the right subrange [mid,hi) is empty, and the
+      // required equality follows directly from ArraySum(a,mid,hi) = 0
   }
 
   //========================================================================
@@ -251,7 +251,7 @@ module NatArrayAggregates
         // corresponding ranges ending at hi-1 by the same element a[hi-1]
     }
 
-      // If mid == hi, the right subrange [mid,hi) is empty, and the
-      // required equality follows directly from ArrayProduct(a,mid,hi) == 1
+      // If mid = hi, the right subrange [mid,hi) is empty, and the
+      // required equality follows directly from ArrayProduct(a,mid,hi) = 1
   }
 }

@@ -57,7 +57,7 @@ module SetSupport
 
   //========================================================================
   // Represents the finite horizontal segment of grid points given by
-  // {(i,row) | lo <= i < hi} 
+  // {(i,row) | lo ≤ i < hi} 
   ghost function RowSegment(lo:nat, hi:nat, row:nat): set<(nat,nat)>
     requires lo <= hi
   {
@@ -92,7 +92,7 @@ module SetSupport
     
     else 
     {
-        // Base case: If lo == hi, the half-open segment is empty, and
+        // Base case: If lo = hi, the half-open segment is empty, and
         // we can start counting from 0.
       Set2DEquality(RowSegment(lo,hi,row), {});
     }
@@ -111,7 +111,7 @@ module SetSupport
 
   //========================================================================
   // Represents the finite vertical segment of grid points given by
-  // {(col,j) | lo <= j < hi}
+  // {(col,j) | lo ≤ j < hi}
   ghost function ColumnSegment(col:nat, lo:nat, hi:nat): set<(nat,nat)>
     requires lo <= hi
   {
@@ -119,7 +119,7 @@ module SetSupport
   }
 
   //========================================================================
-  // Proves that the vertical segment [lo,hi) contains exactly hi-lo
+  // Proves that the vertical segment [lo,hi) contains exactly hi − lo
   // grid points.
   // NOTE: The lemma is proved by induction on the segment length hi-lo.
   // The recursive call counts the shorter segment [lo,hi-1), after which
@@ -146,7 +146,7 @@ module SetSupport
     
     else 
     {
-        // Base case: If lo == hi, the half-open segment is empty, and
+        // Base case: If lo = hi, the half-open segment is empty, and
         // we can start counting from 0.
       Set2DEquality(ColumnSegment(col,lo,hi), {});
     }

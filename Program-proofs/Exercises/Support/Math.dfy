@@ -51,7 +51,7 @@ module MathSupport {
   
   //========================================================================
   // Proves that multiplication by the same natural number preserves an
-  // inequality: if a <= b, then a*c <= b*c.
+  // inequality: if a ≤ b, then a*c ≤ b*c.
   // NOTE: The lemma is proved by induction on c. The recursive call
   // explicitly supplies the induction hypothesis for c-1. Dafny verifies
   // through the decreases clause that the recursive argument becomes
@@ -79,7 +79,7 @@ module MathSupport {
 
   //========================================================================
   // Proves that squaring preserves the order of natural numbers: if
-  // a <= b, then a^2 <= b^2.
+  // a ≤ b, then a^2 ≤ b^2.
   lemma SquareMonotone(a:nat, b:nat)
     requires a <= b
     ensures a*a <= b*b
