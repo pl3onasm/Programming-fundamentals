@@ -101,4 +101,35 @@ module ExpressionTrees
     case  Add(left, right) => SimplifyAdd(Simplify(left), Simplify(right))
     case  Mul(left, right) => SimplifyMul(Simplify(left), Simplify(right))
   }
+
+  //======================================================================
+  // Determines whether an expression contains no remaining constant
+  // operation that Simplify could evaluate. A Const node is always fully
+  // simplified. An Add or Mul node is fully simplified when both of its
+  // operands are fully simplified and at least one operand is not a Const
+  // node. If both operands were constants, Simplify would replace the
+  // operation by a single Const node containing its result.
+  //   IsSimplified(Const(value))     = true
+  //   IsSimplified(Add(left,right)) = IsSimplified(left)
+  //                                   and IsSimplified(right)
+  //                                   and not both operands are constants 
+  //   IsSimplified(Mul(left,right)) = IsSimplified(left)
+  //                                   and IsSimplified(right)
+  //                                   and not both operands are constants
+  // 
+  predicate IsSimplified(expr:Expr)
+    decreases expr
+  {
+    match expr
+    case Const(_) => true
+    case Add(left, right) =>
+      IsSimplified(left) &&
+      IsSimplified(right) &&
+      !(left.Const? && right.Const?)
+    case Mul(left, right) =>
+      IsSimplified(left) &&
+      IsSimplified(right) &&
+      !(left.Const? && right.Const?)
+}
+
 }
