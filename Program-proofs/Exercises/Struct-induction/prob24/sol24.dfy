@@ -4,7 +4,7 @@
       functions over a binary tree is equivalent to successive mappings
 */
 
-include "../../Support/Datatypes/BinaryTrees.dfy"
+include "../../Support/Datatypes/Finite/BinaryTrees.dfy"
 include "../../Support/Math.dfy"
 
 import opened BinaryTrees

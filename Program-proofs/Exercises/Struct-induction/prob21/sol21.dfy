@@ -4,7 +4,7 @@
       inorder traversal equals the size of the tree
 */
 
-include "../../Support/Datatypes/BinaryTrees.dfy"
+include "../../Support/Datatypes/Finite/BinaryTrees.dfy"
 import opened BinaryTrees
 
 //========================================================================

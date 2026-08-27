@@ -4,7 +4,7 @@
     prob32
 */
 
-include "../../Support/Datatypes/ExpressionTrees.dfy"
+include "../../Support/Datatypes/Finite/ExpressionTrees.dfy"
 import opened ExpressionTrees
 
 //========================================================================

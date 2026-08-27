@@ -4,7 +4,7 @@
       successor as its second argument
 */
 
-include "../../Support/Datatypes/PeanoNumbers.dfy"
+include "../../Support/Datatypes/Finite/PeanoNumbers.dfy"
 import opened PeanoNumbers
 
 //========================================================================

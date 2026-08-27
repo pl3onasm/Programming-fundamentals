@@ -4,7 +4,7 @@
       identity for Peano addition
 */
 
-include "../../Support/Datatypes/PeanoNumbers.dfy"
+include "../../Support/Datatypes/Finite/PeanoNumbers.dfy"
 import opened PeanoNumbers
 
 //========================================================================

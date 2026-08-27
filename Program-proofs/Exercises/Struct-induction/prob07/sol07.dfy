@@ -4,7 +4,7 @@
       number to a natural number and back preserves its value
 */
 
-include "../../Support/Datatypes/PeanoNumbers.dfy"
+include "../../Support/Datatypes/Finite/PeanoNumbers.dfy"
 import opened PeanoNumbers
 
 //========================================================================

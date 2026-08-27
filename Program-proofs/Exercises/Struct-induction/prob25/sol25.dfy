@@ -4,7 +4,7 @@
       tree reverses its inorder traversal
 */
 
-include "../../Support/Datatypes/BinaryTrees.dfy"
+include "../../Support/Datatypes/Finite/BinaryTrees.dfy"
 include "../prob05/sol05.dfy"
 
 import opened BinaryTrees

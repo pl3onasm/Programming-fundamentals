@@ -4,7 +4,7 @@
       constant operations preserves the value of arithmetic expressions
 */
 
-include "../../Support/Datatypes/ExpressionTrees.dfy"
+include "../../Support/Datatypes/Finite/ExpressionTrees.dfy"
 import opened ExpressionTrees
 
 //========================================================================

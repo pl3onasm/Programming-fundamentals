@@ -4,7 +4,7 @@
       tree twice returns the original tree
 */
 
-include "../../Support/Datatypes/BinaryTrees.dfy"
+include "../../Support/Datatypes/Finite/BinaryTrees.dfy"
 import opened BinaryTrees
 
 //========================================================================

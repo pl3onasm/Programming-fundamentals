@@ -4,7 +4,7 @@
     prob07
 */
 
-include "../../Support/Datatypes/PeanoNumbers.dfy"
+include "../../Support/Datatypes/Finite/PeanoNumbers.dfy"
 import opened PeanoNumbers
 
 //========================================================================

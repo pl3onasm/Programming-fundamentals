@@ -4,7 +4,7 @@
       preserves the number of occurrences of every value
 */
 
-include "../../Support/Datatypes/Lists.dfy"
+include "../../Support/Datatypes/Finite/Lists.dfy"
 include "../../Support/Math.dfy"
 
 import opened Lists

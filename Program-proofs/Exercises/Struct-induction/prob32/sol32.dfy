@@ -4,7 +4,7 @@
       arithmetic expression preserves its value
 */
 
-include "../../Support/Datatypes/ExpressionTrees.dfy"
+include "../../Support/Datatypes/Finite/ExpressionTrees.dfy"
 import opened ExpressionTrees
 
 //========================================================================

@@ -4,7 +4,7 @@
     prob16
 */
 
-include "../../Support/Datatypes/Lists.dfy"
+include "../../Support/Datatypes/Finite/Lists.dfy"
 import opened Lists
 
 //========================================================================

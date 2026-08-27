@@ -6,7 +6,7 @@
       has at most one nonempty subtree.
 */
 
-include "../../Support/Datatypes/BinaryTrees.dfy"
+include "../../Support/Datatypes/Finite/BinaryTrees.dfy"
 include "../../Support/Math.dfy"
 
 import opened BinaryTrees
