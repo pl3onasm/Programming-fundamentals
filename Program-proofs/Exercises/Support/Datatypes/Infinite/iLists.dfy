@@ -37,7 +37,7 @@
     however, is necessarily infinite.
 */
 
-module InfiniteLists
+module iLists
 {
   //======================================================================
   // Represents a possibly infinite list. iNil terminates a finite list,

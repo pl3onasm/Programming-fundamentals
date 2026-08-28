@@ -37,7 +37,7 @@
     however, is necessarily infinite.
 */
 
-module InfiniteTrees
+module iTrees
 {
   //======================================================================
   // Represents an infinite binary tree. Every node contains a value and

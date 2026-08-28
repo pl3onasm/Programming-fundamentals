@@ -4,7 +4,7 @@
       operations
 */
 
-include "../Math.dfy"
+include "../../Math.dfy"
 
 module Lists
 {
