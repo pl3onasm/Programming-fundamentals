@@ -68,8 +68,10 @@ module InfiniteLists
   //======================================================================
   // Holds exactly when xs reaches iNil after finitely many iCons
   // constructors. As a least predicate, IsFinite requires a finite
-  // derivation ending in the iNil case.
-  least predicate IsFinite<T>(xs:iList<T>)
+  // derivation ending in the iNil case. The annotation [nat] tells
+  // Dafny to index the generated prefix predicate IsFinite# by a natural
+  // number representing the finite derivation depth.
+  least predicate IsFinite<T>[nat](xs:iList<T>)
   {
     xs.iNil? || (xs.iCons? && IsFinite(xs.tail))
   }
@@ -77,8 +79,10 @@ module InfiniteLists
   //======================================================================
   // Holds exactly when xs continues with iCons constructors forever and
   // therefore never reaches iNil. As a greatest predicate, IsInfinite
-  // permits the recursive condition to continue indefinitely.
-  greatest predicate IsInfinite<T>(xs:iList<T>)
+  // permits the recursive condition to continue indefinitely. The
+  // annotation [nat] makes IsInfinite#[k] describe the first k finite
+  // observations of this greatest predicate.
+  greatest predicate IsInfinite<T>[nat](xs:iList<T>)
   {
     xs.iCons? && IsInfinite(xs.tail)
   }
