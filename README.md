@@ -44,8 +44,9 @@ $\Large{\color{darkseagreen}\text{PF 1-3 exams}}$
 
 ||||
 |:---:|:---:|:---:|
-| **[2023 exam](PF1-3/exam1-2023)** | **[2023 resit](PF1-3/resit1-2023)** | **[2024 exam](PF1-3/exam1-2024)** |
-| **[2025 exam](PF1-3/exam1-2025)** | **[2025 resit](PF1-3/resit1-2025)** | **[2026 exam](PF1-3/exam1-2026)** |
+| **[2023 exam](PF1-3/exam1-2023)**   | **[2023 resit](PF1-3/resit1-2023)** | **[2024 exam](PF1-3/exam1-2024)** |
+| **[2025 exam](PF1-3/exam1-2025)**   | **[2025 resit](PF1-3/resit1-2025)** | **[2026 exam](PF1-3/exam1-2026)** |
+| **[2026 resit](PF1-3/resit1-2026)** |                                     |                                   |
 ||||
 
 <br/>
