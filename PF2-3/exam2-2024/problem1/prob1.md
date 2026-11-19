@@ -48,7 +48,7 @@ $\Large{\color{darkkhaki}\text{Prob 1.3}}$
 
 ${\color{peru}(a)} \quad x := 0; \space y := A - B;$  
 ${\color{peru}(b)} \quad y := -y; \space x := x + y;$  
-${\color{peru}(c)} \quad y := x - 3 * y; \space y := 2 * y;$  
+${\color{peru}(c)} \quad x := x - 3 * y; \space y := 2 * y;$  
 
 <br/>
 
