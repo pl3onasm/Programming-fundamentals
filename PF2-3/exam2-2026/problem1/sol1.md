@@ -125,7 +125,7 @@ x, y := x + 2 * y, 3 * x - y;
 $\quad \lbrace \space 2 * x > 3 * y \space \rbrace$  
 $\qquad \color{darkseagreen} (\space \text{add x - y to both sides} \space)$  
 $\quad \lbrace \space 3 * x - y > x + 2 * y \space \rbrace$  
-$\qquad \color{darkseagreen} (\space \text{rearrange the inequality} \space)$
+$\qquad \color{darkseagreen} (\space \text{rearrange the inequality} \space)$  
 $\quad \lbrace \space x + 2 * y < 3 * x - y \space \rbrace$  
 $\qquad \color{darkseagreen} (\space \text{prepare parallel assignment} \space)$  
 $\space \color{cornflowerblue} x, \space y := x + 2 * y,\ 3 * x - y;$  
