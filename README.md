@@ -56,7 +56,7 @@ $\Large{\color{darkseagreen}\text{PF 2-3 exams}}$
 ||||
 |:---:|:---:|:---:|
 | **[2023 exam](PF2-3/exam2-2023)**   | **[2023 resit](PF2-3/resit2-2023)** | **[2024 exam](PF2-3/exam2-2024)** |
-| **[2024 resit](PF2-3/resit2-2024)** | **[2025 exam](PF2-3/exam2-2025)**   |                                   |
+| **[2024 resit](PF2-3/resit2-2024)** | **[2025 exam](PF2-3/exam2-2025)**   | **[2026 exam](PF2-3/exam2-2026)** | 
 ||||
 
 <br/>

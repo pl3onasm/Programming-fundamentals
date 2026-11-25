@@ -62,7 +62,7 @@ requires n >= 0
 
       When k reaches n, a will equal fProduct(n).
 
-      We initialise as follows:
+      We initialize as follows:
           k = 0
           x = f(0) = 1
           y = f(1) = 2
